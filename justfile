@@ -22,67 +22,84 @@ install-system theme="gruvbox-material" dest="/usr/share/themes":
     mkdir -p "{{dest}}"
     cp -a {{theme}}/themes/. "{{dest}}/"
 
-# Install themes from a checklist (needs only just and bash). Installs real copies into ~/.themes (override with THEMES_DEST=DIR); give theme names to skip the prompt, e.g. just install Gruvbox-Material. Flatpak apps see ~/.themes, not /usr/share/themes, and cannot follow symlinks
-[positional-arguments]
+# Install themes from a checklist, one entry per colour scheme (needs only just and bash). Copies every theme folder of the chosen schemes into ~/.themes as real files (override with THEMES_DEST=DIR). Give scheme names (gruvbox-material) or single folder names (Gruvbox-Material-Shell-Dark) to skip the prompt. Flatpak apps see ~/.themes, not /usr/share/themes, and cannot follow symlinks
 [group('install')]
+[positional-arguments]
 install *names:
     #!/usr/bin/env bash
     set -euo pipefail
     dest="${THEMES_DEST:-$HOME/.themes}"
-    # Every theme folder of every scheme: <scheme>/themes/<Name>
-    names=(); paths=()
-    for d in */themes/*/; do names+=("$(basename "$d")"); paths+=("${d%/}"); done
-    if [ "${#names[@]}" -eq 0 ]; then echo "No themes found (run this from the repo root)"; exit 1; fi
+    # One entry per scheme (a directory with a palette.toml and a themes/ folder), described by what it contains
+    schemes=(); labels=()
+    for p in */palette.toml; do
+        sc="${p%%/*}"
+        [ -d "$sc/themes" ] || continue
+        gtk=""; shell=""
+        for d in "$sc"/themes/*/; do
+            n=$(basename "$d")
+            case "$n" in
+                *-Shell-*) v="${n##*-Shell-}"; shell="${shell:+$shell/}$(printf '%s' "$v" | tr 'A-Z' 'a-z')" ;;
+                *) gtk="GTK 3/4" ;;
+            esac
+        done
+        what="${gtk}${gtk:+${shell:+ + }}${shell:+GNOME Shell $shell}"
+        schemes+=("$sc"); labels+=("$sc  ($what)")
+    done
+    if [ "${#schemes[@]}" -eq 0 ]; then echo "No schemes found (run this from the repo root)"; exit 1; fi
+    folders_of() { for d in "$1"/themes/*/; do basename "$d"; done; }
     on=()
-    for i in "${!names[@]}"; do on[i]=0; done
+    for i in "${!schemes[@]}"; do on[i]=0; done
     if [ "$#" -gt 0 ]; then
+        singles=()
         for want in "$@"; do
             found=0
-            for i in "${!names[@]}"; do if [ "${names[i]}" = "$want" ]; then on[i]=1; found=1; fi; done
-            [ "$found" -eq 1 ] || { echo "'$want' is not a theme in this repo (see: just list)"; exit 1; }
+            for i in "${!schemes[@]}"; do
+                if [ "${schemes[i]}" = "$want" ]; then on[i]=1; found=1; fi
+                if [ "$found" -eq 0 ] && [ -d "${schemes[i]}/themes/$want" ]; then singles+=("${schemes[i]}/themes/$want"); found=1; fi
+            done
+            [ "$found" -eq 1 ] || { echo "'$want' is neither a scheme nor a theme folder here (see: just list)"; exit 1; }
         done
     else
-        # Preselect what is already in the destination, or the plain GTK theme of each scheme on a first run
+        singles=()
+        # Preselect schemes that are already in the destination, or every scheme on a first run
         any=0
-        for i in "${!names[@]}"; do if [ -e "$dest/${names[i]}" ]; then on[i]=1; any=1; fi; done
-        if [ "$any" -eq 0 ]; then
-            for i in "${!names[@]}"; do case "${names[i]}" in *-Shell-*) ;; *) on[i]=1 ;; esac; done
-        fi
+        for i in "${!schemes[@]}"; do
+            while read -r f; do if [ -e "$dest/$f" ]; then on[i]=1; any=1; fi; done < <(folders_of "${schemes[i]}")
+        done
+        if [ "$any" -eq 0 ]; then for i in "${!schemes[@]}"; do on[i]=1; done; fi
         if command -v gum >/dev/null 2>&1 && [ -t 0 ]; then
-            pre=""; for i in "${!names[@]}"; do if [ "${on[i]}" -eq 1 ]; then pre="${pre:+$pre,}${names[i]}"; fi; done
-            picked=$(gum choose --no-limit --selected="$pre" --header "Themes to copy into $dest (space toggles, enter confirms)" "${names[@]}" || true)
-            for i in "${!names[@]}"; do on[i]=0; if printf '%s\n' "$picked" | grep -qx -- "${names[i]}"; then on[i]=1; fi; done
+            pre=""; for i in "${!schemes[@]}"; do if [ "${on[i]}" -eq 1 ]; then pre="${pre:+$pre,}${labels[i]}"; fi; done
+            picked=$(gum choose --no-limit --selected="$pre" --header "Themes to copy into $dest (x toggles, enter installs)" "${labels[@]}" || true)
+            for i in "${!schemes[@]}"; do on[i]=0; if printf '%s\n' "$picked" | grep -qxF -- "${labels[i]}"; then on[i]=1; fi; done
         else
             while true; do
                 echo; echo "Themes to copy into $dest:"
-                for i in "${!names[@]}"; do
+                for i in "${!schemes[@]}"; do
                     mark=" "; if [ "${on[i]}" -eq 1 ]; then mark="x"; fi
-                    printf ' %2d) [%s] %s\n' "$((i+1))" "$mark" "${names[i]}"
+                    printf ' %2d) [%s] %s\n' "$((i+1))" "$mark" "${labels[i]}"
                 done
                 read -r -p "Number toggles, a = all, n = none, Enter = install, q = quit: " a || a=q
                 case "$a" in
                     "") break ;;
                     q) echo "Nothing installed."; exit 0 ;;
-                    a) for i in "${!names[@]}"; do on[i]=1; done ;;
-                    n) for i in "${!names[@]}"; do on[i]=0; done ;;
+                    a) for i in "${!schemes[@]}"; do on[i]=1; done ;;
+                    n) for i in "${!schemes[@]}"; do on[i]=0; done ;;
                     *[!0-9]*) echo "Not a number: $a" ;;
-                    *) if [ "$a" -ge 1 ] && [ "$a" -le "${#names[@]}" ]; then i=$((a-1)); on[i]=$((1-on[i])); else echo "Out of range: $a"; fi ;;
+                    *) if [ "$a" -ge 1 ] && [ "$a" -le "${#schemes[@]}" ]; then i=$((a-1)); on[i]=$((1-on[i])); else echo "Out of range: $a"; fi ;;
                 esac
             done
         fi
     fi
     mkdir -p "$dest"
     count=0
-    for i in "${!names[@]}"; do
+    copy() { rm -rf "${dest:?}/$(basename "$1")"; cp -a "$1" "$dest/$(basename "$1")"; echo "Installed $(basename "$1") -> $dest/$(basename "$1")"; count=$((count+1)); }
+    for i in "${!schemes[@]}"; do
         if [ "${on[i]}" -ne 1 ]; then continue; fi
-        rm -rf "${dest:?}/${names[i]}"
-        cp -a "${paths[i]}" "$dest/${names[i]}"
-        echo "Installed ${names[i]} -> $dest/${names[i]}"
-        count=$((count+1))
+        for d in "${schemes[i]}"/themes/*/; do copy "${d%/}"; done
     done
-    if [ "$count" -eq 0 ]; then echo "Nothing selected."; else echo "Restart GTK apps (and Flatpaks) to pick up the changes; select a Shell theme with the User Themes extension."; fi
+    for d in "${singles[@]}"; do copy "$d"; done
+    if [ "$count" -eq 0 ]; then echo "Nothing selected (in the checklist, x ticks an entry and enter installs the ticked ones)."; else echo "Restart GTK apps (and Flatpaks) to pick up the changes; select a Shell theme with the User Themes extension."; fi
 
-# List the installable theme names
 [group('install')]
 list:
     @for d in */themes/*/; do basename "$d"; done

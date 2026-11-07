@@ -15,8 +15,8 @@ Layout: `<scheme>/palette.toml`, `<scheme>/themes/<Name>/` (installed as-is), `<
 ## Install
 
 ```
-just install                               # checklist; copies the chosen themes into ~/.themes
-just install Gruvbox-Material              # no prompt
+just install                               # checklist of schemes (x ticks, enter installs) into ~/.themes
+just install gruvbox-material              # no prompt (a scheme, or one folder such as Gruvbox-Material-Shell-Dark)
 just install-libadwaita                    # libadwaita apps: installs ~/.config/gtk-4.0/gtk.css
 just install-system gruvbox-material       # a whole scheme into /usr/share/themes (root)
 just list                                  # theme names
