@@ -36,6 +36,9 @@ Palettes
   Material    Material Theme by Mattia Astorino, Sublime Text port (https://github.com/SublimeText/material-theme), Darker and
               Lighter. MIT License, Copyright (c) 2016 Mattia Astorino. The official Material Theme for VS Code is a commercial
               product and was not used.
+  Monokai     Monokai by Wimer Hazenberg (https://monokai.nl), the classic palette, taken as plain hex values from Base16 Monokai in
+              tinted-theming/schemes (https://github.com/tinted-theming/schemes, MIT, Copyright (c) 2022 Tinted Theming; the original
+              Monokai itself has no licence of its own). Monokai Pro (monokai.pro) is proprietary and is deliberately NOT used.
   Terminal accents (the six per scheme) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
   from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of

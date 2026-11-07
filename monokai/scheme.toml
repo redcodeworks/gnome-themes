@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT
+# Monokai (classic, by Wimer Hazenberg, monokai.nl), dark only. The canonical copy used is Base16 Monokai in
+# tinted-theming/schemes (MIT, https://github.com/tinted-theming/schemes), VERIFIED against the raw base16/monokai.yaml (2026-11-07).
+# Monokai PRO (monokai.pro) is proprietary and is deliberately NOT used.
+# Roles: view base00 #272822, window base01 #383830, headers base02 #49483e, popovers DERIVED (fixed rule, 28 % towards fg),
+# comment base03 #75715e, fg_dim base04 #a59f85, fg base05 #f8f8f2, selection base02.
+# ANSI six = Ptyxis "Monokai Dark" Color1-6 (it matches the classic palette; "Monokai Soda" is a different one: #1A1A1A, red #F4005F),
+# except cyan: Ptyxis has #2AA198 (a Solarized teal), Base16 Monokai has base0C #a1efe4, which is what is used here.
+# Ptyxis' yellow #F4BF75 = base0A (the original string yellow #E6DB74 is not used).
+# Default accent green #A6E22E (Monokai's signature colour, base0B), one of the six.
+title = "Monokai"
+gtk_name = "Monokai"
+shell_name = "Monokai-Shell"
+credit = "Monokai by Wimer Hazenberg (palette values via Base16, tinted-theming/schemes, MIT); not Monokai Pro"
+default_accent = "green"
+
+[dark]
+bg_deep = "#272822"
+bg = "#383830"
+surface = "#49483e"
+fg = "#f8f8f2"
+fg_dim = "#a59f85"
+comment = "#75715e"
+selection = "#49483e"
+red = "#f92672"
+orange = "#fd971f"
+yellow = "#f4bf75"
+green = "#a6e22e"
+cyan = "#a1efe4"
+blue = "#66d9ef"
+magenta = "#ae81ff"
+purple = "#ae81ff"
+pink = "#f92672"
+[dark.ansi]
+red = "#f92672"
+green = "#a6e22e"
+yellow = "#f4bf75"
+blue = "#66d9ef"
+magenta = "#ae81ff"
+cyan = "#a1efe4"
