@@ -47,4 +47,10 @@ colour scheme) and offers the libadwaita file `~/.config/gtk-4.0/gtk.css`, never
 one without asking. GTK 3 follows `gtk-application-prefer-dark-theme` in `~/.config/gtk-3.0/settings.ini`,
 not `color-scheme`.
 
+## Contributing
+
+`main` is protected. Push your work to `testing` (`git push origin HEAD:testing`); CI runs the tests there
+(`tools/test.sh`, also runnable locally, plus a secret scan). Open a pull request from `testing` into `main`;
+it can be merged only when both CI jobs pass.
+
 Licence: the tooling and docs are MIT (`LICENSE`). The generated theme files derive from GTK's and GNOME Shell's stock stylesheets and stay LGPL: each `*/themes/<Name>/` folder carries its own `LICENSE`. See `NOTICE` for the exact split and the credits.
