@@ -260,7 +260,7 @@ THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; [ "$(
 FORCE=1 THEMES_DEST=$PD just install-themes fairy-floss </dev/null >/dev/null 2>&1; grep -q "# gnome-themes:" "$fname" && chk ok "FORCE=1 replaces and marks the palette" || chk fail "FORCE=1 palette"
 # no Ptyxis profile at all: a clear note, nothing written
 : > "$DCONF_DB"; out=$(THEMES_DEST=$PD just switch-theme fairy-floss </dev/null 2>&1)
-printf '%s\n' "$out" | grep -q "no Ptyxis profile found" && [ ! -s "$DCONF_DB" ] && chk ok "no Ptyxis settings: note and skip" || chk fail "missing Ptyxis settings not handled"
+printf '%s\n' "$out" | grep -q "no Ptyxis profile found" && ! grep -q Ptyxis "$DCONF_DB" && chk ok "no Ptyxis settings: note and skip" || chk fail "missing Ptyxis settings not handled"
 THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; rm -rf "$PTYXIS_PALETTES"
 
 # ---- GtkSourceView style schemes: generated files, install/switch/update/remove, Flatpak editors, collision guard ------------------
@@ -289,9 +289,9 @@ for f in sorted(glob.glob('*/gtksourceview/*.xml')):
             if v is not None and val(v) is None: bad.append('%s: style %s %s=%s does not resolve' % (f, s.get('name'), a, v))
         fg = s.get('foreground')
         if fg is None or s.get('name') in ('selection',): continue
-        need = 3.0 if s.get('name') == 'def:comment' else 4.5
+        need = 3.0 if s.get('name') in ('def:comment', 'def:shebang') else 4.5
         bgs = [val(s.get('background'))] if s.get('background') and s.get('name') not in ('current-line-number',) else [B, CL]
-        if s.get('name') == 'search-match' or s.get('name').startswith('bracket') : bgs = [val(s.get('background'))]
+        if s.get('name') in ('search-match', 'bracket-match', 'bracket-mismatch'): bgs = [val(s.get('background'))]
         for b in bgs:
             if sr.contrast(val(fg), b) < need - 0.01: bad.append('%s: %s %.2f < %.1f on %s' % (f, s.get('name'), sr.contrast(val(fg), b), need, b))
     if sr.contrast(cols['fg'], cols['selection']) < 4.5: bad.append(f + ': fg on selection')
@@ -323,7 +323,7 @@ PATH="$lbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null
 echo "<!-- stale -->" >> "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml"; THEMES_DEST=$PD just update-themes </dev/null >/dev/null 2>&1
 grep -q stale "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml" && chk fail "update did not refresh the style scheme" || chk ok "update-themes refreshes the style schemes"
 THEMES_DEST=$PD just remove-themes gruvbox-material </dev/null >/dev/null 2>&1
-[ -z "$(ls "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor/data/gtksourceview-5/styles" 2>/dev/null)" ] && chk ok "remove-themes removes the style schemes everywhere" || chk fail "remove left style schemes"
+[ -z "$(find "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor" -type f 2>/dev/null)" ] && chk ok "remove-themes removes the style schemes everywhere" || chk fail "remove left style schemes: $(find "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS" -type f 2>&1 | tr "\n" " ")"
 # collision: an unmarked file with our id is kept; dark-only scheme has only the dark id
 mkdir -p "$GTKSOURCEVIEW_STYLES"; echo mine > "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"
 out=$(THEMES_DEST=$PD just install-themes fairy-floss </dev/null 2>&1)

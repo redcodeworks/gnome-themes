@@ -19,7 +19,7 @@ Role mapping (variant roles from scheme.toml, derived ones filled in by palette-
 Current line: halfway between bg_deep and bg (a subtle highlight; bg itself is too far from the editor background for
 syntax colours to keep their contrast on it).
 Contrast rule: every foreground colour (text, line numbers, all syntax colours) must reach 4.5:1 on BOTH the editor background
-(bg_deep) and the current-line background; comments need 3:1. A role colour that misses its threshold gets only its LIGHTNESS
+(bg_deep) and the current-line background; comments and the shebang line (comment colour) need 3:1. A role colour that misses its threshold gets only its LIGHTNESS
 changed (hue and saturation kept; lighter in dark variants, darker in light ones) in 1 % steps until it passes; the colours that
 were moved are listed in a comment inside the file (`adjusted:`): several upstream palettes (Solarized, Catppuccin Latte ...) have
 accents below 4.5:1 on their own light background, so those light variants come out darker than upstream. The selection background
@@ -53,7 +53,7 @@ STYLES = [
     ('text', 'foreground="fg" background="bg-deep"'), ('selection', 'background="selection"'), ('cursor', 'foreground="fg"'),
     ('secondary-cursor', 'foreground="fg-dim"'), ('current-line', 'background="bg"'), ('current-line-number', 'foreground="fg" background="bg"'),
     ('line-numbers', 'foreground="fg-dim" background="bg-deep"'), ('snippet-focus', 'background="bg"'),
-    ('bracket-match', 'foreground="fg" background="selection"'), ('bracket-mismatch', 'foreground="red" background="selection"'),
+    ('bracket-match', 'foreground="fg" background="selection"'), ('bracket-mismatch', 'foreground="bg-deep" background="red"'),
     ('right-margin', 'foreground="fg-dim" background="bg"'), ('search-match', 'foreground="bg-deep" background="yellow"'),
     ('def:comment', 'foreground="comment" italic="true"'), ('def:shebang', 'foreground="comment" bold="true"'),
     ('def:doc-comment-element', 'italic="true"'),
