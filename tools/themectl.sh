@@ -157,7 +157,7 @@ case "$action" in
         fi
         [ "${#chosen[@]}" -gt 0 ] || { echo "Nothing selected (in the checklist, x ticks an entry and enter installs the ticked ones)."; exit 0; }
         for i in "${chosen[@]}"; do while read -r f; do copy_folder "$f" "${items[i]}"; done < <(folders_of "${items[i]}"); done
-        if [ "$kind" = themes ]; then echo "Next: just switch-theme to use it."; else echo "Next: just switch-icons to use it."; fi ;;
+        if [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icons to use it."; fi ;;
 
     update)
         if [ "$kind" = icons ]; then sync_icons refresh; else sync_themes; fi
