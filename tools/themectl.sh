@@ -21,6 +21,8 @@
 # FORCE=1 (replace or remove folders that were not installed by gnome-themes without asking).
 set -euo pipefail
 
+# the guard asks on a copy of the original stdin (fd 3): the loops below read their own input from process substitutions
+tty_in=0; if [ -t 0 ]; then tty_in=1; exec 3<&0; fi
 kind="${1:-}"; action="${2:-}"; want="${3:-}"; accent_arg="${4:-}"
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cache="${GNOME_THEMES_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/gnome-themes}"
@@ -220,8 +222,8 @@ may_touch() {
     [ -e "$d" ] || [ -L "$d" ] || return 0
     is_ours "$d" "${2:-}" && return 0
     [ "${FORCE:-}" = 1 ] && return 0
-    if [ -t 0 ]; then
-        read -r -p "$d exists and was not installed by gnome-themes. ${3:-Replace} it? [y/N] " a || a=n
+    if [ "$tty_in" = 1 ]; then
+        read -r -u 3 -p "$d exists and was not installed by gnome-themes. ${3:-Replace} it? [y/N] " a || a=n
         case "$a" in [yY]*) return 0 ;; esac
         echo "Left $d alone." >&2; return 1
     fi
