@@ -78,11 +78,11 @@ accent_label() {   # label of accent index $1: name, hex (dark / light)
 # choose_accent SCHEME: sets accent_pick (the name) from the scheme's accents; Enter/cancel keeps the current one
 accent_pick=""
 choose_accent() {
-    local sc="$1" cur i a picked ls=() curlabel=""
+    local sc="$1" cur i a ls=()
     cur=$(current_accent "$sc"); accent_pick="$cur"; load_accents "$sc"
     [ "${#acc_names[@]}" -gt 0 ] || { accent_pick=""; return 0; }
     for i in "${!acc_names[@]}"; do
-        l=$(accent_label "$i"); if [ "${acc_names[i]}" = "$cur" ]; then l="$l  (current)"; curlabel="$l"; fi; ls+=("$l")
+        l=$(accent_label "$i"); if [ "${acc_names[i]}" = "$cur" ]; then l="$l  (current)"; fi; ls+=("$l")
     done
     local savedl=("${labels[@]}") rc=0 idx=() cc=0
     labels=("${ls[@]}"); for i in "${!ls[@]}"; do idx+=("$i"); if [ "${acc_names[i]}" = "$cur" ]; then cc=$i; fi; done
