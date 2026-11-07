@@ -46,7 +46,8 @@ and the papirus source with `ICONS_URL`.
 
 Workflow, themes: `update-themes` pulls your checkout (`git fetch`, `git pull --ff-only`; quiet on a detached HEAD), then replaces each installed set's folder.
 Icons: clone the source into `~/.cache/gnome-themes/icons/<source>` (or refresh it to the latest upstream; offline it uses the cache), then replace each set's folder.
-Only the sets' own folders are replaced, never the whole directory. Tela and Fluent run their upstream `install.sh` (third-party code from the cloned repo) into a temp dir.
+Only the sets' own folders are replaced, never the whole directory.
+Every installed folder carries a `.gnome-themes` marker; a same-named folder without it (e.g. a third-party `Dracula`) is replaced or removed only after you answer `y` at the prompt (default no); without a terminal it is skipped with a message, and `FORCE=1` overrides. Folders installed before the marker are adopted when their `index.theme` is identical to ours. Tela and Fluent run their upstream `install.sh` (third-party code from the cloned repo) into a temp dir.
 
 The accent is one of the scheme's six terminal colours (`<scheme>/accents/list`), applied with sed token maps
 (`accents/<accent>.{dark,light}.sed`) and remembered in `~/.local/state/gnome-themes/accents`. `switch-theme` sets the GTK theme, the Shell theme (User Themes extension; dark or light follows your
