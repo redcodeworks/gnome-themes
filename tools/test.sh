@@ -293,13 +293,13 @@ out=$(PATH="$FP_PATH" THEMES_DEST=$FS just install-themes fairy-floss </dev/null
 if command -v script >/dev/null 2>&1; then
     # a pre-existing entry; answer n, then y
     : > "$FLATPAK_DB"; echo "xdg-config/gtk-4.0:ro" > "$FLATPAK_DB"
-    printf 'n\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss" /dev/null > "$T/fp.out" 2>&1
+    printf 'n\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null > "$T/fp.out" 2>&1
     [ "$(fpshow)" = "xdg-config/gtk-4.0:ro " ] && [ ! -e "$fpst" ] && grep -q "Allow read-only access to these folders for all Flatpaks" "$T/fp.out" && chk ok "answer n: nothing granted or recorded; the prompt text" || chk fail "flatpak n case ($(fpshow))"
-    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss" /dev/null >/dev/null 2>&1
+    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null >/dev/null 2>&1
     [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "answer y: the missing entries were granted" || chk fail "flatpak y grant ($(fpshow))"
     [ "$(sort "$fpst" | tr '\n' ' ')" = "xdg-config/gtk-3.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "only the entries gnome-themes added are recorded (the pre-existing one is not)" || chk fail "record: $(cat "$fpst" 2>/dev/null | tr '\n' ' ')"
     # a second switch finds nothing missing: no prompt
-    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss" /dev/null > "$T/fp.out" 2>&1
+    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null > "$T/fp.out" 2>&1
     grep -q "Allow read-only access" "$T/fp.out" && chk fail "prompted although everything is granted" || chk ok "nothing missing: no prompt"
     # undo: install an icon set too; removing the themes alone keeps the record, removing the last set asks
     PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icons Fake-Dark </dev/null >/dev/null 2>&1

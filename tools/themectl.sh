@@ -405,7 +405,7 @@ pty_switch() {   # set the palette on the default profile and on every profile t
 }
 
 # ---- Flatpak access (themes and icons: grant after switch-theme, undo after the last removal) -------------------
-fp_paths=(xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro "~/.themes:ro")   # the only entries gnome-themes ever manages
+fp_paths=(xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro '~/.themes:ro')   # literal tilde, as flatpak stores it; the only entries gnome-themes ever manages
 fp_state="$state/flatpak-overrides"
 fp_have() { flatpak override --user --show 2>/dev/null | sed -n 's/^filesystems=//p' | tr ';' '\n' | grep -vx '' || true; }
 fp_cmd_add() { local c="flatpak override --user" p; for p in "$@"; do c="$c --filesystem=$p"; done; echo "$c"; }
