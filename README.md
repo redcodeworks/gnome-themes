@@ -4,27 +4,41 @@ Terminal-inspired colour schemes for GNOME, built on top of the stock GNOME Shel
 and GTK 3 templates. Each theme takes the stock stylesheet unchanged and replaces colour values only,
 from a per-scheme `palette.toml`. Selectors, geometry and assets stay stock.
 
-Schemes: `gruvbox-material` (palette by [sainnhe](https://github.com/sainnhe/gruvbox-material)).
-Layout: `<scheme>/palette.toml`, `<scheme>/themes/<Name>/` (installed as-is), `<scheme>/libadwaita/gtk.css`.
+A theme is a top-level directory of this repo (so far `gruvbox-material`, palette by
+[sainnhe](https://github.com/sainnhe/gruvbox-material)); icon sets come from an icon repo
+(Papirus by default), where each top-level directory is one set.
 
 ## Requirements
 
-- To install: [`just`](https://github.com/casey/just) and bash.
+- To install: [`just`](https://github.com/casey/just), bash and git (`gum` makes the checklists nicer).
 - To regenerate the CSS (`just generate`): python3, python3-gobject, GTK 3, GTK 4 and gnome-shell.
 
 ## Install
 
 ```
-just install                               # checklist of schemes (x ticks, enter installs) into ~/.themes
-just install gruvbox-material              # no prompt (a scheme, or one folder such as Gruvbox-Material-Shell-Dark)
-just install-libadwaita                    # libadwaita apps: installs ~/.config/gtk-4.0/gtk.css
-just install-system gruvbox-material       # a whole scheme into /usr/share/themes (root)
-just list                                  # theme names
+git clone https://github.com/redcodeworks/gnome-themes && cd gnome-themes
+just install-themes          # checklist; or: just install-themes gruvbox-material
+just switch-theme            # apply it (GTK, Shell, libadwaita); or: just switch-theme gruvbox-material
+just install-icons           # checklist; or: just install-icons Papirus-Dark
+just switch-icons Papirus-Dark
 ```
 
-Then select the GTK theme in Tweaks (or `gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Material`)
-and the Shell theme with the User Themes extension. GTK 3 follows `gtk-application-prefer-dark-theme` in
-`~/.config/gtk-3.0/settings.ini`, not `color-scheme`. Flatpak apps only see `~/.themes`
-(`flatpak override --user --filesystem=~/.themes:ro`).
+| Themes | Icons | |
+|---|---|---|
+| `list-themes` | `list-icons` | what is available (✓ = installed) |
+| `install-themes [name]` | `install-icons [name]` | checklist without a name |
+| `update-themes` | `update-icons` | refresh everything installed from the repo |
+| `remove-themes [name]` | `remove-icons [name]` | checklist without a name |
+| `switch-theme [name]` | `switch-icons [name]` | checklist without a name |
+
+Themes go to `~/.themes` and icons to `~/.local/share/icons` as real copies (Flatpak apps see
+`~/.themes`, not `/usr/share/themes`, and cannot follow symlinks; give them
+`--filesystem=~/.themes:ro`). In the checklists `x` ticks an entry and enter confirms. Override the
+destinations with `THEMES_DEST` and `ICONS_DEST`, and the icon repo with `ICONS_URL`.
+
+`switch-theme` sets the GTK theme, the Shell theme (User Themes extension; dark or light follows your
+colour scheme) and offers the libadwaita file `~/.config/gtk-4.0/gtk.css`, never replacing a different
+one without asking. GTK 3 follows `gtk-application-prefer-dark-theme` in `~/.config/gtk-3.0/settings.ini`,
+not `color-scheme`.
 
 Licence: LGPL-2.1, see `LICENSE` and `NOTICE` for the stock-stylesheet and palette credits.
