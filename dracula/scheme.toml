@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: MIT
+# Dracula (dracula/dracula-theme, MIT, Copyright (c) 2023 Dracula Theme) dark + Alucard light.
+# The spec has only bg #282a36 and selection #44475a: bg_deep = bg, surface = selection, bg and surface_high are
+# DERIVED by mixing towards fg (dark ladder rule), fg_dim and comment likewise. Alucard (light) lists only bg #fffbeb
+# and fg #1f1f1f as surfaces: its ladder is derived (light rule).
+# ANSI six: dark = Ptyxis "Dracula" [Dark] Color1-6, which settles the values the research file had marked unverified
+# (they match: blue #bd93f9 = Dracula purple). Light = Ptyxis "Dracula" [Light] Color1-6 (a Ptyxis-made light palette,
+# NOT Alucard's own colours, because the accents follow the terminal definition); the light role colours below are Alucard's.
+title = "Dracula"
+gtk_name = "Dracula"
+shell_name = "Dracula-Shell"
+credit = "Dracula Theme (MIT), light variant Alucard"
+default_accent = "blue"
+
+[dark]
+bg_deep = "#282a36"
+surface = "#44475a"
+fg = "#f8f8f2"
+selection = "#44475a"
+red = "#ff5555"
+orange = "#ffb86c"
+yellow = "#f1fa8c"
+green = "#50fa7b"
+cyan = "#8be9fd"
+blue = "#bd93f9"
+magenta = "#ff79c6"
+purple = "#bd93f9"
+pink = "#ff79c6"
+[dark.ansi]
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#bd93f9"
+magenta = "#ff79c6"
+cyan = "#8be9fd"
+
+[light]
+bg_deep = "#fffbeb"
+fg = "#1f1f1f"
+selection = "#cfcfde"
+comment = "#6c664b"
+red = "#cb3a2a"
+orange = "#a34d14"
+yellow = "#846e15"
+green = "#14710a"
+cyan = "#036a96"
+blue = "#644ac9"
+magenta = "#a3144d"
+purple = "#644ac9"
+pink = "#a3144d"
+[light.ansi]
+red = "#b60021"
+green = "#006800"
+yellow = "#515f00"
+blue = "#6946a3"
+magenta = "#a41d74"
+cyan = "#006274"

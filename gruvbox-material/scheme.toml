@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: MIT
+# Role file for tools/palette-from-scheme.py (-> palette.toml). Gruvbox Material (sainnhe/gruvbox-material, MIT).
+# The values are the ones the previous hand-written palette.toml used: dark = MEDIUM backgrounds (bg0 #282828),
+# light = a hard-contrast block. Terminal accents = the scheme's own terminal colours (Ghostty theme).
+title = "Gruvbox Material"
+gtk_name = "Gruvbox-Material"
+shell_name = "Gruvbox-Material-Shell"
+credit = "sainnhe/gruvbox-material (MIT)"
+default_accent = "blue"
+
+[dark]
+bg_deep = "#282828"
+bg = "#32302f"
+surface = "#45403d"
+surface_high = "#5a524c"
+fg = "#ddc7a1"
+fg_dim = "#a89984"
+comment = "#928374"
+selection = "#504945"
+red = "#ea6962"
+orange = "#e78a4e"
+yellow = "#d8a657"
+green = "#a9b665"
+cyan = "#89b482"
+blue = "#7daea3"
+magenta = "#d3869b"
+purple = "#d3869b"
+warning_fg = "#1d2021"
+[dark.ansi]
+red = "#ea6962"
+green = "#a9b665"
+yellow = "#d8a657"
+blue = "#7daea3"
+magenta = "#d3869b"
+cyan = "#89b482"
+
+[light]
+bg_deep = "#f9f5d7"
+bg = "#f5edca"
+surface = "#f2e5bc"
+surface_high = "#eee0b7"
+fg = "#4f3829"
+comment = "#928374"
+selection = "#eee0b7"
+red = "#c14a4a"
+orange = "#c35e0a"
+yellow = "#b47109"
+green = "#6c782e"
+cyan = "#4c7a5d"
+blue = "#45707a"
+magenta = "#945e80"
+purple = "#945e80"
+warning_fg = "#1d2021"
+[light.ansi]
+red = "#c14a4a"
+green = "#6c782e"
+yellow = "#b47109"
+blue = "#45707a"
+magenta = "#945e80"
+cyan = "#4c7a5d"
+[light.adw]
+secondary_sidebar = "#f3eac7"   # hand-picked in the old libadwaita file; the rule (bg/surface mix) would give #f4e9c3

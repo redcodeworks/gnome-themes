@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: MIT
+# Solarized (altercation/solarized, MIT, Copyright (c) 2011 Ethan Schoonover), dark (base03/base02) + light (base3/base2).
+# Only two real background layers per variant: the missing ladder steps are DERIVED by mixing towards the foreground
+# (dark: surface +16 %, surface_high +28 %; light: bg +3 %, surface +6 %; see tools/palette-from-scheme.py).
+# fg is base1 (dark) / base01 (light), the "emphasised" tones, because the body tones base0/base00 are below 4.5:1 on
+# the backgrounds (Solarized's documented low contrast); base0/base00 serve as fg_dim. ANSI six = Ptyxis "Solarized"
+# Color1-6 (the 16 Solarized accents, same in both variants). Default accent blue.
+title = "Solarized"
+gtk_name = "Solarized"
+shell_name = "Solarized-Shell"
+credit = "Solarized by Ethan Schoonover (MIT)"
+default_accent = "blue"
+
+[dark]
+bg_deep = "#002b36"
+bg = "#073642"
+fg = "#93a1a1"
+fg_dim = "#839496"
+comment = "#586e75"
+selection = "#073642"
+red = "#dc322f"
+orange = "#cb4b16"
+yellow = "#b58900"
+green = "#859900"
+cyan = "#2aa198"
+blue = "#268bd2"
+magenta = "#d33682"
+purple = "#6c71c4"
+[dark.ansi]
+red = "#dc322f"
+green = "#859900"
+yellow = "#b58900"
+blue = "#268bd2"
+magenta = "#d33682"
+cyan = "#2aa198"
+
+[light]
+bg_deep = "#fdf6e3"
+surface_high = "#eee8d5"
+fg = "#586e75"
+fg_dim = "#657b83"
+comment = "#93a1a1"
+selection = "#eee8d5"
+red = "#dc322f"
+orange = "#cb4b16"
+yellow = "#b58900"
+green = "#859900"
+cyan = "#2aa198"
+blue = "#268bd2"
+magenta = "#d33682"
+purple = "#6c71c4"
+[light.ansi]
+red = "#dc322f"
+green = "#859900"
+yellow = "#b58900"
+blue = "#268bd2"
+magenta = "#d33682"
+cyan = "#2aa198"

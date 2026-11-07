@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: MIT
+# Nord palette (arcticicestudio/nord, MIT, Copyright (c) 2016-present Sven Greb), dark only. "Nordic" is the
+# GTK theme (EliverLara/Nordic) that popularised Nord for GTK; only the Nord palette values are used here.
+# Ladder as in the brief: view nord0, window nord1, headers nord2, popovers nord3. fg_dim and comment are derived
+# by the fixed mixing rules (Nord has no dim-text step). ANSI six = Ptyxis "Nord" [Dark] Color1-6 (identical to
+# the Nord spec's typical terminal table); default accent cyan = nord8, Nord's primary UI colour.
+title = "Nordic"
+gtk_name = "Nordic-Nord"
+shell_name = "Nordic-Nord-Shell"
+credit = "Nord by Sven Greb (MIT)"
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#2e3440"
+bg = "#3b4252"
+surface = "#434c5e"
+surface_high = "#4c566a"
+fg = "#d8dee9"
+selection = "#4c566a"
+red = "#bf616a"
+orange = "#d08770"
+yellow = "#ebcb8b"
+green = "#a3be8c"
+cyan = "#88c0d0"
+blue = "#81a1c1"
+magenta = "#b48ead"
+purple = "#b48ead"
+[dark.ansi]
+red = "#bf616a"
+green = "#a3be8c"
+yellow = "#ebcb8b"
+blue = "#81a1c1"
+magenta = "#b48ead"
+cyan = "#88c0d0"

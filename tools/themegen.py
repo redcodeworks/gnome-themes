@@ -16,18 +16,42 @@ def hx(s):
     return tuple(int(s[i:i + 2], 16) for i in (0, 2, 4))
 def th(t): return '#%02x%02x%02x' % tuple(max(0, min(255, round(v))) for v in t)
 
-def load_palette(path, section=None):
-    """Palette data lives in a TOML file (one per theme, --palette=FILE). section: read the
-    [<section>.dark] / [<section>.light] tables instead of [dark] / [light] (the GNOME Shell
-    generator uses "shell", because stock Shell's greys differ from GTK's)."""
+def load_meta(path):
+    """Root-level scheme data of a palette TOML (title, credit, names, default_accent, ...)."""
     import tomllib
-    with open(path, 'rb') as f: d = tomllib.load(f)
-    if section: d = d[section]
-    for v in ('dark', 'light'):
-        P = d[v]
+    with open(path, 'rb') as f: return tomllib.load(f)
+
+def load_palette(path, section=None):
+    """Palette data lives in a TOML file (one per scheme, --palette=FILE). section: read the
+    [<section>.dark] / [<section>.light] tables instead of [dark] / [light] (the GNOME Shell
+    generator uses "shell", because stock Shell's greys differ from GTK's). A dark-only scheme has
+    no light table; callers loop over the variants that are present. Each variant table also gets
+    P['accents'] ({name: {color, fg}} from [accents.<variant>.<name>]) and P['accent'] (the default
+    accent colour)."""
+    root = load_meta(path)
+    d = root[section] if section else root
+    d = {v: d[v] for v in ('dark', 'light') if v in d}
+    for v, P in d.items():
         P['ramp'] = [(g, c) for g, c in P['ramp']]
         P['fam'] = {k: tuple(x) for k, x in P['fam'].items()}
+        P['accents'] = root.get('accents', {}).get(v, {})
+        P['accent'] = P['accents'][root['default_accent']]['color'] if P['accents'] else P['fam']['blue'][1]
     return d
+
+def with_accent(P, name):
+    """A copy of variant palette P with the accent family (blue anchor target, exact entries that
+    map to the default accent, text-on-accent colour) switched to accent <name>."""
+    import copy
+    a = P['accents'][name]; old = P['accent'].lower(); Q = copy.deepcopy(P)
+    Q['fam']['blue'] = (P['fam']['blue'][0], a['color'])
+    Q['exact'] = {k: (a['color'] if v.lower() == old else v) for k, v in P['exact'].items()}
+    Q['accent_fg'] = a['fg']; Q['accent'] = a['color']
+    return Q
+
+def accent_dir_write(adir, accent, rel, text):
+    """Write the output of an accent run under <adir>/<accent>/<rel> (used by --accent-dir)."""
+    p = os.path.join(adir, accent, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
+    open(p, 'w').write(text)
 
 def lerp(a, b, t): return tuple(x + (y - x) * t for x, y in zip(a, b))
 def hsl_l(rgb): return colorsys.rgb_to_hls(*(v / 255 for v in rgb))[1]
