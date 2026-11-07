@@ -29,4 +29,10 @@ Development (private recipes; need python3-gobject, GTK 3, GTK 4 and gnome-shell
 
 `main` is protected: work goes to `testing`, CI (`.github/workflows/ci.yml`: job `test` runs `tools/test.sh` in a Fedora 45 container, job `secrets` runs gitleaks) must pass, and a pull request `testing` -> `main` is then merged (see README, Contributing). CI shellcheck runs at warning level.
 
+## Scope and delegation
+
+- This repo is its own Claude project: work only inside it. Never edit anything outside it (other repos, the real themes or icons directories, home-directory configs, live gsettings/dconf). Tests use temp dirs and `THEMES_DEST` / `ICONS_DEST`, as `tools/test.sh` does.
+- Anything that needs the outside (applying a theme on the desktop, a live check in the running Shell, a change in another repo) is not done here. Report it as a request under `Needs from hub:` to whoever spawned the session, who handles or delegates it.
+- Work on this repo from other sessions goes through a project agent spawned by that hub, not through direct edits to these files.
+
 Licences: tooling and docs MIT (`LICENSE`); each `*/themes/<Name>/` folder carries its own LGPL `LICENSE` because the generated CSS derives from GTK / GNOME Shell stock stylesheets. A new scheme needs its palette credit in `NOTICE`, provenance notes in `scheme.toml`, and the folder `LICENSE` (`just generate` copies it).
