@@ -11,3 +11,4 @@ findutils
 which
 util-linux-script
 gtksourceview5
+binutils
