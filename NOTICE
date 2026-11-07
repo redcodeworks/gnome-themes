@@ -48,10 +48,12 @@ Palettes
               palette (Tango ANSI colours, as shipped in the Ptyxis "Ubuntu" palette, generated from Gogh). Only hex values are used; no
               logos, fonts or artwork. "Ubuntu" and its logos are Canonical trademarks (https://ubuntu.com/legal/intellectual-property-policy),
               which is why the theme is called Aubergine. The licence of the Tango palette itself was not verified.
-  Terminal accents (the six per scheme) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
+  Terminal accents (the six per scheme, plus orange as a seventh accent, taken from the scheme's own orange role colour) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
   from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
   Exceptions (each documented in its scheme.toml): Fairy Floss (partly invented), Material (the tmTheme accents; Ptyxis' Material is a
   different scheme), Monokai (cyan from Base16) and Rose Pine (the official Rose Pine terminal mapping, no Ptyxis palette).
+  Orange: every scheme has the seventh accent except Rose Pine (its upstream palette has no orange; the orange role is a derived
+  gold/love mix) and Fairy Floss (orange is invented here). Aubergine is dark only (Ubuntu orange #E95420).
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of
   each project.
 
@@ -65,7 +67,9 @@ Stock stylesheets these themes are built on (colour values replaced, structure u
               gtk-3.0/assets and gtk-4.0/assets are unmodified stock files.
   Shell       Gruvbox-Material-Shell-{Dark,Light}/gnome-shell/gnome-shell.css are generated from
               GNOME Shell's stock stylesheets (gnome-shell-dark.css, gnome-shell-light.css from
-              gnome-shell-theme.gresource), colour values replaced, structure unchanged. The stock
+              gnome-shell-theme.gresource), colour values replaced, structure unchanged except one
+              marked override block appended at the end (calendar flat: transparent
+              background rules for days, headings, month label and arrows). The stock
               header is kept in each file: "Copyright 2009, 2015 Red Hat, Inc. Portions adapted from
               Mx's data/style/default.css, Copyright 2009 Intel Corporation", GNU Lesser General
               Public License version 2.1 (https://gitlab.gnome.org/GNOME/gnome-shell).

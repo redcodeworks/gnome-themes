@@ -110,6 +110,29 @@ if command -v script >/dev/null 2>&1; then
     [ ! -e "$I/Dracula/mine.txt" ] && chk ok "interactive: answer y replaces it" || chk fail "interactive y did not replace"
 else echo "  skip interactive guard tests (script not installed)"; fi
 
+# ---- Shell theme without the extension's gsettings schema (it is per user: gsettings does not list it) -----------------------
+echo "=== shell theme via dconf"
+first=$(echo $schemes | awk '{print $1}')
+mkdir -p "$T/bin2"; DLOG="$T/dconf.log"; : > "$DLOG"
+printf '#!/bin/sh\ncase "$1" in set) echo "set $2 $3 $4" >> "%s" ;; get) echo "\x27prefer-dark\x27" ;; list-schemas) : ;; esac\n' "$LOG" > "$T/bin2/gsettings"
+printf '#!/bin/sh\n[ "$1" = write ] && echo "write $2 $3" >> "%s"\n' "$DLOG" > "$T/bin2/dconf"
+chmod +x "$T/bin2/gsettings" "$T/bin2/dconf"
+D="$T/themes-dconf"; PATH="$T/bin2:$PATH" THEMES_DEST=$D just install-themes "$first" >/dev/null 2>&1
+PATH="$T/bin2:$PATH" THEMES_DEST=$D just switch-theme "$first" >/dev/null 2>&1
+grep -q "write /org/gnome/shell/extensions/user-theme/name" "$DLOG" && chk ok "switch-theme writes the user-theme key with dconf when gsettings lacks the schema" || chk fail "switch-theme did not set the Shell theme (no dconf write)"
+
+# ---- libadwaita file: no confirmation for our own files or when the backup of the original already exists ---------------------
+echo "=== libadwaita file replacement"
+first=$(echo $schemes | awk '{print $1}'); D="$T/themes-la"; CFGLA="$T/cfg-la"; mkdir -p "$CFGLA/gtk-4.0"; accs=$(grep -v '^#' "$first/accents/list" | awk 'NF {print $1}')
+a1=$(echo "$accs" | sed -n 1p); a2=$(echo "$accs" | sed -n 2p)
+THEMES_DEST=$D just install-themes "$first" >/dev/null 2>&1
+sw() { XDG_CONFIG_HOME="$CFGLA" THEMES_DEST=$D just switch-theme "$first" "$1" 2>&1 </dev/null; }
+sw "$a1" | grep -q "Installed $CFGLA/gtk-4.0/gtk.css" && chk ok "libadwaita file installed when absent" || chk fail "libadwaita file not installed when absent"
+c1=$(sha1sum < "$CFGLA/gtk-4.0/gtk.css"); sw "$a2" | grep -q "Updated $CFGLA/gtk-4.0/gtk.css"; c2=$(sha1sum < "$CFGLA/gtk-4.0/gtk.css")
+[ "$c1" != "$c2" ] && chk ok "our own libadwaita file is replaced without a prompt on an accent change" || chk fail "accent change did not replace our own libadwaita file"
+echo "/* somebody else's stylesheet */" > "$CFGLA/gtk-4.0/gtk.css"; sw "$a1" | grep -q "left alone" && grep -q "somebody else" "$CFGLA/gtk-4.0/gtk.css" && chk ok "a foreign libadwaita file without a backup is left alone without a terminal" || chk fail "foreign libadwaita file was touched"
+echo "/* original */" > "$CFGLA/gtk-4.0/gtk.css.bak"; sw "$a1" >/dev/null; { ! grep -q "somebody else" "$CFGLA/gtk-4.0/gtk.css" && grep -q "original" "$CFGLA/gtk-4.0/gtk.css.bak"; } && chk ok "with a backup present the file is replaced without a prompt and the backup is kept" || chk fail "backup case wrong"
+
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
 printf 'fake|file://%s/icons-src|top|\n' "$T" > "$T/sources.conf"
@@ -129,6 +152,46 @@ FORCE=1 just install-icons Fake-Light </dev/null >/dev/null 2>&1; [ ! -e "$ICONS
 cp -a "$T/icons-src/Fake-Dark" "$ICONS_DEST/Fake-Dark"; rm -rf "$ICONS_DEST/Fake-Dark/.git"; echo stale > "$ICONS_DEST/Fake-Dark/stale.txt"
 just install-icons Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.gnome-themes" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
 just remove-icons Fake-Dark </dev/null >/dev/null 2>&1; just remove-icons Fake-Light </dev/null >/dev/null 2>&1
+
+# ---- checklist UI (pty): SPACE toggles, ENTER confirms, q cancels, preselection shown ---------------------------
+echo "=== checklist (pty)"
+cat > "$T/ptyrun.py" <<'PY'
+import os, pty, select, sys, time, fcntl, termios, struct, re
+keys = {'down': b'\x1b[B', 'up': b'\x1b[A', 'space': b' ', 'enter': b'\r', 'q': b'q', 'n': b'n', 'a': b'a', 'j': b'j'}
+seq = sys.argv[1].split(','); cmd = sys.argv[2:]
+pid, fd = pty.fork()
+if pid == 0: os.execvp(cmd[0], cmd)
+fcntl.ioctl(fd, termios.TIOCSWINSZ, struct.pack('HHHH', 50, 140, 0, 0))
+out = b''; i = 0; last = time.time(); t0 = last
+while time.time() - t0 < 30:
+    r, _, _ = select.select([fd], [], [], 0.2)
+    if r:
+        try: d = os.read(fd, 8192)
+        except OSError: break
+        if not d: break
+        out += d; last = time.time()
+    elif i < len(seq) and time.time() - last > 0.3:
+        os.write(fd, keys[seq[i]]); i += 1; last = time.time()
+    elif i >= len(seq) and time.time() - last > 5: break
+try: os.waitpid(pid, 0)
+except ChildProcessError: pass
+sys.stdout.write(re.sub(r'\x1b\[[0-9;?]*[A-Za-z]', '', out.decode(errors='replace')))
+PY
+pty() { python3 -I "$T/ptyrun.py" "$@"; }
+n_inst() { ls -d "$1"/*/ 2>/dev/null | wc -l; }
+PD="$T/pty-themes"; mkdir -p "$PD"
+out=$(THEMES_DEST=$PD pty q tools/themectl.sh themes install)
+echo "$out" | grep -q '\[x\]' && chk ok "checklist shows the preselection" || chk fail "checklist preselection not shown"
+echo "$out" | grep -q 'SPACE toggles' && chk ok "checklist hint says SPACE toggles" || chk fail "checklist hint"
+[ "$(n_inst "$PD")" -eq 0 ] && echo "$out" | grep -q Cancelled && chk ok "q cancels, nothing installed" || chk fail "q did not cancel"
+THEMES_DEST=$PD pty n,down,space,enter tools/themectl.sh themes install >/dev/null
+first_sc=$(ls -d */palette.toml | sed -n 2p | cut -d/ -f1); gname=$(awk -F'"' '/^gtk_name/ {print $2}' "$first_sc/palette.toml")
+[ -d "$PD/$gname" ] && chk ok "none, down, SPACE ticks one entry, ENTER installs it ($first_sc)" || chk fail "space did not tick the second entry"
+PD2="$T/pty-themes2"; mkdir -p "$PD2"; THEMES_DEST=$PD2 pty enter tools/themectl.sh themes install >/dev/null
+[ "$(n_inst "$PD2")" -gt 4 ] && chk ok "ENTER alone installs the preselected set (first run: every scheme)" || chk fail "enter alone installed $(n_inst "$PD2")"
+out=$(THEMES_DEST=$PD pty down,enter tools/themectl.sh themes switch "$first_sc")
+echo "$out" | grep -q 'current' && chk ok "accent submenu marks the current accent" || chk fail "accent submenu: no (current) mark"
+grep -q "^$first_sc=" "$XDG_STATE_HOME/gnome-themes/accents" && chk ok "accent chosen in the submenu is remembered" || chk fail "accent not remembered"
 
 echo; echo "TOTAL: $pass PASS, $fail FAIL"
 [ "$fail" -eq 0 ]

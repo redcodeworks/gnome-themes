@@ -4,7 +4,7 @@
 
   python3 -I tools/selftest.py <scheme> [contrast|gtk3|gtk4|shell|all]
 
-contrast : WCAG ratios from palette.toml (fg on window and view, dim text, text on each of the six accents, warning text)
+contrast : WCAG ratios from palette.toml (fg on window and view, dim text, text on each accent (the six terminal colours, plus orange), warning text)
 gtk3/gtk4/shell (each in its own process, the toolkits cannot share one):
   structure : stock stylesheet and generated file are identical after masking colour tokens (0 differing lines)
   neutrals  : generated tokens equal to a stock neutral grey (stray default-Adwaita greys; pure black/white excluded)
@@ -109,6 +109,12 @@ def toolkit(kind):
         rel = os.path.relpath(path, D); new = open(path).read()
         body = new[new.index('*/') + 2:] if kind == 'shell' else new[new.index('*/') + 2:]
         # structure: shell stock keeps its own header comment; compare after dropping comments
+        CALRE = re.compile(r'\n?/\* gnome-themes override: calendar flat \(begin\) \*/.*?/\* gnome-themes override: calendar flat \(end\) \*/\n?', re.S)
+        if kind == 'shell':
+            blocks = CALRE.findall(new)
+            ok(len(blocks) == 1 and new.rstrip().endswith('(end) */') and re.findall(r'(?m)^(\.calendar [^{]*) \{ background-color: transparent; \}$', blocks[0]).__len__() == 8 and blocks[0].count('{') == 8
+               and not TOK.search(blocks[0]), '%s has exactly one calendar override block at the end (8 transparent-background rules, no colour tokens)' % rel)
+            new = CALRE.sub('\n', new)
         a, b = mask(stock), mask(new)
         diff = sum(1 for x, y in zip(a.split('\n'), b.split('\n')) if x != y) + abs(len(a.split('\n')) - len(b.split('\n')))
         ok(diff == 0, '%s structure identical to stock after colour masking (%d differing lines)' % (rel, diff))

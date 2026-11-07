@@ -4,7 +4,7 @@
 
   python3 -I tools/accent-maps-gen.py <scheme-dir> <accent-dir>
 
-<accent-dir>/<accent>/... holds the scheme re-generated with each of its six accents (the generators'
+<accent-dir>/<accent>/... holds the scheme re-generated with each of its accents (six terminal colours, plus orange where the scheme has one) (the generators'
 --accent-dir option: the recolour is re-run with the accent anchor, the accent exact entries and the text-on-accent
 colour switched). This script compares each file with the default-accent output token by token (hex and rgba()
 forms, lower-cased) and writes the map from the default accent's tokens to the accent's tokens, per variant: the same

@@ -11,14 +11,14 @@
 # derived: light.surface_high derived: #fafafa 9.0% towards fg
 # derived: light.fg_dim derived: fg 30% towards bg
 # derived: light.comment derived: fg 55% towards bg
-# derived: dark.yellow nudged to #ffcb6c (it equals the default accent; keeps accent tokens unique)
+# derived: dark.orange nudged to #f78c74 (it equals the default accent; keeps accent tokens unique)
 # derived: light.accent_fg #212121 -> #212129 (the text colour varies per accent: the default needs its own token)
-# derived: light.yellow nudged to #ffb62d (it equals the default accent; keeps accent tokens unique)
+# derived: light.orange nudged to #f76d4f (it equals the default accent; keeps accent tokens unique)
 title = "Material"
 gtk_name = "Material"
 shell_name = "Material-Shell"
 credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
-default_accent = "yellow"
+default_accent = "orange"
 dark_only = false
 
 [dark]
@@ -29,14 +29,14 @@ top = "#b0bec5"
 accent_fg = "#212121"
 view = "#212121"
 [dark.fam]
-blue = ["#15539e","#ffcb6b"]
+blue = ["#15539e","#f78c6c"]
 red = ["#cc0000","#f07178"]
-orange = ["#f57900","#ffcb6c"]
+orange = ["#f57900","#ffcb6b"]
 green = ["#4e9a06","#c3e88d"]
 [dark.exact]
 "#26ab62" = "#c3e88d"
 "#26a269" = "#c3e88d"      # GTK4 stock success green
-"#3584e4" = "#ffcb6b"
+"#3584e4" = "#f78c6c"
 "#eeeeec" = "#b0bec5"
 
 [light]
@@ -47,9 +47,9 @@ top = "#fafafa"
 accent_fg = "#212129"
 view = "#fafafa"
 [light.fam]
-blue = ["#3584e4","#ffb62c"]
+blue = ["#3584e4","#f76d47"]
 red = ["#cc0000","#e53935"]
-orange = ["#f57900","#ffb62d"]
+orange = ["#f57900","#ffb62c"]
 green = ["#4e9a06","#91b859"]
 [light.exact]
 "#33d17a" = "#91b859"
@@ -69,12 +69,12 @@ top = "#b0bec5"
 accent_fg = "#212121"
 view = "#212121"
 [shell.dark.fam]
-blue = ["#3584e4","#ffcb6b"]
+blue = ["#3584e4","#f78c6c"]
 red = ["#c01c28","#f07178"]
-orange = ["#ff7800","#f78c6c"]
+orange = ["#ff7800","#f78c74"]
 green = ["#26a269","#c3e88d"]
 [shell.dark.exact]
-"#cd9309" = "#ffcb6c"      # warning yellow (hue 43, would fall in the orange family)
+"#cd9309" = "#ffcb6b"      # warning yellow (hue 43, would fall in the orange family)
 "#a5a5b7" = "#889296"      # web-login title, dim text
 "#54545a" = "#383a3b"      # notification/message card: surface
 "#45454a" = "#303232"      # message card stacked behind the front one: bg and surface mixed 50 %
@@ -88,12 +88,12 @@ top = "#fafafa"
 accent_fg = "#212129"
 view = "#fafafa"
 [shell.light.fam]
-blue = ["#3584e4","#ffb62c"]
+blue = ["#3584e4","#f76d47"]
 red = ["#c01c28","#e53935"]
-orange = ["#e66100","#f76d47"]
+orange = ["#e66100","#f76d4f"]
 green = ["#26a269","#91b859"]
 [shell.light.exact]
-"#e5a50a" = "#ffb62d"      # warning yellow
+"#e5a50a" = "#ffb62c"      # warning yellow
 "#a5a5b7" = "#adb9be"
 
 # accents: [accents.<variant>.<name>] color = the terminal's ANSI colour, fg = text on it (contrast in tools/selftest.py)
@@ -115,6 +115,9 @@ fg = "#212121"
 [accents.dark.cyan]
 color = "#89ddff"
 fg = "#212121"
+[accents.dark.orange]
+color = "#f78c6c"
+fg = "#212121"
 [accents.light.red]
 color = "#e53935"
 fg = "#fafafa"
@@ -133,6 +136,9 @@ fg = "#fafafa"
 [accents.light.cyan]
 color = "#39adb5"
 fg = "#212129"
+[accents.light.orange]
+color = "#f76d47"
+fg = "#212129"
 
 # roles for tools/libadwaita-gen.py
 [roles.dark]
@@ -144,8 +150,8 @@ popover = "#494d4f"
 fg = "#b0bec5"
 red = "#f07178"
 green = "#c3e88d"
-yellow = "#ffcb6c"
-accent = "#ffcb6b"
+yellow = "#ffcb6b"
+accent = "#f78c6c"
 accent_fg = "#212121"
 warning_fg = "#212121"
 secondary_sidebar = "#292a2a"
@@ -158,8 +164,8 @@ popover = "#fafafa"
 fg = "#546e7a"
 red = "#e53935"
 green = "#91b859"
-yellow = "#ffb62d"
-accent = "#ffb62c"
+yellow = "#ffb62c"
+accent = "#f76d47"
 accent_fg = "#212129"
 warning_fg = "#212121"
 secondary_sidebar = "#f2f4f4"

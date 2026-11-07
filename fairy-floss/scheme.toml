@@ -13,6 +13,7 @@
 #    These equal Ptyxis "Fairy Floss" Color2/Color6/Color3 respectively; Ptyxis' own Color1 #a8757b (dull red), Color4 #ae81ff
 #    (Monokai leftover) and Color5 #716799 (contrast 1.3:1 on the background) were not used and its "green" is really coral.
 # Ptyxis "Fairy Floss" has the same background #5A5475; the theme was matched to it, not the other way round.
+# No seventh "orange" accent: the upstream tmTheme has no orange (the orange role is invented here), so only the six terminal accents exist.
 # Default accent magenta = pink #FFB8D1, the theme's signature colour (Kevin's brief).
 title = "Fairy Floss"
 gtk_name = "Fairy-Floss"

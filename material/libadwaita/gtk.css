@@ -15,7 +15,7 @@
  * org.gnome.desktop.interface color-scheme change.
  */
 
-@define-color accent_bg_color #ffb62c;
+@define-color accent_bg_color #f76d47;
 @define-color accent_fg_color #212129;
 
 @define-color destructive_bg_color #e53935;
@@ -24,7 +24,7 @@
 @define-color success_bg_color #91b859;
 @define-color success_fg_color #212129;
 
-@define-color warning_bg_color #ffb62d;
+@define-color warning_bg_color #ffb62c;
 @define-color warning_fg_color #212121;
 
 @define-color error_bg_color #e53935;
@@ -61,7 +61,7 @@
 @define-color thumbnail_fg_color #546e7a;
 
 @media (prefers-color-scheme: dark) {
-    @define-color accent_bg_color #ffcb6b;
+    @define-color accent_bg_color #f78c6c;
     @define-color accent_fg_color #212121;
 
     @define-color destructive_bg_color #f07178;
@@ -70,7 +70,7 @@
     @define-color success_bg_color #c3e88d;
     @define-color success_fg_color #212121;
 
-    @define-color warning_bg_color #ffcb6c;
+    @define-color warning_bg_color #ffcb6b;
     @define-color warning_fg_color #212121;
 
     @define-color error_bg_color #f07178;

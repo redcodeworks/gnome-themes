@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
 # Install, list, update, remove and switch themes (this repo) and icon sets (several icon repos, see
-# tools/icon-sources.conf) in the user's home. Needs only bash and git; gum is used for the checklists if present.
+# tools/icon-sources.conf) in the user's home. Needs only bash and git. Checklists are a built-in terminal UI (SPACE toggles).
 #   themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]
 # A theme is a top-level directory of this repo (a scheme, e.g. gruvbox-material); an icon set belongs to a source of
 # tools/icon-sources.conf (e.g. Papirus-Dark from papirus, Tela-nord from tela). Without a name, install/remove/switch ask.
@@ -13,7 +13,7 @@
 # index.theme is byte-identical to the one of our source. Any other folder of the same name (e.g. a third-party Dracula) is
 # never replaced silently: in a terminal the script asks (default no), without one it refuses that folder with a message and
 # carries on with the others; FORCE=1 in the environment overrides the guard.
-# Themes have a per-scheme accent (one of the six terminal colours listed in <scheme>/accents/list): switch asks for it
+# Themes have a per-scheme accent (one of the scheme's accents, the six terminal colours plus orange where it has one, listed in <scheme>/accents/list): switch asks for it
 # (or takes it as the 4th argument), remembers it in $XDG_STATE_HOME/gnome-themes/accents (lines scheme=accent), and
 # install/update re-apply the remembered one by running the scheme's sed token map over the installed copies.
 # Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (replaces the papirus source's URL),
@@ -75,24 +75,26 @@ apply_accent() {   # apply_accent SCHEME ACCENT [FOLDER]: run the token maps ove
 accent_label() {   # label of accent index $1: name, hex (dark / light)
     local l="${acc_names[$1]}  ${acc_dark[$1]}"; [ "${acc_light[$1]}" != "-" ] && l="$l / ${acc_light[$1]}"; echo "$l"
 }
-# choose_accent SCHEME: sets accent_pick (the name) from the six accents; Enter/cancel keeps the current one
+# choose_accent SCHEME: sets accent_pick (the name) from the scheme's accents; Enter/cancel keeps the current one
 accent_pick=""
 choose_accent() {
-    local sc="$1" cur i a picked ls=() curlabel=""
+    local sc="$1" cur i a ls=()
     cur=$(current_accent "$sc"); accent_pick="$cur"; load_accents "$sc"
     [ "${#acc_names[@]}" -gt 0 ] || { accent_pick=""; return 0; }
     for i in "${!acc_names[@]}"; do
-        l=$(accent_label "$i"); if [ "${acc_names[i]}" = "$cur" ]; then l="$l  (current)"; curlabel="$l"; fi; ls+=("$l")
+        l=$(accent_label "$i"); if [ "${acc_names[i]}" = "$cur" ]; then l="$l  (current)"; fi; ls+=("$l")
     done
-    if have_gum; then
-        picked=$(gum choose --header "Accent colour for $sc" --selected="$curlabel" "${ls[@]}" || true)
-        for i in "${!acc_names[@]}"; do if [ "${ls[i]}" = "$picked" ]; then accent_pick="${acc_names[i]}"; fi; done
-    else
-        echo; echo "Accent colour for $sc (the scheme's six terminal colours):"
+    local savedl=("${labels[@]}") rc=0 idx=() cc=0
+    labels=("${ls[@]}"); for i in "${!ls[@]}"; do idx+=("$i"); if [ "${acc_names[i]}" = "$cur" ]; then cc=$i; fi; done
+    tui_cur=$cc; pick=""; tui_one "Accent colour for $sc" "${idx[@]}" || rc=$?; tui_cur=0; labels=("${savedl[@]}")
+    if [ "$rc" -eq 0 ] && [ -n "$pick" ]; then accent_pick="${acc_names[pick]}"
+    elif [ "$rc" -eq 2 ]; then
+        echo; echo "Accent colour for $sc (the scheme's terminal colours):"
         for i in "${!ls[@]}"; do printf ' %2d) %s\n' "$((i+1))" "${ls[i]}"; done
         read -r -p "Number (Enter keeps $cur): " a || a=""
         if [[ "$a" =~ ^[0-9]+$ ]] && [ "$a" -ge 1 ] && [ "$a" -le "${#acc_names[@]}" ]; then accent_pick="${acc_names[$((a-1))]}"; fi
     fi
+
 }
 
 # ---- sources -------------------------------------------------------------------------------------
@@ -235,18 +237,67 @@ is_installed() { local f; while read -r f; do [ -e "$dest/$f" ] && is_ours "$des
 index_of() { local i; for i in "${!items[@]}"; do [ "${items[i]}" = "$1" ] && { echo "$i"; return 0; }; done; return 1; }
 
 # ---- prompts -------------------------------------------------------------------------------------
-have_gum() { command -v gum >/dev/null 2>&1 && [ -t 0 ]; }
+# Terminal UI (no dependencies): up/down or j/k move, SPACE toggles, a all, n none, ENTER confirms, q cancels. Without a
+# terminal the numbered lists below are used.
+# Terminal checklist for bash: arrow keys or j/k move, SPACE toggles, a = all, n = none, Enter confirms, q cancels.
+# No dependencies. Draws on stderr, reads the keyboard from /dev/tty. Needs: labels[] (display text per index),
+# on[] (1 = ticked) for tui_many. Returns 2 when there is no terminal, so the caller can fall back to a numbered list.
+#   tui_many HEADER IDX...   sets chosen=(ticked indexes among IDX); returns 1 when cancelled
+#   tui_one  HEADER IDX...   sets pick=<index> (empty when cancelled); tui_cur=N (position within IDX) puts the cursor there
+_tui_read_key() {   # sets key to: up down space enter quit all none or the raw character
+    local k rest
+    IFS= read -rsn1 k </dev/tty || { key=quit; return; }
+    case "$k" in
+        $'\e') IFS= read -rsn2 -t 0.05 rest </dev/tty || rest=""
+               case "$rest" in '[A'|'OA') key=up ;; '[B'|'OB') key=down ;; *) key=quit ;; esac ;;
+        ' ') key=space ;; '') key=enter ;; k) key=up ;; j) key=down ;; a) key=all ;; n) key=none ;; q) key=quit ;;
+        *) key="$k" ;;
+    esac
+}
+_tui_end() { stty "$_tui_saved" </dev/tty 2>/dev/null; printf '\e[?25h' >&2; trap - INT; }
+_tui_run() {   # _tui_run MODE HEADER IDX... ; MODE many|one
+    local mode="$1" header="$2"; shift 2; local cand=("$@") n=$# cur="${tui_cur:-0}" i line first=1
+    [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] || return 2
+    _tui_saved=$(stty -g </dev/tty) || return 2
+    trap '_tui_end; exit 130' INT
+    stty -echo -icanon min 1 time 0 </dev/tty; printf '\e[?25l' >&2
+    local hint="up/down move, SPACE toggles, a all, n none, ENTER confirms, q cancels"
+    [ "$mode" = one ] && hint="up/down move, ENTER selects, q cancels"
+    while true; do
+        [ "$first" -eq 0 ] && printf '\e[%dA' "$((n+1))" >&2
+        first=0
+        printf '\r\e[K%s (%s)\n' "$header" "$hint" >&2
+        for i in "${!cand[@]}"; do
+            line="${labels[${cand[i]}]}"
+            if [ "$mode" = many ]; then
+                local mark=" "; [ "${on[${cand[i]}]:-0}" -eq 1 ] && mark="x"
+                line="[$mark] $line"
+            fi
+            if [ "$i" -eq "$cur" ]; then printf '\r\e[K\e[7m> %s\e[0m\n' "$line" >&2; else printf '\r\e[K  %s\n' "$line" >&2; fi
+        done
+        _tui_read_key
+        case "$key" in
+            up) cur=$(( (cur + n - 1) % n )) ;;
+            down) cur=$(( (cur + 1) % n )) ;;
+            space) [ "$mode" = many ] && on[${cand[cur]}]=$((1 - ${on[${cand[cur]}]:-0})) ;;
+            all) [ "$mode" = many ] && for i in "${cand[@]}"; do on[i]=1; done ;;
+            none) [ "$mode" = many ] && for i in "${cand[@]}"; do on[i]=0; done ;;
+            enter) if [ "$mode" = one ]; then pick="${cand[cur]}"; else chosen=(); for i in "${cand[@]}"; do [ "${on[i]:-0}" -eq 1 ] && chosen+=("$i"); done; fi; _tui_end; return 0 ;;
+            quit) if [ "$mode" = one ]; then pick=""; else chosen=(); fi; _tui_end; return 1 ;;
+        esac
+    done
+}
+tui_many() { chosen=(); _tui_run many "$@"; }
+tui_one()  { pick=""; _tui_run one "$@"; }
+
 # choose_many HEADER IDX... : tick entries from the candidate indexes; sets chosen=(indexes). Preselected = on[]
 chosen=(); on=()
 choose_many() {
-    local header="$1"; shift; local cand=("$@") i a pre="" picked mark
+    local header="$1"; shift; local cand=("$@") i a mark rc=0
     chosen=()
-    if have_gum; then
-        for i in "${cand[@]}"; do if [ "${on[i]:-0}" -eq 1 ]; then pre="${pre:+$pre,}${labels[i]}"; fi; done
-        local ls=(); for i in "${cand[@]}"; do ls+=("${labels[i]}"); done
-        picked=$(gum choose --no-limit --selected="$pre" --header "$header (x toggles, enter confirms)" "${ls[@]}" || true)
-        for i in "${cand[@]}"; do if printf '%s\n' "$picked" | grep -qxF -- "${labels[i]}"; then chosen+=("$i"); fi; done
-    else
+    tui_many "$header" "${cand[@]}" || rc=$?
+    if [ "$rc" -eq 1 ]; then echo "Cancelled."; exit 0
+    elif [ "$rc" -eq 2 ]; then
         while true; do
             echo; echo "$header:"
             for i in "${!cand[@]}"; do
@@ -269,13 +320,10 @@ choose_many() {
 # choose_one HEADER IDX... : pick exactly one; sets pick=index (empty when cancelled)
 pick=""
 choose_one() {
-    local header="$1"; shift; local cand=("$@") i a picked
+    local header="$1"; shift; local cand=("$@") i a rc=0
     pick=""
-    if have_gum; then
-        local ls=(); for i in "${cand[@]}"; do ls+=("${labels[i]}"); done
-        picked=$(gum choose --header "$header" "${ls[@]}" || true)
-        for i in "${cand[@]}"; do if [ "${labels[i]}" = "$picked" ]; then pick="$i"; fi; done
-    else
+    tui_one "$header" "$@" || rc=$?
+    if [ "$rc" -eq 2 ]; then
         echo; echo "$header:"
         for i in "${!cand[@]}"; do printf ' %2d) %s\n' "$((i+1))" "${labels[${cand[i]}]}"; done
         read -r -p "Number (Enter cancels): " a || a=""
@@ -458,9 +506,20 @@ case "$action" in
             shell="$shell_d"
             if ! gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | grep -qi dark; then shell="${shell_l:-$shell_d}"; fi
             if [ -n "$shell" ] && was_skipped "$shell"; then echo "Not switching the Shell theme: $shell was left alone (not installed by gnome-themes)."; shell=""; fi
-            if [ -n "$shell" ] && gsettings list-schemas 2>/dev/null | grep -qx org.gnome.shell.extensions.user-theme; then
-                gsettings set org.gnome.shell.extensions.user-theme name "$shell"
-                echo "Shell theme is now $shell (reload it by logging out and in, or toggling the User Themes extension)."
+            if [ -n "$shell" ]; then
+                shell_done=0
+                if gsettings list-schemas 2>/dev/null | grep -qx org.gnome.shell.extensions.user-theme; then
+                    gsettings set org.gnome.shell.extensions.user-theme name "$shell" && shell_done=1
+                elif command -v dconf >/dev/null 2>&1; then
+                    # The User Themes extension is normally installed per user, so its schema is not in the system schema dirs and
+                    # gsettings does not list it: write the key directly.
+                    dconf write /org/gnome/shell/extensions/user-theme/name "'$shell'" && shell_done=1
+                fi
+                if [ "$shell_done" -eq 1 ]; then echo "Shell theme is now $shell (reload it by logging out and in, or toggling the User Themes extension)."
+                else echo "Could not set the Shell theme: neither gsettings nor dconf could write the User Themes key."; fi
+                if command -v gnome-extensions >/dev/null 2>&1 && ! gnome-extensions list --enabled 2>/dev/null | grep -q '^user-theme@'; then
+                    echo "  note: the User Themes extension is not enabled; the Shell theme only applies once it is."
+                fi
             fi
             # libadwaita apps ignore the GTK theme and read only the user stylesheet
             la="$root/$sc/libadwaita/gtk.css"; target="$cfg/gtk-4.0/gtk.css"
@@ -474,6 +533,10 @@ case "$action" in
                 mkdir -p "$(dirname "$target")"
                 if [ ! -e "$target" ]; then cp "$la" "$target"; echo "Installed $target (libadwaita apps)."
                 elif cmp -s "$la" "$target"; then echo "$target is already current."
+                elif grep -q "libadwaita-gen.py" "$target" 2>/dev/null || [ -e "$target.bak" ]; then
+                    # A file generated by gnome-themes earlier (another accent or scheme), or a backup of the original already exists
+                    # (so this file was put here by these recipes): replace it without asking and keep the existing backup.
+                    cp "$la" "$target"; echo "Updated $target (libadwaita apps)."
                 elif [ -t 0 ]; then
                     read -r -p "$target differs from the scheme's libadwaita file. Replace it (the old one is kept as .bak)? [y/N] " a || a=n
                     case "$a" in [yY]*) cp -L --backup=numbered "$target" "$target.bak"; cp "$la" "$target"; echo "Replaced $target (old one: $target.bak)." ;; *) echo "Left $target alone." ;; esac
