@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: MIT
+# Tokyo Night as ported by folke/tokyonight.nvim (Apache-2.0): Night dark + Day light.
+# Dark ladder: view bg_dark, window bg, headers bg_highlight, popovers fg_gutter. Light: view bg, window bg_dark,
+# headers bg_highlight, popovers bg_visual. ANSI six = Ptyxis "Tokyo Night" / "Tokyo Night Day" Color1-6 (identical to
+# the tokyonight terminal tables). Default accent blue. Deviation: Day's fg is darkened (see [light]) to reach 4.5:1.
+title = "Tokyo Night"
+gtk_name = "Tokyo-Night"
+shell_name = "Tokyo-Night-Shell"
+credit = "Tokyo Night by folke (tokyonight.nvim, Apache-2.0), Night and Day"
+default_accent = "blue"
+
+[dark]
+bg_deep = "#16161e"
+bg = "#1a1b26"
+surface = "#292e42"
+surface_high = "#3b4261"
+fg = "#c0caf5"
+fg_dim = "#a9b1d6"
+comment = "#737aa2"
+selection = "#283457"
+red = "#f7768e"
+orange = "#ff9e64"
+yellow = "#e0af68"
+green = "#9ece6a"
+cyan = "#7dcfff"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+purple = "#9d7cd8"
+pink = "#ff007c"
+[dark.ansi]
+red = "#f7768e"
+green = "#9ece6a"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+cyan = "#7dcfff"
+
+[light]
+bg_deep = "#e1e2e7"
+bg = "#d0d5e3"
+surface = "#c4c8da"
+surface_high = "#b7c1e3"
+fg = "#30519f"                  # Day fg #3760bf darkened 20 % towards #16161e: upstream gives 3.99:1 on the window, this 5.1:1
+fg_dim = "#6172b0"
+comment = "#848cb5"
+selection = "#b7c1e3"
+red = "#f52a65"
+orange = "#b15c00"
+yellow = "#8c6c3e"
+green = "#587539"
+cyan = "#007197"
+blue = "#2e7de9"
+magenta = "#9854f1"
+purple = "#7847bd"
+pink = "#d20065"
+[light.ansi]
+red = "#f52a65"
+green = "#587539"
+yellow = "#8c6c3e"
+blue = "#2e7de9"
+magenta = "#9854f1"
+cyan = "#007197"
