@@ -28,6 +28,11 @@ Palettes
               (tokyo-night/scheme.toml says so).
   Solarized   Solarized (https://github.com/altercation/solarized). MIT License, Copyright (c) 2011 Ethan Schoonover.
   Everforest  Everforest (https://github.com/sainnhe/everforest). MIT License, Copyright (c) 2019 sainnhe.
+  Fairy Floss Fairy Floss by sailorhg (https://github.com/sailorhg/fairyfloss). The repository has NO licence (all rights
+              reserved by default), so only a few plain hex values are used as facts (background #5A5475, foreground #F8F8F2, pink,
+              lavender, mint, coral, yellow) and no file of it is copied. The original is a thin syntax theme: the surface ladder,
+              orange, blue and cyan accents are INVENTED or DERIVED here, and the other accents were picked from the tmTheme and the
+              Ptyxis "Fairy Floss" palette; fairy-floss/scheme.toml says which is which. If the author objects, the scheme goes.
   Terminal accents (the six per scheme) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
   from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of

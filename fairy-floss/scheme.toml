@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: MIT
+# Fairy Floss (sailorhg/fairyfloss, fairyfloss.tmTheme), dark only. NO UPSTREAM LICENCE (all rights reserved by default;
+# raw LICENSE returns 404): only a handful of hex values are taken as facts, nothing else from the repo.
+# VERIFIED against the raw tmTheme (2026-11-07): background #5A5475, foreground #F8F8F2, pink #FFB8D1, lavender #C5A3FF,
+# mint #C2FFDF, coral #FF857F, comment yellow #E6C000, yellow #FFEA00. The tmTheme is a thin syntax theme: there is no
+# red/orange/green/blue/cyan set, no surface layers and no ANSI table (its #F92672/#AE81FF/#F8F8F0/#49483E are Monokai leftovers).
+# Therefore, and by Kevin's decision (2026-11-07) to build it anyway:
+#  - NOT from the tmTheme (INVENTED or DERIVED here): bg_deep #42395d (the background of Ptyxis' "Fairy Floss Dark", a
+#    Gogh variant, not the tmTheme), surface and surface_high (bg mixed 8 % / 16 % towards fg), fg_dim and comment (derived
+#    by the fixed rules), orange (coral mixed 35 % towards yellow), accents blue #aac3f8 (lavender + cyan, 50 %) and
+#    cyan #8fe3f0 (invented), selection (= surface_high).
+#  - FROM the tmTheme: red = coral #ff857f, green = mint #c2ffdf, yellow = #e6c000, magenta = pink #ffb8d1, purple = lavender.
+#    These equal Ptyxis "Fairy Floss" Color2/Color6/Color3 respectively; Ptyxis' own Color1 #a8757b (dull red), Color4 #ae81ff
+#    (Monokai leftover) and Color5 #716799 (contrast 1.3:1 on the background) were not used and its "green" is really coral.
+# Ptyxis "Fairy Floss" has the same background #5A5475; the theme was matched to it, not the other way round.
+# Default accent magenta = pink #FFB8D1, the theme's signature colour (Kevin's brief).
+title = "Fairy Floss"
+gtk_name = "Fairy-Floss"
+shell_name = "Fairy-Floss-Shell"
+credit = "Fairy Floss by sailorhg (hex values only, no upstream licence; accents partly invented)"
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#42395d"
+bg = "#5a5475"
+surface = "#67617f"
+surface_high = "#736e89"
+fg = "#f8f8f2"
+selection = "#736e89"
+red = "#ff857f"
+orange = "#f69a53"
+yellow = "#e6c000"
+green = "#c2ffdf"
+cyan = "#8fe3f0"
+blue = "#aac3f8"
+magenta = "#ffb8d1"
+purple = "#c5a3ff"
+pink = "#ffb8d1"
+[dark.ansi]
+red = "#ff857f"
+green = "#c2ffdf"
+yellow = "#e6c000"
+blue = "#aac3f8"
+magenta = "#ffb8d1"
+cyan = "#8fe3f0"
