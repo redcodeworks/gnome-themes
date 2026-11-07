@@ -13,6 +13,7 @@ Public recipes (ten, all thin calls into `tools/themectl.sh`; run from the repo 
 Development (private recipes; need python3-gobject, GTK 3, GTK 4 and gnome-shell installed):
 - `just generate [scheme|all]` regenerates everything for a scheme (palette, GTK3/GTK4/Shell themes, libadwaita file, accent maps). Generated files are committed; never hand-edit them.
 - `just test <scheme>` or `python3 -I tools/selftest.py <scheme> [contrast|gtk3|gtk4|shell|all]` runs the checks for one scheme.
+- `just new-scheme <scheme-dir> <ptyxis-palette> [light-palette]` starts a new scheme: `tools/scheme-from-ptyxis.py` writes a DRAFT `scheme.toml` from a Ptyxis built-in palette (`tools/ptyxis-palette.sh list|show <name>`, `PTYXIS_BIN` overrides the binary) and prints the TODO decisions; then the normal pipeline. Private recipes still run by name (`just --justfile <file> new-scheme ...`, which is how the image's `ujust gnome-themes new-scheme` reaches them). The walk-through is the project skill `.claude/skills/build-scheme/SKILL.md`.
 - `tools/test.sh [--rebuild] [scheme ...]` is the whole suite (lint, hygiene, regeneration, selftest per scheme, install/switch/update/remove for every scheme and accent, icon recipes). It builds a cached Fedora 45 image from `tools/test.Containerfile` + `tools/test-packages.txt` and runs itself in a throwaway podman/docker container with the repo mounted read-only. It tests the **committed HEAD** (a fresh clone), so commit before running it.
 
 ## Architecture

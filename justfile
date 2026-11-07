@@ -87,3 +87,15 @@ generate theme="all":
 [private]
 test theme="gruvbox-material":
     PYTHONDONTWRITEBYTECODE=1 python3 -I tools/selftest.py {{theme}}
+
+# Development: start a new scheme from a built-in Ptyxis palette (see tools/ptyxis-palette.sh list): writes a DRAFT <scheme-dir>/scheme.toml and prints the decisions left (the build-scheme skill has the whole walk-through)
+[private]
+new-scheme dir palette light="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    light="{{light}}"
+    python3 -I tools/scheme-from-ptyxis.py "{{dir}}" "{{palette}}" ${light:+"$light"}
+    echo
+    echo "Next: resolve the TODOs in {{dir}}/scheme.toml, then run:"
+    echo "  just generate {{dir}} && just test {{dir}} && tools/test.sh {{dir}}"
+    echo "and add the credit to NOTICE and the scheme to the list in README.md (see .claude/skills/build-scheme/SKILL.md)."

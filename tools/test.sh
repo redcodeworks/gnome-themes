@@ -332,6 +332,36 @@ rm -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"; THEMES_DEST=$PD
 [ -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml" ] && [ ! -e "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-light.xml" ] && chk ok "a dark-only scheme installs only its -dark style scheme" || chk fail "dark-only gsv"
 THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; THEMES_DEST=$PD just remove-themes gruvbox-material </dev/null >/dev/null 2>&1; rm -rf "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS" "$PTYXIS_PALETTES"
 
+# ---- new-scheme helpers: Ptyxis built-in reader and the draft scheme.toml writer (fixture binary, no real Ptyxis needed) ----------------
+echo "=== new scheme from a Ptyxis palette"
+col() { printf 'Background=%s\nForeground=%s\nCursor=%s\n' "$1" "$2" "$3"; for i in $(seq 0 15); do printf 'Color%d=#%02x%02x%02x\n' "$i" $((i*9+40)) $((255-i*8)) $((i*5+90)); done; }
+{ printf 'junk\n(uuay)Fake Night.palette\n[Palette]\nName=Fake Night\n'; col '#101820' '#e0e0e0' '#ffffff'; printf '# generated\n(uuay)Fake Duo.palette\n[Palette]\nName=Fake Duo\nPrimary=true\n[Light]\n'; col '#fafafa' '#202020' '#202020'; printf '[Dark]\n'; col '#202030' '#d0d0e0' '#d0d0e0'; printf 'tail\n'; } > "$T/fake-ptyxis"
+export PTYXIS_BIN="$T/fake-ptyxis"
+[ "$(tools/ptyxis-palette.sh list | tr '\t\n' '= ')" = "Fake Night=flat Fake Duo=Light,Dark " ] && chk ok "ptyxis-palette.sh list: names and sections" || chk fail "ptyxis-palette.sh list: $(tools/ptyxis-palette.sh list | tr '\t\n' '= ')"
+tools/ptyxis-palette.sh show "fake duo" | grep -q '^\[Dark\]' && tools/ptyxis-palette.sh show "Fake Night" | grep -q '^Color15=' && ! tools/ptyxis-palette.sh show "Fake Night" | grep -q Duo && chk ok "ptyxis-palette.sh show: case-insensitive, one palette, verbatim" || chk fail "ptyxis-palette.sh show"
+tools/ptyxis-palette.sh show nothing >/dev/null 2>&1 && chk fail "show of an unknown name succeeded" || chk ok "ptyxis-palette.sh show: unknown name fails"
+rm -rf zz-fake zz-duo zz-two
+out=$(python3 -I tools/scheme-from-ptyxis.py zz-duo "Fake Duo" 2>&1)
+python3 -I - <<'PY' && chk ok "scheme-from-ptyxis: a sectioned palette gives dark and light draft variants with the accents, bg_deep, fg, and the TODO list" || chk fail "draft scheme.toml wrong"
+import tomllib
+S = tomllib.load(open('zz-duo/scheme.toml', 'rb'))
+assert S['title'] == 'Zz Duo' and S['gtk_name'] == 'Zz-Duo' and S['shell_name'] == 'Zz-Duo-Shell'
+assert S['dark']['bg_deep'] == '#202030' and S['light']['bg_deep'] == '#fafafa' and S['dark']['fg'] == '#d0d0e0'
+assert set(S['dark']['ansi']) == {'red', 'green', 'yellow', 'blue', 'magenta', 'cyan'}
+assert S['dark']['ansi']['green'] == '#%02x%02x%02x' % (2 * 9 + 40, 255 - 16, 2 * 5 + 90)
+assert 'terminal' in S['dark'] and S['dark']['terminal']['black'] == '#%02x%02x%02x' % (40, 255, 90)
+assert open('zz-duo/scheme.toml').read().count('# TODO') >= 8
+PY
+printf '%s\n' "$out" | grep -q "default_accent: proposed" && chk ok "the TODO list is printed (default_accent proposal with its reason)" || chk fail "TODO list not printed"
+python3 -I tools/palette-from-scheme.py zz-duo --check >/dev/null 2>&1 && chk ok "the draft derives a palette.toml (the pipeline accepts it)" || chk fail "palette-from-scheme.py rejects the draft"
+out=$(python3 -I tools/scheme-from-ptyxis.py zz-duo "Fake Duo" 2>&1); rc=$?
+[ $rc -ne 0 ] && printf '%s\n' "$out" | grep -q "refusing to overwrite" && chk ok "scheme-from-ptyxis refuses to overwrite an existing scheme" || chk fail "overwrite not refused"
+python3 -I tools/scheme-from-ptyxis.py zz-fake "Fake Night" >/dev/null 2>&1; grep -q '^\[dark\]' zz-fake/scheme.toml && ! grep -q '^\[light\]' zz-fake/scheme.toml && grep -q "dark only" zz-fake/scheme.toml && chk ok "a flat dark palette gives a dark-only draft" || chk fail "flat palette draft"
+python3 -I tools/scheme-from-ptyxis.py zz-two "Fake Night" "Fake Duo" >/dev/null 2>&1; grep -q '^bg_deep = "#fafafa"' zz-two/scheme.toml && grep -q '^bg_deep = "#101820"' zz-two/scheme.toml && chk ok "a second palette gives the light variant" || chk fail "light palette argument"
+rm -rf zz-fake zz-duo zz-two; unset PTYXIS_BIN
+just --summary 2>/dev/null | grep -q new-scheme && chk fail "new-scheme became a public recipe" || chk ok "new-scheme is private (public set unchanged)"
+just --justfile justfile --working-directory . new-scheme 2>&1 | grep -qi "usage\|palette" && chk ok "the private recipe runs by name (the passthrough path)" || chk fail "private recipe not runnable by name"
+
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
 printf 'fake|file://%s/icons-src|top|\n' "$T" > "$T/sources.conf"
