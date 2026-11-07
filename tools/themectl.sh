@@ -2,24 +2,89 @@
 # SPDX-License-Identifier: MIT
 # Install, list, update, remove and switch themes (this repo) and icon sets (an icon repo, Papirus by
 # default) in the user's home. Needs only bash and git; gum is used for the checklists if present.
-#   themectl.sh <themes|icons> <install|list|update|remove|switch> [name]
+#   themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]
 # A theme is a top-level directory of this repo (a scheme, e.g. gruvbox-material); an icon set is a
 # top-level directory of the icon repo (e.g. Papirus-Dark). Without a name, install/remove/switch ask.
+# Themes have a per-scheme accent (one of the six terminal colours listed in <scheme>/accents/list): switch asks for it
+# (or takes it as the 4th argument), remembers it in $XDG_STATE_HOME/gnome-themes/accents (lines scheme=accent), and
+# install/update re-apply the remembered one by running the scheme's sed token map over the installed copies.
 # Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (Papirus),
 # GNOME_THEMES_CACHE (~/.cache/gnome-themes, holds the icon repo clone).
 set -euo pipefail
 
-kind="${1:-}"; action="${2:-}"; want="${3:-}"
+kind="${1:-}"; action="${2:-}"; want="${3:-}"; accent_arg="${4:-}"
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cache="${GNOME_THEMES_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/gnome-themes}"
 cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
+state="${XDG_STATE_HOME:-$HOME/.local/state}/gnome-themes"
 case "$kind" in
     themes) dest="${THEMES_DEST:-$HOME/.themes}"; noun="theme" ;;
     icons)  dest="${ICONS_DEST:-${XDG_DATA_HOME:-$HOME/.local/share}/icons}"; noun="icon set"
             icons_url="${ICONS_URL:-https://github.com/PapirusDevelopmentTeam/papirus-icon-theme.git}"
             src="$cache/icons" ;;
-    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name]"; exit 2 ;;
+    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]"; exit 2 ;;
 esac
+
+# ---- accents (themes only) -----------------------------------------------------------------------------------
+# state file lines: key=value
+state_get() { [ -f "$1" ] && sed -n "s/^$2=//p" "$1" | head -n1 || true; }
+state_set() { mkdir -p "$(dirname "$1")"; { [ -f "$1" ] && grep -v "^$2=" "$1" || true; echo "$2=$3"; } > "$1.new"; mv "$1.new" "$1"; }
+state_del() { [ -f "$1" ] || return 0; { grep -v "^$2=" "$1" || true; } > "$1.new"; mv "$1.new" "$1"; }
+acc_names=(); acc_dark=(); acc_light=(); acc_default=""
+load_accents() {   # accents of scheme $1 from <scheme>/accents/list (name dark light|- [default])
+    acc_names=(); acc_dark=(); acc_light=(); acc_default=""
+    local n d l f
+    [ -f "$root/$1/accents/list" ] || return 0
+    while read -r n d l f; do
+        case "$n" in ""|"#"*) continue ;; esac
+        acc_names+=("$n"); acc_dark+=("$d"); acc_light+=("$l"); if [ "$f" = default ]; then acc_default="$n"; fi
+    done < "$root/$1/accents/list"
+}
+current_accent() { local a; a=$(state_get "$state/accents" "$1"); load_accents "$1"; [ -n "$a" ] && printf '%s\n' "${acc_names[@]}" | grep -qx "$a" && echo "$a" || echo "$acc_default"; }
+accent_maps() {    # sets map_dark, map_light for scheme $1 accent $2 (light falls back to dark for dark-only schemes)
+    map_dark="$root/$1/accents/$2.dark.sed"; map_light="$root/$1/accents/$2.light.sed"
+    [ -f "$map_light" ] || map_light="$map_dark"
+}
+apply_accent() {   # apply_accent SCHEME ACCENT [FOLDER]: run the token maps over the installed copies of SCHEME
+    local sc="$1" a="$2" f d
+    load_accents "$sc"; [ -n "$a" ] && [ "$a" != "$acc_default" ] || return 0
+    accent_maps "$sc" "$a"
+    [ -f "$map_dark" ] || { echo "No accent map for $sc/$a" >&2; return 1; }
+    while read -r f; do
+        d="$dest/$f"
+        case "$f" in
+            *-Shell-Dark)  sed -i -f "$map_dark" "$d/gnome-shell/gnome-shell.css" ;;
+            *-Shell-Light) sed -i -f "$map_light" "$d/gnome-shell/gnome-shell.css" ;;
+            *-Shell-*) ;;
+            *) for v in gtk-3.0 gtk-4.0; do
+                   [ -f "$d/$v/gtk.css" ] && sed -i -f "$map_light" "$d/$v/gtk.css"
+                   [ -f "$d/$v/gtk-dark.css" ] && sed -i -f "$map_dark" "$d/$v/gtk-dark.css"
+               done ;;
+        esac
+    done < <(if [ -n "${3:-}" ]; then echo "$3"; else folders_of "$sc"; fi)
+}
+accent_label() {   # label of accent index $1: name, hex (dark / light)
+    local l="${acc_names[$1]}  ${acc_dark[$1]}"; [ "${acc_light[$1]}" != "-" ] && l="$l / ${acc_light[$1]}"; echo "$l"
+}
+# choose_accent SCHEME: sets accent_pick (the name) from the six accents; Enter/cancel keeps the current one
+accent_pick=""
+choose_accent() {
+    local sc="$1" cur i a picked ls=() curlabel=""
+    cur=$(current_accent "$sc"); accent_pick="$cur"; load_accents "$sc"
+    [ "${#acc_names[@]}" -gt 0 ] || { accent_pick=""; return 0; }
+    for i in "${!acc_names[@]}"; do
+        l=$(accent_label "$i"); if [ "${acc_names[i]}" = "$cur" ]; then l="$l  (current)"; curlabel="$l"; fi; ls+=("$l")
+    done
+    if have_gum; then
+        picked=$(gum choose --header "Accent colour for $sc" --selected="$curlabel" "${ls[@]}" || true)
+        for i in "${!acc_names[@]}"; do if [ "${ls[i]}" = "$picked" ]; then accent_pick="${acc_names[i]}"; fi; done
+    else
+        echo; echo "Accent colour for $sc (the scheme's six terminal colours):"
+        for i in "${!ls[@]}"; do printf ' %2d) %s\n' "$((i+1))" "${ls[i]}"; done
+        read -r -p "Number (Enter keeps $cur): " a || a=""
+        if [[ "$a" =~ ^[0-9]+$ ]] && [ "$a" -ge 1 ] && [ "$a" -le "${#acc_names[@]}" ]; then accent_pick="${acc_names[$((a-1))]}"; fi
+    fi
+}
 
 # ---- sources -------------------------------------------------------------------------------------
 sync_icons() {   # clone the icon repo, or refresh the clone when $1 = refresh
@@ -123,7 +188,8 @@ choose_one() {
 copy_folder() {  # copy folder $1 of item $2 into dest
     local f="$1" it="$2"
     mkdir -p "$dest"; rm -rf "${dest:?}/$f"; cp -a "$(src_of "$f" "$it")" "$dest/$f"
-    if [ "$kind" = icons ]; then gtk-update-icon-cache -q -f -t "$dest/$f" 2>/dev/null || true; fi
+    if [ "$kind" = icons ]; then gtk-update-icon-cache -q -f -t "$dest/$f" 2>/dev/null || true
+    else apply_accent "$it" "$(current_accent "$it")" "$f"; fi
     echo "Installed $f -> $dest/$f"
 }
 current_value() {  # the value the desktop currently uses (theme or icon set)
@@ -138,7 +204,8 @@ case "$action" in
         if [ "$kind" = icons ]; then sync_icons; fi
         load_items
         for i in "${!items[@]}"; do
-            if is_installed "${items[i]}"; then echo "✓ ${labels[i]}"; else echo "  ${labels[i]}"; fi
+            ac=""; if [ "$kind" = themes ]; then ac="  [accent: $(current_accent "${items[i]}")]"; fi
+            if is_installed "${items[i]}"; then echo "✓ ${labels[i]}$ac"; else echo "  ${labels[i]}"; fi
         done ;;
 
     install)
@@ -189,6 +256,7 @@ case "$action" in
                     if [ "$f" = "$cur" ]; then echo "  note: $f is the one currently in use; run switch to choose another."; fi
                 fi
             done < <(folders_of "${items[i]}")
+            if [ "$kind" = themes ]; then state_del "$state/accents" "${items[i]}"; fi
         done ;;
 
     switch)
@@ -201,6 +269,17 @@ case "$action" in
         else
             choose_one "Switch to which $noun?" "${inst[@]}"; i="$pick"
             [ -n "$i" ] || { echo "Cancelled."; exit 0; }
+        fi
+        if [ "$kind" = themes ]; then
+            # accent: argument, else the submenu; copy the scheme's folders afresh (clean) and re-apply it
+            load_accents "${items[i]}"
+            if [ -n "$accent_arg" ]; then
+                printf '%s\n' "${acc_names[@]}" | grep -qx "$accent_arg" || { echo "'$accent_arg' is not an accent of ${items[i]}. Available: ${acc_names[*]}" >&2; exit 1; }
+                accent_pick="$accent_arg"
+            else choose_accent "${items[i]}"; fi
+            if [ -n "$accent_pick" ]; then state_set "$state/accents" "${items[i]}" "$accent_pick"; fi
+            while read -r f; do copy_folder "$f" "${items[i]}"; done < <(folders_of "${items[i]}")
+            [ -z "$accent_pick" ] || echo "Accent: $accent_pick."
         fi
         set_ini() {  # set_ini KEY VALUE: rewrite the key in the GTK settings.ini files that already have it
             local f; for f in "$cfg/gtk-3.0/settings.ini" "$cfg/gtk-4.0/settings.ini"; do
@@ -234,6 +313,12 @@ case "$action" in
             # libadwaita apps ignore the GTK theme and read only the user stylesheet
             la="$root/$sc/libadwaita/gtk.css"; target="$cfg/gtk-4.0/gtk.css"
             if [ -f "$la" ]; then
+                ac=$(current_accent "$sc")
+                if [ -n "$ac" ] && [ "$ac" != "$acc_default" ]; then
+                    accent_maps "$sc" "$ac"; tmpla=$(mktemp); trap 'rm -f "$tmpla"' EXIT
+                    if [ "$map_light" = "$map_dark" ]; then sed -f "$map_dark" "$la" > "$tmpla"; else sed -f "$map_light" -f "$map_dark" "$la" > "$tmpla"; fi
+                    chmod 644 "$tmpla"; la="$tmpla"
+                fi
                 mkdir -p "$(dirname "$target")"
                 if [ ! -e "$target" ]; then cp "$la" "$target"; echo "Installed $target (libadwaita apps)."
                 elif cmp -s "$la" "$target"; then echo "$target is already current."
@@ -246,5 +331,5 @@ case "$action" in
             echo "Restart GTK apps to pick up the new theme."
         fi ;;
 
-    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name]"; exit 2 ;;
+    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]"; exit 2 ;;
 esac
