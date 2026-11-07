@@ -22,7 +22,9 @@ Everything under `themes/` is installed as-is; `libadwaita/` is installed by `ju
 just list
 just generate gruvbox-material                      # needs python3-gobject, GTK 3, GTK 4 and gnome-shell
 just install gruvbox-material                       # themes to /usr/share/themes (root)
-just install gruvbox-material ~/.themes             # per user; real copies (Flatpaks cannot follow symlinks)
+just pick                                           # checklist: choose themes, real copies into ~/.themes (needs only just + bash)
+just pick Gruvbox-Material                          # same, no prompt
+just install gruvbox-material ~/.themes             # a whole scheme, no prompt
 just install-user gruvbox-material                  # libadwaita/gtk.css -> ~/.config/gtk-4.0/gtk.css
 ```
 
