@@ -13,14 +13,14 @@
 # ANSI six: the Material accents of the tmTheme above (magenta = purple). Ptyxis' "Material" palette was NOT used on purpose: it
 # is Gogh's separate terminal scheme (background #1E282C, magenta #FF2490, yellow #F7EB95), not the Darker/Lighter themes, and it
 # has no light counterpart, so one lineage was kept for both variants.
-# Default accent yellow: Darker's UI accent is orange #FF9800, which is not a terminal colour; of the six, yellow (#FFCB6B,
-# hue 40 against orange's 36) is nearest. Lighter's own UI accent is cyan #00BCD4; the single default_accent of a scheme serves both
-# variants, so Lighter gets yellow (#FFB62C) too (weak as a ring on #FAFAFA: 1.7:1; cyan would be 2.6:1, also under 3:1).
+# Default accent orange (the seventh accent, the scheme's own orange role colour): Darker's UI accent is orange #FF9800, and Darker's
+# tmTheme orange is #F78C6C. The single default_accent serves both variants, so Lighter gets its orange #F76D47 too (Lighter's own
+# UI accent is cyan #00BCD4; cyan stays selectable).
 title = "Material"
 gtk_name = "Material"
 shell_name = "Material-Shell"
 credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
-default_accent = "yellow"
+default_accent = "orange"
 
 [dark]
 bg_deep = "#212121"
@@ -36,6 +36,7 @@ magenta = "#c792ea"
 purple = "#c792ea"
 pink = "#ff5370"
 [dark.ansi]
+orange = "#f78c6c"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
 red = "#f07178"
 green = "#c3e88d"
 yellow = "#ffcb6b"
@@ -57,6 +58,7 @@ magenta = "#7c4dff"
 purple = "#7c4dff"
 pink = "#ff5370"
 [light.ansi]
+orange = "#f76d47"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
 red = "#e53935"
 green = "#91b859"
 yellow = "#ffb62c"

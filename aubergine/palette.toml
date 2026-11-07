@@ -5,12 +5,12 @@
 # derived: dark.fg_dim derived: fg 30% towards bg
 # derived: dark.comment derived: fg 55% towards bg
 # derived: dark.accent_fg #2c001e -> #2c0026 (the text colour varies per accent: the default needs its own token)
-# derived: dark.yellow nudged to #c4a001 (it equals the default accent; keeps accent tokens unique)
+# derived: dark.orange nudged to #e95428 (it equals the default accent; keeps accent tokens unique)
 title = "Aubergine"
 gtk_name = "Aubergine"
 shell_name = "Aubergine-Shell"
 credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
-default_accent = "yellow"
+default_accent = "orange"
 dark_only = true
 
 [dark]
@@ -21,14 +21,14 @@ top = "#ffffff"
 accent_fg = "#2c0026"
 view = "#2c001e"
 [dark.fam]
-blue = ["#15539e","#c4a000"]
+blue = ["#15539e","#e95420"]
 red = ["#cc0000","#cc0000"]
-orange = ["#f57900","#c4a001"]
+orange = ["#f57900","#c4a000"]
 green = ["#4e9a06","#4e9a06"]
 [dark.exact]
 "#26ab62" = "#4e9a06"
 "#26a269" = "#4e9a06"      # GTK4 stock success green
-"#3584e4" = "#c4a000"
+"#3584e4" = "#e95420"
 "#eeeeec" = "#ffffff"
 
 # [shell.*]: stock Shell greys differ from GTK's, so the ramps have their own stops.
@@ -43,12 +43,12 @@ top = "#ffffff"
 accent_fg = "#2c0026"
 view = "#2c001e"
 [shell.dark.fam]
-blue = ["#3584e4","#c4a000"]
+blue = ["#3584e4","#e95420"]
 red = ["#c01c28","#cc0000"]
-orange = ["#ff7800","#e95420"]
+orange = ["#ff7800","#e95428"]
 green = ["#26a269","#4e9a06"]
 [shell.dark.exact]
-"#cd9309" = "#c4a001"      # warning yellow (hue 43, would fall in the orange family)
+"#cd9309" = "#c4a000"      # warning yellow (hue 43, would fall in the orange family)
 "#a5a5b7" = "#c1b6bd"      # web-login title, dim text
 "#54545a" = "#5e2750"      # notification/message card: surface
 "#45454a" = "#47183a"      # message card stacked behind the front one: bg and surface mixed 50 %
@@ -72,6 +72,9 @@ fg = "#ffffff"
 [accents.dark.cyan]
 color = "#06989a"
 fg = "#2c0026"
+[accents.dark.orange]
+color = "#e95420"
+fg = "#2c0026"
 
 # roles for tools/libadwaita-gen.py
 [roles.dark]
@@ -83,8 +86,8 @@ popover = "#67475d"
 fg = "#ffffff"
 red = "#cc0000"
 green = "#4e9a06"
-yellow = "#c4a001"
-accent = "#c4a000"
+yellow = "#c4a000"
+accent = "#e95420"
 accent_fg = "#2c0026"
 warning_fg = "#2c001e"
 secondary_sidebar = "#300a24"

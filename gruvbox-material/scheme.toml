@@ -27,6 +27,7 @@ magenta = "#d3869b"
 purple = "#d3869b"
 warning_fg = "#1d2021"
 [dark.ansi]
+orange = "#e78a4e"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
 red = "#ea6962"
 green = "#a9b665"
 yellow = "#d8a657"
@@ -52,6 +53,7 @@ magenta = "#945e80"
 purple = "#945e80"
 warning_fg = "#1d2021"
 [light.ansi]
+orange = "#c35e0a"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
 red = "#c14a4a"
 green = "#6c782e"
 yellow = "#b47109"

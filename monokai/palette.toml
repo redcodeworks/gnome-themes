@@ -69,6 +69,9 @@ fg = "#272822"
 [accents.dark.cyan]
 color = "#a1efe4"
 fg = "#272822"
+[accents.dark.orange]
+color = "#fd971f"
+fg = "#272822"
 
 # roles for tools/libadwaita-gen.py
 [roles.dark]

@@ -7,15 +7,13 @@
 # Ladder: view dark aubergine #2c001e, window #300a24 (terminal background), headers mid aubergine #5e2750, popovers DERIVED
 # (fixed rule, 28 % towards fg). fg_dim and comment derived.
 # ANSI six = Ptyxis "Ubuntu" Color1-6 (Tango red, green, yellow, blue, magenta, cyan).
-# Default accent yellow #C4A000: Ubuntu orange #E95420 is not a terminal colour. By hue the nearest of the six is red #CC0000
-# (15 deg away, yellow 35 deg), but red is the error and destructive colour and has only 3.0:1 on the window; yellow has 7.0:1 and
-# the same warm family. A seventh "orange" accent (#E95420) would be clearly better; it is NOT implemented (six accents is the
-# machinery's rule), recommended for Kevin to decide.
+# Default accent orange #E95420: Ubuntu's brand accent. Orange is the seventh accent, next to the six terminal colours (it is the
+# scheme's own orange role colour, not an ANSI colour).
 title = "Aubergine"
 gtk_name = "Aubergine"
 shell_name = "Aubergine-Shell"
 credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
-default_accent = "yellow"
+default_accent = "orange"
 
 [dark]
 bg_deep = "#2c001e"
@@ -32,6 +30,7 @@ blue = "#3465a4"
 magenta = "#75507b"
 purple = "#75507b"
 [dark.ansi]
+orange = "#e95420"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
 red = "#cc0000"
 green = "#4e9a06"
 yellow = "#c4a000"

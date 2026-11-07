@@ -14,7 +14,7 @@
  * Dark-only scheme: the dark values apply unconditionally, whatever colour scheme the desktop asks for.
  */
 
-@define-color accent_bg_color #c4a000;
+@define-color accent_bg_color #e95420;
 @define-color accent_fg_color #2c0026;
 
 @define-color destructive_bg_color #cc0000;
@@ -23,7 +23,7 @@
 @define-color success_bg_color #4e9a06;
 @define-color success_fg_color #2c0026;
 
-@define-color warning_bg_color #c4a001;
+@define-color warning_bg_color #c4a000;
 @define-color warning_fg_color #2c001e;
 
 @define-color error_bg_color #cc0000;
