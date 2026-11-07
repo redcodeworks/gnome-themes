@@ -44,3 +44,5 @@ yellow = "#e6c000"
 blue = "#aac3f8"
 magenta = "#ffb8d1"
 cyan = "#8fe3f0"
+
+# Terminal palette: no overrides (tools/ptyxis-gen.py defaults): the Ptyxis built-in "Fairy Floss" was not used for the normals (see the header), so its Color0 and brights are not either.

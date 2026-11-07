@@ -58,3 +58,28 @@ yellow = "#b58900"
 blue = "#268bd2"
 magenta = "#d33682"
 cyan = "#2aa198"
+
+# Terminal palette overrides (tools/ptyxis-gen.py). Source (checked 2026-11-07 with tools/ptyxis-palette.sh): the Ptyxis built-in palette(s) named below,
+# whose six ANSI colours equal this scheme's; their black and REAL brights are taken wherever they differ from the generator defaults
+# (a bright black equal to the background is skipped: it would be invisible; the default `comment` stays). Each key notes the Color it is.
+# dark variant <- Ptyxis "Solarized [Dark]"
+[dark.terminal]
+black = "#073642"   # Color0
+bright_red = "#cb4b16"   # Color9
+bright_green = "#586e75"   # Color10
+bright_yellow = "#657b83"   # Color11
+bright_blue = "#839496"   # Color12
+bright_magenta = "#6c71c4"   # Color13
+bright_cyan = "#93a1a1"   # Color14
+bright_white = "#fdf6e3"   # Color15
+# light variant <- Ptyxis "Solarized [Light]"
+[light.terminal]
+black = "#073642"   # Color0
+bright_black = "#002b36"   # Color8
+bright_red = "#cb4b16"   # Color9
+bright_green = "#586e75"   # Color10
+bright_yellow = "#657b83"   # Color11
+bright_blue = "#839496"   # Color12
+bright_magenta = "#6c71c4"   # Color13
+bright_cyan = "#93a1a1"   # Color14
+bright_white = "#fdf6e3"   # Color15

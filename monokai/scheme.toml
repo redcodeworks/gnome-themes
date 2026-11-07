@@ -39,3 +39,8 @@ yellow = "#f4bf75"
 blue = "#66d9ef"
 magenta = "#ae81ff"
 cyan = "#a1efe4"
+
+# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-in "Monokai Dark" (five of the six ANSI colours equal ours):
+# Color0 = its black. It has no real brights, so the defaults stay.
+[dark.terminal]
+black = "#75715e"   # Ptyxis built-in "Monokai Dark" Color0

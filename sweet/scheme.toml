@@ -36,3 +36,6 @@ yellow = "#f9dc5c"
 blue = "#7cb7ff"
 magenta = "#c74ded"
 cyan = "#00c1e4"
+
+# Terminal palette: no overrides. The Ptyxis built-in "Sweet Eliverlara" matches the six ANSI colours, but its black (Color0) is its own
+# background #282c34, which on this scheme's darker background would be nearly invisible, and it has no real brights; the defaults stay.

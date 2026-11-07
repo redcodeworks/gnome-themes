@@ -39,6 +39,9 @@ credentials.*
 .npmrc
 .pypirc
 
+# Private Claude Code notes
+CLAUDE.local.md
+
 # Editors and OS
 .DS_Store
 Thumbs.db

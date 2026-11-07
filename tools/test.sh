@@ -42,8 +42,37 @@ case "\$1" in
 esac
 SH
 chmod +x "$T/bin/gsettings"
+# a stand-in dconf over a plain file (DCONF_DB: lines "key<TAB>value"): read, write, list; every recipe that touches Ptyxis settings uses it
+export DCONF_DB="$T/dconf.db"; : > "$DCONF_DB"
+cat > "$T/bin/dconf" <<'SH'
+#!/bin/sh
+db="${DCONF_DB:?}"
+case "$1" in
+  read) awk -F'\t' -v k="$2" '$1==k {v=$2} END {if (v!="") print v}' "$db" ;;
+  write) grep -v "^$2	" "$db" > "$db.new" || true; printf '%s\t%s\n' "$2" "$3" >> "$db.new"; mv "$db.new" "$db" ;;
+  list) awk -F'\t' -v d="$2" 'index($1,d)==1 {print $1}' "$db" ;;
+esac
+SH
+chmod +x "$T/bin/dconf"
+export PTYXIS_PALETTES="$T/ptyxis-palettes" GTKSOURCEVIEW_STYLES="$T/gsv-styles" FLATPAK_APPS="$T/var-app"
 export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" GNOME_THEMES_CACHE="$T/cache"
 export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
+# a stand-in flatpak (FLATPAK_DB: the global override's filesystems, one entry per line); only the calls themectl makes. Absent unless a test
+# puts $T/fpbin on the PATH, so the other tests behave like a machine without Flatpak
+mkdir -p "$T/fpbin"; export FLATPAK_DB="$T/flatpak.db"; : > "$FLATPAK_DB"
+cat > "$T/fpbin/flatpak" <<'SH'
+#!/bin/sh
+db="${FLATPAK_DB:?}"
+if [ "$1" = info ]; then case " ${FLATPAK_INFO:-} " in *" $2 "*) exit 0 ;; esac; exit 1; fi
+[ "$1" = override ] && [ "$2" = --user ] || exit 2
+shift 2
+for a in "$@"; do case "$a" in
+  --show) printf '[Context]\nfilesystems=%s\n' "$(tr '\n' ';' < "$db")" ;;
+  --filesystem=*) v="${a#--filesystem=}"; grep -qxF "$v" "$db" || echo "$v" >> "$db" ;;
+  --nofilesystem=*) v="${a#--nofilesystem=}"; awk -v v="$v" '{p=$0; sub(/:[a-z]+$/,"",p)} p!=v' "$db" > "$db.new"; mv "$db.new" "$db" ;;
+esac; done
+SH
+chmod +x "$T/fpbin/flatpak"
 # a fake icon repo (two sets, each with an index.theme), so the icon tests need no network
 mkdir -p "$T/icons-src" && (cd "$T/icons-src" && git init -q && for n in Fake-Dark Fake-Light; do mkdir -p $n/apps; printf '[Icon Theme]\nName=%s\nDirectories=apps\n' $n > $n/index.theme; echo x > $n/apps/a.svg; done && git add -A && git commit -q -m init)
 
@@ -133,6 +162,206 @@ c1=$(sha1sum < "$CFGLA/gtk-4.0/gtk.css"); sw "$a2" | grep -q "Updated $CFGLA/gtk
 echo "/* somebody else's stylesheet */" > "$CFGLA/gtk-4.0/gtk.css"; sw "$a1" | grep -q "left alone" && grep -q "somebody else" "$CFGLA/gtk-4.0/gtk.css" && chk ok "a foreign libadwaita file without a backup is left alone without a terminal" || chk fail "foreign libadwaita file was touched"
 echo "/* original */" > "$CFGLA/gtk-4.0/gtk.css.bak"; sw "$a1" >/dev/null; { ! grep -q "somebody else" "$CFGLA/gtk-4.0/gtk.css" && grep -q "original" "$CFGLA/gtk-4.0/gtk.css.bak"; } && chk ok "with a backup present the file is replaced without a prompt and the backup is kept" || chk fail "backup case wrong"
 
+# ---- Ptyxis palettes: generated files, install/switch/update/remove, collision guard, profile selection -----------------------
+echo "=== ptyxis palettes"
+cat > "$T/ptycheck.py" <<'PY'
+import sys, re, glob, os
+sys.path.insert(0, 'tools'); import schemeroles as sr
+bad = []
+for f in sorted(glob.glob('*/ptyxis/*.palette')):
+    sec = {}; cur = None
+    for l in open(f):
+        l = l.strip()
+        if not l or l.startswith('#'): continue
+        m = re.match(r'\[(\w+)\]$', l)
+        if m: cur = sec.setdefault(m[1], {}); continue
+        k, v = l.split('=', 1); cur[k] = v
+    if sec.get('Palette', {}).get('Name', '') == '': bad.append(f + ': no Name')
+    for s in ('Light', 'Dark'):
+        d = sec.get(s)
+        if not d: bad.append('%s: no [%s]' % (f, s)); continue
+        for k in ['Foreground', 'Background', 'TitlebarBackground', 'TitlebarForeground', 'Cursor'] + ['Color%d' % i for i in range(16)]:
+            if not re.fullmatch(r'#[0-9A-Fa-f]{6}', d.get(k, '')): bad.append('%s [%s] %s=%r' % (f, s, k, d.get(k)))
+        if d.get('Foreground') and d.get('Background') and sr.contrast(d['Foreground'], d['Background']) < 4.5: bad.append('%s [%s] contrast %.2f' % (f, s, sr.contrast(d['Foreground'], d['Background'])))
+    if not open(f).read().rstrip().endswith('# gnome-themes: ' + f.split('/')[0]): bad.append(f + ': marker missing')
+print('\n'.join(bad)); sys.exit(1 if bad else 0)
+PY
+out=$(python3 -I "$T/ptycheck.py" 2>&1) && chk ok "every palette has Name, [Light] and [Dark] with all 16 colours and the 5 UI colours, Foreground:Background >= 4.5, marker" || { chk fail "palette check"; printf '%s\n' "$out" | head -5; }
+# regression: gruvbox-material against the hand-made reference (Kevin's working palette, 2026-11-07)
+cat > "$T/gm.ref" <<'REF'
+Dark Foreground #D4BE98
+Dark Background #282828
+Dark TitlebarBackground #45403d
+Dark TitlebarForeground #ddc7a1
+Dark Cursor #D4BE98
+Dark Color0 #3C3836
+Dark Color1 #EA6962
+Dark Color2 #A9B665
+Dark Color3 #D8A657
+Dark Color4 #7DAEA3
+Dark Color5 #D3869B
+Dark Color6 #89B482
+Dark Color7 #D4BE98
+Dark Color8 #928374
+Dark Color9 #EA6962
+Dark Color10 #A9B665
+Dark Color11 #D8A657
+Dark Color12 #7DAEA3
+Dark Color13 #D3869B
+Dark Color14 #89B482
+Dark Color15 #D4BE98
+Light Foreground #654735
+Light Background #f5edca
+Light TitlebarBackground #f9f5d7
+Light TitlebarForeground #4f3829
+Light Cursor #654735
+Light Color0 #f2e5bc
+Light Color1 #c14a4a
+Light Color2 #6c782e
+Light Color3 #b47109
+Light Color4 #45707a
+Light Color5 #945e80
+Light Color6 #4c7a5d
+Light Color7 #654735
+Light Color8 #f2e5bc
+Light Color9 #c14a4a
+Light Color10 #6c782e
+Light Color11 #b47109
+Light Color12 #45707a
+Light Color13 #945e80
+Light Color14 #4c7a5d
+Light Color15 #654735
+REF
+awk '/^\[/ {s=substr($0,2,length($0)-2); next} /=/ && s!="Palette" {split($0,a,"="); print s, a[1], a[2]}' gruvbox-material/ptyxis/gnome-themes-gruvbox-material.palette | sort > "$T/gm.got"
+sort "$T/gm.ref" | tr 'A-F' 'a-f' | sed 's/^\(.\)/\1/' > "$T/gm.ref.s"; tr 'A-F' 'a-f' < "$T/gm.got" | sort > "$T/gm.got.s"
+# lowercase only the hex values: keys and section names are compared after the same transformation on both sides
+tr 'A-F' 'a-f' < "$T/gm.ref.s" | sort > "$T/gm.ref.s2"
+diff -q "$T/gm.ref.s2" "$T/gm.got.s" >/dev/null && chk ok "gruvbox-material palette equals the reference (all 40 values; the dark Color8 comment, light background and light Color8 differences from the built-in are in scheme.toml)" || { chk fail "gruvbox-material palette differs from the reference"; diff "$T/gm.ref.s2" "$T/gm.got.s" | head; }
+# dconf db: three profiles; the default one (a) has no palette key, b has one, c has none
+PD="$T/themes-pty"; : > "$DCONF_DB"
+printf '%s\t%s\n' /org/gnome/Ptyxis/profile-uuids "['aaa', 'bbb', 'ccc']" /org/gnome/Ptyxis/default-profile-uuid "'aaa'" /org/gnome/Ptyxis/Profiles/bbb/palette "'Old'" /org/gnome/Ptyxis/Profiles/ccc/label "'x'" >> "$DCONF_DB"
+rm -rf "$PTYXIS_PALETTES"; fname="$PTYXIS_PALETTES/gnome-themes-fairy-floss.palette"
+THEMES_DEST=$PD just install-themes fairy-floss </dev/null >/dev/null 2>&1
+[ -f "$fname" ] && grep -qx "# gnome-themes: fairy-floss" "$fname" && chk ok "install-themes copies the palette with its marker" || chk fail "install-themes: palette missing"
+THEMES_DEST=$PD just switch-theme fairy-floss </dev/null >/dev/null 2>&1
+nm=$(sed -n 's/^Name=//p' "$fname")
+[ "$(dconf read /org/gnome/Ptyxis/Profiles/aaa/palette)" = "'$nm'" ] && [ "$(dconf read /org/gnome/Ptyxis/Profiles/bbb/palette)" = "'$nm'" ] && [ -z "$(dconf read /org/gnome/Ptyxis/Profiles/ccc/palette)" ] && chk ok "switch-theme: palette set on the default profile and the one that had a palette key, not on the other" || chk fail "profile selection rule ($(grep palette "$DCONF_DB" | tr '\t\n' '= '))"
+echo "# stale" >> "$fname"; THEMES_DEST=$PD just update-themes </dev/null >/dev/null 2>&1
+grep -q stale "$fname" && chk fail "update-themes did not refresh the palette" || chk ok "update-themes refreshes the palette"
+THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1
+[ ! -e "$fname" ] && chk ok "remove-themes removes the palette" || chk fail "remove-themes left the palette"
+# collision: an unmarked file of the same name
+mkdir -p "$PTYXIS_PALETTES"; echo mine > "$fname"
+out=$(THEMES_DEST=$PD just install-themes fairy-floss </dev/null 2>&1)
+[ "$(cat "$fname")" = mine ] && printf '%s\n' "$out" | grep -q "not installed by gnome-themes" && chk ok "an unmarked palette of the same name is not replaced (refusal message)" || chk fail "collision: palette replaced"
+: > "$DCONF_DB"; printf '%s\t%s\n' /org/gnome/Ptyxis/profile-uuids "['aaa']" /org/gnome/Ptyxis/default-profile-uuid "'aaa'" >> "$DCONF_DB"
+THEMES_DEST=$PD just switch-theme fairy-floss </dev/null 2>&1 | grep -q "is not ours" && [ -z "$(dconf read /org/gnome/Ptyxis/Profiles/aaa/palette)" ] && chk ok "switch-theme does not apply a palette that is not ours" || chk fail "switch applied a foreign palette"
+THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; [ "$(cat "$fname")" = mine ] && chk ok "remove leaves the unmarked palette" || chk fail "remove deleted the unmarked palette"
+FORCE=1 THEMES_DEST=$PD just install-themes fairy-floss </dev/null >/dev/null 2>&1; grep -q "# gnome-themes:" "$fname" && chk ok "FORCE=1 replaces and marks the palette" || chk fail "FORCE=1 palette"
+# no Ptyxis profile at all: a clear note, nothing written
+: > "$DCONF_DB"; out=$(THEMES_DEST=$PD just switch-theme fairy-floss </dev/null 2>&1)
+printf '%s\n' "$out" | grep -q "no Ptyxis profile found" && ! grep -q Ptyxis "$DCONF_DB" && chk ok "no Ptyxis settings: note and skip" || chk fail "missing Ptyxis settings not handled"
+THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; rm -rf "$PTYXIS_PALETTES"
+
+# ---- GtkSourceView style schemes: generated files, install/switch/update/remove, Flatpak editors, collision guard ------------------
+echo "=== gtksourceview styles"
+cat > "$T/gsvcheck.py" <<'PY'
+import sys, re, glob, os, xml.etree.ElementTree as ET
+sys.path.insert(0, 'tools'); import schemeroles as sr
+bad = []
+for f in sorted(glob.glob('*/gtksourceview/*.xml')):
+    scheme = f.split('/')[0]
+    try: root = ET.parse(f).getroot()
+    except ET.ParseError as e: bad.append('%s: %s' % (f, e)); continue
+    sid = root.get('id'); name = root.get('_name') or root.get('name')
+    if sid != os.path.basename(f)[:-4] or not re.fullmatch(r'([a-zA-Z0-9_]|-)+', sid) or not name: bad.append(f + ': id/name')
+    if 'gnome-themes: ' + scheme not in open(f).read(): bad.append(f + ': marker')
+    cols = {c.get('name'): c.get('value') for c in root.iter('color')}
+    meta = {p.get('name'): p.text for p in root.iter('property')}
+    if meta.get('variant') not in ('dark', 'light'): bad.append(f + ': variant')
+    for k in ('light-variant', 'dark-variant'):
+        if k in meta and not os.path.exists('%s/gtksourceview/%s.xml' % (scheme, meta[k])): bad.append('%s: %s %s does not resolve' % (f, k, meta[k]))
+    def val(v): return cols.get(v) if not v.startswith('#') else v
+    B, CL = val('bg-deep'), val('bg')
+    for s in root.iter('style'):
+        for a in ('foreground', 'background', 'line-background'):
+            v = s.get(a)
+            if v is not None and val(v) is None: bad.append('%s: style %s %s=%s does not resolve' % (f, s.get('name'), a, v))
+        fg = s.get('foreground')
+        if fg is None or s.get('name') in ('selection',): continue
+        need = 3.0 if s.get('name') in ('def:comment', 'def:shebang') else 4.5
+        bgs = [val(s.get('background'))] if s.get('background') and s.get('name') not in ('current-line-number',) else [B, CL]
+        if s.get('name') in ('search-match', 'bracket-match', 'bracket-mismatch'): bgs = [val(s.get('background'))]
+        for b in bgs:
+            if sr.contrast(val(fg), b) < need - 0.01: bad.append('%s: %s %.2f < %.1f on %s' % (f, s.get('name'), sr.contrast(val(fg), b), need, b))
+    if sr.contrast(cols['fg'], cols['selection']) < 4.5: bad.append(f + ': fg on selection')
+print('\n'.join(bad[:15])); sys.exit(1 if bad else 0)
+PY
+out=$(python3 -I "$T/gsvcheck.py" 2>&1) && chk ok "style schemes: XML parses, id = file name, markers, metadata and every colour reference resolve, syntax colours >= 4.5:1 (comments 3:1) on the editor background and current line, text on selection >= 4.5" || { chk fail "gtksourceview check"; printf '%s\n' "$out" | head -8; }
+if python3 -c "import gi; gi.require_version('GtkSource','5')" 2>/dev/null; then
+    out=$(python3 -I - <<'PY' 2>&1
+import gi, glob, os; gi.require_version('GtkSource', '5'); from gi.repository import GtkSource
+m = GtkSource.StyleSchemeManager.new(); m.set_search_path([os.path.abspath(d) for d in glob.glob('*/gtksourceview')])
+miss = [os.path.basename(f)[:-4] for f in glob.glob('*/gtksourceview/*.xml') if not m.get_scheme(os.path.basename(f)[:-4])]
+print(miss); raise SystemExit(1 if miss else 0)
+PY
+) && chk ok "GtkSourceView itself loads every generated style scheme" || { chk fail "GtkSourceView could not load: $out"; }
+else echo "  skip GtkSourceView load test (typelib not installed)"; fi
+rm -rf "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS"; PD="$T/themes-gsv"; : > "$DCONF_DB"; : > "$FLATPAK_DB"
+printf '%s\t%s\n' /org/gnome/Ptyxis/profile-uuids "['aaa']" >> "$DCONF_DB"
+mkdir -p "$FLATPAK_APPS/org.gnome.TextEditor"    # Text Editor: data dir exists; Builder: only known to flatpak
+out=$(FLATPAK_INFO="org.gnome.Builder" PATH="$T/fpbin:$PATH" THEMES_DEST=$PD just install-themes gruvbox-material </dev/null 2>&1)
+ids="gnome-themes-gruvbox-material-dark.xml gnome-themes-gruvbox-material-light.xml"; ok=1
+for d in "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor/data/gtksourceview-5/styles" "$FLATPAK_APPS/org.gnome.Builder/data/gtksourceview-5/styles"; do for f in $ids; do [ -f "$d/$f" ] || ok=0; done; done
+[ $ok = 1 ] && chk ok "install-themes copies the style schemes into the user dir and into the Flatpak editors' data dirs (Text Editor by dir, Builder via flatpak info)" || chk fail "gsv install ($(ls "$GTKSOURCEVIEW_STYLES" 2>&1 | tr '\n' ' '))"
+out=$(FLATPAK_INFO="org.gnome.Builder" PATH="$T/fpbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null 2>&1)
+[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'gnome-themes-gruvbox-material-dark'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'gnome-themes-gruvbox-material-dark'" ] && chk ok "switch-theme sets Text Editor and (Builder present) Builder to the -dark id while the desktop is dark" || chk fail "gsv switch dark ($(grep -E 'TextEditor|builder' "$DCONF_DB" | tr '\t\n' '= '))"
+lbin="$T/bin-light"; mkdir -p "$lbin"; printf '#!/bin/sh\ncase "$1" in set) : ;; get) case "$3" in color-scheme) echo "\x27default\x27";; *) echo "\x27x\x27";; esac ;; list-schemas) echo org.gnome.shell.extensions.user-theme ;; esac\n' > "$lbin/gsettings"; chmod +x "$lbin/gsettings"
+PATH="$lbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null >/dev/null 2>&1
+[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'gnome-themes-gruvbox-material-light'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'gnome-themes-gruvbox-material-dark'" ] && chk ok "light desktop: the -light id for Text Editor; Builder untouched when it is not installed" || chk fail "gsv switch light"
+PATH="$lbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null 2>&1 | grep -q "Builder not found" && chk ok "without Builder the skip is announced" || chk fail "no Builder note"
+echo "<!-- stale -->" >> "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml"; THEMES_DEST=$PD just update-themes </dev/null >/dev/null 2>&1
+grep -q stale "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml" && chk fail "update did not refresh the style scheme" || chk ok "update-themes refreshes the style schemes"
+THEMES_DEST=$PD just remove-themes gruvbox-material </dev/null >/dev/null 2>&1
+[ -z "$(find "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor" -type f 2>/dev/null)" ] && chk ok "remove-themes removes the style schemes everywhere" || chk fail "remove left style schemes: $(find "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS" -type f 2>&1 | tr "\n" " ")"
+# collision: an unmarked file with our id is kept; dark-only scheme has only the dark id
+mkdir -p "$GTKSOURCEVIEW_STYLES"; echo mine > "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"
+out=$(THEMES_DEST=$PD just install-themes fairy-floss </dev/null 2>&1)
+[ "$(cat "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml")" = mine ] && printf '%s\n' "$out" | grep -q "not installed by gnome-themes" && chk ok "an unmarked style scheme file is not replaced" || chk fail "gsv collision"
+rm -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"; THEMES_DEST=$PD just install-themes fairy-floss </dev/null >/dev/null 2>&1
+[ -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml" ] && [ ! -e "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-light.xml" ] && chk ok "a dark-only scheme installs only its -dark style scheme" || chk fail "dark-only gsv"
+THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; THEMES_DEST=$PD just remove-themes gruvbox-material </dev/null >/dev/null 2>&1; rm -rf "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS" "$PTYXIS_PALETTES"
+
+# ---- new-scheme helpers: Ptyxis built-in reader and the draft scheme.toml writer (fixture binary, no real Ptyxis needed) ----------------
+echo "=== new scheme from a Ptyxis palette"
+col() { printf 'Background=%s\nForeground=%s\nCursor=%s\n' "$1" "$2" "$3"; for i in $(seq 0 15); do printf 'Color%d=#%02x%02x%02x\n' "$i" $((i*9+40)) $((255-i*8)) $((i*5+90)); done; }
+{ printf 'junk\n(uuay)Fake Night.palette\n[Palette]\nName=Fake Night\n'; col '#101820' '#e0e0e0' '#ffffff'; printf '# generated\n(uuay)Fake Duo.palette\n[Palette]\nName=Fake Duo\nPrimary=true\n[Light]\n'; col '#fafafa' '#202020' '#202020'; printf '[Dark]\n'; col '#202030' '#d0d0e0' '#d0d0e0'; printf 'tail\n'; } > "$T/fake-ptyxis"
+export PTYXIS_BIN="$T/fake-ptyxis"
+[ "$(tools/ptyxis-palette.sh list | tr '\t\n' '= ')" = "Fake Night=flat Fake Duo=Light,Dark " ] && chk ok "ptyxis-palette.sh list: names and sections" || chk fail "ptyxis-palette.sh list: $(tools/ptyxis-palette.sh list | tr '\t\n' '= ')"
+tools/ptyxis-palette.sh show "fake duo" | grep -q '^\[Dark\]' && tools/ptyxis-palette.sh show "Fake Night" | grep -q '^Color15=' && ! tools/ptyxis-palette.sh show "Fake Night" | grep -q Duo && chk ok "ptyxis-palette.sh show: case-insensitive, one palette, verbatim" || chk fail "ptyxis-palette.sh show"
+tools/ptyxis-palette.sh show nothing >/dev/null 2>&1 && chk fail "show of an unknown name succeeded" || chk ok "ptyxis-palette.sh show: unknown name fails"
+rm -rf zz-fake zz-duo zz-two
+out=$(python3 -I tools/scheme-from-ptyxis.py zz-duo "Fake Duo" 2>&1)
+python3 -I - <<'PY' && chk ok "scheme-from-ptyxis: a sectioned palette gives dark and light draft variants with the accents, bg_deep, fg, and the TODO list" || chk fail "draft scheme.toml wrong"
+import tomllib
+S = tomllib.load(open('zz-duo/scheme.toml', 'rb'))
+assert S['title'] == 'Zz Duo' and S['gtk_name'] == 'Zz-Duo' and S['shell_name'] == 'Zz-Duo-Shell'
+assert S['dark']['bg_deep'] == '#202030' and S['light']['bg_deep'] == '#fafafa' and S['dark']['fg'] == '#d0d0e0'
+assert set(S['dark']['ansi']) == {'red', 'green', 'yellow', 'blue', 'magenta', 'cyan'}
+assert S['dark']['ansi']['green'] == '#%02x%02x%02x' % (2 * 9 + 40, 255 - 16, 2 * 5 + 90)
+assert 'terminal' in S['dark'] and S['dark']['terminal']['black'] == '#%02x%02x%02x' % (40, 255, 90)
+assert open('zz-duo/scheme.toml').read().count('# TODO') >= 8
+PY
+printf '%s\n' "$out" | grep -q "default_accent: proposed" && chk ok "the TODO list is printed (default_accent proposal with its reason)" || chk fail "TODO list not printed"
+python3 -I tools/palette-from-scheme.py zz-duo --check >/dev/null 2>&1 && chk ok "the draft derives a palette.toml (the pipeline accepts it)" || chk fail "palette-from-scheme.py rejects the draft"
+out=$(python3 -I tools/scheme-from-ptyxis.py zz-duo "Fake Duo" 2>&1); rc=$?
+[ $rc -ne 0 ] && printf '%s\n' "$out" | grep -q "refusing to overwrite" && chk ok "scheme-from-ptyxis refuses to overwrite an existing scheme" || chk fail "overwrite not refused"
+python3 -I tools/scheme-from-ptyxis.py zz-fake "Fake Night" >/dev/null 2>&1; grep -q '^\[dark\]' zz-fake/scheme.toml && ! grep -q '^\[light\]' zz-fake/scheme.toml && grep -q "dark only" zz-fake/scheme.toml && chk ok "a flat dark palette gives a dark-only draft" || chk fail "flat palette draft"
+python3 -I tools/scheme-from-ptyxis.py zz-two "Fake Night" "Fake Duo" >/dev/null 2>&1; grep -q '^bg_deep = "#fafafa"' zz-two/scheme.toml && grep -q '^bg_deep = "#101820"' zz-two/scheme.toml && chk ok "a second palette gives the light variant" || chk fail "light palette argument"
+rm -rf zz-fake zz-duo zz-two; unset PTYXIS_BIN
+just --summary 2>/dev/null | grep -q new-scheme && chk fail "new-scheme became a public recipe" || chk ok "new-scheme is private (public set unchanged)"
+just --justfile justfile --working-directory . new-scheme 2>&1 | grep -qi "usage\|palette" && chk ok "the private recipe runs by name (the passthrough path)" || chk fail "private recipe not runnable by name"
+
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
 printf 'fake|file://%s/icons-src|top|\n' "$T" > "$T/sources.conf"
@@ -152,6 +381,41 @@ FORCE=1 just install-icons Fake-Light </dev/null >/dev/null 2>&1; [ ! -e "$ICONS
 cp -a "$T/icons-src/Fake-Dark" "$ICONS_DEST/Fake-Dark"; rm -rf "$ICONS_DEST/Fake-Dark/.git"; echo stale > "$ICONS_DEST/Fake-Dark/stale.txt"
 just install-icons Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.gnome-themes" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
 just remove-icons Fake-Dark </dev/null >/dev/null 2>&1; just remove-icons Fake-Light </dev/null >/dev/null 2>&1
+
+# ---- Flatpak access: grant after a y, record only what was added, undo only that ------------------------------------------------
+echo "=== flatpak access"
+FS="$T/themes-fp"; FI="$T/icons-fp"; fpst="$XDG_STATE_HOME/gnome-themes/flatpak-overrides"; rm -f "$fpst"
+export FP_PATH="$T/fpbin:$PATH"
+fpshow() { sort "$FLATPAK_DB" | tr '\n' ' '; }
+# without a terminal: nothing changes, the exact command is printed
+: > "$FLATPAK_DB"
+out=$(PATH="$FP_PATH" THEMES_DEST=$FS just install-themes fairy-floss </dev/null 2>&1; PATH="$FP_PATH" THEMES_DEST=$FS just switch-theme fairy-floss </dev/null 2>&1)
+[ ! -s "$FLATPAK_DB" ] && [ ! -e "$fpst" ] && printf '%s\n' "$out" | grep -qF "flatpak override --user --filesystem=xdg-config/gtk-3.0:ro --filesystem=xdg-config/gtk-4.0:ro --filesystem=xdg-data/icons:ro --filesystem=~/.themes:ro" && chk ok "no terminal: sandbox untouched, exact command printed" || chk fail "no-terminal flatpak case"
+if command -v script >/dev/null 2>&1; then
+    # a pre-existing entry; answer n, then y
+    : > "$FLATPAK_DB"; echo "xdg-config/gtk-4.0:ro" > "$FLATPAK_DB"
+    printf 'n\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null > "$T/fp.out" 2>&1
+    [ "$(fpshow)" = "xdg-config/gtk-4.0:ro " ] && [ ! -e "$fpst" ] && grep -q "Allow read-only access to these folders for all Flatpaks" "$T/fp.out" && chk ok "answer n: nothing granted or recorded; the prompt text" || chk fail "flatpak n case ($(fpshow))"
+    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null >/dev/null 2>&1
+    [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "answer y: the missing entries were granted" || chk fail "flatpak y grant ($(fpshow))"
+    [ "$(sort "$fpst" | tr '\n' ' ')" = "xdg-config/gtk-3.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "only the entries gnome-themes added are recorded (the pre-existing one is not)" || chk fail "record: $(cat "$fpst" 2>/dev/null | tr '\n' ' ')"
+    # a second switch finds nothing missing: no prompt
+    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null > "$T/fp.out" 2>&1
+    grep -q "Allow read-only access" "$T/fp.out" && chk fail "prompted although everything is granted" || chk ok "nothing missing: no prompt"
+    # undo: install an icon set too; removing the themes alone keeps the record, removing the last set asks
+    PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icons Fake-Dark </dev/null >/dev/null 2>&1
+    printf 'y\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh themes remove fairy-floss" /dev/null > "$T/fp.out" 2>&1
+    [ -s "$fpst" ] && ! grep -q "Remove the Flatpak read access" "$T/fp.out" && chk ok "removing the last theme while an icon set remains does not ask" || chk fail "undo asked too early"
+    printf 'n\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh icons remove Fake-Dark" /dev/null > "$T/fp.out" 2>&1
+    grep -q "Remove the Flatpak read access that gnome-themes added" "$T/fp.out" && [ -s "$fpst" ] && [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "removing the last set asks; n keeps access and record" || chk fail "undo n case"
+    PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icons Fake-Dark </dev/null >/dev/null 2>&1
+    out=$(PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just remove-icons Fake-Dark </dev/null 2>&1)
+    printf '%s\n' "$out" | grep -qF "flatpak override --user --nofilesystem=xdg-config/gtk-3.0 --nofilesystem=xdg-data/icons --nofilesystem=~/.themes" && ! printf '%s\n' "$out" | grep -q "nofilesystem=xdg-config/gtk-4.0" && [ -s "$fpst" ] && chk ok "no terminal: the undo commands for exactly the recorded entries are printed, nothing removed" || chk fail "undo no-terminal case"
+    PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icons Fake-Dark </dev/null >/dev/null 2>&1
+    printf 'y\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh icons remove Fake-Dark" /dev/null >/dev/null 2>&1
+    [ "$(fpshow)" = "xdg-config/gtk-4.0:ro " ] && [ ! -e "$fpst" ] && chk ok "answer y: exactly the recorded entries are removed (the pre-existing one stays), record cleared" || chk fail "undo y case ($(fpshow))"
+else echo "  skip flatpak prompt tests (script not installed)"; fi
+rm -rf "$FS" "$FI" "$fpst"; : > "$FLATPAK_DB"
 
 # ---- checklist UI (pty): SPACE toggles, ENTER confirms, q cancels, preselection shown ---------------------------
 echo "=== checklist (pty)"

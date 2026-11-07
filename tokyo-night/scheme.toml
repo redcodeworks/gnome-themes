@@ -62,3 +62,10 @@ yellow = "#8c6c3e"
 blue = "#2e7de9"
 magenta = "#9854f1"
 cyan = "#007197"
+
+# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-ins "Tokyo Night" / "Tokyo Night Day" (their six ANSI
+# colours equal ours): Color0 = their black. They have no real brights (Color9-14 equal Color1-6), so the defaults stay.
+[dark.terminal]
+black = "#414868"   # Ptyxis built-in "Tokyo Night" Color0
+[light.terminal]
+black = "#e9e9ed"   # Ptyxis built-in "Tokyo Night Day" Color0
