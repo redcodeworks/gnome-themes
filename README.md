@@ -15,10 +15,11 @@ Layout: `<scheme>/palette.toml`, `<scheme>/themes/<Name>/` (installed as-is), `<
 ## Install
 
 ```
-just pick                                  # checklist; copies the chosen themes into ~/.themes
-just pick Gruvbox-Material                 # no prompt
-just install gruvbox-material              # a whole scheme into /usr/share/themes (root)
-just install-user                          # libadwaita apps: installs ~/.config/gtk-4.0/gtk.css
+just install                               # checklist; copies the chosen themes into ~/.themes
+just install Gruvbox-Material              # no prompt
+just install-libadwaita                    # libadwaita apps: installs ~/.config/gtk-4.0/gtk.css
+just install-system gruvbox-material       # a whole scheme into /usr/share/themes (root)
+just list                                  # theme names
 ```
 
 Then select the GTK theme in Tweaks (or `gsettings set org.gnome.desktop.interface gtk-theme Gruvbox-Material`)

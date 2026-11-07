@@ -1,15 +1,12 @@
 # gnome-themes: one directory per colour scheme; each has palette.toml and themes/<Name>/ folders that are
-# installed as-is into a themes directory (GTK3, plain GTK4 and GNOME Shell); libadwaita/ is a USER-level file (just install-user).
-# `just pick` is the easy way: a checklist that copies the themes you choose into ~/.themes. Needs only just and bash.
+# installed as-is into a themes directory (GTK3, plain GTK4 and GNOME Shell); libadwaita/ is a USER-level file (just install-libadwaita).
+# `just install` is the easy way: a checklist that copies the themes you choose into ~/.themes. Needs only just and bash.
 
 default:
     @just --list
 
-# List the colour schemes in this repo
-list:
-    @ls -d */themes | sed 's|/themes||'
-
 # Regenerate the GTK3, GTK4 and GNOME Shell CSS of a scheme from the toolkits' own stock stylesheets (needs python3-gobject, GTK 3, GTK 4 and gnome-shell)
+[group('develop')]
 generate theme="gruvbox-material":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -20,13 +17,15 @@ generate theme="gruvbox-material":
     python3 -I tools/shell-theme-gen.py --palette={{theme}}/palette.toml --out={{theme}}/themes
 
 # Install every theme folder of a scheme into a themes directory (system: /usr/share/themes; per user: ~/.themes as real copies, Flatpak cannot follow symlinks)
-install theme="gruvbox-material" dest="/usr/share/themes":
+[group('install')]
+install-system theme="gruvbox-material" dest="/usr/share/themes":
     mkdir -p "{{dest}}"
     cp -a {{theme}}/themes/. "{{dest}}/"
 
-# Pick which themes to install, from a checklist (needs only just and bash). Installs real copies into ~/.themes (override with THEMES_DEST=DIR); give theme names to skip the prompt, e.g. just pick Gruvbox-Material. Flatpak apps see ~/.themes, not /usr/share/themes, and cannot follow symlinks
+# Install themes from a checklist (needs only just and bash). Installs real copies into ~/.themes (override with THEMES_DEST=DIR); give theme names to skip the prompt, e.g. just install Gruvbox-Material. Flatpak apps see ~/.themes, not /usr/share/themes, and cannot follow symlinks
 [positional-arguments]
-pick *names:
+[group('install')]
+install *names:
     #!/usr/bin/env bash
     set -euo pipefail
     dest="${THEMES_DEST:-$HOME/.themes}"
@@ -40,7 +39,7 @@ pick *names:
         for want in "$@"; do
             found=0
             for i in "${!names[@]}"; do if [ "${names[i]}" = "$want" ]; then on[i]=1; found=1; fi; done
-            [ "$found" -eq 1 ] || { echo "'$want' is not a theme in this repo (see: just list-themes)"; exit 1; }
+            [ "$found" -eq 1 ] || { echo "'$want' is not a theme in this repo (see: just list)"; exit 1; }
         done
     else
         # Preselect what is already in the destination, or the plain GTK theme of each scheme on a first run
@@ -84,11 +83,13 @@ pick *names:
     if [ "$count" -eq 0 ]; then echo "Nothing selected."; else echo "Restart GTK apps (and Flatpaks) to pick up the changes; select a Shell theme with the User Themes extension."; fi
 
 # List the installable theme names
-list-themes:
+[group('install')]
+list:
     @for d in */themes/*/; do basename "$d"; done
 
 # Install the libadwaita named-colour file as ~/.config/gtk-4.0/gtk.css (libadwaita apps ignore the GTK theme and read only this user stylesheet). Never overwrites a different file unless force=force (then keeps a .bak)
-install-user theme="gruvbox-material" force="":
+[group('install')]
+install-libadwaita theme="gruvbox-material" force="":
     #!/usr/bin/env bash
     set -euo pipefail
     src="{{theme}}/libadwaita/gtk.css"
@@ -97,7 +98,7 @@ install-user theme="gruvbox-material" force="":
     if [ -e "$dest" ] && ! cmp -s "$src" "$dest"; then
         if [ "{{force}}" != "force" ]; then
             echo "$dest exists and differs from $src; not overwriting."
-            echo "Review: diff $src $dest   -- then: just install-user {{theme}} force"
+            echo "Review: diff $src $dest   -- then: just install-libadwaita {{theme}} force"
             exit 1
         fi
         cp -L --backup=numbered "$dest" "$dest.bak" && echo "kept the old file as $dest.bak"
