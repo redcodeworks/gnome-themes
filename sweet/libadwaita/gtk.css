@@ -15,54 +15,54 @@
  */
 
 @define-color accent_bg_color #c74ded;
-@define-color accent_fg_color #161925;
+@define-color accent_fg_color #282c34;
 
 @define-color destructive_bg_color #ed254e;
-@define-color destructive_fg_color #161925;
+@define-color destructive_fg_color #282c34;
 
 @define-color success_bg_color #71f79f;
-@define-color success_fg_color #161925;
+@define-color success_fg_color #282c34;
 
 @define-color warning_bg_color #f9dc5c;
-@define-color warning_fg_color #161925;
+@define-color warning_fg_color #282c34;
 
 @define-color error_bg_color #ed254e;
-@define-color error_fg_color #161925;
+@define-color error_fg_color #282c34;
 
-@define-color window_bg_color #181b28;
+@define-color window_bg_color #31353d;
 @define-color window_fg_color #c3c7d1;
 
-@define-color view_bg_color #161925;
+@define-color view_bg_color #282c34;
 @define-color view_fg_color #c3c7d1;
 
-@define-color headerbar_bg_color #292f45;
+@define-color headerbar_bg_color #41454d;
 @define-color headerbar_fg_color #c3c7d1;
-@define-color headerbar_backdrop_color #181b28;
+@define-color headerbar_backdrop_color #31353d;
 
-@define-color sidebar_bg_color #292f45;
+@define-color sidebar_bg_color #41454d;
 @define-color sidebar_fg_color #c3c7d1;
-@define-color sidebar_backdrop_color #181b28;
+@define-color sidebar_backdrop_color #31353d;
 
-@define-color secondary_sidebar_bg_color #181b28;
+@define-color secondary_sidebar_bg_color #31353d;
 @define-color secondary_sidebar_fg_color #c3c7d1;
-@define-color secondary_sidebar_backdrop_color #181b28;
+@define-color secondary_sidebar_backdrop_color #31353d;
 
 @define-color card_bg_color alpha(white, .08);
 @define-color card_fg_color #c3c7d1;
 
-@define-color dialog_bg_color #464a55;
+@define-color dialog_bg_color #535760;
 @define-color dialog_fg_color #c3c7d1;
 
-@define-color popover_bg_color #464a55;
+@define-color popover_bg_color #535760;
 @define-color popover_fg_color #c3c7d1;
 
-@define-color thumbnail_bg_color #464a55;
+@define-color thumbnail_bg_color #535760;
 @define-color thumbnail_fg_color #c3c7d1;
 
 /* libadwaita hard-codes AdwToast as `toast { background: #505053; color: white; }` rather than going through any
  * *_bg_color named colour, so the overrides above cannot reach it. Like stock Adwaita it stays dark in light and
  * dark mode; the values are the dark popover surface and dark foreground. */
 toast {
-    background: #464a55;
+    background: #535760;
     color: #c3c7d1;
 }

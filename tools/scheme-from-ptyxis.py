@@ -14,7 +14,7 @@ accents, [<variant>.ansi]), purple = magenta. Everything a palette cannot give i
 50 %), selection (bg_deep 20 % towards fg), the surface ladder and fg_dim/comment (the fixed rules of palette-from-scheme.py), default_accent (the
 accent with the best contrast on bg_deep, with the numbers as the reason), accent_fg (listed when an accent fails 4.5:1 with bg_deep ink),
 dark-only or not, the credit/licence lines for NOTICE. Black, white, brights and cursor that differ from the generator defaults of
-tools/ptyxis-gen.py are written to [<variant>.terminal] with the palette as their source. title, gtk_name and shell_name come from the directory name.
+tools/ptyxis-gen.py are written to [<variant>.terminal], which always carries `source = "<palette>"` (the source of truth, checked by tools/ptyxis-compare.py --check). title, gtk_name and shell_name come from the directory name.
 The draft is not a finished scheme: resolve every TODO, then run `just generate <scheme>`.
 """
 import sys, os, re, subprocess
@@ -113,7 +113,9 @@ def build(scheme_dir, ref, ref_light=None):
         diff('bright_black', 'Color8', p.get('Color8'))
         for i, n in enumerate(NAMES): diff('bright_' + n, 'Color%d' % (i + 9), p.get('Color%d' % (i + 9)))
         diff('bright_white', 'Color15', p.get('Color15'))
-        if term: roles += ['[%s.terminal]   # source: Ptyxis palette "%s"' % (v, src[v])] + term
+        # `source` is always written: the built-in is the source of truth (tools/ptyxis-compare.py --check compares against it); what differs from
+        # the generator defaults is listed beside it. A palette that is a file, not a built-in, needs `no_builtin` instead (TODO)
+        roles += ['[%s.terminal]' % v, 'source = "%s"   # Ptyxis built-in (change to no_builtin = "<why>" when the palette is not a built-in)' % src[v]] + term
         body.append('\n'.join(roles))
         c = {n: sr.contrast(acc[n], bg) for n in NAMES}
         top = max(c, key=c.get); best.append((v, top, c[top]))

@@ -5,15 +5,20 @@
 # Roles: view base00 #272822, window base01 #383830, headers base02 #49483e, popovers DERIVED (fixed rule, 28 % towards fg),
 # comment base03 #75715e, fg_dim base04 #a59f85, fg base05 #f8f8f2, selection base02.
 # ANSI six = Ptyxis "Monokai Dark" Color1-6 (it matches the classic palette; "Monokai Soda" is a different one: #1A1A1A, red #F4005F),
-# except cyan: Ptyxis has #2AA198 (a Solarized teal), Base16 Monokai has base0C #a1efe4, which is what is used here.
+# including cyan #2aa198 (a Solarized teal; Base16 Monokai's base0C #a1efe4 was used before 2026-11-07).
 # Ptyxis' yellow #F4BF75 = base0A (the original string yellow #E6DB74 is not used).
 # Default accent green #A6E22E (Monokai's signature colour, base0B), one of the six.
+# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
+# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
+# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# Source: Monokai Dark (flat, dark only; classic Monokai: same background, foreground and five of the six accents). Changes: cyan #2aa198, plus its black #75715e,
+# white #f9f8f5, brights (its bright black equals the background #272822, so it is invisible as text; kept, it is the built-in's).
 title = "Monokai"
 gtk_name = "Monokai"
 shell_name = "Monokai-Shell"
 credit = "Monokai by Wimer Hazenberg (palette values via Base16, tinted-theming/schemes, MIT); not Monokai Pro"
-ptyxis = "generated"
-ptyxis_reason = "the nearest built-in, Monokai Dark, differs visibly (cyan 30 dE); the Monokai Pro built-ins are a different palette"
+ptyxis = "Monokai Dark"
+ptyxis_reason = "Monokai Dark is the source (classic Monokai: background #272822, same ANSI colours; the Monokai Pro built-ins are a different palette) and equals the scheme in every role (0.00 dE, no nudges); flat and dark only, like the scheme"
 default_accent = "green"
 
 [dark]
@@ -28,7 +33,7 @@ red = "#f92672"
 orange = "#fd971f"
 yellow = "#f4bf75"
 green = "#a6e22e"
-cyan = "#a1efe4"
+cyan = "#2aa198"
 blue = "#66d9ef"
 magenta = "#ae81ff"
 purple = "#ae81ff"
@@ -40,9 +45,21 @@ green = "#a6e22e"
 yellow = "#f4bf75"
 blue = "#66d9ef"
 magenta = "#ae81ff"
-cyan = "#a1efe4"
+cyan = "#2aa198"
 
-# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-in "Monokai Dark" (five of the six ANSI colours equal ours):
-# Color0 = its black. It has no real brights, so the defaults stay.
+# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
+# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
+# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+
 [dark.terminal]
-black = "#75715e"   # Ptyxis built-in "Monokai Dark" Color0
+source = "Monokai Dark"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+black = "#75715e"   # Color0
+white = "#f9f8f5"   # Color7
+bright_black = "#272822"   # Color8
+bright_red = "#f92672"   # Color9
+bright_green = "#a6e22e"   # Color10
+bright_yellow = "#f4bf75"   # Color11
+bright_blue = "#66d9ef"   # Color12
+bright_magenta = "#ae81ff"   # Color13
+bright_cyan = "#2aa198"   # Color14
+bright_white = "#f8f8f2"   # Color15

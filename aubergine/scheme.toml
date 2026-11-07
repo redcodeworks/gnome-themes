@@ -4,22 +4,25 @@
 # (dark aubergine #2C001E, mid aubergine #5E2750, orange #E95420); terminal table = Ptyxis "Ubuntu" (background #300A24, foreground
 # #FFFFFF; gnome-terminal's own profile has #EEEEEC) with the Tango ANSI colours. The Tango palette's licence was not verified;
 # the values come from the Ptyxis palette (Gogh, MIT) and the research file, NOT re-read from a raw upstream file (not reachable).
-# Ladder: view dark aubergine #2c001e, window #300a24 (terminal background), headers mid aubergine #5e2750, popovers DERIVED
-# (fixed rule, 28 % towards fg). fg_dim and comment derived.
+# Ladder: view and terminal background #300a24 (Ubuntu's own; the brand dark aubergine #2c001e was the view before), window DERIVED,
+# headers mid aubergine #5e2750, popovers DERIVED (fixed rule, 28 % towards fg). fg_dim and comment derived.
 # ANSI six = Ptyxis "Ubuntu" Color1-6 (Tango red, green, yellow, blue, magenta, cyan).
 # Default accent orange #E95420: Ubuntu's brand accent. Orange is the seventh accent, next to the six terminal colours (it is the
 # scheme's own orange role colour, not an ANSI colour).
+# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
+# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
+# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# Source: Ubuntu (flat, dark only). bg_deep #300a24 replaces the brand #2c001e; the ANSI colours and brights were already Ubuntu's.
 title = "Aubergine"
 gtk_name = "Aubergine"
 shell_name = "Aubergine-Shell"
 credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
-ptyxis = "generated"
-ptyxis_reason = "the Ubuntu built-in's ANSI colours match, but its background #300A24 differs from this scheme's terminal background (the view colour #2C001E, 4.1 dE, above the threshold)"
+ptyxis = "Ubuntu"
+ptyxis_reason = "the Ubuntu built-in is the source and its colours equal this scheme's in every role (0.00 dE, no nudges); like the scheme it is flat and dark only"
 default_accent = "orange"
 
 [dark]
-bg_deep = "#2c001e"
-bg = "#300a24"
+bg_deep = "#300a24"
 surface = "#5e2750"
 fg = "#ffffff"
 selection = "#5e2750"
@@ -40,15 +43,19 @@ blue = "#3465a4"
 magenta = "#75507b"
 cyan = "#06989a"
 
-# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-in "Ubuntu" (all six ANSI colours equal ours, the
-# classic Ubuntu terminal): its black and its REAL brights (Color8-15, the only built-in among our schemes that has them).
+# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
+# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
+# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+
 [dark.terminal]
-black = "#2e3436"          # Ptyxis built-in "Ubuntu" Color0
+source = "Ubuntu"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+black = "#2e3436"   # Color0
+white = "#d3d7cf"   # Color7
 bright_black = "#555753"   # Color8
-bright_red = "#ef2929"
-bright_green = "#8ae234"
-bright_yellow = "#fce94f"
-bright_blue = "#729fcf"
-bright_magenta = "#ad7fa8"
-bright_cyan = "#34e2e2"
+bright_red = "#ef2929"   # Color9
+bright_green = "#8ae234"   # Color10
+bright_yellow = "#fce94f"   # Color11
+bright_blue = "#729fcf"   # Color12
+bright_magenta = "#ad7fa8"   # Color13
+bright_cyan = "#34e2e2"   # Color14
 bright_white = "#eeeeec"   # Color15

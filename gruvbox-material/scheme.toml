@@ -2,12 +2,17 @@
 # Role file for tools/palette-from-scheme.py (-> palette.toml). Gruvbox Material (sainnhe/gruvbox-material, MIT).
 # The values are the ones the previous hand-written palette.toml used: dark = MEDIUM backgrounds (bg0 #282828),
 # light = a hard-contrast block. Terminal accents = the scheme's own terminal colours (Ghostty theme).
+# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
+# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
+# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# Source dark: Gruvbox Material (fg #d4be98, was the role fg #ddc7a1 with a terminal override; the override is gone). Light: NO built-in exists
+# (the built-in of that name is dark only), so the light values below stay as they were; see no_builtin in [light.terminal].
 title = "Gruvbox Material"
 gtk_name = "Gruvbox-Material"
 shell_name = "Gruvbox-Material-Shell"
 credit = "sainnhe/gruvbox-material (MIT)"
 ptyxis = "generated"
-ptyxis_reason = "the Gruvbox Material built-in is flat and dark only: its roles equal our dark variant (0.00 dE) but a flat built-in would lose light/dark switching, and it has no light counterpart (79 dE from our light variant)"
+ptyxis_reason = "the Gruvbox Material built-in is the dark source (0.00 dE, no nudges) but it is flat and dark only and there is no light built-in, so a flat built-in would lose light/dark switching; the generated pair palette carries the built-in's dark colours and this scheme's own light ones"
 default_accent = "blue"
 
 [dark]
@@ -15,7 +20,7 @@ bg_deep = "#282828"
 bg = "#32302f"
 surface = "#45403d"
 surface_high = "#5a524c"
-fg = "#ddc7a1"
+fg = "#d4be98"
 fg_dim = "#a89984"
 comment = "#928374"
 selection = "#504945"
@@ -65,17 +70,25 @@ cyan = "#4c7a5d"
 [light.adw]
 secondary_sidebar = "#f3eac7"   # hand-picked in the old libadwaita file; the rule (bg/surface mix) would give #f4e9c3
 
-# Terminal palette (tools/ptyxis-gen.py reads these overrides; defaults are in its header). Source of every value below:
-# the hub's reference palette (Kevin's own working Gruvbox Material Ptyxis palette, 2026-11-07), which the Ptyxis built-in
-# "Gruvbox Material" (Gogh) matches for Foreground #D4BE98, Cursor, Color0 #3C3836 and the six ANSI colours; the built-in's
-# Color8 #3C3836 is NOT used (it is black on black; the default, the `comment` role #928374, matches the reference). The light
-# values (no built-in exists) are the reference too: its Background is the window colour (#f5edca), not the view colour
-# (#f9f5d7, which is its titlebar colour), and Color8 equals Color0 (surface). tools/test.sh compares the generated palette
-# with the reference, key by key.
+# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
+# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
+# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+
 [dark.terminal]
-foreground = "#d4be98"   # Ptyxis built-in "Gruvbox Material" (the terminal text is slightly dimmer than the role fg #ddc7a1)
-black = "#3c3836"        # Ptyxis built-in Color0
+source = "Gruvbox Material"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+black = "#3c3836"   # Color0
+white = "#d4be98"   # Color7
+bright_black = "#3c3836"   # Color8
+bright_red = "#ea6962"   # Color9
+bright_green = "#a9b665"   # Color10
+bright_yellow = "#d8a657"   # Color11
+bright_blue = "#7daea3"   # Color12
+bright_magenta = "#d3869b"   # Color13
+bright_cyan = "#89b482"   # Color14
+bright_white = "#d4be98"   # Color15
+
 [light.terminal]
+no_builtin = "no Ptyxis built-in has a light Gruvbox Material (the built-in of that name is dark only); the values stay as before"
 foreground = "#654735"   # reference (a softer ink than the role fg #4f3829)
 background = "#f5edca"   # reference: the window colour
 bright_black = "#f2e5bc" # reference: equals Color0

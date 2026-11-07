@@ -14,7 +14,7 @@ Color3=#DF8E1D
 Color4=#1E66F5
 Color5=#EA76CB
 Color6=#179299
-Color7=#4C4F69
+Color7=#ACB0BE
 Color8=#6C6F85
 Color9=#D20F39
 Color10=#40A02B
@@ -26,7 +26,7 @@ Color15=#BCC0CC
 
 [Dark]
 Foreground=#CDD6F4
-Background=#181825
+Background=#1E1E2E
 TitlebarBackground=#313244
 TitlebarForeground=#CDD6F4
 Cursor=#CDD6F4
@@ -37,7 +37,7 @@ Color3=#F9E2AF
 Color4=#89B4FA
 Color5=#F5C2E7
 Color6=#94E2D5
-Color7=#CDD6F4
+Color7=#BAC2DE
 Color8=#585B70
 Color9=#F38BA8
 Color10=#A6E3A1

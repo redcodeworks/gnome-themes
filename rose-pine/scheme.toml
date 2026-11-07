@@ -9,20 +9,26 @@
 # 6.9:1 against 9.3:1 for #464261, both pass; change fg below to #464261 if palette.json is the one that matters to you.
 # Ladder dark: view base #191724, window surface #1f1d2e, headers overlay #26233a, popovers highlight-med #403d52.
 # Ladder light (view lightest): view surface #fffaf3, window base #faf4ed, headers overlay #f2e9e1, popovers highlight-med #dfdad9.
-# fg_dim = subtle, comment = muted. ANSI six = the official mapping: love red, pine green, gold yellow, foam blue, iris magenta,
-# rose cyan (Rose Pine has no Ptyxis palette). Rose Pine has no orange: orange is DERIVED (gold mixed 35 % towards love).
+# fg_dim = subtle, comment = muted. ANSI six = Ptyxis' mapping (2026-11-07): love red, FOAM green, gold yellow, PINE blue, iris magenta,
+# rose cyan (the alacritty port has pine green and foam blue). Rose Pine has no orange: orange is DERIVED (gold mixed 35 % towards love).
 # No seventh "orange" accent: upstream Rose Pine has no orange (the orange role above is a derived mix), so only the six terminal accents exist.
 # Default accent magenta = iris: Rose Pine's own UI accent in most ports; iris and rose are not ANSI blue, and iris is the
-# one with the best contrast of the six on the dark window (8.4:1 on base; pine/green is only 3.2:1, 3.6:1 on Dawn view for iris).
+# one with the best contrast of the six on the dark window (8.4:1 on base; pine, now the blue, is only 3.2:1, 3.6:1 on Dawn view for iris).
 # accent_fg (dark): text on an accent is the window colour #1f1d2e, not bg_deep. Reason (generator limit, not taste): the dark and
 # light variants would otherwise share ONE nudged ink token (#19172c) that maps to different inks per accent in the two variants,
 # and the single libadwaita file (both variants, one sed pass) cannot tell them apart (accent-maps-gen verification fails).
+# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
+# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
+# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# Sources: Rosé Pine (dark), Rosé Pine Dawn (light). Green and blue are swapped against the alacritty mapping (green = foam #9ccfd8 / #56949f, blue = pine #31748f / #286983),
+# so the UI success colour is foam. Dawn: bg_deep is base #faf4ed (was the surface #fffaf3 as the view), its bg and surface steps are DERIVED now.
+# Moon is a third built-in and is not used (dark = the main variant).
 title = "Rose Pine"
 gtk_name = "Rose-Pine"
 shell_name = "Rose-Pine-Shell"
 credit = "Rose Pine (MIT), Main and Dawn"
 ptyxis = "generated"
-ptyxis_reason = "the built-ins Rosé Pine, Moon and Dawn are three flat palettes (no light/dark pair in one name), and their green and blue differ from the official ANSI mapping used here (36 dE dark, 19 dE Dawn)"
+ptyxis_reason = "Rosé Pine (dark) and Rosé Pine Dawn (light) are the sources and equal the scheme (0.00 dE, no nudges), but they are two flat built-ins and one profile holds one palette name, so the pair cannot follow light/dark; the generated pair palette carries exactly their colours"
 default_accent = "magenta"
 
 [dark]
@@ -38,24 +44,22 @@ selection = "#403d52"
 red = "#eb6f92"
 orange = "#f2a480"
 yellow = "#f6c177"
-green = "#31748f"
+green = "#9ccfd8"
 cyan = "#ebbcba"
-blue = "#9ccfd8"
+blue = "#31748f"
 magenta = "#c4a7e7"
 purple = "#c4a7e7"
 pink = "#ebbcba"
 [dark.ansi]
 red = "#eb6f92"
-green = "#31748f"
+green = "#9ccfd8"
 yellow = "#f6c177"
-blue = "#9ccfd8"
+blue = "#31748f"
 magenta = "#c4a7e7"
 cyan = "#ebbcba"
 
 [light]
-bg_deep = "#fffaf3"
-bg = "#faf4ed"
-surface = "#f2e9e1"
+bg_deep = "#faf4ed"
 surface_high = "#dfdad9"
 fg = "#575279"
 fg_dim = "#797593"
@@ -64,18 +68,46 @@ selection = "#dfdad9"
 red = "#b4637a"
 orange = "#d7894c"
 yellow = "#ea9d34"
-green = "#286983"
+green = "#56949f"
 cyan = "#d7827e"
-blue = "#56949f"
+blue = "#286983"
 magenta = "#907aa9"
 purple = "#907aa9"
 pink = "#d7827e"
 [light.ansi]
 red = "#b4637a"
-green = "#286983"
+green = "#56949f"
 yellow = "#ea9d34"
-blue = "#56949f"
+blue = "#286983"
 magenta = "#907aa9"
 cyan = "#d7827e"
 
-# Terminal palette: no overrides (tools/ptyxis-gen.py defaults): no Ptyxis built-in matches this scheme's ANSI colours (checked 2026-11-07), so there are no real brights to take.
+# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
+# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
+# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+
+[dark.terminal]
+source = "Rosé Pine"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+black = "#26233a"   # Color0
+white = "#e0def4"   # Color7
+bright_black = "#6e6a86"   # Color8
+bright_red = "#eb6f92"   # Color9
+bright_green = "#9ccfd8"   # Color10
+bright_yellow = "#f6c177"   # Color11
+bright_blue = "#31748f"   # Color12
+bright_magenta = "#c4a7e7"   # Color13
+bright_cyan = "#ebbcba"   # Color14
+bright_white = "#e0def4"   # Color15
+
+[light.terminal]
+source = "Rosé Pine Dawn"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+black = "#f2e9e1"   # Color0
+white = "#575279"   # Color7
+bright_black = "#9893a5"   # Color8
+bright_red = "#b4637a"   # Color9
+bright_green = "#56949f"   # Color10
+bright_yellow = "#ea9d34"   # Color11
+bright_blue = "#286983"   # Color12
+bright_magenta = "#907aa9"   # Color13
+bright_cyan = "#d7827e"   # Color14
+bright_white = "#575279"   # Color15

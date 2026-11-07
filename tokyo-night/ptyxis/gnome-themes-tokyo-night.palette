@@ -2,11 +2,11 @@
 Name=Tokyo Night (GNOME Themes)
 
 [Light]
-Foreground=#30519F
+Foreground=#3258AF
 Background=#E1E2E7
 TitlebarBackground=#E1E2E7
-TitlebarForeground=#30519F
-Cursor=#30519F
+TitlebarForeground=#3258AF
+Cursor=#3258AF
 Color0=#E9E9ED
 Color1=#F52A65
 Color2=#587539
@@ -14,19 +14,19 @@ Color3=#8C6C3E
 Color4=#2E7DE9
 Color5=#9854F1
 Color6=#007197
-Color7=#30519F
-Color8=#848CB5
+Color7=#6172B0
+Color8=#A1A6C5
 Color9=#F52A65
 Color10=#587539
 Color11=#8C6C3E
 Color12=#2E7DE9
 Color13=#9854F1
 Color14=#007197
-Color15=#30519F
+Color15=#3760BF
 
 [Dark]
 Foreground=#C0CAF5
-Background=#16161E
+Background=#1A1B26
 TitlebarBackground=#292E42
 TitlebarForeground=#C0CAF5
 Cursor=#C0CAF5
@@ -37,8 +37,8 @@ Color3=#E0AF68
 Color4=#7AA2F7
 Color5=#BB9AF7
 Color6=#7DCFFF
-Color7=#C0CAF5
-Color8=#737AA2
+Color7=#A9B1D6
+Color8=#414868
 Color9=#F7768E
 Color10=#9ECE6A
 Color11=#E0AF68

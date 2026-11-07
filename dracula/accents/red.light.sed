@@ -13,41 +13,41 @@ s|#65449d|@@L10@@|gI
 s|#66449f|@@L11@@|gI
 s|#6946a3|@@L12@@|gI
 s|#6c4aa5|@@L13@@|gI
-s|#7656a9|@@L14@@|gI
-s|#795aab|@@L15@@|gI
-s|#7f61ae|@@L16@@|gI
-s|#866ab1|@@L17@@|gI
-s|#8a6eb3|@@L18@@|gI
-s|#9a81bb|@@L19@@|gI
-s|#b4a0c7|@@L20@@|gI
-s|#b4a1c7|@@L21@@|gI
-s|#b8a5c9|@@L22@@|gI
-s|#bcaacb|@@L23@@|gI
-s|#c3b2ce|@@L24@@|gI
-s|#c4b4cf|@@L25@@|gI
-s|#c7b7d0|@@L26@@|gI
-s|#cdbed3|@@L27@@|gI
-s|#d1c4d5|@@L28@@|gI
-s|#d4c7d6|@@L29@@|gI
-s|#d6c9d7|@@L30@@|gI
-s|#dfd5dc|@@L31@@|gI
-s|#e1d6dc|@@L32@@|gI
-s|#e6dddf|@@L33@@|gI
-s|#e8dfe0|@@L34@@|gI
-s|#eae1e1|@@L35@@|gI
-s|#ebe3e1|@@L36@@|gI
-s|#efe8e3|@@L37@@|gI
-s|#f5efe6|@@L38@@|gI
-s|#f6f0e7|@@L39@@|gI
-s|#fcf8ea|@@L40@@|gI
+s|#7656ab|@@L14@@|gI
+s|#795aad|@@L15@@|gI
+s|#7f61b1|@@L16@@|gI
+s|#866ab5|@@L17@@|gI
+s|#8a6fb7|@@L18@@|gI
+s|#9a82c1|@@L19@@|gI
+s|#b4a2d1|@@L20@@|gI
+s|#b4a3d1|@@L21@@|gI
+s|#b8a7d3|@@L22@@|gI
+s|#bcacd6|@@L23@@|gI
+s|#c3b4da|@@L24@@|gI
+s|#c4b7db|@@L25@@|gI
+s|#c7badd|@@L26@@|gI
+s|#cdc1e0|@@L27@@|gI
+s|#d1c6e3|@@L28@@|gI
+s|#d4cae5|@@L29@@|gI
+s|#d6cce6|@@L30@@|gI
+s|#dfd8ec|@@L31@@|gI
+s|#e1d9ec|@@L32@@|gI
+s|#e6e1f0|@@L33@@|gI
+s|#e8e3f1|@@L34@@|gI
+s|#eae5f2|@@L35@@|gI
+s|#ebe7f3|@@L36@@|gI
+s|#efebf5|@@L37@@|gI
+s|#f5f2f9|@@L38@@|gI
+s|#f6f4fa|@@L39@@|gI
+s|#fcfcfd|@@L40@@|gI
 s|rgba(105, 70, 163, 0)|@@L41@@|gI
 s|rgba(105, 70, 163, 0\.2)|@@L42@@|gI
 s|rgba(105, 70, 163, 0\.3)|@@L43@@|gI
 s|rgba(105, 70, 163, 0\.5)|@@L44@@|gI
 s|rgba(105, 70, 163, 0\.7)|@@L45@@|gI
 s|rgba(105, 70, 163, 0\.8)|@@L46@@|gI
-s|rgba(165, 143, 192, 0\.9)|@@L47@@|gI
-s|rgba(180, 161, 199, 0\.88)|@@L48@@|gI
+s|rgba(165, 144, 200, 0\.9)|@@L47@@|gI
+s|rgba(180, 163, 209, 0\.88)|@@L48@@|gI
 s|rgba(76, 51, 118, 0\.5)|@@L49@@|gI
 s|rgba(86, 57, 133, 0\.2)|@@L50@@|gI
 s|rgba(86, 57, 133, 0\.9)|@@L51@@|gI
@@ -64,42 +64,42 @@ s|@@L9@@|#aa001f|g
 s|@@L10@@|#b00020|g
 s|@@L11@@|#b10020|g
 s|@@L12@@|#b60021|g
-s|@@L13@@|#b80525|g
-s|@@L14@@|#bc1633|g
-s|@@L15@@|#be1b37|g
-s|@@L16@@|#c1253f|g
-s|@@L17@@|#c43149|g
-s|@@L18@@|#c6384e|g
-s|@@L19@@|#ce5263|g
-s|@@L20@@|#da7d86|g
-s|@@L21@@|#db7e86|g
-s|@@L22@@|#dc838b|g
-s|@@L23@@|#de8a90|g
-s|@@L24@@|#e2969a|g
-s|@@L25@@|#e2999c|g
-s|@@L26@@|#e49da0|g
-s|@@L27@@|#e7a7a7|g
-s|@@L28@@|#e9aead|g
-s|@@L29@@|#eab3b1|g
-s|@@L30@@|#ebb6b3|g
-s|@@L31@@|#f0c6c0|g
-s|@@L32@@|#f0c8c2|g
-s|@@L33@@|#f3d2ca|g
-s|@@L34@@|#f4d5cc|g
-s|@@L35@@|#f5d8ce|g
-s|@@L36@@|#f5dad0|g
-s|@@L37@@|#f7e0d6|g
-s|@@L38@@|#faeadd|g
-s|@@L39@@|#fbecdf|g
-s|@@L40@@|#fef7e7|g
+s|@@L13@@|#b80626|g
+s|@@L14@@|#bc1634|g
+s|@@L15@@|#be1c39|g
+s|@@L16@@|#c12642|g
+s|@@L17@@|#c4324d|g
+s|@@L18@@|#c63952|g
+s|@@L19@@|#ce5369|g
+s|@@L20@@|#da7f90|g
+s|@@L21@@|#db8090|g
+s|@@L22@@|#dc8695|g
+s|@@L23@@|#de8c9b|g
+s|@@L24@@|#e298a6|g
+s|@@L25@@|#e29ba8|g
+s|@@L26@@|#e4a0ac|g
+s|@@L27@@|#e7a9b5|g
+s|@@L28@@|#e9b1bb|g
+s|@@L29@@|#eab6c0|g
+s|@@L30@@|#ebb8c2|g
+s|@@L31@@|#f0c9d0|g
+s|@@L32@@|#f0cbd2|g
+s|@@L33@@|#f3d5da|g
+s|@@L34@@|#f4d8dd|g
+s|@@L35@@|#f5dbe0|g
+s|@@L36@@|#f5dde2|g
+s|@@L37@@|#f7e4e7|g
+s|@@L38@@|#faeef0|g
+s|@@L39@@|#fbf0f2|g
+s|@@L40@@|#fefbfb|g
 s|@@L41@@|rgba(182, 0, 33, 0)|g
 s|@@L42@@|rgba(182, 0, 33, 0.2)|g
 s|@@L43@@|rgba(182, 0, 33, 0.3)|g
 s|@@L44@@|rgba(182, 0, 33, 0.5)|g
 s|@@L45@@|rgba(182, 0, 33, 0.7)|g
 s|@@L46@@|rgba(182, 0, 33, 0.8)|g
-s|@@L47@@|rgba(211, 101, 114, 0.9)|g
-s|@@L48@@|rgba(219, 126, 134, 0.88)|g
+s|@@L47@@|rgba(211, 102, 122, 0.9)|g
+s|@@L48@@|rgba(219, 128, 144, 0.88)|g
 s|@@L49@@|rgba(132, 0, 24, 0.5)|g
 s|@@L50@@|rgba(149, 0, 27, 0.2)|g
 s|@@L51@@|rgba(149, 0, 27, 0.9)|g

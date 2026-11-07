@@ -3,8 +3,21 @@
 """Compare each scheme's terminal colours with the Ptyxis built-in palette(s) of the same name (decides `ptyxis = ...` in scheme.toml).
 
   python3 -I tools/ptyxis-compare.py [scheme ...]            # the table
-  python3 -I tools/ptyxis-compare.py --check [scheme ...]    # fail when a scheme's `ptyxis` declaration contradicts the data
+  python3 -I tools/ptyxis-compare.py --check [scheme ...]    # fail when a declaration or a source contradicts the data
 PTYXIS_BIN overrides the binary (see tools/ptyxis-palette.sh).
+
+PRINCIPLE: the Ptyxis built-in palette of the same name is the starting point and the source of truth for a scheme's terminal colours. Where
+scheme.toml differs from it, scheme.toml is wrong, not the built-in. So every variant of every scheme says where it comes from, in its
+[<variant>.terminal] table: `source = "<built-in name>"` (for a built-in with [Light] and [Dark] sections the section of the variant is used, for
+two flat built-ins such as Catppuccin Mocha and Latte each variant names its own) or `no_builtin = "<why>"` (no built-in exists for that variant;
+the scheme's own values stay). `--check` then requires, per variant with a source, that the colours the generator writes (slot_colors in
+ptyxis-gen.py: Background = bg_deep, Foreground = fg, Color1..6 = the accents, Color0/7/8..15 = the terminal table) equal the built-in's 18
+colours (Background, Foreground, Color0..15), except those listed in `[<variant>.nudge]` (a nudge is a deviation the repo's contrast checks force,
+for example fg on the window under 4.5:1):
+    [<variant>.nudge]
+    Foreground = { from = "<built-in value>", to = "<our value>", de = <delta E>, why = "<reason>" }
+`from` must be the built-in's value, `to` the value in use, `de` the CIE76 delta E between them (within 0.1), `why` a real reason, and the delta E at
+most NUDGE_MAX. A nudge for a colour that no longer differs is stale and fails. UNDECIDED lists the schemes exempt from the source rule.
 
 For every scheme variant it prints the colour distance to each candidate built-in (names that start with the scheme title, plus HINTS). What is
 compared are the colours the generator (tools/ptyxis-gen.py) would write for that variant, so scheme.toml's [<variant>.terminal] overrides count.
@@ -38,6 +51,9 @@ _s = importlib.util.spec_from_file_location('ptyxis_gen', os.path.join(HERE, 'pt
 pg = importlib.util.module_from_spec(_s); _s.loader.exec_module(pg)
 
 THRESHOLD = 3.0    # max CIE76 delta E over the roles; the single definition of "close match"
+NUDGE_MAX = 6.0    # max CIE76 delta E of one listed nudge (a colour moved off its built-in because a contrast check forces it); the single definition of "small"
+# schemes exempt from the `source` / `no_builtin` rule until Kevin decides
+UNDECIDED = {'nordic': 'dark-only scheme against the Nord built-in that has [Light] and [Dark] sections: no decision yet'}
 KEYS = ['Background', 'Foreground'] + ['Color%d' % i for i in range(16)]
 # built-in names that do not start with the scheme title (the Ubuntu terminal palette is Aubergine; Nordic is the Nord palette)
 HINTS = {'aubergine': ['Ubuntu'], 'nordic': ['Nord']}
@@ -119,6 +135,36 @@ def qualifying(scheme_dir):
         out.append(n)
     return sorted(out)
 
+def terminal_problems(scheme_dir):
+    """Problems with the `source` / `no_builtin` / nudge declarations of one scheme (see the header); [] when fine."""
+    S, roles, _ = sr.load(scheme_dir)
+    scheme = os.path.basename(os.path.abspath(scheme_dir)); bad = []
+    if scheme in UNDECIDED: return bad
+    for v in [v for v in ('dark', 'light') if v in S]:
+        T = S[v].get('terminal', {}); N = S[v].get('nudge', {}); src = str(T.get('source', '')).strip(); nob = str(T.get('no_builtin', '')).strip()
+        who = '%s %s' % (scheme, v)
+        if bool(src) == bool(nob): bad.append('%s: [%s.terminal] needs exactly one of source = "<built-in>" or no_builtin = "<why>"' % (who, v)); continue
+        if nob:
+            if N: bad.append('%s: nudges listed but the variant has no built-in source' % who)
+            continue
+        b = builtin_set(src, v)
+        if not b: bad.append('%s: source "%s" is not a Ptyxis built-in with a %s palette' % (who, src, v)); continue
+        mine = pg.slot_colors(S, roles, v)
+        for k in KEYS:
+            if k not in b or k not in mine: bad.append('%s: %s missing' % (who, k)); continue
+            d = de(mine[k], b[k]); n = N.get(k)
+            if d > 0.001:
+                if not n: bad.append('%s: %s %s differs from %s %s (dE %.2f) and is not listed in [%s.nudge]' % (who, k, mine[k], src, b[k], d, v)); continue
+                if n.get('from', '').upper() != b[k]: bad.append('%s: nudge %s: from %s is not the built-in value %s' % (who, k, n.get('from'), b[k]))
+                if n.get('to', '').upper() != mine[k]: bad.append('%s: nudge %s: to %s is not the value in use %s' % (who, k, n.get('to'), mine[k]))
+                if abs(n.get('de', -1) - d) > 0.1: bad.append('%s: nudge %s: de %s is not the computed %.2f' % (who, k, n.get('de'), d))
+                if d > NUDGE_MAX: bad.append('%s: nudge %s is %.2f dE, above NUDGE_MAX %.1f' % (who, k, d, NUDGE_MAX))
+                if len(str(n.get('why', '')).strip()) < 10: bad.append('%s: nudge %s has no reason' % (who, k))
+            elif n: bad.append('%s: nudge %s is listed but %s equals the built-in (stale)' % (who, k, k))
+        for k in N:
+            if k not in KEYS: bad.append('%s: nudge key %s is not one of %s' % (who, k, ', '.join(KEYS[:3]) + ' ...'))
+    return bad
+
 def main():
     root = os.path.join(HERE, '..')
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
@@ -131,6 +177,7 @@ def main():
             if choice is None and q: bad.append('%s: declared generated but %s qualifies' % (s, ', '.join(q)))
             if choice is not None and choice not in q: bad.append('%s: declared built-in "%s" does not qualify (qualifying: %s)' % (s, choice, ', '.join(q) or 'none'))
             if not S.get('ptyxis_reason', '').strip(): bad.append('%s: ptyxis_reason missing' % s)
+            bad += terminal_problems(path(s))
         print('\n'.join(bad)); sys.exit(1 if bad else 0)
     print('close match = roles max delta E (CIE76) <= %.1f\n' % THRESHOLD)
     print('%-16s %-7s %-32s %-11s %7s %-9s %7s' % ('scheme', 'variant', 'built-in', 'sections', 'roles', 'worst', 'all18'))

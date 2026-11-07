@@ -5,8 +5,8 @@
   <author>gnome-themes</author>
   <_description>Tokyo Night, dark variant (gnome-themes)</_description>
   <metadata><property name="variant">dark</property><property name="light-variant">gnome-themes-tokyo-night-light</property></metadata>
-  <color name="bg-deep" value="#16161e"/>
-  <color name="bg" value="#181822"/>
+  <color name="bg-deep" value="#1a1b26"/>
+  <color name="bg" value="#1e202c"/>
   <color name="fg" value="#c0caf5"/>
   <color name="selection" value="#283457"/>
   <color name="red" value="#f7768e"/>
