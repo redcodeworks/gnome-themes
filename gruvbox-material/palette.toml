@@ -1,0 +1,48 @@
+# Palette data for tools/gtk3-theme-gen.py and tools/gtk4-theme-gen.py (pass with --palette). Only this file
+# changes per theme (Nord, ...); the generators and their engine (tools/themegen.py) are shared. `just generate <theme>` reads gtk_name for the output folder.
+gtk_name = "Gruvbox-Material"
+#
+# ramp   : [stock Adwaita grey level 0..255, theme colour] stops; neutral greys of the
+#          stock stylesheet are interpolated along it (stock window = level 53 dark /
+#          246 light).
+# fg/top : text colour / lightest tint used to lighten accents; accent_fg: text on accents;
+#          view: text-view background.
+# fam.*  : [stock family anchor, theme accent]; every other shade of the family keeps its
+#          stock lightness relation to the anchor.
+# exact  : stock colour -> theme colour overrides.
+
+[dark]
+ramp = [[0,"#000000"],[45,"#282828"],[53,"#32302f"],[66,"#45403d"],[91,"#5a524c"],
+        [145,"#928374"],[238,"#ddc7a1"],[255,"#ddc7a1"]]
+fg = "#ddc7a1"
+top = "#ddc7a1"
+accent_fg = "#282828"
+view = "#282828"
+[dark.fam]
+blue = ["#15539e","#7daea3"]
+red = ["#cc0000","#ea6962"]
+orange = ["#f57900","#d8a657"]
+green = ["#4e9a06","#a9b665"]
+[dark.exact]
+"#26ab62" = "#a9b665"
+"#26a269" = "#a9b665"      # GTK4 stock success green
+"#3584e4" = "#7daea3"
+"#eeeeec" = "#ddc7a1"
+
+[light]
+ramp = [[0,"#4f3829"],[46,"#4f3829"],[145,"#928374"],[224,"#eee0b7"],[237,"#f2e5bc"],
+        [246,"#f5edca"],[255,"#f9f5d7"]]
+fg = "#4f3829"
+top = "#f9f5d7"
+accent_fg = "#f9f5d7"
+view = "#f9f5d7"
+[light.fam]
+blue = ["#3584e4","#45707a"]
+red = ["#cc0000","#c14a4a"]
+orange = ["#f57900","#b47109"]
+green = ["#4e9a06","#6c782e"]
+[light.exact]
+"#33d17a" = "#6c782e"
+"#2ec27e" = "#6c782e"      # GTK4 stock success green (light)
+"#2e3436" = "#4f3829"
+"#f6f5f4" = "#f5edca"
