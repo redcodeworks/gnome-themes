@@ -55,6 +55,8 @@ colour scheme) and offers the libadwaita file `~/.config/gtk-4.0/gtk.css`, never
 one without asking. GTK 3 follows `gtk-application-prefer-dark-theme` in `~/.config/gtk-3.0/settings.ini`,
 not `color-scheme`.
 
+Ptyxis: every scheme also has a terminal palette (`<scheme>/ptyxis/gnome-themes-<scheme>.palette`, light and dark sections that follow the system colour scheme, shown in Ptyxis as "<Title> (GNOME Themes)"). `install-themes` / `update-themes` / `remove-themes` copy, refresh and delete it in `~/.local/share/org.gnome.Ptyxis/palettes` (`PTYXIS_PALETTES` overrides), with the same marker and collision rules as the folders; `switch-theme` selects it on the default Ptyxis profile and on every profile that already has a palette set (via `dconf`; with no Ptyxis profile yet it says so and skips). The accent does not change it.
+
 ## Contributing
 
 `main` is protected. Push your work to `testing` (`git push origin HEAD:testing`); CI runs the tests there

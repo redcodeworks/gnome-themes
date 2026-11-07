@@ -37,3 +37,16 @@ yellow = "#c4a000"
 blue = "#3465a4"
 magenta = "#75507b"
 cyan = "#06989a"
+
+# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-in "Ubuntu" (all six ANSI colours equal ours, the
+# classic Ubuntu terminal): its black and its REAL brights (Color8-15, the only built-in among our schemes that has them).
+[dark.terminal]
+black = "#2e3436"          # Ptyxis built-in "Ubuntu" Color0
+bright_black = "#555753"   # Color8
+bright_red = "#ef2929"
+bright_green = "#8ae234"
+bright_yellow = "#fce94f"
+bright_blue = "#729fcf"
+bright_magenta = "#ad7fa8"
+bright_cyan = "#34e2e2"
+bright_white = "#eeeeec"   # Color15

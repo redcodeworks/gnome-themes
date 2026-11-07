@@ -62,3 +62,11 @@ yellow = "#df8e1d"
 blue = "#1e66f5"
 magenta = "#ea76cb"
 cyan = "#179299"
+
+# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-ins "Catppuccin Mocha" / "Catppuccin Latte" (their six
+# ANSI colours equal ours): Color0 = their black. Their Color8-15 equal the normal colours' dark/bright pairs only for the normals, so
+# the defaults stay (Color8 = comment, brights = normals): the built-ins have no real brights either.
+[dark.terminal]
+black = "#45475a"   # Ptyxis built-in "Catppuccin Mocha" Color0
+[light.terminal]
+black = "#5c5f77"   # Ptyxis built-in "Catppuccin Latte" Color0

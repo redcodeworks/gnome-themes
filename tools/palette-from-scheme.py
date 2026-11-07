@@ -169,4 +169,4 @@ def main():
     if '--check' in sys.argv: print(text)
     else: open(d + '/palette.toml', 'w').write(text); print('wrote %s/palette.toml%s' % (d, ' (' + '; '.join(notes) + ')' if notes else ''))
 
-main()
+if __name__ == '__main__': main()   # importable by tools/schemeroles.py

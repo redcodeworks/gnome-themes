@@ -59,7 +59,7 @@ remove-icons name="":
 switch-icons name="":
     @tools/themectl.sh icons switch "{{name}}"
 
-# Development: regenerate one scheme (or all) from its scheme.toml: palette tables, GTK3, GTK4 and GNOME Shell CSS from the toolkits' own stock stylesheets, the libadwaita file and the accent maps (needs python3-gobject, GTK 3, GTK 4 and gnome-shell)
+# Development: regenerate one scheme (or all) from its scheme.toml: palette tables, GTK3, GTK4 and GNOME Shell CSS from the toolkits' own stock stylesheets, the libadwaita file, the accent maps and the Ptyxis palette (needs python3-gobject, GTK 3, GTK 4 and gnome-shell)
 [private]
 generate theme="all":
     #!/usr/bin/env bash
@@ -78,6 +78,7 @@ generate theme="all":
         printf '[Desktop Entry]\nType=X-GNOME-Metatheme\nName=%s\nComment=%s recolour of GTK'"'"'s own stock stylesheets (gtk-3.0 from GTK3 Adwaita, gtk-4.0 from GTK4 Default); libadwaita apps use the user-level libadwaita/gtk.css\n' "$name" "$title" > "$s/themes/$name/index.theme"
         for d in "$s"/themes/*/; do [ -f "$d/LICENSE" ] || cp gruvbox-material/themes/Gruvbox-Material/LICENSE "$d/LICENSE"; done
         python3 -I tools/accent-maps-gen.py "$s" "$acc"
+        python3 -I tools/ptyxis-gen.py "$s"
         rm -rf "$acc"
     done
 

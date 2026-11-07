@@ -57,3 +57,5 @@ yellow = "#515f00"
 blue = "#6946a3"
 magenta = "#a41d74"
 cyan = "#006274"
+
+# Terminal palette: no overrides (tools/ptyxis-gen.py defaults): no Ptyxis built-in matches this scheme's ANSI colours (checked 2026-11-07), so there are no real brights to take.
