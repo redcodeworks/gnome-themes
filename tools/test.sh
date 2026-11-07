@@ -77,6 +77,31 @@ for s in $schemes; do
     THEMES_DEST=$D just remove-themes "$s" >/dev/null 2>&1; [ -z "$(ls -A "$D" 2>/dev/null)" ] && chk ok "remove-themes emptied the set" || chk fail "remove-themes left $(ls "$D" | tr '\n' ' ')"
 done
 
+# ---- collision guard (themes): unrelated folders with our names are never replaced or removed without asking ---------
+echo "=== collision guard"
+G="$T/guard-themes"; mkdir -p "$G/Dracula"; echo mine > "$G/Dracula/mine.txt"; printf '[Desktop Entry]\nName=Dracula\n' > "$G/Dracula/index.theme"
+out=$(THEMES_DEST=$G just install-themes dracula </dev/null 2>&1); rc=$?
+[ -f "$G/Dracula/mine.txt" ] && [ ! -f "$G/Dracula/.gnome-themes" ] && chk ok "install: unrelated folder of the same name left untouched" || chk fail "install replaced an unrelated Dracula"
+printf '%s\n' "$out" | grep -q "not installed by gnome-themes" && [ $rc -eq 0 ] && chk ok "install: refusal message, other folders still handled (rc=$rc)" || chk fail "install: no refusal message or rc=$rc"
+[ -f "$G/Dracula-Shell-Dark/.gnome-themes" ] && [ "$(cat "$G/Dracula-Shell-Dark/.gnome-themes")" = dracula ] && chk ok "install: the other folders were installed with the marker" || chk fail "install: marker missing on Dracula-Shell-Dark"
+THEMES_DEST=$G just update-themes </dev/null >/dev/null 2>&1; [ -f "$G/Dracula/mine.txt" ] && chk ok "update: unrelated folder untouched" || chk fail "update replaced an unrelated Dracula"
+THEMES_DEST=$G just remove-themes dracula </dev/null >/dev/null 2>&1
+[ -f "$G/Dracula/mine.txt" ] && [ ! -e "$G/Dracula-Shell-Dark" ] && chk ok "remove: unrelated folder untouched, our folders removed" || chk fail "remove: wrong result ($(ls "$G" | tr '\n' ' '))"
+FORCE=1 THEMES_DEST=$G just install-themes dracula </dev/null >/dev/null 2>&1
+[ ! -e "$G/Dracula/mine.txt" ] && [ -f "$G/Dracula/.gnome-themes" ] && chk ok "FORCE=1 replaces the unrelated folder and marks it" || chk fail "FORCE=1 did not replace"
+echo stale > "$G/Dracula/stale.txt"; out=$(THEMES_DEST=$G just install-themes dracula </dev/null 2>&1)
+[ ! -e "$G/Dracula/stale.txt" ] && ! printf '%s\n' "$out" | grep -q "not installed by" && chk ok "a marked folder is replaced silently" || chk fail "marked folder not replaced silently"
+L="$T/guard-legacy"; mkdir -p "$L"; cp -a dracula/themes/Dracula "$L/Dracula"; echo stale > "$L/Dracula/stale.txt"
+out=$(THEMES_DEST=$L just install-themes dracula </dev/null 2>&1)
+[ ! -e "$L/Dracula/stale.txt" ] && [ -f "$L/Dracula/.gnome-themes" ] && ! printf '%s\n' "$out" | grep -q "not installed by" && chk ok "a pre-marker installation (identical index.theme) is adopted" || chk fail "legacy installation not adopted"
+if command -v script >/dev/null 2>&1; then
+    I="$T/guard-ask"; mkdir -p "$I/Dracula"; echo mine > "$I/Dracula/mine.txt"
+    printf 'n\n' | script -qec "THEMES_DEST=$I tools/themectl.sh themes install dracula" /dev/null >/dev/null 2>&1
+    [ -f "$I/Dracula/mine.txt" ] && chk ok "interactive: answer n keeps the unrelated folder" || chk fail "interactive n replaced the folder"
+    printf 'y\n' | script -qec "THEMES_DEST=$I tools/themectl.sh themes install dracula" /dev/null >/dev/null 2>&1
+    [ ! -e "$I/Dracula/mine.txt" ] && chk ok "interactive: answer y replaces it" || chk fail "interactive y did not replace"
+else echo "  skip interactive guard tests (script not installed)"; fi
+
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
 printf 'fake|file://%s/icons-src|top|\n' "$T" > "$T/sources.conf"
@@ -88,6 +113,14 @@ just install-icons Fake-Dark >/dev/null 2>&1; [ -d "$ICONS_DEST/Fake-Dark" ] && 
 just update-icons >/dev/null 2>&1; [ -f "$ICONS_DEST/Fake-Dark/apps/b.svg" ] && chk ok "update-icons picks up the new upstream commit" || chk fail "update-icons"
 just remove-icons Fake-Dark >/dev/null 2>&1; [ ! -d "$ICONS_DEST/Fake-Dark" ] && chk ok "remove-icons" || chk fail "remove-icons"
 
+# collision guard (icons): an unrelated Fake-Light is left alone, a pre-marker copy of Fake-Dark is adopted
+mkdir -p "$ICONS_DEST/Fake-Light"; echo mine > "$ICONS_DEST/Fake-Light/mine.txt"
+just install-icons Fake-Light </dev/null >/dev/null 2>&1; just update-icons </dev/null >/dev/null 2>&1; just remove-icons Fake-Light </dev/null >/dev/null 2>&1
+[ -f "$ICONS_DEST/Fake-Light/mine.txt" ] && chk ok "icons: unrelated folder untouched by install, update and remove" || chk fail "icons: unrelated Fake-Light was touched"
+FORCE=1 just install-icons Fake-Light </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Light/mine.txt" ] && [ -f "$ICONS_DEST/Fake-Light/.gnome-themes" ] && chk ok "icons: FORCE=1 replaces and marks" || chk fail "icons: FORCE=1"
+cp -a "$T/icons-src/Fake-Dark" "$ICONS_DEST/Fake-Dark"; rm -rf "$ICONS_DEST/Fake-Dark/.git"; echo stale > "$ICONS_DEST/Fake-Dark/stale.txt"
+just install-icons Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.gnome-themes" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
+just remove-icons Fake-Dark </dev/null >/dev/null 2>&1; just remove-icons Fake-Light </dev/null >/dev/null 2>&1
 [ "$(canary)" = "$canary0" ] && chk ok "real home untouched (.themes, icons, gtk-4.0)" || chk fail "real home untouched (.themes, icons, gtk-4.0)"
 
 echo; echo "TOTAL: $pass PASS, $fail FAIL"
