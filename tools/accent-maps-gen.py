@@ -13,13 +13,13 @@ plain sed scripts so installing needs only sed: two phases (token -> placeholder
 value can never be rewritten again by a later rule. Every map is then VERIFIED by running sed on the default files and
 comparing with the directly generated accent files. Different stock shades can collapse to one default token (8-bit
 rounding) and then need slightly different accent tokens; the map takes the most frequent one, so such tokens may be
-off by 1-2 units per channel (invisible; counted in the output, never more than TOL). Anything else aborts.
+off by 1-3 units per channel (invisible; counted in the output, never more than TOL). Anything else aborts.
 """
 import sys, os, re, subprocess, tomllib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from collections import Counter
 from themegen import TOK
-TOL = 2
+TOL = 3     # 3 of 255 (about 1 %) per channel: Rose Pine's dark pine-green accent needs 3 for two collapsed tints
 
 d, adir = sys.argv[1].rstrip('/'), sys.argv[2]
 with open(d + '/palette.toml', 'rb') as f: M = tomllib.load(f)
@@ -42,7 +42,7 @@ def tokmap(dtext, atext, rel):
     """{default token: accent token} for one file; variant of each position for libadwaita."""
     dt, at = toks(dtext), toks(atext)
     assert len(dt) == len(at) and TOK.sub('', dtext) == TOK.sub('', atext), '%s: accent output differs in more than colour tokens' % rel
-    cut = (dtext.find('@media') if '@media' in dtext else 0) if rel.startswith('libadwaita/') else None
+    cut = (dtext.find('\n@media') if '\n@media' in dtext else 0) if rel.startswith('libadwaita/') else None
     out = {'dark': {}, 'light': {}}
     for (pos, x), (_, y) in zip(dt, at):
         if x == y: continue
