@@ -8,11 +8,17 @@
 # Workflow: install-themes copies from this checkout; update-themes does git fetch + pull --ff-only first. Icons: clone the
 # source into the cache when missing, else bring it to the latest upstream (install and update both), then replace each
 # set's folder in the destination (remove it, copy the fresh one; unrelated folders there are never touched).
+# Collision guard: every folder this script installs gets a marker file (.gnome-themes, containing the scheme/set name). A
+# folder is replaced or removed only when it carries the marker or, for installs from before the marker existed, when its
+# index.theme is byte-identical to the one of our source. Any other folder of the same name (e.g. a third-party Dracula) is
+# never replaced silently: in a terminal the script asks (default no), without one it refuses that folder with a message and
+# carries on with the others; FORCE=1 in the environment overrides the guard.
 # Themes have a per-scheme accent (one of the six terminal colours listed in <scheme>/accents/list): switch asks for it
 # (or takes it as the 4th argument), remembers it in $XDG_STATE_HOME/gnome-themes/accents (lines scheme=accent), and
 # install/update re-apply the remembered one by running the scheme's sed token map over the installed copies.
 # Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (replaces the papirus source's URL),
-# ICON_SOURCES (another registry file), GNOME_THEMES_CACHE (~/.cache/gnome-themes; icon clones in icons/<source>).
+# ICON_SOURCES (another registry file), GNOME_THEMES_CACHE (~/.cache/gnome-themes; icon clones in icons/<source>),
+# FORCE=1 (replace or remove folders that were not installed by gnome-themes without asking).
 set -euo pipefail
 
 kind="${1:-}"; action="${2:-}"; want="${3:-}"; accent_arg="${4:-}"
@@ -190,7 +196,40 @@ shared_bases() {  # hidden base dirs (e.g. .Fluent-base) that the installed fold
         | sed -n 's|^\(\.\./\)\{1,\}\(\.[^/][^/]*\)/.*|\2|p' | sort -u || true
 }
 finish_item() { if [ -n "$build_dir" ]; then rm -rf "${build_dir:?}"; build_dir=""; fi; }
-is_installed() { local f; while read -r f; do [ -e "$dest/$f" ] && return 0; done < <(folders_of "$1"); return 1; }
+# ---- collision guard -----------------------------------------------------------------------------
+# A folder in $dest is ours when it has the marker file, or (installs from before the marker) when its index.theme is
+# byte-identical to the index.theme of our source for that folder (themes: the generated one of the scheme; icons: the
+# cloned or freshly built one; script-built sets have no source copy outside install, so they are adopted on install only).
+marker=.gnome-themes
+src_index() {    # src_index ITEM FOLDER: our source's index.theme for that folder (may not exist)
+    if [ "$kind" = themes ]; then echo "$root/$1/themes/$2/index.theme"; return; fi
+    case "${src_layout[${i_src[$1]}]}" in
+        top)    echo "$(clone_of "${i_src[$1]}")/${i_dir[$1]}/index.theme" ;;
+        root)   echo "$(clone_of "${i_src[$1]}")/index.theme" ;;
+        script) [ -n "$build_dir" ] && echo "$build_dir/$2/index.theme" || echo "" ;;
+    esac
+}
+is_ours() {      # is_ours DIR SRC_INDEX
+    [ -d "$1" ] || return 1
+    [ -f "$1/$marker" ] && return 0
+    [ -n "${2:-}" ] && [ -f "$2" ] && [ -f "$1/index.theme" ] && cmp -s "$2" "$1/index.theme"
+}
+# may_touch DIR SRC_INDEX VERB: 0 when DIR is absent, ours, FORCE=1 or the user says yes in a terminal; else 1 (with a message)
+may_touch() {
+    local d="$1" a
+    [ -e "$d" ] || [ -L "$d" ] || return 0
+    is_ours "$d" "${2:-}" && return 0
+    [ "${FORCE:-}" = 1 ] && return 0
+    if [ -t 0 ]; then
+        read -r -p "$d exists and was not installed by gnome-themes. ${3:-Replace} it? [y/N] " a || a=n
+        case "$a" in [yY]*) return 0 ;; esac
+        echo "Left $d alone." >&2; return 1
+    fi
+    echo "Refused: $d exists and was not installed by gnome-themes; left alone (FORCE=1 replaces it, or run in a terminal to be asked)." >&2
+    return 1
+}
+mark_dir() { printf '%s\n' "$2" > "$1/$marker"; }
+is_installed() { local f; while read -r f; do [ -e "$dest/$f" ] && is_ours "$dest/$f" "$(src_index "$1" "$f")" && return 0; done < <(folders_of "$1"); return 1; }
 index_of() { local i; for i in "${!items[@]}"; do [ "${items[i]}" = "$1" ] && { echo "$i"; return 0; }; done; return 1; }
 
 # ---- prompts -------------------------------------------------------------------------------------
@@ -243,9 +282,13 @@ choose_one() {
 }
 
 # ---- actions -------------------------------------------------------------------------------------
-copy_folder() {  # replace folder $1 of item $2 in dest: remove the set's folder, then copy the fresh one (never merge)
+skipped=(); installed_n=0
+was_skipped() { local s; for s in "${skipped[@]}"; do [ "$s" = "$1" ] && return 0; done; return 1; }
+copy_folder() {  # replace folder $1 of item $2 in dest: remove the set's folder, then copy the fresh one (never merge); 1 = guard said no
     local f="$1" it="$2" c
-    mkdir -p "$dest"; rm -rf "${dest:?}/$f"
+    mkdir -p "$dest"
+    if ! may_touch "$dest/$f" "$(src_index "$it" "$f")" Replace; then skipped+=("$f"); return 1; fi
+    rm -rf "${dest:?}/$f"
     if [ "$kind" = themes ]; then cp -a "$root/$it/themes/$f" "$dest/$f"
     else
         c=$(clone_of "${i_src[$it]}")
@@ -256,16 +299,22 @@ copy_folder() {  # replace folder $1 of item $2 in dest: remove the set's folder
         esac
         gtk-update-icon-cache -q -f -t "$dest/$f" 2>/dev/null || true
     fi
+    mark_dir "$dest/$f" "$it"
     if [ "$kind" = themes ]; then apply_accent "$it" "$(current_accent "$it")" "$f"; fi
-    echo "Installed $f -> $dest/$f"
+    installed_n=$((installed_n+1)); echo "Installed $f -> $dest/$f"
 }
 copy_item() {
-    local f h
+    local f h b mine=0
     prepare_item "$1" || return 1
-    while read -r f; do copy_folder "$f" "$1"; done < <(folders_of "$1")
+    while read -r f; do if is_ours "$dest/$f" "$(src_index "$1" "$f")"; then mine=1; fi; done < <(folders_of "$1")
+    while read -r f; do copy_folder "$f" "$1" || true; done < <(folders_of "$1")
     if [ -n "$build_dir" ]; then   # hidden shared bases the build produced (Fluent's .Fluent-base ...): replaced too
         for h in "$build_dir"/.[!.]*; do
-            [ -d "$h" ] || continue; rm -rf "${dest:?}/$(basename "$h")"; cp -a "$h" "$dest/$(basename "$h")"; echo "Installed $(basename "$h") (shared base)"
+            [ -d "$h" ] || continue; b=$(basename "$h")
+            # a base is ours when marked, or when one of this set's own folders was ours before this run (it links into the base)
+            if [ -e "$dest/$b" ] && [ ! -f "$dest/$b/$marker" ] && [ "$mine" -eq 1 ]; then rm -rf "${dest:?}/$b"
+            elif ! may_touch "$dest/$b" "" Replace; then continue; else rm -rf "${dest:?}/$b"; fi
+            cp -a "$h" "$dest/$b"; mark_dir "$dest/$b" "$1"; echo "Installed $b (shared base)"
         done
     fi
     finish_item
@@ -309,7 +358,8 @@ case "$action" in
         names=(); for i in "${chosen[@]}"; do names+=("${items[i]}"); done
         if [ "$kind" = icons ]; then refresh_for "${names[@]}"; load_items; fi   # icons: always refresh the clones first
         for nm in "${names[@]}"; do copy_item "$nm"; done
-        if [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icons to use it."; fi ;;
+        if [ "$installed_n" -eq 0 ]; then echo "Nothing was installed (see the messages above)."
+        elif [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icons to use it."; fi ;;
 
     update)
         # themes: git fetch + pull --ff-only in this checkout; icons: refresh the clones of the installed sets' sources.
@@ -320,7 +370,7 @@ case "$action" in
         if [ "$kind" = icons ]; then refresh_for "${inst[@]}"; load_items; else sync_themes; fi
         for nm in "${inst[@]}"; do
             if [ "$kind" = icons ]; then copy_item "$nm"; n=$((n+1))
-            else while read -r f; do if [ -e "$dest/$f" ]; then copy_folder "$f" "$nm"; n=$((n+1)); fi; done < <(folders_of "$nm"); fi
+            else while read -r f; do if [ -e "$dest/$f" ] && copy_folder "$f" "$nm"; then n=$((n+1)); fi; done < <(folders_of "$nm"); fi
         done
         [ "$n" -gt 0 ] || echo "None of the ${noun}s from this source is installed in $dest." ;;
 
@@ -342,17 +392,18 @@ case "$action" in
         for i in "${chosen[@]}"; do
             while read -r f; do
                 if [ -e "$dest/$f" ] || [ -L "$dest/$f" ]; then
+                    may_touch "$dest/$f" "$(src_index "${items[i]}" "$f")" Remove || continue
                     rm -rf "${dest:?}/$f"; echo "Removed $dest/$f"
                     if [ "$f" = "$cur" ]; then echo "  note: $f is the one currently in use; run switch to choose another."; fi
                 fi
             done < <(folders_of "${items[i]}")
-            if [ "$kind" = themes ]; then state_del "$state/accents" "${items[i]}"; fi
+            if [ "$kind" = themes ] && ! is_installed "${items[i]}"; then state_del "$state/accents" "${items[i]}"; fi
         done
         # shared hidden base dirs (Fluent): remove one only when no remaining installed set links into it
         if [ "$kind" = icons ]; then
             still=""; for i in "${!items[@]}"; do if is_installed "${items[i]}"; then still+=$'\n'"$(shared_bases "${items[i]}")"; fi; done
             for b in $bases; do
-                if ! printf '%s\n' "$still" | grep -qxF -- "$b" && [ -d "$dest/$b" ]; then rm -rf "${dest:?}/$b"; echo "Removed $dest/$b (shared base, no longer used)"; fi
+                if ! printf '%s\n' "$still" | grep -qxF -- "$b" && [ -d "$dest/$b" ] && may_touch "$dest/$b" "" Remove; then rm -rf "${dest:?}/$b"; echo "Removed $dest/$b (shared base, no longer used)"; fi
             done
         fi ;;
 
@@ -397,12 +448,14 @@ case "$action" in
                     *) [ -n "$gtk" ] || gtk="$f" ;;
                 esac
             done < <(folders_of "$sc")
+            if [ -n "$gtk" ] && was_skipped "$gtk"; then echo "Not switching the GTK theme: $gtk was left alone (not installed by gnome-themes)."; gtk=""; fi
             if [ -n "$gtk" ]; then
                 gsettings set org.gnome.desktop.interface gtk-theme "$gtk"; set_ini gtk-theme-name "$gtk"
                 echo "GTK theme is now $gtk."
             fi
             shell="$shell_d"
             if ! gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | grep -qi dark; then shell="${shell_l:-$shell_d}"; fi
+            if [ -n "$shell" ] && was_skipped "$shell"; then echo "Not switching the Shell theme: $shell was left alone (not installed by gnome-themes)."; shell=""; fi
             if [ -n "$shell" ] && gsettings list-schemas 2>/dev/null | grep -qx org.gnome.shell.extensions.user-theme; then
                 gsettings set org.gnome.shell.extensions.user-theme name "$shell"
                 echo "Shell theme is now $shell (reload it by logging out and in, or toggling the User Themes extension)."
