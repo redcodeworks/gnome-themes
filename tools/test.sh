@@ -110,6 +110,17 @@ if command -v script >/dev/null 2>&1; then
     [ ! -e "$I/Dracula/mine.txt" ] && chk ok "interactive: answer y replaces it" || chk fail "interactive y did not replace"
 else echo "  skip interactive guard tests (script not installed)"; fi
 
+# ---- Shell theme without the extension's gsettings schema (it is per user: gsettings does not list it) -----------------------
+echo "=== shell theme via dconf"
+first=$(echo $schemes | awk '{print $1}')
+mkdir -p "$T/bin2"; DLOG="$T/dconf.log"; : > "$DLOG"
+printf '#!/bin/sh\ncase "$1" in set) echo "set $2 $3 $4" >> "%s" ;; get) echo "\x27prefer-dark\x27" ;; list-schemas) : ;; esac\n' "$LOG" > "$T/bin2/gsettings"
+printf '#!/bin/sh\n[ "$1" = write ] && echo "write $2 $3" >> "%s"\n' "$DLOG" > "$T/bin2/dconf"
+chmod +x "$T/bin2/gsettings" "$T/bin2/dconf"
+D="$T/themes-dconf"; PATH="$T/bin2:$PATH" THEMES_DEST=$D just install-themes "$first" >/dev/null 2>&1
+PATH="$T/bin2:$PATH" THEMES_DEST=$D just switch-theme "$first" >/dev/null 2>&1
+grep -q "write /org/gnome/shell/extensions/user-theme/name" "$DLOG" && chk ok "switch-theme writes the user-theme key with dconf when gsettings lacks the schema" || chk fail "switch-theme did not set the Shell theme (no dconf write)"
+
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
 printf 'fake|file://%s/icons-src|top|\n' "$T" > "$T/sources.conf"

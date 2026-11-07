@@ -506,9 +506,20 @@ case "$action" in
             shell="$shell_d"
             if ! gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | grep -qi dark; then shell="${shell_l:-$shell_d}"; fi
             if [ -n "$shell" ] && was_skipped "$shell"; then echo "Not switching the Shell theme: $shell was left alone (not installed by gnome-themes)."; shell=""; fi
-            if [ -n "$shell" ] && gsettings list-schemas 2>/dev/null | grep -qx org.gnome.shell.extensions.user-theme; then
-                gsettings set org.gnome.shell.extensions.user-theme name "$shell"
-                echo "Shell theme is now $shell (reload it by logging out and in, or toggling the User Themes extension)."
+            if [ -n "$shell" ]; then
+                shell_done=0
+                if gsettings list-schemas 2>/dev/null | grep -qx org.gnome.shell.extensions.user-theme; then
+                    gsettings set org.gnome.shell.extensions.user-theme name "$shell" && shell_done=1
+                elif command -v dconf >/dev/null 2>&1; then
+                    # The User Themes extension is normally installed per user, so its schema is not in the system schema dirs and
+                    # gsettings does not list it: write the key directly.
+                    dconf write /org/gnome/shell/extensions/user-theme/name "'$shell'" && shell_done=1
+                fi
+                if [ "$shell_done" -eq 1 ]; then echo "Shell theme is now $shell (reload it by logging out and in, or toggling the User Themes extension)."
+                else echo "Could not set the Shell theme: neither gsettings nor dconf could write the User Themes key."; fi
+                if command -v gnome-extensions >/dev/null 2>&1 && ! gnome-extensions list --enabled 2>/dev/null | grep -q '^user-theme@'; then
+                    echo "  note: the User Themes extension is not enabled; the Shell theme only applies once it is."
+                fi
             fi
             # libadwaita apps ignore the GTK theme and read only the user stylesheet
             la="$root/$sc/libadwaita/gtk.css"; target="$cfg/gtk-4.0/gtk.css"
