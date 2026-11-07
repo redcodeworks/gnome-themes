@@ -6,7 +6,7 @@
  * palette and re-run `just generate`, do not hand-edit this file. A clean-room build: nothing
  * here comes from any third-party Shell theme.
  * Licence: derived from GNOME Shell's stock stylesheet, so LGPL-2.1 (the original header
- * follows unchanged; see NOTICE and LICENSE.LGPL-2.1 in the repo). Palette: sainnhe/gruvbox-material (MIT).
+ * follows unchanged; see LICENSE in this theme folder and NOTICE in the repo). Palette: sainnhe/gruvbox-material (MIT).
  * Palette: Gruvbox Material, dark = MEDIUM backgrounds (panel/overview #282828, windows and
  * popups #32302f, buttons/borders #45403d, submenus #5a524c, fg #ddc7a1); light = hard
  * backgrounds (#f9f5d7, fg #4f3829). Accent states follow GNOME's accent-color setting

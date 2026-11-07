@@ -31,10 +31,11 @@ Stock stylesheets these themes are built on (colour values replaced, structure u
               LGPL-2.1-or-later, https://gitlab.gnome.org/GNOME/libadwaita).
 
 Licences by path
-  themes/**   the generated and recoloured theme files derive from the LGPL works above, so they stay
-              under the LGPL: the GTK files LGPL-2.0-or-later (use them under LGPL-2.1-or-later), the
-              GNOME Shell files LGPL-2.1 (version 2.1 only, as in their source header). Text:
-              LICENSE.LGPL-2.1. Keep the notices in the file headers when you copy them.
-  everything  tools/, justfile, README, palette.toml and gruvbox-material/libadwaita/gtk.css are
-  else        original work under the MIT licence (LICENSE). The palette values come from
-              sainnhe/gruvbox-material (MIT, credited above).
+  themes/<Name>/   the generated and recoloured theme files derive from the LGPL works above, so they
+                   stay under the LGPL: the GTK files LGPL-2.0-or-later (use them under LGPL-2.1-or-later),
+                   the GNOME Shell files LGPL-2.1 (version 2.1 only, as in their source header). The LGPL
+                   text is the LICENSE file inside each theme folder, so installed copies carry it. Keep
+                   the notices in the file headers when you copy the files.
+  everything else  tools/, justfile, README, palette.toml and gruvbox-material/libadwaita/gtk.css are
+                   original work under the MIT licence (LICENSE at the repo root). The palette values come
+                   from sainnhe/gruvbox-material (MIT, credited above).

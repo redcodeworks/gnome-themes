@@ -47,4 +47,4 @@ colour scheme) and offers the libadwaita file `~/.config/gtk-4.0/gtk.css`, never
 one without asking. GTK 3 follows `gtk-application-prefer-dark-theme` in `~/.config/gtk-3.0/settings.ini`,
 not `color-scheme`.
 
-Licence: the tooling and docs are MIT (`LICENSE`). The generated theme files under `*/themes/` derive from GTK's and GNOME Shell's stock stylesheets and stay LGPL (`LICENSE.LGPL-2.1`); see `NOTICE` for the exact split and the credits.
+Licence: the tooling and docs are MIT (`LICENSE`). The generated theme files derive from GTK's and GNOME Shell's stock stylesheets and stay LGPL: each `*/themes/<Name>/` folder carries its own `LICENSE`. See `NOTICE` for the exact split and the credits.
