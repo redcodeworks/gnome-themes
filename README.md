@@ -5,7 +5,8 @@ and GTK 3 templates. Each theme takes the stock stylesheet unchanged and replace
 from a per-scheme `palette.toml`. Selectors, geometry and assets stay stock.
 
 A theme is a top-level directory of this repo, each with its own `scheme.toml` (roles plus the six terminal
-accents): `gruvbox-material`, `nordic`, `dracula`, `catppuccin`, `tokyo-night`, `solarized`, `everforest`. Icon
+accents): `gruvbox-material`, `nordic`, `dracula`, `catppuccin`, `tokyo-night`, `solarized`, `everforest`, `fairy-floss`, `material`, `monokai`, `rose-pine`, `sweet`, `aubergine`
+(the Ubuntu terminal look). `fairy-floss` has no upstream licence and partly invented accents; `monokai` is classic Monokai, not Monokai Pro. Icon
 sets come from the repos in `tools/icon-sources.conf`: Papirus, Gruvbox Plus, Zafiro, candy, Tela and Fluent.
 
 ## About this repo

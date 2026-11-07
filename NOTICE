@@ -50,6 +50,8 @@ Palettes
               which is why the theme is called Aubergine. The licence of the Tango palette itself was not verified.
   Terminal accents (the six per scheme) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
   from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
+  Exceptions (each documented in its scheme.toml): Fairy Floss (partly invented), Material (the tmTheme accents; Ptyxis' Material is a
+  different scheme), Monokai (cyan from Base16) and Rose Pine (the official Rose Pine terminal mapping, no Ptyxis palette).
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of
   each project.
 
@@ -79,4 +81,4 @@ Licences by path
                    the notices in the file headers when you copy the files.
   everything else  tools/, justfile, README, scheme.toml, palette.toml, accents/ and <scheme>/libadwaita/gtk.css are
                    original work under the MIT licence (LICENSE at the repo root). The palette values come
-                   from the projects credited above (MIT, Tokyo Night Apache-2.0).
+                   from the projects credited above (MIT, Tokyo Night Apache-2.0; Fairy Floss has no licence, Sweet's source is GPL-3.0 and not used, see the entries above).
