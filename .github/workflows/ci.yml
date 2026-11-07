@@ -23,6 +23,7 @@ jobs:
   # stylesheet changes upstream, the regeneration check fails: run `just generate <scheme>` and commit the result.
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     container: fedora:45
     steps:
       - name: Install git (needed by checkout)
@@ -40,6 +41,7 @@ jobs:
   # The required check "secrets": no credentials in the history.
   secrets:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:

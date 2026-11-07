@@ -173,7 +173,14 @@ while time.time() - t0 < 30:
     elif i < len(seq) and time.time() - last > 0.3:
         os.write(fd, keys[seq[i]]); i += 1; last = time.time()
     elif i >= len(seq) and time.time() - last > 5: break
-try: os.waitpid(pid, 0)
+# never wait forever for a child that is still reading the terminal: give it a moment, then kill it
+import signal
+try:
+    done, _ = os.waitpid(pid, os.WNOHANG)
+    if not done:
+        time.sleep(1.0); done, _ = os.waitpid(pid, os.WNOHANG)
+    if not done:
+        os.kill(pid, signal.SIGKILL); os.waitpid(pid, 0)
 except ChildProcessError: pass
 sys.stdout.write(re.sub(r'\x1b\[[0-9;?]*[A-Za-z]', '', out.decode(errors='replace')))
 PY
