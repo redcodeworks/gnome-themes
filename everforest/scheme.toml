@@ -4,9 +4,10 @@
 # ANSI six = Ptyxis "Everforest" Color1-6 ([Dark] and [Light]): red green yellow blue, purple as magenta, aqua as cyan.
 # Default accent green (Everforest's primary). Light accent_fg is Everforest dark bg_dim #232a2e: the light accents are
 # too bright for cream text (green #8da101 would give 2.7:1).
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
 # Source: Everforest, [Dark] and [Light] sections. The values already equalled it; the terminal tables now carry its black, white and brights too.
 title = "Everforest"
 gtk_name = "Everforest"

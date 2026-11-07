@@ -6,8 +6,11 @@
   python3 -I tools/ptyxis-compare.py --check [scheme ...]    # fail when a declaration or a source contradicts the data
 PTYXIS_BIN overrides the binary (see tools/ptyxis-palette.sh).
 
-PRINCIPLE: the Ptyxis built-in palette of the same name is the starting point and the source of truth for a scheme's terminal colours. Where
-scheme.toml differs from it, scheme.toml is wrong, not the built-in. So every variant of every scheme says where it comes from, in its
+PRINCIPLE (source order): an OFFICIAL source (the scheme's own repo, tmTheme, terminal port) comes first, the Ptyxis built-in of the same name
+second, invented values last. A scheme is built on its built-in as the starting point; where it has no official source, scheme.toml differing
+from the built-in is wrong, not the built-in. Where an official source exists and differs, the official colours win and the scheme says so
+(`source = "official: <repo/url, date verified>"` plus `builtin_differs = { name = "<built-in>", de = <max delta E over the 18 colours>, note = "<why>" }`;
+`--check` recomputes de, 0.1 tolerance) and declares `ptyxis = "generated"`. So every variant of every scheme says where it comes from, in its
 [<variant>.terminal] table: `source = "<built-in name>"` (for a built-in with [Light] and [Dark] sections the section of the variant is used, for
 two flat built-ins such as Catppuccin Mocha and Latte each variant names its own) or `no_builtin = "<why>"` (no built-in exists for that variant;
 the scheme's own values stay). `--check` then requires, per variant with a source, that the colours the generator writes (slot_colors in
@@ -17,7 +20,7 @@ for example fg on the window under 4.5:1):
     [<variant>.nudge]
     Foreground = { from = "<built-in value>", to = "<our value>", de = <delta E>, why = "<reason>" }
 `from` must be the built-in's value, `to` the value in use, `de` the CIE76 delta E between them (within 0.1), `why` a real reason, and the delta E at
-most NUDGE_MAX. A nudge for a colour that no longer differs is stale and fails. UNDECIDED lists the schemes exempt from the source rule.
+most NUDGE_MAX (for an official source `from` is the official value). A nudge for a colour that no longer differs is stale and fails.
 
 For every scheme variant it prints the colour distance to each candidate built-in (names that start with the scheme title, plus HINTS). What is
 compared are the colours the generator (tools/ptyxis-gen.py) would write for that variant, so scheme.toml's [<variant>.terminal] overrides count.
@@ -37,7 +40,8 @@ A built-in qualifies (`ptyxis = "<name>"` in scheme.toml) only when ALL of these
      Latte and Mocha) do not qualify: Ptyxis stores ONE palette name per profile, so a pair cannot follow light/dark; one flat built-in does not
      either (it would stay dark or light in the other mode);
   3. the scheme has one variant: the built-in is flat (a sectioned built-in switches to a light terminal under a light system setting, which a
-     dark-only scheme never does: its GTK light slot is the dark values too).
+     dark-only scheme never does: its GTK light slot is the dark values too), unless scheme.toml says `ptyxis_light_section_accepted = true` (Nordic with Nord: the
+     terminal follows the system light/dark, the rest of the theme stays dark; a deliberate decision).
 The generated palette also carries a titlebar colour; flat built-ins have none (only 7 of the 244 built-ins define one), so a built-in never
 reproduces it. `--check` verifies the declarations in scheme.toml (`ptyxis = "<built-in name>"` must qualify, `ptyxis = "generated"` must have
 no qualifying built-in, `ptyxis_reason` is required) and needs the Ptyxis binary or PTYXIS_BIN.
@@ -52,8 +56,6 @@ pg = importlib.util.module_from_spec(_s); _s.loader.exec_module(pg)
 
 THRESHOLD = 3.0    # max CIE76 delta E over the roles; the single definition of "close match"
 NUDGE_MAX = 6.0    # max CIE76 delta E of one listed nudge (a colour moved off its built-in because a contrast check forces it); the single definition of "small"
-# schemes exempt from the `source` / `no_builtin` rule until Kevin decides
-UNDECIDED = {'nordic': 'dark-only scheme against the Nord built-in that has [Light] and [Dark] sections: no decision yet'}
 KEYS = ['Background', 'Foreground'] + ['Color%d' % i for i in range(16)]
 # built-in names that do not start with the scheme title (the Ubuntu terminal palette is Aubergine; Nordic is the Nord palette)
 HINTS = {'aubergine': ['Ubuntu'], 'nordic': ['Nord']}
@@ -131,7 +133,7 @@ def qualifying(scheme_dir):
         mine = [r for r in rows if r[1] == n]
         if sorted(r[0] for r in mine) != sorted(variants) or any(r[3] > THRESHOLD for r in mine): continue
         if len(variants) == 2 and sections != 'Light,Dark': continue
-        if len(variants) == 1 and sections != 'flat': continue
+        if len(variants) == 1 and sections != 'flat' and not S.get('ptyxis_light_section_accepted'): continue   # a sectioned built-in shows its [Light] section under a light system scheme: only when scheme.toml accepts that
         out.append(n)
     return sorted(out)
 
@@ -139,7 +141,6 @@ def terminal_problems(scheme_dir):
     """Problems with the `source` / `no_builtin` / nudge declarations of one scheme (see the header); [] when fine."""
     S, roles, _ = sr.load(scheme_dir)
     scheme = os.path.basename(os.path.abspath(scheme_dir)); bad = []
-    if scheme in UNDECIDED: return bad
     for v in [v for v in ('dark', 'light') if v in S]:
         T = S[v].get('terminal', {}); N = S[v].get('nudge', {}); src = str(T.get('source', '')).strip(); nob = str(T.get('no_builtin', '')).strip()
         who = '%s %s' % (scheme, v)
@@ -147,9 +148,28 @@ def terminal_problems(scheme_dir):
         if nob:
             if N: bad.append('%s: nudges listed but the variant has no built-in source' % who)
             continue
+        mine = pg.slot_colors(S, roles, v)
+        if src.startswith('official:'):
+            # an official source wins over the built-in: the built-in must be named with its measured distance, and a scheme that differs from it generates its palette
+            bd = T.get('builtin_differs')
+            if not isinstance(bd, dict) or not bd.get('name') or len(str(bd.get('note', '')).strip()) < 10:
+                bad.append('%s: an official source needs builtin_differs = { name, de, note } (the built-in it differs from, the delta E, why official wins)' % who); continue
+            bb = builtin_set(bd['name'], v)
+            if not bb: bad.append('%s: builtin_differs names "%s", which is not a Ptyxis built-in with a %s palette' % (who, bd['name'], v)); continue
+            d = max(de(mine[k], bb[k]) for k in KEYS if k in bb)
+            if abs(bd.get('de', -1) - d) > 0.1: bad.append('%s: builtin_differs de %s is not the computed %.1f' % (who, bd.get('de'), d))
+            if d <= THRESHOLD: bad.append('%s: official source equals the built-in "%s" within THRESHOLD (%.1f dE): use the built-in as source' % (who, bd['name'], d))
+            if sr.ptyxis_choice(S) is not None: bad.append('%s: differs from the built-in, so `ptyxis = "generated"` is required' % who)
+            for k, n in N.items():   # nudges are measured against the official value (`from`), which only scheme.toml knows
+                if k not in KEYS or k not in mine: bad.append('%s: nudge key %s unknown' % (who, k)); continue
+                if n.get('to', '').upper() != mine[k]: bad.append('%s: nudge %s: to %s is not the value in use %s' % (who, k, n.get('to'), mine[k]))
+                nd = de(n.get('from', '#000000'), mine[k])
+                if abs(n.get('de', -1) - nd) > 0.1: bad.append('%s: nudge %s: de %s is not the computed %.2f' % (who, k, n.get('de'), nd))
+                if nd > NUDGE_MAX: bad.append('%s: nudge %s is %.2f dE, above NUDGE_MAX %.1f' % (who, k, nd, NUDGE_MAX))
+                if len(str(n.get('why', '')).strip()) < 10: bad.append('%s: nudge %s has no reason' % (who, k))
+            continue
         b = builtin_set(src, v)
         if not b: bad.append('%s: source "%s" is not a Ptyxis built-in with a %s palette' % (who, src, v)); continue
-        mine = pg.slot_colors(S, roles, v)
         for k in KEYS:
             if k not in b or k not in mine: bad.append('%s: %s missing' % (who, k)); continue
             d = de(mine[k], b[k]); n = N.get(k)

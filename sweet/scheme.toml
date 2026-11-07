@@ -7,21 +7,24 @@
 # Ladder (2026-11-07): bg_deep = the built-in's #282c34 and every step above it DERIVED (fixed rules). EliverLara's own greys (window #161925,
 # view #181b28, surface #292f45, all darker than #282c34) are no longer used. Sweet's selection teal #00D3A7 is not one of the six (nearest: cyan); purple stays the default.
 # Default accent magenta = Sweet's primary purple #C74DED (Kevin's brief).
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
-# Source: Sweet Eliverlara (flat, dark only). Background #282c34 replaces #161925; bg and surface are derived; the six accents and fg already equalled it.
-# Black, white and brights are the built-in's (black and bright black equal the background).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
+# Source: official (EliverLara/Sweet gtk-dark.css): window #161925 (bg_deep), view #181b28, surface #292f45, fg #c3c7d1, the accents equal the built-in's. Only the background differs from Sweet
+# Eliverlara (#282c34). The built-in's white and bright white are used; its black and bright black equal ITS background (#282c34), which would be nearly invisible on #161925, so they are skipped.
 title = "Sweet"
 gtk_name = "Sweet"
 shell_name = "Sweet-Shell"
 credit = "Sweet by EliverLara (palette values only; SCSS GPL-3.0 not used)"
-ptyxis = "Sweet Eliverlara"
-ptyxis_reason = "Sweet Eliverlara is the source (the closest to EliverLara's Sweet; Sweet Terminal is another scheme) and equals the scheme in every role (0.00 dE, no nudges); flat and dark only, like the scheme"
+ptyxis = "generated"
+ptyxis_reason = "the official EliverLara background #161925 differs from the Sweet Eliverlara built-in's #282c34 (the accents and foreground are equal); a built-in cannot carry it, so the palette is generated"
 default_accent = "magenta"
 
 [dark]
-bg_deep = "#282c34"
+bg_deep = "#161925"
+bg = "#181b28"
+surface = "#292f45"
 fg = "#c3c7d1"
 selection = "#00d3a7"
 red = "#ed254e"
@@ -32,6 +35,7 @@ cyan = "#00c1e4"
 blue = "#7cb7ff"
 magenta = "#c74ded"
 purple = "#c74ded"
+
 [dark.ansi]
 orange = "#ff6a00"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
 red = "#ed254e"
@@ -41,19 +45,8 @@ blue = "#7cb7ff"
 magenta = "#c74ded"
 cyan = "#00c1e4"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
-
 [dark.terminal]
-source = "Sweet Eliverlara"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
-black = "#282c34"   # Color0
-white = "#dcdfe4"   # Color7
-bright_black = "#282c34"   # Color8
-bright_red = "#ed254e"   # Color9
-bright_green = "#71f79f"   # Color10
-bright_yellow = "#f9dc5c"   # Color11
-bright_blue = "#7cb7ff"   # Color12
-bright_magenta = "#c74ded"   # Color13
-bright_cyan = "#00c1e4"   # Color14
-bright_white = "#dcdfe4"   # Color15
+source = "official: EliverLara/Sweet gtk-3.0/gtk-dark.css, raw file, verified 2026-11-07"
+builtin_differs = { name = "Sweet Eliverlara", de = 26.3, note = "EliverLara's own greys (window #161925, view #181b28, surface #292f45) are official; the built-in's background is #282c34" }
+white = "#dcdfe4"   # Color7 (the built-in's)
+bright_white = "#dcdfe4"   # Color15 (the built-in's)

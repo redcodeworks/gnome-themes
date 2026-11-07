@@ -5,9 +5,10 @@
 # fg is base1 (dark) / base01 (light), the "emphasised" tones, because the body tones base0/base00 are below 4.5:1 on
 # the backgrounds (Solarized's documented low contrast); base0/base00 serve as fg_dim. ANSI six = Ptyxis "Solarized"
 # Color1-6 (the 16 Solarized accents, same in both variants). Default accent blue.
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
 # Sources: Solarized [Dark] and [Light] as they are: fg #839496 / #657b83 (were #93a1a1 / #586e75). Both fail 4.5:1 on the window (4.11 and 3.98), so fg carries a listed
 # nudge in each variant. fg_dim (and the light comment) were dropped and are derived now (they would sit on or past fg).
 title = "Solarized"

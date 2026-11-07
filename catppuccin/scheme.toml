@@ -3,9 +3,10 @@
 # Ladder dark: view and window Base (Mocha's terminal background; the view was Mantle before, the window step is now DERIVED), headers Surface0, popovers Surface1 (Crust unused). Light: view Base,
 # window Mantle, headers Crust, popovers/dialogs Surface0. ANSI six = Ptyxis "Catppuccin Mocha"/"Catppuccin Latte"
 # Color1-6 (identical to the Catppuccin terminal tables). Default accent blue (the brand accent mauve is not a terminal colour).
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
 # Sources: Catppuccin Mocha (dark), Catppuccin Latte (light); the six accents already equalled them. Mocha: bg_deep is Base #1e1e2e (was Mantle #181825).
 # Latte needed no change. The black, white and brights are the built-ins' (Mocha black #45475a, white #bac2de, bright white #a6adc8).
 title = "Catppuccin"

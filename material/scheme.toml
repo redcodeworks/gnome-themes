@@ -15,41 +15,43 @@
 # Default accent orange (the seventh accent, the scheme's own orange role colour): Darker's UI accent is orange #FF9800, and Darker's
 # tmTheme orange is #F78C6C. The single default_accent serves both variants, so Lighter gets its orange #F76D47 too (Lighter's own
 # UI accent is cyan #00BCD4; cyan stays selectable).
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
-# Source dark: Material (Gogh's terminal scheme: background #1e282c, fg #c3c7d1, red #eb606b, green #c3e88d, yellow #f7eb95, blue #80cbc3, magenta #ff2490, cyan #aeddff),
-# which replaces the Darker tmTheme values above for the dark variant. Light: NO built-in (the built-in of that name is dark only), the Lighter values stay;
-# the two variants now come from different lineages. The explicit-less ladder is derived from the new bg_deep.
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
+# Source dark: official (Darker tmTheme, raw file): bg #212121, red #f07178, green #c3e88d, yellow #ffcb6b, blue #82aaff, magenta = purple #c792ea, cyan #89ddff; fg #b0bec5 is the
+# project's documented UI text colour (not in the raw file; kept as documented). The built-in Material is a different (Gogh) palette. Light: no built-in, Lighter tmTheme values (official) stay.
+# The built-in's black, white, bright black and bright white are used for the terminal.
 title = "Material"
 gtk_name = "Material"
 shell_name = "Material-Shell"
 credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
 ptyxis = "generated"
-ptyxis_reason = "the Material built-in is the dark source (no nudges) but it is flat and dark only and there is no light built-in, so a flat built-in would lose light/dark switching; the generated pair palette carries the built-in's dark colours and this scheme's own light ones"
+ptyxis_reason = "the official Darker tmTheme colours differ from the Material built-in (Gogh's own scheme: blue, magenta, yellow, cyan 10-58 dE); the generated pair palette carries the official dark colours and the Lighter light ones (no light built-in exists)"
 default_accent = "orange"
 
 [dark]
-bg_deep = "#1e282c"
-fg = "#c3c7d1"
+bg_deep = "#212121"
+fg = "#b0bec5"
 selection = "#424242"
-red = "#eb606b"
+red = "#f07178"
 orange = "#f78c6c"
-yellow = "#f7eb95"
+yellow = "#ffcb6b"
 green = "#c3e88d"
-cyan = "#aeddff"
-blue = "#80cbc3"
-magenta = "#ff2490"
-purple = "#ff2490"
+cyan = "#89ddff"
+blue = "#82aaff"
+magenta = "#c792ea"
+purple = "#c792ea"
 pink = "#ff5370"
+
 [dark.ansi]
 orange = "#f78c6c"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
-red = "#eb606b"
+red = "#f07178"
 green = "#c3e88d"
-yellow = "#f7eb95"
-blue = "#80cbc3"
-magenta = "#ff2490"
-cyan = "#aeddff"
+yellow = "#ffcb6b"
+blue = "#82aaff"
+magenta = "#c792ea"
+cyan = "#89ddff"
 
 [light]
 bg_deep = "#fafafa"
@@ -78,17 +80,12 @@ cyan = "#39adb5"
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Material"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
-black = "#073641"   # Color0
-white = "#ffffff"   # Color7
-bright_black = "#002b36"   # Color8
-bright_red = "#eb606b"   # Color9
-bright_green = "#c3e88d"   # Color10
-bright_yellow = "#f7eb95"   # Color11
-bright_blue = "#7dc6bf"   # Color12
-bright_magenta = "#6c71c3"   # Color13
-bright_cyan = "#34434d"   # Color14
-bright_white = "#ffffff"   # Color15
+source = "official: SublimeText/material-theme schemes/Material-Theme-Darker.tmTheme, raw file, verified 2026-11-07 (fg #b0bec5 is the project's documented UI text colour, not in the raw file)"
+builtin_differs = { name = "Material", de = 60.5, note = "the Darker tmTheme accents are official; the built-in Material is Gogh's separate terminal scheme (teal blue, hot-pink magenta)" }
+black = "#073641"   # Color0 (the built-in's)
+white = "#ffffff"   # Color7 (the built-in's)
+bright_black = "#002b36"   # Color8 (the built-in's)
+bright_white = "#ffffff"   # Color15 (the built-in's)
 
 [light.terminal]
 no_builtin = "no Ptyxis built-in has a light Material (the built-in of that name is dark only); the values stay as before"

@@ -2,9 +2,10 @@
 # Role file for tools/palette-from-scheme.py (-> palette.toml). Gruvbox Material (sainnhe/gruvbox-material, MIT).
 # The values are the ones the previous hand-written palette.toml used: dark = MEDIUM backgrounds (bg0 #282828),
 # light = a hard-contrast block. Terminal accents = the scheme's own terminal colours (Ghostty theme).
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
 # Source dark: Gruvbox Material (fg #d4be98, was the role fg #ddc7a1 with a terminal override; the override is gone). Light: NO built-in exists
 # (the built-in of that name is dark only), so the light values below stay as they were; see no_builtin in [light.terminal].
 title = "Gruvbox Material"

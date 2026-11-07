@@ -8,17 +8,18 @@
 # including cyan #2aa198 (a Solarized teal; Base16 Monokai's base0C #a1efe4 was used before 2026-11-07).
 # Ptyxis' yellow #F4BF75 = base0A (the original string yellow #E6DB74 is not used).
 # Default accent green #A6E22E (Monokai's signature colour, base0B), one of the six.
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
-# Source: Monokai Dark (flat, dark only; classic Monokai: same background, foreground and five of the six accents). Changes: cyan #2aa198, plus its black #75715e,
-# white #f9f8f5, brights (its bright black equals the background #272822, so it is invisible as text; kept, it is the built-in's).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
+# Source: official (Base16 Monokai, raw file): cyan is base0C #a1efe4; the built-in Monokai Dark has #2aa198 there and is otherwise the same, so only cyan differs. The built-in's black #75715e and
+# white are used; its bright black equals the background and is skipped.
 title = "Monokai"
 gtk_name = "Monokai"
 shell_name = "Monokai-Shell"
 credit = "Monokai by Wimer Hazenberg (palette values via Base16, tinted-theming/schemes, MIT); not Monokai Pro"
-ptyxis = "Monokai Dark"
-ptyxis_reason = "Monokai Dark is the source (classic Monokai: background #272822, same ANSI colours; the Monokai Pro built-ins are a different palette) and equals the scheme in every role (0.00 dE, no nudges); flat and dark only, like the scheme"
+ptyxis = "generated"
+ptyxis_reason = "the official Base16 Monokai cyan #a1efe4 differs from the Monokai Dark built-in's #2aa198 (30 dE); everything else equals it, but a built-in cannot carry the official cyan, so the palette is generated"
 default_accent = "green"
 
 [dark]
@@ -33,11 +34,12 @@ red = "#f92672"
 orange = "#fd971f"
 yellow = "#f4bf75"
 green = "#a6e22e"
-cyan = "#2aa198"
+cyan = "#a1efe4"
 blue = "#66d9ef"
 magenta = "#ae81ff"
 purple = "#ae81ff"
 pink = "#f92672"
+
 [dark.ansi]
 orange = "#fd971f"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
 red = "#f92672"
@@ -45,21 +47,14 @@ green = "#a6e22e"
 yellow = "#f4bf75"
 blue = "#66d9ef"
 magenta = "#ae81ff"
-cyan = "#2aa198"
+cyan = "#a1efe4"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-in "Monokai Dark" (five of the six ANSI colours equal ours):
+# Color0 = its black. It has no real brights, so the defaults stay.
 
 [dark.terminal]
-source = "Monokai Dark"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
-black = "#75715e"   # Color0
-white = "#f9f8f5"   # Color7
-bright_black = "#272822"   # Color8
-bright_red = "#f92672"   # Color9
-bright_green = "#a6e22e"   # Color10
-bright_yellow = "#f4bf75"   # Color11
-bright_blue = "#66d9ef"   # Color12
-bright_magenta = "#ae81ff"   # Color13
-bright_cyan = "#2aa198"   # Color14
-bright_white = "#f8f8f2"   # Color15
+source = "official: tinted-theming/schemes base16/monokai.yaml, raw file, verified 2026-11-07"
+builtin_differs = { name = "Monokai Dark", de = 32.5, note = "Base16 Monokai base0C cyan #a1efe4 is official; the built-in Monokai Dark has a Solarized teal #2aa198 there" }
+black = "#75715e"   # Color0 (the built-in's)
+white = "#f9f8f5"   # Color7 (the built-in's)
+bright_white = "#f8f8f2"   # Color15 (the built-in's)

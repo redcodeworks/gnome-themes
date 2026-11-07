@@ -12,19 +12,19 @@
 #  - FROM the tmTheme: purple = lavender, comment yellow #e6c000 (the ANSI yellow); the ANSI six are now Ptyxis' (see below).
 # No seventh "orange" accent: the upstream tmTheme has no orange (the orange role is invented here), so only the six terminal accents exist.
 # Default accent magenta = pink #FFB8D1, the theme's signature colour (Kevin's brief).
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
-# Source: Fairy Floss Dark (it has this scheme's background #42395d; the plain "Fairy Floss" built-in has #5A5475). That changes the accents to Ptyxis' own:
-# red #a8757b (dull), green #ff857f (really coral), yellow #e6c000, blue #ae81ff, magenta #716799 (a dull violet; 1.3:1 against the background as a text colour),
-# cyan #c2ffdf (mint); fg #c2ffdf (was #f8f8f2). The names follow the Ptyxis slots, not the colours' hues. The role colours red, green, yellow, cyan, blue,
-# magenta, pink follow the ANSI six, so the UI's success colour is coral here. If these look wrong, the built-in is what to fix upstream (or leave the scheme).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
+# Source dark: official (tmTheme): fg #f8f8f2, red = coral #ff857f, green = mint #c2ffdf, yellow #e6c000, magenta = pink #ffb8d1, window #5a5475. NOT official and kept as before:
+# bg_deep #42395d (the view; Ptyxis' Fairy Floss Dark background), blue #aac3f8 and cyan #8fe3f0 (invented), orange and the surface steps. The built-ins Fairy Floss / Fairy Floss
+# Dark map the slots differently (green = coral, magenta a dull violet #716799), which is why this scheme generates its palette; their black, white and bright black/white are taken.
 title = "Fairy Floss"
 gtk_name = "Fairy-Floss"
 shell_name = "Fairy-Floss-Shell"
 credit = "Fairy Floss by sailorhg (hex values only, no upstream licence; accents partly invented)"
-ptyxis = "Fairy Floss Dark"
-ptyxis_reason = "Fairy Floss Dark is the source (it has this scheme's background #42395D; the plain Fairy Floss built-in has #5A5475) and equals the scheme in every role (0.00 dE, no nudges); flat and dark only, like the scheme"
+ptyxis = "generated"
+ptyxis_reason = "the official Fairy Floss colours (tmTheme coral, mint, yellow, pink) differ from both Fairy Floss built-ins, which map the slots differently (green is coral, magenta a dull violet; 77 dE in green); the generated palette carries the official colours"
 default_accent = "magenta"
 
 [dark]
@@ -32,38 +32,29 @@ bg_deep = "#42395d"
 bg = "#5a5475"
 surface = "#67617f"
 surface_high = "#736e89"
-fg = "#c2ffdf"
+fg = "#f8f8f2"
 selection = "#736e89"
-red = "#a8757b"
+red = "#ff857f"
 orange = "#f69a53"
 yellow = "#e6c000"
-green = "#ff857f"
-cyan = "#c2ffdf"
-blue = "#ae81ff"
-magenta = "#716799"
+green = "#c2ffdf"
+cyan = "#8fe3f0"
+blue = "#aac3f8"
+magenta = "#ffb8d1"
 purple = "#c5a3ff"
-pink = "#716799"
-[dark.ansi]
-red = "#a8757b"
-green = "#ff857f"
-yellow = "#e6c000"
-blue = "#ae81ff"
-magenta = "#716799"
-cyan = "#c2ffdf"
+pink = "#ffb8d1"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+[dark.ansi]
+red = "#ff857f"
+green = "#c2ffdf"
+yellow = "#e6c000"
+blue = "#aac3f8"
+magenta = "#ffb8d1"
+cyan = "#8fe3f0"
 
 [dark.terminal]
-source = "Fairy Floss Dark"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
-black = "#42395d"   # Color0
-white = "#f8f8f2"   # Color7
-bright_black = "#75507b"   # Color8
-bright_red = "#ffb8d1"   # Color9
-bright_green = "#f1568e"   # Color10
-bright_yellow = "#d5a425"   # Color11
-bright_blue = "#c5a3ff"   # Color12
-bright_magenta = "#8077a8"   # Color13
-bright_cyan = "#c2ffff"   # Color14
-bright_white = "#f8f8f0"   # Color15
+source = "official: sailorhg/fairyfloss fairyfloss.tmTheme, raw file, verified 2026-11-07"
+builtin_differs = { name = "Fairy Floss Dark", de = 96.4, note = "the tmTheme's coral, mint, yellow, pink and foreground are official; the built-in Fairy Floss Dark is a Gogh port with a different mapping (its green is coral, magenta a dull violet); blue, cyan and the view colour stay this scheme's own (invented, as before)" }
+white = "#f8f8f2"   # Color7 (the built-in's)
+bright_black = "#75507b"   # Color8 (the built-in's)
+bright_white = "#f8f8f0"   # Color15 (the built-in's)

@@ -3,9 +3,10 @@
 # Dark ladder: view and window bg (the built-in's background; the view was bg_dark #16161e before), headers bg_highlight, popovers fg_gutter. Light: view bg, window bg_dark,
 # headers bg_highlight, popovers bg_visual. ANSI six = Ptyxis "Tokyo Night" / "Tokyo Night Day" Color1-6 (identical to
 # the tokyonight terminal tables). Default accent blue. Deviation: Day's fg is nudged off the built-in (see [light.nudge]) to reach 4.5:1.
-# TERMINAL FIRST (2026-11-07): the Ptyxis built-in named in [<variant>.terminal] `source` is the starting point and the source of truth. bg_deep and fg are its
-# Background and Foreground, the six accents its Color1-6, the real black, white and brights are in the terminal table. Where an older note above gives other
-# values, THIS block and the values below supersede it. A colour that still differs from its source is a listed nudge ([<variant>.nudge], with its reason).
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
 # Sources: Tokyo Night (dark: bg #1a1b26; Storm #24283b and Moon are other built-ins and not used because the scheme's window colour was Night's), Tokyo Night Day (light;
 # Tokyo Night Light is another palette). Dark: bg_deep #1a1b26 (was #16161e). Light: fg #3760bf is below 4.5:1 on the window, so it is nudged (listed).
 title = "Tokyo Night"

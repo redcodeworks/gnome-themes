@@ -438,6 +438,19 @@ out=$(cchk); printf '%s\n' "$out" | grep -q 'stale' && chk ok "ptyxis-compare --
 cp everforest/scheme.toml zz-ef/scheme.toml; sed -i '/^source = /d' zz-ef/scheme.toml
 out=$(cchk); printf '%s\n' "$out" | grep -q 'exactly one of source' && chk ok "ptyxis-compare --check: a variant without source or no_builtin is flagged" || chk fail "ptyxis-compare: missing source accepted ($out)"
 cp everforest/scheme.toml zz-ef/scheme.toml
+# a sectioned built-in for a dark-only scheme qualifies only when scheme.toml accepts the light section (Nordic with Nord)
+if [ -r "${PTYXIS_BIN:-/usr/bin/ptyxis}" ] && tools/ptyxis-palette.sh show Nord >/dev/null 2>&1; then
+    python3 -I tools/ptyxis-compare.py --check nordic >/dev/null 2>&1 && chk ok "ptyxis-compare --check: Nordic on the sectioned Nord built-in passes (accepted light section)" || chk fail "ptyxis-compare: nordic"
+    mkdir zz-nd && sed '/^ptyxis_light_section_accepted/d' nordic/scheme.toml > zz-nd/scheme.toml
+    out=$(python3 -I tools/ptyxis-compare.py --check zz-nd 2>&1); printf '%s\n' "$out" | grep -q 'does not qualify' && chk ok "ptyxis-compare --check: a sectioned built-in for a dark-only scheme is refused without the acceptance flag" || chk fail "ptyxis-compare: sectioned built-in accepted for dark-only ($out)"
+    rm -rf zz-nd
+else echo "  SKIP Nordic/Nord checks (no Ptyxis binary here)"; fi
+# official source: needs builtin_differs with the right delta E, and the generated declaration
+cp everforest/scheme.toml zz-ef/scheme.toml; sed -i '0,/^source = .*/s//source = "official: fixture\/repo, verified 2026-11-07"/' zz-ef/scheme.toml
+out=$(cchk); printf '%s\n' "$out" | grep -q 'needs builtin_differs' && chk ok "ptyxis-compare --check: an official source without builtin_differs is flagged" || chk fail "ptyxis-compare: official source without builtin_differs accepted ($out)"
+sed -i '0,/^source = .*/s//&\nbuiltin_differs = { name = "Everforest", de = 9.9, note = "fixture: official wins" }/' zz-ef/scheme.toml
+out=$(cchk); printf '%s\n' "$out" | grep -q 'is not the computed' && printf '%s\n' "$out" | grep -q 'equals the built-in' && chk ok "ptyxis-compare --check: builtin_differs de is recomputed, and an official source that equals the built-in is flagged" || chk fail "ptyxis-compare: builtin_differs not verified ($out)"
+cp everforest/scheme.toml zz-ef/scheme.toml
 python3 -I - <<'PY' && chk ok "ptyxis-gen: a scheme that uses a built-in writes no file and removes a stale generated one" || chk fail "ptyxis-gen with a built-in"
 import subprocess, os
 d = 'zz-ef'; os.makedirs(d + '/ptyxis', exist_ok=True); f = d + '/ptyxis/gnome-themes-zz-ef.palette'
