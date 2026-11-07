@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
 # Install, list, update, remove and switch themes (this repo) and icon sets (an icon repo, Papirus by
 # default) in the user's home. Needs only bash and git; gum is used for the checklists if present.
 #   themectl.sh <themes|icons> <install|list|update|remove|switch> [name]

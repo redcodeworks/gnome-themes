@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # gnome-themes: terminal-inspired GNOME themes (one top-level directory per scheme) and icon sets from an icon repo
 # (Papirus by default). Run `just` for the list; every recipe is a thin call into tools/themectl.sh. Needs just, bash, git.
 

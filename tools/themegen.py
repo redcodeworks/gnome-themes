@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """Shared recolour engine for the gnome-themes generators (tools/gtk3-theme-gen.py,
 tools/gtk4-theme-gen.py, tools/shell-theme-gen.py): takes a stock GTK or GNOME Shell stylesheet VERBATIM and replaces COLOUR VALUES only,
 driven by a palette TOML. No toolkit-specific code here (no gi import)."""

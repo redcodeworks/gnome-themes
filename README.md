@@ -8,6 +8,12 @@ A theme is a top-level directory of this repo (so far `gruvbox-material`, palett
 [sainnhe](https://github.com/sainnhe/gruvbox-material)); icon sets come from an icon repo
 (Papirus by default), where each top-level directory is one set.
 
+## About this repo
+
+This is a personal project for my own machine, so please excuse the slop. It was written with Claude
+(Anthropic's coding assistant) and I have only tested it on my own setup. More serious maintainers are
+welcome to take anything here that looks useful, no need to ask.
+
 ## Requirements
 
 - To install: [`just`](https://github.com/casey/just), bash and git (`gum` makes the checklists nicer).
@@ -41,4 +47,4 @@ colour scheme) and offers the libadwaita file `~/.config/gtk-4.0/gtk.css`, never
 one without asking. GTK 3 follows `gtk-application-prefer-dark-theme` in `~/.config/gtk-3.0/settings.ini`,
 not `color-scheme`.
 
-Licence: LGPL-2.1, see `LICENSE` and `NOTICE` for the stock-stylesheet and palette credits.
+Licence: the tooling and docs are MIT (`LICENSE`). The generated theme files under `*/themes/` derive from GTK's and GNOME Shell's stock stylesheets and stay LGPL (`LICENSE.LGPL-2.1`); see `NOTICE` for the exact split and the credits.

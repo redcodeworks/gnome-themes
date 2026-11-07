@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Palette data for tools/gtk3-theme-gen.py, tools/gtk4-theme-gen.py and tools/shell-theme-gen.py (pass with --palette). Only this file
 # changes per theme (Nord, ...); the generators and their engine (tools/themegen.py) are shared. `just generate <theme>` reads gtk_name for the output folder.
 gtk_name = "Gruvbox-Material"
