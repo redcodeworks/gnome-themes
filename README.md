@@ -2,7 +2,7 @@
 
 Terminal-inspired colour schemes for GNOME, built on top of the stock GNOME Shell, GTK 4 / libadwaita
 and GTK 3 templates. Each theme takes the stock stylesheet unchanged and replaces colour values only,
-from a per-scheme `palette.toml`. Selectors, geometry and assets stay stock.
+from a per-scheme `palette.toml`. Selectors, geometry and assets stay stock; the one exception is the Shell themes, which are stock plus colours plus a single marked override that draws ordinary calendar days flat (no circle per day).
 
 A theme is a top-level directory of this repo, each with its own `scheme.toml` (roles plus the six terminal
 colours as accents, and orange as a seventh where the scheme has one): `gruvbox-material`, `nordic`, `dracula`, `catppuccin`, `tokyo-night`, `solarized`, `everforest`, `fairy-floss`, `material`, `monokai`, `rose-pine`, `sweet`, `aubergine`

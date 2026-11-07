@@ -109,6 +109,12 @@ def toolkit(kind):
         rel = os.path.relpath(path, D); new = open(path).read()
         body = new[new.index('*/') + 2:] if kind == 'shell' else new[new.index('*/') + 2:]
         # structure: shell stock keeps its own header comment; compare after dropping comments
+        CALRE = re.compile(r'\n?/\* gnome-themes override: calendar days flat \(begin\) \*/.*?/\* gnome-themes override: calendar days flat \(end\) \*/\n?', re.S)
+        if kind == 'shell':
+            blocks = CALRE.findall(new)
+            ok(len(blocks) == 1 and new.rstrip().endswith('(end) */') and len(re.findall(r'\.calendar \.calendar-day[^{]*\{[^}]*\}', blocks[0])) == 2
+               and not TOK.search(blocks[0]), '%s has exactly one calendar override block at the end (2 rules, no colour tokens)' % rel)
+            new = CALRE.sub('\n', new)
         a, b = mask(stock), mask(new)
         diff = sum(1 for x, y in zip(a.split('\n'), b.split('\n')) if x != y) + abs(len(a.split('\n')) - len(b.split('\n')))
         ok(diff == 0, '%s structure identical to stock after colour masking (%d differing lines)' % (rel, diff))

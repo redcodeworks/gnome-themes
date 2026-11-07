@@ -67,7 +67,9 @@ Stock stylesheets these themes are built on (colour values replaced, structure u
               gtk-3.0/assets and gtk-4.0/assets are unmodified stock files.
   Shell       Gruvbox-Material-Shell-{Dark,Light}/gnome-shell/gnome-shell.css are generated from
               GNOME Shell's stock stylesheets (gnome-shell-dark.css, gnome-shell-light.css from
-              gnome-shell-theme.gresource), colour values replaced, structure unchanged. The stock
+              gnome-shell-theme.gresource), colour values replaced, structure unchanged except one
+              marked override block appended at the end (calendar days flat: two transparent
+              background rules). The stock
               header is kept in each file: "Copyright 2009, 2015 Red Hat, Inc. Portions adapted from
               Mx's data/style/default.css, Copyright 2009 Intel Corporation", GNU Lesser General
               Public License version 2.1 (https://gitlab.gnome.org/GNOME/gnome-shell).
