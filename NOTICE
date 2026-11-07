@@ -1,4 +1,4 @@
-gnome-themes: colour schemes for GTK3, GTK4 and libadwaita (a GNOME Shell theme is planned).
+gnome-themes: colour schemes for GTK3, GTK4, libadwaita and GNOME Shell.
 
 Palette
   Gruvbox Material colour palette: https://github.com/sainnhe/gruvbox-material
@@ -20,9 +20,16 @@ Stock stylesheets these themes are built on (colour values replaced, structure u
               (Default-light.css, Default-dark.css, GTK 4.24; the former "Adwaita" theme).
               GTK is LGPL-2.0-or-later, Copyright the GTK contributors. The bitmaps in
               gtk-3.0/assets and gtk-4.0/assets are unmodified stock files.
+  Shell       Gruvbox-Material-Shell-{Dark,Light}/gnome-shell/gnome-shell.css are generated from
+              GNOME Shell's stock stylesheets (gnome-shell-dark.css, gnome-shell-light.css from
+              gnome-shell-theme.gresource), colour values replaced, structure unchanged. The stock
+              header is kept in each file: "Copyright 2009, 2015 Red Hat, Inc. Portions adapted from
+              Mx's data/style/default.css, Copyright 2009 Intel Corporation", GNU Lesser General
+              Public License version 2.1 (https://gitlab.gnome.org/GNOME/gnome-shell).
+              pad-osd.css is the unmodified stock file.
   libadwaita/ gtk.css overrides libadwaita's public named colours (libadwaita is
               LGPL-2.1-or-later, https://gitlab.gnome.org/GNOME/libadwaita).
 
 Because the generated and recoloured files derive from those LGPL works, the repository is
-licensed under the GNU Lesser General Public License (see LICENSE, version 2.1; the GTK files may
+licensed under the GNU Lesser General Public License (see LICENSE, version 2.1; the Shell files are LGPL-2.1; the GTK files may
 also be used under "any later version"). Keep these notices when copying the files.

@@ -1,5 +1,5 @@
 # gnome-themes: one directory per colour scheme; each has palette.toml and themes/<Name>/ folders that are
-# installed as-is into a themes directory (GTK3 and plain GTK4; a GNOME Shell theme is planned); libadwaita/ is a USER-level file (just install-user).
+# installed as-is into a themes directory (GTK3, plain GTK4 and GNOME Shell); libadwaita/ is a USER-level file (just install-user).
 
 default:
     @just --list
@@ -8,7 +8,7 @@ default:
 list:
     @ls -d */themes | sed 's|/themes||'
 
-# Regenerate the generated GTK3 and GTK4 CSS of a scheme from GTK's own stock stylesheets (needs python3-gobject, GTK 3 and GTK 4)
+# Regenerate the GTK3, GTK4 and GNOME Shell CSS of a scheme from the toolkits' own stock stylesheets (needs python3-gobject, GTK 3, GTK 4 and gnome-shell)
 generate theme="gruvbox-material":
     #!/usr/bin/env bash
     set -euo pipefail
@@ -16,6 +16,7 @@ generate theme="gruvbox-material":
     export PYTHONDONTWRITEBYTECODE=1
     python3 -I tools/gtk3-theme-gen.py --palette={{theme}}/palette.toml --out={{theme}}/themes/$name/gtk-3.0
     python3 -I tools/gtk4-theme-gen.py --palette={{theme}}/palette.toml --out={{theme}}/themes/$name/gtk-4.0
+    python3 -I tools/shell-theme-gen.py --palette={{theme}}/palette.toml --out={{theme}}/themes
 
 # Install every theme folder of a scheme into a themes directory (system: /usr/share/themes; per user: ~/.themes as real copies, Flatpak cannot follow symlinks)
 install theme="gruvbox-material" dest="/usr/share/themes":

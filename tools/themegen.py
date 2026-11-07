@@ -1,5 +1,5 @@
 """Shared recolour engine for the gnome-themes generators (tools/gtk3-theme-gen.py,
-tools/gtk4-theme-gen.py): takes a stock GTK stylesheet VERBATIM and replaces COLOUR VALUES only,
+tools/gtk4-theme-gen.py, tools/shell-theme-gen.py): takes a stock GTK or GNOME Shell stylesheet VERBATIM and replaces COLOUR VALUES only,
 driven by a palette TOML. No toolkit-specific code here (no gi import)."""
 import colorsys, re, os, sys
 
@@ -15,10 +15,13 @@ def hx(s):
     return tuple(int(s[i:i + 2], 16) for i in (0, 2, 4))
 def th(t): return '#%02x%02x%02x' % tuple(max(0, min(255, round(v))) for v in t)
 
-def load_palette(path):
-    """Palette data lives in a TOML file (one per theme, --palette=FILE)."""
+def load_palette(path, section=None):
+    """Palette data lives in a TOML file (one per theme, --palette=FILE). section: read the
+    [<section>.dark] / [<section>.light] tables instead of [dark] / [light] (the GNOME Shell
+    generator uses "shell", because stock Shell's greys differ from GTK's)."""
     import tomllib
     with open(path, 'rb') as f: d = tomllib.load(f)
+    if section: d = d[section]
     for v in ('dark', 'light'):
         P = d[v]
         P['ramp'] = [(g, c) for g, c in P['ramp']]
@@ -98,7 +101,7 @@ def has_coloured_bg(body):
 def recolour(css, P):
     def body_sub(m):
         sel, body = m.group(1), m.group(2)
-        fgctx = has_coloured_bg(body) or bool(re.search(r':selected|(?<![-\w])selection(?![-\w])', sel))
+        fgctx = has_coloured_bg(body) or (P.get('selected_ctx', True) and bool(re.search(r':selected|(?<![-\w])selection(?![-\w])', sel)))
         out = []
         for d in body.split(';'):
             if ':' in d:
