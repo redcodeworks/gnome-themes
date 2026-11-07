@@ -12,6 +12,8 @@ title = "Monokai"
 gtk_name = "Monokai"
 shell_name = "Monokai-Shell"
 credit = "Monokai by Wimer Hazenberg (palette values via Base16, tinted-theming/schemes, MIT); not Monokai Pro"
+ptyxis = "generated"
+ptyxis_reason = "the nearest built-in, Monokai Dark, differs visibly (cyan 30 dE); the Monokai Pro built-ins are a different palette"
 default_accent = "green"
 
 [dark]

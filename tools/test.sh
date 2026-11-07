@@ -184,9 +184,19 @@ for f in sorted(glob.glob('*/ptyxis/*.palette')):
             if not re.fullmatch(r'#[0-9A-Fa-f]{6}', d.get(k, '')): bad.append('%s [%s] %s=%r' % (f, s, k, d.get(k)))
         if d.get('Foreground') and d.get('Background') and sr.contrast(d['Foreground'], d['Background']) < 4.5: bad.append('%s [%s] contrast %.2f' % (f, s, sr.contrast(d['Foreground'], d['Background'])))
     if not open(f).read().rstrip().endswith('# gnome-themes: ' + f.split('/')[0]): bad.append(f + ': marker missing')
+# every scheme declares `ptyxis` (+ reason); a generated palette file exists exactly for the schemes that declare `generated`
+for p in sorted(glob.glob('*/scheme.toml')):
+    d = os.path.dirname(p); S, _, _ = sr.load(d); choice = sr.ptyxis_choice(S)
+    has = os.path.isfile('%s/ptyxis/gnome-themes-%s.palette' % (d, d))
+    if not S.get('ptyxis_reason', '').strip(): bad.append(d + ': ptyxis_reason missing')
+    if choice is None and not has: bad.append(d + ': declared generated but no palette file')
+    if choice is not None and has: bad.append('%s: uses the built-in "%s" but a generated palette file is committed' % (d, choice))
 print('\n'.join(bad)); sys.exit(1 if bad else 0)
 PY
-out=$(python3 -I "$T/ptycheck.py" 2>&1) && chk ok "every palette has Name, [Light] and [Dark] with all 16 colours and the 5 UI colours, Foreground:Background >= 4.5, marker" || { chk fail "palette check"; printf '%s\n' "$out" | head -5; }
+out=$(python3 -I "$T/ptycheck.py" 2>&1) && chk ok "every generated palette has Name, [Light] and [Dark] with all 16 colours and the 5 UI colours, Foreground:Background >= 4.5, marker; every scheme declares ptyxis with a reason and a palette file exists exactly for the generated ones" || { chk fail "palette check"; printf '%s\n' "$out" | head -5; }
+if [ -r "${PTYXIS_BIN:-/usr/bin/ptyxis}" ]; then
+    out=$(python3 -I tools/ptyxis-compare.py --check 2>&1) && chk ok "ptyxis-compare --check: the ptyxis declarations agree with the built-in palettes" || { chk fail "ptyxis declarations vs built-ins"; printf '%s\n' "$out" | head -5; }
+else echo "  SKIP ptyxis-compare --check on the real built-ins (no Ptyxis binary here; the fixture test below covers the rules)"; fi
 # regression: gruvbox-material against the hand-made reference (Kevin's working palette, 2026-11-07)
 cat > "$T/gm.ref" <<'REF'
 Dark Foreground #D4BE98
@@ -262,6 +272,17 @@ FORCE=1 THEMES_DEST=$PD just install-themes fairy-floss </dev/null >/dev/null 2>
 : > "$DCONF_DB"; out=$(THEMES_DEST=$PD just switch-theme fairy-floss </dev/null 2>&1)
 printf '%s\n' "$out" | grep -q "no Ptyxis profile found" && ! grep -q Ptyxis "$DCONF_DB" && chk ok "no Ptyxis settings: note and skip" || chk fail "missing Ptyxis settings not handled"
 THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; rm -rf "$PTYXIS_PALETTES"
+# a scheme that declares a Ptyxis built-in (everforest): install copies no palette file, switch-theme sets the built-in's NAME on the same profiles and says so,
+# remove-themes leaves the palettes directory alone
+mkdir -p "$PTYXIS_PALETTES"; echo other > "$PTYXIS_PALETTES/other.palette"
+: > "$DCONF_DB"; printf '%s\t%s\n' /org/gnome/Ptyxis/profile-uuids "['aaa', 'bbb', 'ccc']" /org/gnome/Ptyxis/default-profile-uuid "'aaa'" /org/gnome/Ptyxis/Profiles/bbb/palette "'Old'" /org/gnome/Ptyxis/Profiles/ccc/label "'x'" >> "$DCONF_DB"
+out=$(THEMES_DEST=$PD just install-themes everforest </dev/null 2>&1)
+[ ! -e "$PTYXIS_PALETTES/gnome-themes-everforest.palette" ] && printf '%s\n' "$out" | grep -q 'built-in palette "Everforest"' && chk ok "install-themes copies no palette for a scheme that uses a Ptyxis built-in" || chk fail "built-in scheme: a palette file was installed or no note"
+out=$(THEMES_DEST=$PD just switch-theme everforest </dev/null 2>&1)
+[ "$(dconf read /org/gnome/Ptyxis/Profiles/aaa/palette)" = "'Everforest'" ] && [ "$(dconf read /org/gnome/Ptyxis/Profiles/bbb/palette)" = "'Everforest'" ] && [ -z "$(dconf read /org/gnome/Ptyxis/Profiles/ccc/palette)" ] && printf '%s\n' "$out" | grep -q 'Ptyxis palette is now "Everforest" (Ptyxis built-in' && chk ok "switch-theme sets the built-in's name on the default and the palette-keyed profile and prints it" || chk fail "built-in switch ($(grep palette "$DCONF_DB" | tr '\t\n' '= '))"
+THEMES_DEST=$PD just remove-themes everforest </dev/null >/dev/null 2>&1
+[ "$(cat "$PTYXIS_PALETTES/other.palette")" = other ] && [ "$(ls "$PTYXIS_PALETTES" | wc -l)" = 1 ] && chk ok "remove-themes does not touch the palettes directory for a built-in scheme" || chk fail "remove-themes touched palettes of a built-in scheme"
+rm -rf "$PTYXIS_PALETTES"
 
 # ---- GtkSourceView style schemes: generated files, install/switch/update/remove, Flatpak editors, collision guard ------------------
 echo "=== gtksourceview styles"
@@ -335,9 +356,11 @@ THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; THEME
 # ---- new-scheme helpers: Ptyxis built-in reader and the draft scheme.toml writer (fixture binary, no real Ptyxis needed) ----------------
 echo "=== new scheme from a Ptyxis palette"
 col() { printf 'Background=%s\nForeground=%s\nCursor=%s\n' "$1" "$2" "$3"; for i in $(seq 0 15); do printf 'Color%d=#%02x%02x%02x\n' "$i" $((i*9+40)) $((255-i*8)) $((i*5+90)); done; }
-{ printf 'junk\n(uuay)Fake Night.palette\n[Palette]\nName=Fake Night\n'; col '#101820' '#e0e0e0' '#ffffff'; printf '# generated\n(uuay)Fake Duo.palette\n[Palette]\nName=Fake Duo\nPrimary=true\n[Light]\n'; col '#fafafa' '#202020' '#202020'; printf '[Dark]\n'; col '#202030' '#d0d0e0' '#d0d0e0'; printf 'tail\n'; } > "$T/fake-ptyxis"
+{ printf 'junk\n(uuay)Fake Night.palette\n[Palette]\nName=Fake Night\n'; col '#101820' '#e0e0e0' '#ffffff'; printf '# generated\n(uuay)Fake Duo.palette\n[Palette]\nName=Fake Duo\nPrimary=true\n[Light]\n'; col '#fafafa' '#202020' '#202020'; printf '[Dark]\n'; col '#202030' '#d0d0e0' '#d0d0e0'; printf 'tail\n(uuay)Ros\xc3\xa9 Fake.palette\n[Palette]\nName=Ros\xc3\xa9 Fake\n'; col '#191724' '#e0def4' '#e0def4'; printf 'tail\n'; } > "$T/fake-ptyxis"
 export PTYXIS_BIN="$T/fake-ptyxis"
-[ "$(tools/ptyxis-palette.sh list | tr '\t\n' '= ')" = "Fake Night=flat Fake Duo=Light,Dark " ] && chk ok "ptyxis-palette.sh list: names and sections" || chk fail "ptyxis-palette.sh list: $(tools/ptyxis-palette.sh list | tr '\t\n' '= ')"
+[ "$(tools/ptyxis-palette.sh list | tr '\t\n' '= ')" = "Fake Night=flat Fake Duo=Light,Dark Rosé Fake=flat " ] && chk ok "ptyxis-palette.sh list: names and sections, including a non-ASCII name" || chk fail "ptyxis-palette.sh list: $(tools/ptyxis-palette.sh list | tr '\t\n' '= ')"
+tools/ptyxis-palette.sh show "rosé fake" | grep -qx 'Name=Rosé Fake' && python3 -I tools/scheme-from-ptyxis.py zz-rose "Rosé Fake" >/dev/null 2>&1 && grep -q '^bg_deep = "#191724"' zz-rose/scheme.toml && chk ok "non-ASCII palette names work in ptyxis-palette.sh show and scheme-from-ptyxis" || chk fail "non-ASCII palette name (Rosé)"
+rm -rf zz-rose
 tools/ptyxis-palette.sh show "fake duo" | grep -q '^\[Dark\]' && tools/ptyxis-palette.sh show "Fake Night" | grep -q '^Color15=' && ! tools/ptyxis-palette.sh show "Fake Night" | grep -q Duo && chk ok "ptyxis-palette.sh show: case-insensitive, one palette, verbatim" || chk fail "ptyxis-palette.sh show"
 tools/ptyxis-palette.sh show nothing >/dev/null 2>&1 && chk fail "show of an unknown name succeeded" || chk ok "ptyxis-palette.sh show: unknown name fails"
 rm -rf zz-fake zz-duo zz-two
@@ -359,6 +382,37 @@ out=$(python3 -I tools/scheme-from-ptyxis.py zz-duo "Fake Duo" 2>&1); rc=$?
 python3 -I tools/scheme-from-ptyxis.py zz-fake "Fake Night" >/dev/null 2>&1; grep -q '^\[dark\]' zz-fake/scheme.toml && ! grep -q '^\[light\]' zz-fake/scheme.toml && grep -q "dark only" zz-fake/scheme.toml && chk ok "a flat dark palette gives a dark-only draft" || chk fail "flat palette draft"
 python3 -I tools/scheme-from-ptyxis.py zz-two "Fake Night" "Fake Duo" >/dev/null 2>&1; grep -q '^bg_deep = "#fafafa"' zz-two/scheme.toml && grep -q '^bg_deep = "#101820"' zz-two/scheme.toml && chk ok "a second palette gives the light variant" || chk fail "light palette argument"
 rm -rf zz-fake zz-duo zz-two; unset PTYXIS_BIN
+# ptyxis-compare: a copy of everforest that declares a built-in qualifies only when the built-in (a fixture made from the scheme's own colours,
+# with [Light] and [Dark] sections) matches within the threshold; a changed accent, or a flat fixture, makes the declaration false
+mkdir zz-ef && cp everforest/scheme.toml zz-ef/
+python3 -I - > "$T/fake-ever" <<'PY'
+import sys, importlib.util; sys.path.insert(0, 'tools'); import schemeroles as sr
+spec = importlib.util.spec_from_file_location('pg', 'tools/ptyxis-gen.py'); pg = importlib.util.module_from_spec(spec); spec.loader.exec_module(pg)
+S, roles, slots = sr.load('zz-ef')
+print('(uuay)x\n[Palette]\nName=Everforest\nPrimary=true')
+for slot, variant in slots:
+    c = pg.slot_colors(S, roles, variant); print('[%s]' % slot.capitalize())
+    for k in pg.ORDER: print('%s=%s' % (k, c[k]))
+PY
+PTYXIS_BIN="$T/fake-ever" python3 -I tools/ptyxis-compare.py --check zz-ef >/dev/null 2>&1 && chk ok "ptyxis-compare --check: a declared built-in that matches (sectioned fixture) passes" || chk fail "ptyxis-compare: matching built-in rejected"
+sed '0,/^Color1=/s/^Color1=.*/Color1=#00FF00/' "$T/fake-ever" > "$T/fake-ever-off"
+out=$(PTYXIS_BIN="$T/fake-ever-off" python3 -I tools/ptyxis-compare.py --check zz-ef 2>&1); rc=$?
+[ $rc -ne 0 ] && printf '%s\n' "$out" | grep -q 'does not qualify' && chk ok "ptyxis-compare --check: a built-in whose red differs is not accepted" || chk fail "ptyxis-compare: off built-in accepted"
+sed -i 's/^ptyxis = .*/ptyxis = "generated"/' zz-ef/scheme.toml
+out=$(PTYXIS_BIN="$T/fake-ever" python3 -I tools/ptyxis-compare.py --check zz-ef 2>&1); rc=$?
+[ $rc -ne 0 ] && printf '%s\n' "$out" | grep -q 'declared generated but' && chk ok "ptyxis-compare --check: declaring generated while a built-in matches is flagged" || chk fail "ptyxis-compare: unneeded generated not flagged"
+sed -i 's/^ptyxis = .*/ptyxis = "Everforest"/' zz-ef/scheme.toml
+awk '/^\[Light\]$/ {skip=1; next} /^\[Dark\]$/ {skip=0; next} !skip {print}' "$T/fake-ever" > "$T/fake-ever-flat"   # only the dark colours, as a flat palette
+out=$(PTYXIS_BIN="$T/fake-ever-flat" python3 -I tools/ptyxis-compare.py --check zz-ef 2>&1); rc=$?
+[ $rc -ne 0 ] && printf '%s\n' "$out" | grep -q 'does not qualify' && chk ok "ptyxis-compare --check: a flat built-in does not qualify for a scheme with light and dark variants" || chk fail "ptyxis-compare: flat built-in accepted for a two-variant scheme"
+python3 -I - <<'PY' && chk ok "ptyxis-gen: a scheme that uses a built-in writes no file and removes a stale generated one" || chk fail "ptyxis-gen with a built-in"
+import subprocess, os
+d = 'zz-ef'; os.makedirs(d + '/ptyxis', exist_ok=True); f = d + '/ptyxis/gnome-themes-zz-ef.palette'
+open(f, 'w').write('[Palette]\nName=x\n# gnome-themes: zz-ef\n')
+r = subprocess.run(['python3', '-I', 'tools/ptyxis-gen.py', d], capture_output=True, text=True)
+raise SystemExit(0 if r.returncode == 0 and not os.path.exists(f) and 'built-in palette "Everforest"' in r.stdout else 1)
+PY
+rm -rf zz-ef
 just --summary 2>/dev/null | grep -q new-scheme && chk fail "new-scheme became a public recipe" || chk ok "new-scheme is private (public set unchanged)"
 just --justfile justfile --working-directory . new-scheme 2>&1 | grep -qi "usage\|palette" && chk ok "the private recipe runs by name (the passthrough path)" || chk fail "private recipe not runnable by name"
 

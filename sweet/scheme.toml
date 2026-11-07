@@ -12,6 +12,8 @@ title = "Sweet"
 gtk_name = "Sweet"
 shell_name = "Sweet-Shell"
 credit = "Sweet by EliverLara (palette values only; SCSS GPL-3.0 not used)"
+ptyxis = "generated"
+ptyxis_reason = "the nearest built-in, Sweet Eliverlara, has a visibly different background (9.6 dE); Sweet Terminal is far off (155 dE)"
 default_accent = "magenta"
 
 [dark]

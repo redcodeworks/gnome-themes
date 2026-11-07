@@ -19,6 +19,8 @@ title = "Fairy Floss"
 gtk_name = "Fairy-Floss"
 shell_name = "Fairy-Floss-Shell"
 credit = "Fairy Floss by sailorhg (hex values only, no upstream licence; accents partly invented)"
+ptyxis = "generated"
+ptyxis_reason = "the built-ins Fairy Floss and Fairy Floss Dark differ visibly (green and others, 77 dE; this scheme's accents are partly invented)"
 default_accent = "magenta"
 
 [dark]

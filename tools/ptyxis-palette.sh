@@ -8,12 +8,15 @@
 # Environment: PTYXIS_BIN (default /usr/bin/ptyxis; any file that contains the palette text, which is how the tests use it).
 # Used by tools/scheme-from-ptyxis.py and the build-scheme skill to start a new scheme from a built-in palette. Needs strings (binutils) and awk.
 set -euo pipefail
+# Names are UTF-8 (Rosé Pine): read the binary as 8-bit strings (`strings -e S`; the default 7-bit mode drops any line with a non-ASCII
+# byte) and treat everything as bytes (LC_ALL=C), so the names pass through unchanged. Case-insensitive match is ASCII-only.
+export LC_ALL=C
 bin="${PTYXIS_BIN:-/usr/bin/ptyxis}"
 cmd="${1:-}"; name="${2:-}"
 [ -r "$bin" ] || { echo "ptyxis-palette.sh: cannot read $bin (set PTYXIS_BIN)" >&2; exit 2; }
 command -v strings >/dev/null 2>&1 || { echo "ptyxis-palette.sh: needs strings (binutils)" >&2; exit 2; }
 records() {   # prints each valid palette as: a line "@@ <Name>" followed by its INI text, ended by "@@END"
-    strings -a "$bin" | awk '
+    strings -a -e S "$bin" | awk '
         function flush() { if (inrec && nm != "" && c15) { print "@@ " nm; printf "%s", buf; print "@@END" } inrec = 0; buf = ""; nm = ""; c15 = 0 }
         /^\[Palette\]$/ { flush(); inrec = 1; buf = $0 "\n"; next }
         inrec && /^\(uuay\)/ { flush(); next }

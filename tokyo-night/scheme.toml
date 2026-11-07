@@ -7,6 +7,8 @@ title = "Tokyo Night"
 gtk_name = "Tokyo-Night"
 shell_name = "Tokyo-Night-Shell"
 credit = "Tokyo Night by folke (tokyonight.nvim, Apache-2.0), Night and Day"
+ptyxis = "generated"
+ptyxis_reason = "the built-ins are flat (Tokyo Night, Storm, Moon dark; Tokyo Night Day and Light light) and one profile holds one palette name, so no built-in follows light/dark; Tokyo Night is also 3.3 dE off in the background and Day 11 dE off in the foreground"
 default_accent = "blue"
 
 [dark]

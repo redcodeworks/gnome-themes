@@ -13,6 +13,8 @@ title = "Aubergine"
 gtk_name = "Aubergine"
 shell_name = "Aubergine-Shell"
 credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
+ptyxis = "generated"
+ptyxis_reason = "the Ubuntu built-in's ANSI colours match, but its background #300A24 differs from this scheme's terminal background (the view colour #2C001E, 4.1 dE, above the threshold)"
 default_accent = "orange"
 
 [dark]

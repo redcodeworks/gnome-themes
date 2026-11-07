@@ -8,6 +8,8 @@ title = "Everforest"
 gtk_name = "Everforest"
 shell_name = "Everforest-Shell"
 credit = "Everforest by sainnhe (MIT)"
+ptyxis = "Everforest"
+ptyxis_reason = "the Ptyxis built-in has [Light] and [Dark] sections (follows the system) and its roles equal ours in both variants (tools/ptyxis-compare.py: 0.00 dE); only the unset white and the titlebar colour differ"
 default_accent = "green"
 
 [dark]

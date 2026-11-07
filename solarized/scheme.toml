@@ -9,6 +9,8 @@ title = "Solarized"
 gtk_name = "Solarized"
 shell_name = "Solarized-Shell"
 credit = "Solarized by Ethan Schoonover (MIT)"
+ptyxis = "generated"
+ptyxis_reason = "the Solarized built-in has [Light] and [Dark] but its Foreground differs from ours in both (5.3 dE, above the threshold: ours is #93a1a1 / #586e75, the built-in #839496 / #657b83)"
 default_accent = "blue"
 
 [dark]

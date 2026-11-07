@@ -6,6 +6,8 @@ title = "Gruvbox Material"
 gtk_name = "Gruvbox-Material"
 shell_name = "Gruvbox-Material-Shell"
 credit = "sainnhe/gruvbox-material (MIT)"
+ptyxis = "generated"
+ptyxis_reason = "the Gruvbox Material built-in is flat and dark only: its roles equal our dark variant (0.00 dE) but a flat built-in would lose light/dark switching, and it has no light counterpart (79 dE from our light variant)"
 default_accent = "blue"
 
 [dark]

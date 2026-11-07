@@ -8,6 +8,8 @@ title = "Nordic"
 gtk_name = "Nordic-Nord"
 shell_name = "Nordic-Nord-Shell"
 credit = "Nord by Sven Greb (MIT)"
+ptyxis = "generated"
+ptyxis_reason = "the Nord built-in matches the dark roles exactly but has a [Light] section: under a light system setting Ptyxis would switch to a light terminal while this dark-only scheme (GTK light slot = dark values) stays dark; the generated palette keeps both slots dark"
 default_accent = "cyan"
 
 [dark]

@@ -34,14 +34,24 @@ It writes a DRAFT `<scheme-dir>/scheme.toml` (it refuses to overwrite an existin
 - the surface ladder (`bg`, `surface`, `surface_high`) and `fg_dim`/`comment`/`selection` when the scheme defines them,
 - `accent_fg` overrides where an accent fails 4.5:1 with the default ink,
 - `default_accent` with a one-line reason (the draft proposes the best-contrast accent; the scheme's signature colour is usually the better choice),
-- dark-only or not.
+- dark-only or not,
+- `ptyxis`: the draft says `ptyxis = "generated"` with a TODO reason; step 4 decides it.
 
 Also replace the Ptyxis-derived values with the official ones wherever the research (step 2b) found different hex values; the Ptyxis copy is often slightly off.
 
-## 4. Build with the existing pipeline (nothing new)
+## 4. Terminal palette: built-in or generated, then build with the existing pipeline
+
+Do not generate a Ptyxis palette that duplicates a built-in. Once the scheme's colours are final, run `python3 -I tools/ptyxis-compare.py <scheme>` (needs the Ptyxis binary or `PTYXIS_BIN`; the table lists the same-named built-ins with a colour distance per variant). A built-in qualifies by the rules in that script's header (close = within its single THRESHOLD for every variant; it must have `[Light]`/`[Dark]` sections when the scheme has two variants, because one Ptyxis profile holds one palette name and two flat built-ins cannot follow the system light/dark setting; a flat one for a dark-only scheme). Then set in `scheme.toml`, next to `credit`:
 
 ```
-just generate <scheme>          # palette.toml, GTK3/GTK4/Shell, libadwaita, accent maps, Ptyxis palette, GtkSourceView styles
+ptyxis = "<built-in name>"      # or "generated"
+ptyxis_reason = "<one line: the numbers that decided it>"
+```
+
+`python3 -I tools/ptyxis-compare.py --check <scheme>` fails when the declaration contradicts the data. A generated scheme's palette is written by `just generate`; for a built-in nothing is written.
+
+```
+just generate <scheme>          # palette.toml, GTK3/GTK4/Shell, libadwaita, accent maps, Ptyxis palette (generated schemes only), GtkSourceView styles
 just test <scheme>              # contrast, structure, parse, accent maps, probes
 tools/test.sh <scheme>          # whole suite for the scheme, in its container (it tests the COMMITTED state: commit first)
 ```

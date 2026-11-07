@@ -10,6 +10,8 @@ title = "Dracula"
 gtk_name = "Dracula"
 shell_name = "Dracula-Shell"
 credit = "Dracula Theme (MIT), light variant Alucard"
+ptyxis = "generated"
+ptyxis_reason = "the Dracula built-in's [Dark] equals ours (0.00 dE) but its [Light] differs (Foreground 10 dE, Color7 86 dE) from this scheme's Alucard light variant; one palette name per profile, so the pair cannot be mixed"
 default_accent = "blue"
 
 [dark]

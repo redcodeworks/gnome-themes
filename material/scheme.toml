@@ -20,6 +20,8 @@ title = "Material"
 gtk_name = "Material"
 shell_name = "Material-Shell"
 credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
+ptyxis = "generated"
+ptyxis_reason = "the built-in Material is a flat palette and differs visibly from the Darker variant (59 dE in the accents) and from Lighter (83 dE); it cannot follow light/dark"
 default_accent = "orange"
 
 [dark]

@@ -21,6 +21,8 @@ title = "Rose Pine"
 gtk_name = "Rose-Pine"
 shell_name = "Rose-Pine-Shell"
 credit = "Rose Pine (MIT), Main and Dawn"
+ptyxis = "generated"
+ptyxis_reason = "the built-ins Rosé Pine, Moon and Dawn are three flat palettes (no light/dark pair in one name), and their green and blue differ from the official ANSI mapping used here (36 dE dark, 19 dE Dawn)"
 default_accent = "magenta"
 
 [dark]

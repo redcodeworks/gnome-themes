@@ -39,9 +39,9 @@ def parse_ini(text):
 
 def load_palette(ref):
     """(name, {section: {key: value}}) from a file path or a built-in name."""
-    if os.path.isfile(ref): text = open(ref).read()
+    if os.path.isfile(ref): text = open(ref, encoding='utf-8').read()
     else:
-        r = subprocess.run([os.path.join(HERE, 'ptyxis-palette.sh'), 'show', ref], capture_output=True, text=True)
+        r = subprocess.run([os.path.join(HERE, 'ptyxis-palette.sh'), 'show', ref], capture_output=True, text=True, encoding='utf-8')   # names are UTF-8 (Rosé Pine)
         if r.returncode: sys.exit(r.stderr.strip() or 'no such palette: ' + ref)
         text = r.stdout
     sec = parse_ini(text)
@@ -78,6 +78,7 @@ def build(scheme_dir, ref, ref_light=None):
          '# DRAFT written by tools/scheme-from-ptyxis.py from the Ptyxis palette(s): %s. Not finished: resolve every TODO below (and delete the' % ', '.join(sorted(set(src[v] for v in sets))),
          '# TODO lines when done), then `just generate %s`. Roles the palette cannot give are DERIVED or INVENTED here and say so.' % d,
          '# TODO verify the palette against the scheme\'s official spec or repo (this draft only knows the Ptyxis copy, often a Gogh port).']
+    todo.append('ptyxis: the draft says `ptyxis = "generated"`; run `python3 -I tools/ptyxis-compare.py <scheme-dir>` (rules in its header) and, when a built-in qualifies, set `ptyxis = "<built-in name>"`; keep ptyxis_reason true either way')
     todo.append('credit: set `credit` and add the palette credit and licence to NOTICE (provenance notes in this header: verified vs invented values)')
     todo.append('orange: the palette has none; the orange role below is DERIVED (red and yellow mixed 50 %). Keep, replace with the scheme\'s own orange (then add a seventh `orange` accent in [<variant>.ansi]) or say it is derived')
     todo.append('surface ladder: bg, surface and surface_high are DERIVED by the fixed rules; set them when the palette defines steps')
@@ -124,7 +125,7 @@ def build(scheme_dir, ref, ref_light=None):
     todo.append('default_accent: proposed "%s" (best contrast on bg_deep, %.1f:1 in the %s variant); confirm or choose the scheme\'s signature colour and give a one-line reason' % (top, cr, v0))
     L += ['# TODO list (decisions only a human or agent can make):'] + ['# TODO %s' % t for t in todo]
     L += ['title = "%s"' % title_of(d), 'gtk_name = "%s"' % title_of(d).replace(' ', '-'), 'shell_name = "%s-Shell"' % title_of(d).replace(' ', '-'),
-          'credit = "TODO credit line"', 'default_accent = "%s"   # TODO reason' % top, '']
+          'credit = "TODO credit line"', 'ptyxis = "generated"', 'ptyxis_reason = "TODO say why no Ptyxis built-in is used (tools/ptyxis-compare.py)"','default_accent = "%s"   # TODO reason' % top, '']
     return '\n'.join(L) + '\n' + '\n\n'.join(body) + '\n', todo
 
 def main():

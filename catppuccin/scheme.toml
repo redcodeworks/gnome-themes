@@ -7,6 +7,8 @@ title = "Catppuccin"
 gtk_name = "Catppuccin"
 shell_name = "Catppuccin-Shell"
 credit = "Catppuccin (MIT), Mocha and Latte"
+ptyxis = "generated"
+ptyxis_reason = "Latte equals our light variant (0.00 dE) and Mocha is 3.7 dE off in the background, but both are flat palettes and one profile holds one palette name, so the pair cannot follow light/dark"
 default_accent = "blue"
 
 [dark]
