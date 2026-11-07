@@ -6,12 +6,18 @@
 #   tools/test.sh [scheme ...]      # default: every scheme
 # Needs: git, just, python3 + python3-gobject, GTK 3, GTK 4, gnome-shell (St typelib); shellcheck if present;
 # a display (re-executes itself under xvfb-run when there is none).
+# Runs with HOME pointed at a temp dir and checks at the end that the real ~/.themes, ~/.local/share/icons and ~/.config/gtk-4.0 are unchanged.
 set -u
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 if [ -z "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ] && [ -z "${TEST_UNDER_XVFB:-}" ] && command -v xvfb-run >/dev/null 2>&1; then
     TEST_UNDER_XVFB=1 exec xvfb-run -a "$0" "$@"
 fi
 T=$(mktemp -d); trap 'rm -rf "$T"' EXIT
+# The suite runs with a throwaway HOME, so a code path that ignores XDG_*/THEMES_DEST/ICONS_DEST can only write there; a canary
+# listing of the real ~/.themes, icons and ~/.config/gtk-4.0 is compared at the end.
+REAL_HOME="$HOME"; export HOME="$T/home"; mkdir -p "$HOME"
+canary() { local p; for p in "$REAL_HOME/.themes" "$REAL_HOME/.local/share/icons" "$REAL_HOME/.config/gtk-4.0"; do [ -e "$p" ] && find "$p" -printf '%p %s %T@\n'; done | sort | sha1sum; }
+canary0=$(canary)
 pass=0; fail=0
 chk() { if [ "$1" = ok ]; then pass=$((pass+1)); echo "  PASS $2"; else fail=$((fail+1)); echo "  FAIL $2"; fi; }
 git clone -q "$root" "$T/repo" && cd "$T/repo" || { echo "cannot clone $root"; exit 2; }
@@ -81,6 +87,8 @@ just install-icons Fake-Dark >/dev/null 2>&1; [ -d "$ICONS_DEST/Fake-Dark" ] && 
 (cd "$T/icons-src" && echo y > Fake-Dark/apps/b.svg && git add -A && git commit -q -m more)
 just update-icons >/dev/null 2>&1; [ -f "$ICONS_DEST/Fake-Dark/apps/b.svg" ] && chk ok "update-icons picks up the new upstream commit" || chk fail "update-icons"
 just remove-icons Fake-Dark >/dev/null 2>&1; [ ! -d "$ICONS_DEST/Fake-Dark" ] && chk ok "remove-icons" || chk fail "remove-icons"
+
+[ "$(canary)" = "$canary0" ] && chk ok "real home untouched (.themes, icons, gtk-4.0)" || chk fail "real home untouched (.themes, icons, gtk-4.0)"
 
 echo; echo "TOTAL: $pass PASS, $fail FAIL"
 [ "$fail" -eq 0 ]
