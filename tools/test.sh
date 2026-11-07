@@ -73,7 +73,8 @@ done
 
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
-export ICONS_URL="file://$T/icons-src" ICONS_DEST="$T/icons"
+printf 'fake|file://%s/icons-src|top|\n' "$T" > "$T/sources.conf"
+export ICON_SOURCES="$T/sources.conf" ICONS_DEST="$T/icons"
 just list-icons 2>&1 | grep -q Fake-Dark && chk ok "list-icons shows the sets" || chk fail "list-icons"
 just install-icons Fake-Dark >/dev/null 2>&1; [ -d "$ICONS_DEST/Fake-Dark" ] && chk ok "install-icons" || chk fail "install-icons"
 : > "$LOG"; just switch-icons Fake-Dark >/dev/null 2>&1; grep -q "icon-theme Fake-Dark" "$LOG" && chk ok "switch-icons" || chk fail "switch-icons"
