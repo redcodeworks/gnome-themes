@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
-# Install, list, update, remove and switch themes (this repo) and icon sets (an icon repo, Papirus by
-# default) in the user's home. Needs only bash and git; gum is used for the checklists if present.
+# Install, list, update, remove and switch themes (this repo) and icon sets (several icon repos, see
+# tools/icon-sources.conf) in the user's home. Needs only bash and git; gum is used for the checklists if present.
 #   themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]
-# A theme is a top-level directory of this repo (a scheme, e.g. gruvbox-material); an icon set is a
-# top-level directory of the icon repo (e.g. Papirus-Dark). Without a name, install/remove/switch ask.
+# A theme is a top-level directory of this repo (a scheme, e.g. gruvbox-material); an icon set belongs to a source of
+# tools/icon-sources.conf (e.g. Papirus-Dark from papirus, Tela-nord from tela). Without a name, install/remove/switch ask.
+# Workflow: install-themes copies from this checkout; update-themes does git fetch + pull --ff-only first. Icons: clone the
+# source into the cache when missing, else bring it to the latest upstream (install and update both), then replace each
+# set's folder in the destination (remove it, copy the fresh one; unrelated folders there are never touched).
 # Themes have a per-scheme accent (one of the six terminal colours listed in <scheme>/accents/list): switch asks for it
 # (or takes it as the 4th argument), remembers it in $XDG_STATE_HOME/gnome-themes/accents (lines scheme=accent), and
 # install/update re-apply the remembered one by running the scheme's sed token map over the installed copies.
-# Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (Papirus),
-# GNOME_THEMES_CACHE (~/.cache/gnome-themes, holds the icon repo clone).
+# Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (replaces the papirus source's URL),
+# ICON_SOURCES (another registry file), GNOME_THEMES_CACHE (~/.cache/gnome-themes; icon clones in icons/<source>).
 set -euo pipefail
 
 kind="${1:-}"; action="${2:-}"; want="${3:-}"; accent_arg="${4:-}"
@@ -19,9 +22,7 @@ cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
 state="${XDG_STATE_HOME:-$HOME/.local/state}/gnome-themes"
 case "$kind" in
     themes) dest="${THEMES_DEST:-$HOME/.themes}"; noun="theme" ;;
-    icons)  dest="${ICONS_DEST:-${XDG_DATA_HOME:-$HOME/.local/share}/icons}"; noun="icon set"
-            icons_url="${ICONS_URL:-https://github.com/PapirusDevelopmentTeam/papirus-icon-theme.git}"
-            src="$cache/icons" ;;
+    icons)  dest="${ICONS_DEST:-${XDG_DATA_HOME:-$HOME/.local/share}/icons}"; noun="icon set" ;;
     *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]"; exit 2 ;;
 esac
 
@@ -87,24 +88,56 @@ choose_accent() {
 }
 
 # ---- sources -------------------------------------------------------------------------------------
-sync_icons() {   # clone the icon repo, or refresh the clone when $1 = refresh
-    if [ -d "$src/.git" ]; then
-        if [ "${1:-}" = refresh ]; then
-            git -C "$src" fetch --quiet --depth 1 origin HEAD && git -C "$src" reset --quiet --hard FETCH_HEAD
-        fi
-    else
-        mkdir -p "$cache"; git clone --quiet --depth 1 "$icons_url" "$src"
+# Themes are copied straight from the checkout this script lives in (no cache, no network on install).
+# Icon sets come from the external repos listed in tools/icon-sources.conf (name|url|layout|extra), each with a
+# shallow clone under $cache/icons/<source>. Layouts: top (every top-level dir with index.theme is a set), root (the
+# repo root is the set), script (sets are built by the upstream install.sh, one variant per set, in a temp dir).
+conf="${ICON_SOURCES:-$root/tools/icon-sources.conf}"
+src_names=(); declare -A src_url src_layout src_extra
+load_sources() {
+    local n u l e
+    while IFS='|' read -r n u l e; do
+        case "$n" in ""|"#"*) continue ;; esac
+        src_names+=("$n"); src_url[$n]="$u"; src_layout[$n]="$l"; src_extra[$n]="$e"
+    done < "$conf"
+    if [ -n "${ICONS_URL:-}" ]; then   # override (testing): replaces the papirus source's URL, adding the source if needed
+        if [ -z "${src_url[papirus]:-}" ]; then src_names+=(papirus); src_layout[papirus]=top; src_extra[papirus]=""; fi
+        src_url[papirus]="$ICONS_URL"
     fi
 }
-sync_themes() {  # fast-forward this checkout when it has a remote; harmless otherwise
-    if git -C "$root" remote get-url origin >/dev/null 2>&1; then
-        git -C "$root" pull --quiet --ff-only 2>/dev/null || echo "(could not update the checkout; using what is here)"
+clone_of() { echo "$cache/icons/$1"; }
+migrate_cache() {  # before 2026-11-07 the single Papirus clone lived at $cache/icons itself
+    if [ -d "$cache/icons/.git" ]; then mv "$cache/icons" "$cache/icons.legacy" && mkdir -p "$cache/icons" && mv "$cache/icons.legacy" "$cache/icons/papirus"; fi
+}
+ensure_clone() {   # clone source $1 when its cache dir is missing
+    local d; d=$(clone_of "$1"); [ -d "$d/.git" ] && return 0
+    mkdir -p "$cache/icons"; echo "Cloning $1 ..."
+    git clone --quiet --depth 1 "${src_url[$1]}" "$d" 2>/dev/null || { rm -rf "${d:?}"; echo "(could not clone $1; skipping it)" >&2; return 1; }
+}
+refresh_source() { # bring the shallow clone of source $1 to the latest upstream; offline: keep the cache and say so
+    local d; d=$(clone_of "$1")
+    if [ -d "$d/.git" ]; then
+        git -C "$d" fetch --quiet --depth 1 origin HEAD 2>/dev/null && git -C "$d" reset --quiet --hard FETCH_HEAD || echo "(could not refresh $1; using the cached copy)"
+    else ensure_clone "$1" || true; fi
+}
+sync_icons() { local n; for n in "${src_names[@]}"; do ensure_clone "$n" || true; done; }
+sync_themes() {    # git fetch + pull --ff-only in this checkout; quiet on a detached HEAD or a branch without upstream
+    git -C "$root" remote get-url origin >/dev/null 2>&1 || return 0
+    git -C "$root" fetch --quiet 2>/dev/null || { echo "(could not fetch; using the checkout as it is)"; return 0; }
+    if git -C "$root" symbolic-ref -q HEAD >/dev/null && git -C "$root" rev-parse '@{u}' >/dev/null 2>&1; then
+        git -C "$root" pull --quiet --ff-only 2>/dev/null || echo "(could not fast-forward the checkout; using it as it is)"
     fi
 }
+if [ "$kind" = icons ]; then load_sources; migrate_cache; fi
 
-items=(); labels=()
+items=(); labels=(); declare -A i_src i_dir i_var
+set_name() {       # set name of an icon dir $1: its index.theme Name= when that is a plain id, else $2
+    local nm; nm=$(sed -n 's/^Name=//p' "$1/index.theme" 2>/dev/null | head -n1 | tr -d '\r')
+    case "$nm" in ""|*[[:space:]/]*) echo "$2" ;; *) echo "$nm" ;; esac
+}
+add_item() { items+=("$1"); labels+=("$1  ($2)"); i_src[$1]="$2"; i_dir[$1]="$3"; i_var[$1]="$4"; }
 load_items() {
-    items=(); labels=()
+    items=(); labels=(); i_src=(); i_dir=(); i_var=()
     if [ "$kind" = themes ]; then
         for p in "$root"/*/palette.toml; do
             sc=$(basename "$(dirname "$p")"); [ -d "$root/$sc/themes" ] || continue
@@ -120,18 +153,43 @@ load_items() {
             items+=("$sc"); labels+=("$sc  ($what)")
         done
     else
-        for d in "$src"/*/; do
-            [ -f "$d/index.theme" ] || continue
-            items+=("$(basename "$d")"); labels+=("$(basename "$d")")
+        local n d dd b v base
+        for n in "${src_names[@]}"; do
+            d=$(clone_of "$n"); [ -d "$d/.git" ] || continue
+            case "${src_layout[$n]}" in
+                top) for dd in "$d"/*/; do
+                         [ -f "$dd/index.theme" ] || continue; b=$(basename "$dd"); add_item "$(set_name "$dd" "$b")" "$n" "$b" ""
+                     done ;;
+                root) add_item "$(set_name "$d" "${src_extra[$n]}")" "$n" "" "" ;;
+                script) base="${n^}"
+                        for v in ${src_extra[$n]}; do
+                            if [ "$v" = standard ]; then add_item "$base" "$n" "" "$v"; else add_item "$base-$v" "$n" "" "$v"; fi
+                        done ;;
+                *) echo "icon-sources.conf: unknown layout '${src_layout[$n]}' for $n" >&2 ;;
+            esac
         done
     fi
 }
-folders_of() {   # installable folder names of item $1
-    if [ "$kind" = themes ]; then for d in "$root/$1"/themes/*/; do basename "$d"; done; else echo "$1"; fi
+folders_of() {   # installable folder names of item $1 (exactly these: never a glob, so removing Tela keeps Tela-blue)
+    if [ "$kind" = themes ]; then for d in "$root/$1"/themes/*/; do basename "$d"; done
+    elif [ "${src_layout[${i_src[$1]}]}" = script ]; then echo "$1"; echo "$1-dark"; echo "$1-light"
+    else echo "$1"; fi
 }
-src_of() {       # source path of folder $1 belonging to item $2
-    if [ "$kind" = themes ]; then echo "$root/$2/themes/$1"; else echo "$src/$1"; fi
+build_dir=""
+prepare_item() { # icons, script layout: run the upstream install.sh for the variant into a temp dir (never the real destination)
+    [ "$kind" = icons ] || return 0
+    [ "${src_layout[${i_src[$1]}]}" = script ] || return 0
+    local d f; d=$(clone_of "${i_src[$1]}"); build_dir=$(mktemp -d)
+    echo "Building $1 with the upstream install.sh (variant ${i_var[$1]}) ..."
+    (cd "$d" && ./install.sh -d "$build_dir" "${i_var[$1]}" >/dev/null 2>&1) || { echo "install.sh failed for $1" >&2; return 1; }
+    while read -r f; do [ -d "$build_dir/$f" ] || { echo "install.sh did not produce $f" >&2; return 1; }; done < <(folders_of "$1")
 }
+shared_bases() {  # hidden base dirs (e.g. .Fluent-base) that the installed folders of item $1 link into
+    local f
+    while read -r f; do [ -d "$dest/$f" ] && find "$dest/$f" -type l -printf '%l\n' 2>/dev/null; done < <(folders_of "$1") \
+        | sed -n 's|^\(\.\./\)\{1,\}\(\.[^/][^/]*\)/.*|\2|p' | sort -u || true
+}
+finish_item() { if [ -n "$build_dir" ]; then rm -rf "${build_dir:?}"; build_dir=""; fi; }
 is_installed() { local f; while read -r f; do [ -e "$dest/$f" ] && return 0; done < <(folders_of "$1"); return 1; }
 index_of() { local i; for i in "${!items[@]}"; do [ "${items[i]}" = "$1" ] && { echo "$i"; return 0; }; done; return 1; }
 
@@ -185,12 +243,36 @@ choose_one() {
 }
 
 # ---- actions -------------------------------------------------------------------------------------
-copy_folder() {  # copy folder $1 of item $2 into dest
-    local f="$1" it="$2"
-    mkdir -p "$dest"; rm -rf "${dest:?}/$f"; cp -a "$(src_of "$f" "$it")" "$dest/$f"
-    if [ "$kind" = icons ]; then gtk-update-icon-cache -q -f -t "$dest/$f" 2>/dev/null || true
-    else apply_accent "$it" "$(current_accent "$it")" "$f"; fi
+copy_folder() {  # replace folder $1 of item $2 in dest: remove the set's folder, then copy the fresh one (never merge)
+    local f="$1" it="$2" c
+    mkdir -p "$dest"; rm -rf "${dest:?}/$f"
+    if [ "$kind" = themes ]; then cp -a "$root/$it/themes/$f" "$dest/$f"
+    else
+        c=$(clone_of "${i_src[$it]}")
+        case "${src_layout[${i_src[$it]}]}" in
+            top) cp -a "$c/${i_dir[$it]}" "$dest/$f" ;;
+            root) mkdir -p "$dest/$f"; (cd "$c" && tar cf - --exclude=./.git --exclude=./.github --exclude=./preview --exclude='./README*' --exclude='./LICENSE*' .) | tar xf - -C "$dest/$f" ;;
+            script) cp -a "$build_dir/$f" "$dest/$f" ;;
+        esac
+        gtk-update-icon-cache -q -f -t "$dest/$f" 2>/dev/null || true
+    fi
+    if [ "$kind" = themes ]; then apply_accent "$it" "$(current_accent "$it")" "$f"; fi
     echo "Installed $f -> $dest/$f"
+}
+copy_item() {
+    local f h
+    prepare_item "$1" || return 1
+    while read -r f; do copy_folder "$f" "$1"; done < <(folders_of "$1")
+    if [ -n "$build_dir" ]; then   # hidden shared bases the build produced (Fluent's .Fluent-base ...): replaced too
+        for h in "$build_dir"/.[!.]*; do
+            [ -d "$h" ] || continue; rm -rf "${dest:?}/$(basename "$h")"; cp -a "$h" "$dest/$(basename "$h")"; echo "Installed $(basename "$h") (shared base)"
+        done
+    fi
+    finish_item
+}
+refresh_for() {  # icons: refresh the clones of the sources of the named sets ($@)
+    local n seen=" "
+    for n in "$@"; do case "$seen" in *" ${i_src[$n]} "*) ;; *) seen="$seen${i_src[$n]} "; refresh_source "${i_src[$n]}" ;; esac; done
 }
 current_value() {  # the value the desktop currently uses (theme or icon set)
     if [ "$kind" = themes ]; then gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'" || true
@@ -224,14 +306,21 @@ case "$action" in
             choose_many "${noun^}s to install into $dest" "${!items[@]}"
         fi
         [ "${#chosen[@]}" -gt 0 ] || { echo "Nothing selected (in the checklist, x ticks an entry and enter installs the ticked ones)."; exit 0; }
-        for i in "${chosen[@]}"; do while read -r f; do copy_folder "$f" "${items[i]}"; done < <(folders_of "${items[i]}"); done
+        names=(); for i in "${chosen[@]}"; do names+=("${items[i]}"); done
+        if [ "$kind" = icons ]; then refresh_for "${names[@]}"; load_items; fi   # icons: always refresh the clones first
+        for nm in "${names[@]}"; do copy_item "$nm"; done
         if [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icons to use it."; fi ;;
 
     update)
-        if [ "$kind" = icons ]; then sync_icons refresh; else sync_themes; fi
-        load_items; n=0
-        for i in "${!items[@]}"; do
-            while read -r f; do if [ -e "$dest/$f" ]; then copy_folder "$f" "${items[i]}"; n=$((n+1)); fi; done < <(folders_of "${items[i]}")
+        # themes: git fetch + pull --ff-only in this checkout; icons: refresh the clones of the installed sets' sources.
+        # Then every installed set's folders are removed and copied fresh (the remembered accent is re-applied).
+        if [ "$kind" = icons ]; then sync_icons; fi
+        load_items; n=0; inst=()
+        for i in "${!items[@]}"; do if is_installed "${items[i]}"; then inst+=("${items[i]}"); fi; done
+        if [ "$kind" = icons ]; then refresh_for "${inst[@]}"; load_items; else sync_themes; fi
+        for nm in "${inst[@]}"; do
+            if [ "$kind" = icons ]; then copy_item "$nm"; n=$((n+1))
+            else while read -r f; do if [ -e "$dest/$f" ]; then copy_folder "$f" "$nm"; n=$((n+1)); fi; done < <(folders_of "$nm"); fi
         done
         [ "$n" -gt 0 ] || echo "None of the ${noun}s from this source is installed in $dest." ;;
 
@@ -248,7 +337,8 @@ case "$action" in
             choose_many "${noun^}s to remove from $dest" "${inst[@]}"
         fi
         [ "${#chosen[@]}" -gt 0 ] || { echo "Nothing selected."; exit 0; }
-        cur=$(current_value)
+        cur=$(current_value); bases=""
+        if [ "$kind" = icons ]; then for i in "${chosen[@]}"; do bases+=$'\n'"$(shared_bases "${items[i]}")"; done; fi
         for i in "${chosen[@]}"; do
             while read -r f; do
                 if [ -e "$dest/$f" ] || [ -L "$dest/$f" ]; then
@@ -257,7 +347,14 @@ case "$action" in
                 fi
             done < <(folders_of "${items[i]}")
             if [ "$kind" = themes ]; then state_del "$state/accents" "${items[i]}"; fi
-        done ;;
+        done
+        # shared hidden base dirs (Fluent): remove one only when no remaining installed set links into it
+        if [ "$kind" = icons ]; then
+            still=""; for i in "${!items[@]}"; do if is_installed "${items[i]}"; then still+=$'\n'"$(shared_bases "${items[i]}")"; fi; done
+            for b in $bases; do
+                if ! printf '%s\n' "$still" | grep -qxF -- "$b" && [ -d "$dest/$b" ]; then rm -rf "${dest:?}/$b"; echo "Removed $dest/$b (shared base, no longer used)"; fi
+            done
+        fi ;;
 
     switch)
         if [ "$kind" = icons ]; then sync_icons; fi
@@ -278,7 +375,7 @@ case "$action" in
                 accent_pick="$accent_arg"
             else choose_accent "${items[i]}"; fi
             if [ -n "$accent_pick" ]; then state_set "$state/accents" "${items[i]}" "$accent_pick"; fi
-            while read -r f; do copy_folder "$f" "${items[i]}"; done < <(folders_of "${items[i]}")
+            copy_item "${items[i]}"
             [ -z "$accent_pick" ] || echo "Accent: $accent_pick."
         fi
         set_ini() {  # set_ini KEY VALUE: rewrite the key in the GTK settings.ini files that already have it
