@@ -3,7 +3,7 @@
 """Generate a scheme's libadwaita user stylesheet (<scheme>/libadwaita/gtk.css) from its palette.toml.
 
   python3 -I tools/libadwaita-gen.py --palette=<scheme>/palette.toml --out=<scheme>/libadwaita/gtk.css
-        [--accent-dir=DIR]     # also write the six accent variants as DIR/<accent>/libadwaita/gtk.css
+        [--accent-dir=DIR]     # also write the accent variants as DIR/<accent>/libadwaita/gtk.css
 
 libadwaita apps ignore the GTK theme and read only ~/.config/gtk-4.0/gtk.css. This file changes none of
 libadwaita's structural CSS: it only overrides the *_bg_color / *_fg_color named colours that libadwaita's own

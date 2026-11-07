@@ -13,7 +13,7 @@
 # index.theme is byte-identical to the one of our source. Any other folder of the same name (e.g. a third-party Dracula) is
 # never replaced silently: in a terminal the script asks (default no), without one it refuses that folder with a message and
 # carries on with the others; FORCE=1 in the environment overrides the guard.
-# Themes have a per-scheme accent (one of the six terminal colours listed in <scheme>/accents/list): switch asks for it
+# Themes have a per-scheme accent (one of the scheme's accents, the six terminal colours plus orange where it has one, listed in <scheme>/accents/list): switch asks for it
 # (or takes it as the 4th argument), remembers it in $XDG_STATE_HOME/gnome-themes/accents (lines scheme=accent), and
 # install/update re-apply the remembered one by running the scheme's sed token map over the installed copies.
 # Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (replaces the papirus source's URL),
@@ -75,7 +75,7 @@ apply_accent() {   # apply_accent SCHEME ACCENT [FOLDER]: run the token maps ove
 accent_label() {   # label of accent index $1: name, hex (dark / light)
     local l="${acc_names[$1]}  ${acc_dark[$1]}"; [ "${acc_light[$1]}" != "-" ] && l="$l / ${acc_light[$1]}"; echo "$l"
 }
-# choose_accent SCHEME: sets accent_pick (the name) from the six accents; Enter/cancel keeps the current one
+# choose_accent SCHEME: sets accent_pick (the name) from the scheme's accents; Enter/cancel keeps the current one
 accent_pick=""
 choose_accent() {
     local sc="$1" cur i a picked ls=() curlabel=""
@@ -88,7 +88,7 @@ choose_accent() {
         picked=$(gum choose --header "Accent colour for $sc" --selected="$curlabel" "${ls[@]}" || true)
         for i in "${!acc_names[@]}"; do if [ "${ls[i]}" = "$picked" ]; then accent_pick="${acc_names[i]}"; fi; done
     else
-        echo; echo "Accent colour for $sc (the scheme's six terminal colours):"
+        echo; echo "Accent colour for $sc (the scheme's terminal colours, plus orange where it has one):"
         for i in "${!ls[@]}"; do printf ' %2d) %s\n' "$((i+1))" "${ls[i]}"; done
         read -r -p "Number (Enter keeps $cur): " a || a=""
         if [[ "$a" =~ ^[0-9]+$ ]] && [ "$a" -ge 1 ] && [ "$a" -le "${#acc_names[@]}" ]; then accent_pick="${acc_names[$((a-1))]}"; fi

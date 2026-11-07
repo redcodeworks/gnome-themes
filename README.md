@@ -5,7 +5,7 @@ and GTK 3 templates. Each theme takes the stock stylesheet unchanged and replace
 from a per-scheme `palette.toml`. Selectors, geometry and assets stay stock.
 
 A theme is a top-level directory of this repo, each with its own `scheme.toml` (roles plus the six terminal
-accents): `gruvbox-material`, `nordic`, `dracula`, `catppuccin`, `tokyo-night`, `solarized`, `everforest`, `fairy-floss`, `material`, `monokai`, `rose-pine`, `sweet`, `aubergine`
+colours as accents, and orange as a seventh where the scheme has one): `gruvbox-material`, `nordic`, `dracula`, `catppuccin`, `tokyo-night`, `solarized`, `everforest`, `fairy-floss`, `material`, `monokai`, `rose-pine`, `sweet`, `aubergine`
 (the Ubuntu terminal look). `fairy-floss` has no upstream licence and partly invented accents; `monokai` is classic Monokai, not Monokai Pro. Icon
 sets come from the repos in `tools/icon-sources.conf`: Papirus, Gruvbox Plus, Zafiro, candy, Tela and Fluent.
 
@@ -49,7 +49,7 @@ Icons: clone the source into `~/.cache/gnome-themes/icons/<source>` (or refresh 
 Only the sets' own folders are replaced, never the whole directory.
 Every installed folder carries a `.gnome-themes` marker; a same-named folder without it (e.g. a third-party `Dracula`) is replaced or removed only after you answer `y` at the prompt (default no); without a terminal it is skipped with a message, and `FORCE=1` overrides. Folders installed before the marker are adopted when their `index.theme` is identical to ours. Tela and Fluent run their upstream `install.sh` (third-party code from the cloned repo) into a temp dir.
 
-The accent is one of the scheme's six terminal colours (`<scheme>/accents/list`), applied with sed token maps
+The accent is one of the scheme's six terminal colours plus orange where the scheme has one (`<scheme>/accents/list`; not `rose-pine` and `fairy-floss`, whose upstream has no orange), applied with sed token maps
 (`accents/<accent>.{dark,light}.sed`) and remembered in `~/.local/state/gnome-themes/accents`. `switch-theme` sets the GTK theme, the Shell theme (User Themes extension; dark or light follows your
 colour scheme) and offers the libadwaita file `~/.config/gtk-4.0/gtk.css`, never replacing a different
 one without asking. GTK 3 follows `gtk-application-prefer-dark-theme` in `~/.config/gtk-3.0/settings.ini`,

@@ -27,7 +27,7 @@ update-themes:
 remove-themes name="":
     @tools/themectl.sh themes remove "{{name}}"
 
-# Make a theme the active GTK, Shell and libadwaita theme; without a name, pick one. The optional accent (one of the scheme's six terminal colours) skips the accent question
+# Make a theme the active GTK, Shell and libadwaita theme; without a name, pick one. The optional accent (one of the scheme's accents: its six terminal colours, plus orange where it has one) skips the accent question
 [group('themes')]
 switch-theme name="" accent="":
     @tools/themectl.sh themes switch "{{name}}" "{{accent}}"

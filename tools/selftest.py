@@ -4,7 +4,7 @@
 
   python3 -I tools/selftest.py <scheme> [contrast|gtk3|gtk4|shell|all]
 
-contrast : WCAG ratios from palette.toml (fg on window and view, dim text, text on each of the six accents, warning text)
+contrast : WCAG ratios from palette.toml (fg on window and view, dim text, text on each accent (the six terminal colours, plus orange), warning text)
 gtk3/gtk4/shell (each in its own process, the toolkits cannot share one):
   structure : stock stylesheet and generated file are identical after masking colour tokens (0 differing lines)
   neutrals  : generated tokens equal to a stock neutral grey (stray default-Adwaita greys; pure black/white excluded)

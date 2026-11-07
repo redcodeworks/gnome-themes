@@ -9,7 +9,8 @@ scheme.toml is small data: per variant ([dark], optional [light]) the roles
   buttons, sidebars), surface_high (popovers, menus, dialogs), fg, fg_dim (readable secondary text),
   comment (mid grey: placeholders, borders), selection (informational), red orange yellow green
   cyan blue magenta purple (pink optional), plus [<variant>.ansi] = the six terminal accents
-  (red green yellow blue magenta cyan, normal not bright) and the root key default_accent.
+  (red green yellow blue magenta cyan, normal not bright), optionally a seventh `orange` (the scheme's own orange role
+  colour; a scheme whose upstream has no orange, rose-pine and fairy-floss, simply omits it) and the root key default_accent.
 Optional roles: popover (default surface_high), accent_fg (default bg_deep), warning_fg,
 [<variant>.adw] secondary_sidebar (libadwaita override). Missing roles are DERIVED by fixed rules
 (the generated palette.toml says which):
@@ -42,7 +43,7 @@ def nudge(c, n=1):
     r, g, b = hx(c); return th((r, g, b + n if b + n <= 255 else b - n))
 
 LADDER = {'dark': (0.055, 0.16, 0.28), 'light': (0.03, 0.06, 0.09)}
-ANSI = ('red', 'green', 'yellow', 'blue', 'magenta', 'cyan')
+ANSI = ('red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'orange')   # the six terminal colours plus the optional orange
 
 def resolve(S):
     """Fill derived roles; returns {variant: roles}, notes."""
@@ -77,7 +78,7 @@ def build(S):
     acc, rl = {}, {}
     for v, R in roles.items():
         A = S[v]['ansi']; table = {}
-        for n in ANSI:
+        for n in [x for x in ANSI if x in A]:
             fg, _ = pick_fg(R, A[n], [ink['dark'], ink['light']]); table[n] = [A[n].lower(), fg.lower()]
         dfl = table[dflt][1]
         if len({t[1] for t in table.values()}) > 1:
@@ -86,14 +87,16 @@ def build(S):
             # towards `top`), so it moves 8 blue steps (3 %, invisible); accents sharing it move with it
             new = nudge(dfl, 8).lower()
             notes.append('%s.accent_fg %s -> %s (the text colour varies per accent: the default needs its own token)' % (v, dfl, new))
-            for n in ANSI:
+            for n in table:
                 if table[n][1] == dfl: table[n][1] = new
             dfl = new
         R['accent_fg'] = dfl
         # roles that share the accent colour would make the token map ambiguous: nudge the other role
         for role in ('red', 'green', 'yellow', 'orange'):
             if R[role].lower() == A[dflt].lower():
-                R[role] = nudge(R[role]); notes.append('%s.%s nudged to %s (it equals the default accent; keeps accent tokens unique)' % (v, role, R[role]))
+                # the orange role is the anchor of a whole family of derived shades, like the accent: a 1-unit nudge lets
+                # shades of the two families collapse into one token, so it moves 8 blue steps (3 %, invisible)
+                R[role] = nudge(R[role], 8 if role == 'orange' else 1); notes.append('%s.%s nudged to %s (it equals the default accent; keeps accent tokens unique)' % (v, role, R[role]))
         acc[v] = table
     return roles, acc, notes
 
@@ -152,7 +155,7 @@ def main():
         out.append(emit_variant('shell.' + v, roles[v], v, 'shell', acc[v][dflt][0]))
     out.append('# accents: [accents.<variant>.<name>] color = the terminal\'s ANSI colour, fg = text on it (contrast in tools/selftest.py)')
     for v in roles:
-        for n in ANSI:
+        for n in acc[v]:
             out.append('[accents.%s.%s]\ncolor = "%s"\nfg = "%s"' % ((v, n) + tuple(acc[v][n])))
     out.append('\n# roles for tools/libadwaita-gen.py')
     for v, R in roles.items():
