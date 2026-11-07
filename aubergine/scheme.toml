@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT
+# Aubergine: the Ubuntu terminal look, dark only. Only hex values are used (no Ubuntu logos, fonts or artwork); "Ubuntu" is a
+# Canonical trademark, which is why the theme folders are called Aubergine. Brand colours from design.ubuntu.com/brand/colour-palette
+# (dark aubergine #2C001E, mid aubergine #5E2750, orange #E95420); terminal table = Ptyxis "Ubuntu" (background #300A24, foreground
+# #FFFFFF; gnome-terminal's own profile has #EEEEEC) with the Tango ANSI colours. The Tango palette's licence was not verified;
+# the values come from the Ptyxis palette (Gogh, MIT) and the research file, NOT re-read from a raw upstream file (not reachable).
+# Ladder: view dark aubergine #2c001e, window #300a24 (terminal background), headers mid aubergine #5e2750, popovers DERIVED
+# (fixed rule, 28 % towards fg). fg_dim and comment derived.
+# ANSI six = Ptyxis "Ubuntu" Color1-6 (Tango red, green, yellow, blue, magenta, cyan).
+# Default accent yellow #C4A000: Ubuntu orange #E95420 is not a terminal colour. By hue the nearest of the six is red #CC0000
+# (15 deg away, yellow 35 deg), but red is the error and destructive colour and has only 3.0:1 on the window; yellow has 7.0:1 and
+# the same warm family. A seventh "orange" accent (#E95420) would be clearly better; it is NOT implemented (six accents is the
+# machinery's rule), recommended for Kevin to decide.
+title = "Aubergine"
+gtk_name = "Aubergine"
+shell_name = "Aubergine-Shell"
+credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2c001e"
+bg = "#300a24"
+surface = "#5e2750"
+fg = "#ffffff"
+selection = "#5e2750"
+red = "#cc0000"
+orange = "#e95420"
+yellow = "#c4a000"
+green = "#4e9a06"
+cyan = "#06989a"
+blue = "#3465a4"
+magenta = "#75507b"
+purple = "#75507b"
+[dark.ansi]
+red = "#cc0000"
+green = "#4e9a06"
+yellow = "#c4a000"
+blue = "#3465a4"
+magenta = "#75507b"
+cyan = "#06989a"

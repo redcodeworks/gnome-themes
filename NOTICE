@@ -44,6 +44,10 @@ Palettes
               palette.json lists #464261, see rose-pine/scheme.toml.
   Sweet       Colour values of Sweet by EliverLara (https://github.com/EliverLara/Sweet, GPL-3.0). None of its SCSS, CSS or assets is
               used, only plain hex values (window, view, text, accents), as for Nordic.
+  Aubergine   The Ubuntu terminal colours: Ubuntu brand colours (https://design.ubuntu.com/brand/colour-palette) and the Ubuntu terminal
+              palette (Tango ANSI colours, as shipped in the Ptyxis "Ubuntu" palette, generated from Gogh). Only hex values are used; no
+              logos, fonts or artwork. "Ubuntu" and its logos are Canonical trademarks (https://ubuntu.com/legal/intellectual-property-policy),
+              which is why the theme is called Aubergine. The licence of the Tango palette itself was not verified.
   Terminal accents (the six per scheme) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
   from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of
