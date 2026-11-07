@@ -68,8 +68,8 @@ Stock stylesheets these themes are built on (colour values replaced, structure u
   Shell       Gruvbox-Material-Shell-{Dark,Light}/gnome-shell/gnome-shell.css are generated from
               GNOME Shell's stock stylesheets (gnome-shell-dark.css, gnome-shell-light.css from
               gnome-shell-theme.gresource), colour values replaced, structure unchanged except one
-              marked override block appended at the end (calendar days flat: two transparent
-              background rules). The stock
+              marked override block appended at the end (calendar flat: transparent
+              background rules for days, headings, month label and arrows). The stock
               header is kept in each file: "Copyright 2009, 2015 Red Hat, Inc. Portions adapted from
               Mx's data/style/default.css, Copyright 2009 Intel Corporation", GNU Lesser General
               Public License version 2.1 (https://gitlab.gnome.org/GNOME/gnome-shell).
