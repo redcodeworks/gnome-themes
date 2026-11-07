@@ -39,6 +39,9 @@ Palettes
   Monokai     Monokai by Wimer Hazenberg (https://monokai.nl), the classic palette, taken as plain hex values from Base16 Monokai in
               tinted-theming/schemes (https://github.com/tinted-theming/schemes, MIT, Copyright (c) 2022 Tinted Theming; the original
               Monokai itself has no licence of its own). Monokai Pro (monokai.pro) is proprietary and is deliberately NOT used.
+  Rose Pine   Rose Pine Main and Dawn (https://github.com/rose-pine/rose-pine-palette). MIT License, Copyright (c) mvllow; the terminal
+              mapping is from rose-pine/alacritty (MIT, Copyright (c) Rose Pine). The Dawn text colour is #575279 (alacritty port, site);
+              palette.json lists #464261, see rose-pine/scheme.toml.
   Terminal accents (the six per scheme) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
   from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of

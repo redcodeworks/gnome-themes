@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: MIT
+# Rose Pine (rose-pine/rose-pine-palette, MIT, Copyright (c) mvllow and contributors): Main dark + Dawn light.
+# VERIFIED 2026-11-07 against the raw files: rose-pine/alacritty dist/rose-pine.toml and rose-pine-dawn.toml (the official terminal
+# mapping: foreground, background, surface #1f1d2e (overlay #f2e9e1 on Dawn), selection #403d52/#dfdad9, the eight ANSI colours) and palette.json
+# (base, surface, overlay, muted, subtle, text, love, gold, rose, pine, foam, iris of main and dawn). highlight-med comes from the
+# alacritty selection colour (palette.json has no highlight roles).
+# DAWN TEXT: palette.json says #464261, the alacritty port (and the Rose Pine site/CSS) say #575279. #575279 is used: two official
+# sources against one, and #575279 is the long-standing documented value (palette.json looks like a drift). Contrast on #faf4ed is
+# 6.9:1 against 9.3:1 for #464261, both pass; change fg below to #464261 if palette.json is the one that matters to you.
+# Ladder dark: view base #191724, window surface #1f1d2e, headers overlay #26233a, popovers highlight-med #403d52.
+# Ladder light (view lightest): view surface #fffaf3, window base #faf4ed, headers overlay #f2e9e1, popovers highlight-med #dfdad9.
+# fg_dim = subtle, comment = muted. ANSI six = the official mapping: love red, pine green, gold yellow, foam blue, iris magenta,
+# rose cyan (Rose Pine has no Ptyxis palette). Rose Pine has no orange: orange is DERIVED (gold mixed 35 % towards love).
+# Default accent magenta = iris: Rose Pine's own UI accent in most ports; iris and rose are not ANSI blue, and iris is the
+# one with the best contrast of the six on the dark window (8.4:1 on base; pine/green is only 3.2:1, 3.6:1 on Dawn view for iris).
+# accent_fg (dark): text on an accent is the window colour #1f1d2e, not bg_deep. Reason (generator limit, not taste): the dark and
+# light variants would otherwise share ONE nudged ink token (#19172c) that maps to different inks per accent in the two variants,
+# and the single libadwaita file (both variants, one sed pass) cannot tell them apart (accent-maps-gen verification fails).
+title = "Rose Pine"
+gtk_name = "Rose-Pine"
+shell_name = "Rose-Pine-Shell"
+credit = "Rose Pine (MIT), Main and Dawn"
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#191724"
+bg = "#1f1d2e"
+surface = "#26233a"
+surface_high = "#403d52"
+fg = "#e0def4"
+accent_fg = "#1f1d2e"
+fg_dim = "#908caa"
+comment = "#6e6a86"
+selection = "#403d52"
+red = "#eb6f92"
+orange = "#f2a480"
+yellow = "#f6c177"
+green = "#31748f"
+cyan = "#ebbcba"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+purple = "#c4a7e7"
+pink = "#ebbcba"
+[dark.ansi]
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+
+[light]
+bg_deep = "#fffaf3"
+bg = "#faf4ed"
+surface = "#f2e9e1"
+surface_high = "#dfdad9"
+fg = "#575279"
+fg_dim = "#797593"
+comment = "#9893a5"
+selection = "#dfdad9"
+red = "#b4637a"
+orange = "#d7894c"
+yellow = "#ea9d34"
+green = "#286983"
+cyan = "#d7827e"
+blue = "#56949f"
+magenta = "#907aa9"
+purple = "#907aa9"
+pink = "#d7827e"
+[light.ansi]
+red = "#b4637a"
+green = "#286983"
+yellow = "#ea9d34"
+blue = "#56949f"
+magenta = "#907aa9"
+cyan = "#d7827e"
