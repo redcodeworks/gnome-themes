@@ -45,7 +45,7 @@ got=$(just --summary 2>/dev/null | tr ' ' '\n' | grep -v '^default$' | sort | tr
 schemes=${*:-$(ls -d */palette.toml | cut -d/ -f1)}
 for s in $schemes; do
     for d in $s/themes/*/; do [ -f "$d/LICENSE" ] && chk ok "$d has a LICENSE" || chk fail "$d has no LICENSE"; done
-    for f in $(find "$s/themes" -name '*.css' -not -path '*/assets/*' -not -name 'pad-osd.css'); do head -12 "$f" | grep -q "Licen[cs]e" && chk ok "licence line in $f" || chk fail "no licence line in header of $f"; done
+    while IFS= read -r f; do head -12 "$f" | grep -q "Licen[cs]e" && chk ok "licence line in $f" || chk fail "no licence line in header of $f"; done < <(find "$s/themes" -name '*.css' -not -path '*/assets/*' -not -name 'pad-osd.css')
     grep -q -i "$s" NOTICE && chk ok "NOTICE mentions $s" || chk fail "NOTICE does not mention $s"
 done
 [ -f LICENSE ] && grep -q "MIT License" LICENSE && chk ok "root LICENSE is MIT" || chk fail "root LICENSE"
