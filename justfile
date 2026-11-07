@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
-# gnome-themes: terminal-inspired GNOME themes (one top-level directory per scheme) and icon sets from an icon repo
-# (Papirus by default). Run `just` for the list; every recipe is a thin call into tools/themectl.sh. Needs just, bash, git.
+# gnome-themes: terminal-inspired GNOME themes (one top-level directory per scheme) and icon sets from several icon repos
+# (tools/icon-sources.conf). Run `just` for the list; every recipe is a thin call into tools/themectl.sh. Needs just, bash, git.
 
 default:
     @just --list --unsorted
@@ -32,19 +32,19 @@ remove-themes name="":
 switch-theme name="" accent="":
     @tools/themectl.sh themes switch "{{name}}" "{{accent}}"
 
-# Icons: top-level directories of the icon repo (ICONS_URL, Papirus by default), installed into ~/.local/share/icons (ICONS_DEST)
+# Icons: sets of the repos in tools/icon-sources.conf (Papirus, Gruvbox Plus, Zafiro, candy, Tela, Fluent; ICONS_URL replaces the papirus URL), cloned into ~/.cache/gnome-themes/icons and installed into ~/.local/share/icons (ICONS_DEST)
 
-# List the available icon sets (✓ = installed)
+# List the available icon sets with their source (✓ = installed)
 [group('icons')]
 list-icons:
     @tools/themectl.sh icons list
 
-# Install an icon set (e.g. Papirus-Dark); without a name, pick from a checklist
+# Install an icon set (e.g. Papirus-Dark, Tela-nord) after refreshing its source clone; without a name, pick from a checklist
 [group('icons')]
 install-icons name="":
     @tools/themectl.sh icons install "{{name}}"
 
-# Refresh every installed icon set from the icon repo
+# Refresh the source clones, then replace every installed icon set
 [group('icons')]
 update-icons:
     @tools/themectl.sh icons update
