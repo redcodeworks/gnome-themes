@@ -42,6 +42,8 @@ Palettes
   Rose Pine   Rose Pine Main and Dawn (https://github.com/rose-pine/rose-pine-palette). MIT License, Copyright (c) mvllow; the terminal
               mapping is from rose-pine/alacritty (MIT, Copyright (c) Rose Pine). The Dawn text colour is #575279 (alacritty port, site);
               palette.json lists #464261, see rose-pine/scheme.toml.
+  Sweet       Colour values of Sweet by EliverLara (https://github.com/EliverLara/Sweet, GPL-3.0). None of its SCSS, CSS or assets is
+              used, only plain hex values (window, view, text, accents), as for Nordic.
   Terminal accents (the six per scheme) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
   from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of
