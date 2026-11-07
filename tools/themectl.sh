@@ -22,6 +22,13 @@
 # switch sets it as the `palette` of the default Ptyxis profile and of every profile that already has a palette key (other profiles
 # are left alone) through dconf; without dconf, or before Ptyxis has created a profile, it says so and skips. The accent does not
 # change the palette.
+# Flatpak access: Flatpak apps see neither ~/.config/gtk-3.0|4.0, ~/.themes nor ~/.local/share/icons unless allowed (the list is fp_paths below,
+# read-only). After a switch, when `flatpak` exists and the global user override lacks any of them, the script asks (default no; without a
+# terminal it prints the exact command) and only on y runs `flatpak override --user --filesystem=...` for the MISSING entries and records
+# exactly those in $XDG_STATE_HOME/gnome-themes/flatpak-overrides; an entry that existed before is never recorded and never removed. When
+# remove-themes or remove-icons removes the last installed theme and icon set of this repo's (those with the marker) and the record lists
+# entries, it asks (default no; without a terminal it prints the commands) and on y runs `--nofilesystem=` for the recorded entries only.
+# GtkSourceView schemes need no entry: Flatpak apps read their own ~/.var/app/<id>/data (see the styles section).
 # Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (replaces the papirus source's URL),
 # ICON_SOURCES (another registry file), GNOME_THEMES_CACHE (~/.cache/gnome-themes; icon clones in icons/<source>),
 # PTYXIS_PALETTES (~/.local/share/org.gnome.Ptyxis/palettes),
@@ -397,6 +404,59 @@ pty_switch() {   # set the palette on the default profile and on every profile t
     echo "Ptyxis palette is now \"$name\" on $done_n profile(s) (the default one, plus those that already had a palette set)."
 }
 
+# ---- Flatpak access (themes and icons: grant after switch-theme, undo after the last removal) -------------------
+fp_paths=(xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro "~/.themes:ro")   # the only entries gnome-themes ever manages
+fp_state="$state/flatpak-overrides"
+fp_have() { flatpak override --user --show 2>/dev/null | sed -n 's/^filesystems=//p' | tr ';' '\n' | grep -vx '' || true; }
+fp_cmd_add() { local c="flatpak override --user" p; for p in "$@"; do c="$c --filesystem=$p"; done; echo "$c"; }
+fp_cmd_del() { local c="flatpak override --user" p; for p in "$@"; do c="$c --nofilesystem=${p%:*}"; done; echo "$c"; }
+fp_check() {   # after switch-theme: offer the missing read-only entries
+    command -v flatpak >/dev/null 2>&1 || return 0
+    local have p a miss=()
+    have=$(fp_have)
+    for p in "${fp_paths[@]}"; do printf '%s\n' "$have" | grep -qxF -- "$p" || miss+=("$p"); done
+    [ "${#miss[@]}" -gt 0 ] || return 0
+    echo "Flatpak sandbox: no global read-only access yet to: ${miss[*]}"
+    if [ "$tty_in" = 1 ]; then
+        read -r -u 3 -p "Flatpak apps (for example Calculator, Text Editor) cannot see your themes. Allow read-only access to these folders for all Flatpaks? [y/N] " a || a=n
+        case "$a" in
+            [yY]*) for p in "${miss[@]}"; do
+                       if flatpak override --user --filesystem="$p"; then state_add_line "$fp_state" "$p"; else echo "Could not grant $p." >&2; fi
+                   done; echo "Granted; restart the Flatpak apps. gnome-themes removes exactly these again when you remove the last theme and icon set." ;;
+            *) echo "Left the Flatpak sandbox alone." ;;
+        esac
+    else
+        echo "Not changing the Flatpak sandbox without a terminal. To allow it, run:"; echo "  $(fp_cmd_add "${miss[@]}")"
+        echo "  (or run switch-theme in a terminal and answer y; gnome-themes then records what it added and removes only that later)"
+    fi
+}
+state_add_line() { mkdir -p "$(dirname "$1")"; grep -qxF -- "$2" "$1" 2>/dev/null || echo "$2" >> "$1"; }
+any_marked() {   # is any theme or icon set of this repo (marker file) installed? (both destinations, whatever kind runs)
+    local d
+    for d in "${THEMES_DEST:-$HOME/.themes}" "${ICONS_DEST:-${XDG_DATA_HOME:-$HOME/.local/share}/icons}"; do
+        [ -d "$d" ] && find "$d" -mindepth 2 -maxdepth 2 -name "$marker" 2>/dev/null | grep -q . && return 0
+    done
+    return 1
+}
+fp_undo() {    # after remove: when nothing of ours is installed any more, offer to remove the recorded entries
+    [ -s "$fp_state" ] || return 0
+    any_marked && return 0
+    local ents=() p a; while read -r p; do [ -n "$p" ] && ents+=("$p"); done < "$fp_state"
+    [ "${#ents[@]}" -gt 0 ] || return 0
+    if ! command -v flatpak >/dev/null 2>&1; then echo "Flatpak not found; the record $fp_state still lists: ${ents[*]}"; return 0; fi
+    if [ "$tty_in" = 1 ]; then
+        read -r -u 3 -p "Remove the Flatpak read access that gnome-themes added? [y/N] " a || a=n
+        case "$a" in
+            [yY]*) for p in "${ents[@]}"; do flatpak override --user --nofilesystem="${p%:*}" || echo "Could not remove $p." >&2; done
+                   rm -f "$fp_state"; echo "Removed the Flatpak access gnome-themes had added (${ents[*]})." ;;
+            *) echo "Left the Flatpak access in place." ;;
+        esac
+    else
+        echo "gnome-themes added Flatpak read access that nothing uses any more. To remove exactly that, run:"; echo "  $(fp_cmd_del "${ents[@]}")"
+        echo "  (then delete $fp_state, or run remove-themes in a terminal and answer y)"
+    fi
+}
+
 # ---- actions -------------------------------------------------------------------------------------
 skipped=(); installed_n=0
 was_skipped() { local s; for s in "${skipped[@]}"; do [ "$s" = "$1" ] && return 0; done; return 1; }
@@ -522,7 +582,8 @@ case "$action" in
             for b in $bases; do
                 if ! printf '%s\n' "$still" | grep -qxF -- "$b" && [ -d "$dest/$b" ] && may_touch "$dest/$b" "" Remove; then rm -rf "${dest:?}/$b"; echo "Removed $dest/$b (shared base, no longer used)"; fi
             done
-        fi ;;
+        fi
+        fp_undo ;;
 
     switch)
         if [ "$kind" = icons ]; then sync_icons; fi
@@ -610,7 +671,7 @@ case "$action" in
                 else echo "$target differs from the scheme's libadwaita file; left alone (run in a terminal to replace it)."
                 fi
             fi
-            pty_switch "$sc"
+            pty_switch "$sc"; fp_check
             echo "Restart GTK apps to pick up the new theme."
         fi ;;
 

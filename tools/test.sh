@@ -57,6 +57,20 @@ chmod +x "$T/bin/dconf"
 export PTYXIS_PALETTES="$T/ptyxis-palettes"
 export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" GNOME_THEMES_CACHE="$T/cache"
 export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
+# a stand-in flatpak (FLATPAK_DB: the global override's filesystems, one entry per line); only the calls themectl makes. Absent unless a test
+# puts $T/fpbin on the PATH, so the other tests behave like a machine without Flatpak
+mkdir -p "$T/fpbin"; export FLATPAK_DB="$T/flatpak.db"; : > "$FLATPAK_DB"
+cat > "$T/fpbin/flatpak" <<'SH'
+#!/bin/sh
+db="${FLATPAK_DB:?}"; [ "$1" = override ] && [ "$2" = --user ] || exit 2
+shift 2
+for a in "$@"; do case "$a" in
+  --show) printf '[Context]\nfilesystems=%s\n' "$(tr '\n' ';' < "$db")" ;;
+  --filesystem=*) v="${a#--filesystem=}"; grep -qxF "$v" "$db" || echo "$v" >> "$db" ;;
+  --nofilesystem=*) v="${a#--nofilesystem=}"; awk -v v="$v" '{p=$0; sub(/:[a-z]+$/,"",p)} p!=v' "$db" > "$db.new"; mv "$db.new" "$db" ;;
+esac; done
+SH
+chmod +x "$T/fpbin/flatpak"
 # a fake icon repo (two sets, each with an index.theme), so the icon tests need no network
 mkdir -p "$T/icons-src" && (cd "$T/icons-src" && git init -q && for n in Fake-Dark Fake-Light; do mkdir -p $n/apps; printf '[Icon Theme]\nName=%s\nDirectories=apps\n' $n > $n/index.theme; echo x > $n/apps/a.svg; done && git add -A && git commit -q -m init)
 
@@ -266,6 +280,41 @@ FORCE=1 just install-icons Fake-Light </dev/null >/dev/null 2>&1; [ ! -e "$ICONS
 cp -a "$T/icons-src/Fake-Dark" "$ICONS_DEST/Fake-Dark"; rm -rf "$ICONS_DEST/Fake-Dark/.git"; echo stale > "$ICONS_DEST/Fake-Dark/stale.txt"
 just install-icons Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.gnome-themes" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
 just remove-icons Fake-Dark </dev/null >/dev/null 2>&1; just remove-icons Fake-Light </dev/null >/dev/null 2>&1
+
+# ---- Flatpak access: grant after a y, record only what was added, undo only that ------------------------------------------------
+echo "=== flatpak access"
+FS="$T/themes-fp"; FI="$T/icons-fp"; fpst="$XDG_STATE_HOME/gnome-themes/flatpak-overrides"; rm -f "$fpst"
+export FP_PATH="$T/fpbin:$PATH"
+fpshow() { sort "$FLATPAK_DB" | tr '\n' ' '; }
+# without a terminal: nothing changes, the exact command is printed
+: > "$FLATPAK_DB"
+out=$(PATH="$FP_PATH" THEMES_DEST=$FS just install-themes fairy-floss </dev/null 2>&1; PATH="$FP_PATH" THEMES_DEST=$FS just switch-theme fairy-floss </dev/null 2>&1)
+[ ! -s "$FLATPAK_DB" ] && [ ! -e "$fpst" ] && printf '%s\n' "$out" | grep -qF "flatpak override --user --filesystem=xdg-config/gtk-3.0:ro --filesystem=xdg-config/gtk-4.0:ro --filesystem=xdg-data/icons:ro --filesystem=~/.themes:ro" && chk ok "no terminal: sandbox untouched, exact command printed" || chk fail "no-terminal flatpak case"
+if command -v script >/dev/null 2>&1; then
+    # a pre-existing entry; answer n, then y
+    : > "$FLATPAK_DB"; echo "xdg-config/gtk-4.0:ro" > "$FLATPAK_DB"
+    printf 'n\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss" /dev/null > "$T/fp.out" 2>&1
+    [ "$(fpshow)" = "xdg-config/gtk-4.0:ro " ] && [ ! -e "$fpst" ] && grep -q "Allow read-only access to these folders for all Flatpaks" "$T/fp.out" && chk ok "answer n: nothing granted or recorded; the prompt text" || chk fail "flatpak n case ($(fpshow))"
+    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss" /dev/null >/dev/null 2>&1
+    [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "answer y: the missing entries were granted" || chk fail "flatpak y grant ($(fpshow))"
+    [ "$(sort "$fpst" | tr '\n' ' ')" = "xdg-config/gtk-3.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "only the entries gnome-themes added are recorded (the pre-existing one is not)" || chk fail "record: $(cat "$fpst" 2>/dev/null | tr '\n' ' ')"
+    # a second switch finds nothing missing: no prompt
+    printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss" /dev/null > "$T/fp.out" 2>&1
+    grep -q "Allow read-only access" "$T/fp.out" && chk fail "prompted although everything is granted" || chk ok "nothing missing: no prompt"
+    # undo: install an icon set too; removing the themes alone keeps the record, removing the last set asks
+    PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icons Fake-Dark </dev/null >/dev/null 2>&1
+    printf 'y\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh themes remove fairy-floss" /dev/null > "$T/fp.out" 2>&1
+    [ -s "$fpst" ] && ! grep -q "Remove the Flatpak read access" "$T/fp.out" && chk ok "removing the last theme while an icon set remains does not ask" || chk fail "undo asked too early"
+    printf 'n\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh icons remove Fake-Dark" /dev/null > "$T/fp.out" 2>&1
+    grep -q "Remove the Flatpak read access that gnome-themes added" "$T/fp.out" && [ -s "$fpst" ] && [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "removing the last set asks; n keeps access and record" || chk fail "undo n case"
+    PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icons Fake-Dark </dev/null >/dev/null 2>&1
+    out=$(PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just remove-icons Fake-Dark </dev/null 2>&1)
+    printf '%s\n' "$out" | grep -qF "flatpak override --user --nofilesystem=xdg-config/gtk-3.0 --nofilesystem=xdg-data/icons --nofilesystem=~/.themes" && ! printf '%s\n' "$out" | grep -q "nofilesystem=xdg-config/gtk-4.0" && [ -s "$fpst" ] && chk ok "no terminal: the undo commands for exactly the recorded entries are printed, nothing removed" || chk fail "undo no-terminal case"
+    PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icons Fake-Dark </dev/null >/dev/null 2>&1
+    printf 'y\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh icons remove Fake-Dark" /dev/null >/dev/null 2>&1
+    [ "$(fpshow)" = "xdg-config/gtk-4.0:ro " ] && [ ! -e "$fpst" ] && chk ok "answer y: exactly the recorded entries are removed (the pre-existing one stays), record cleared" || chk fail "undo y case ($(fpshow))"
+else echo "  skip flatpak prompt tests (script not installed)"; fi
+rm -rf "$FS" "$FI" "$fpst"; : > "$FLATPAK_DB"
 
 # ---- checklist UI (pty): SPACE toggles, ENTER confirms, q cancels, preselection shown ---------------------------
 echo "=== checklist (pty)"

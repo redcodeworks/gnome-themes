@@ -39,8 +39,7 @@ just switch-icons Papirus-Dark
 | `switch-theme [name] [accent]` | `switch-icons [name]` | checklist without a name |
 
 Themes go to `~/.themes` and icons to `~/.local/share/icons` as real copies (Flatpak apps see
-`~/.themes`, not `/usr/share/themes`, and cannot follow symlinks; give them
-`--filesystem=~/.themes:ro`). In the checklists SPACE ticks an entry, ENTER confirms and q cancels (up/down or j/k move; a all, n none). Override the
+`~/.themes`, not `/usr/share/themes`, and cannot follow symlinks; see Flatpak below). In the checklists SPACE ticks an entry, ENTER confirms and q cancels (up/down or j/k move; a all, n none). Override the
 destinations with `THEMES_DEST` and `ICONS_DEST` (icons use the XDG path; GTK also reads the legacy `~/.icons`),
 and the papirus source with `ICONS_URL`.
 
@@ -56,6 +55,10 @@ one without asking. GTK 3 follows `gtk-application-prefer-dark-theme` in `~/.con
 not `color-scheme`.
 
 Ptyxis: every scheme also has a terminal palette (`<scheme>/ptyxis/gnome-themes-<scheme>.palette`, light and dark sections that follow the system colour scheme, shown in Ptyxis as "<Title> (GNOME Themes)"). `install-themes` / `update-themes` / `remove-themes` copy, refresh and delete it in `~/.local/share/org.gnome.Ptyxis/palettes` (`PTYXIS_PALETTES` overrides), with the same marker and collision rules as the folders; `switch-theme` selects it on the default Ptyxis profile and on every profile that already has a palette set (via `dconf`; with no Ptyxis profile yet it says so and skips). The accent does not change it.
+
+## Flatpak apps
+
+Flatpak apps (on a fresh Fedora Atomic image the Calculator and Text Editor are Flatpaks) cannot read `~/.themes`, `~/.local/share/icons` or `~/.config/gtk-3.0|4.0` unless allowed. gnome-themes manages that access itself: after `switch-theme`, if `flatpak` is installed and the global user override lacks any of `xdg-config/gtk-3.0:ro`, `xdg-config/gtk-4.0:ro`, `xdg-data/icons:ro`, `~/.themes:ro`, it asks once (default no) whether to allow read-only access for all Flatpaks; without a terminal it only prints the exact `flatpak override --user --filesystem=...` command. Only the missing entries are granted and recorded in `~/.local/state/gnome-themes/flatpak-overrides`; an entry that was already there is never recorded or removed. When `remove-themes` or `remove-icons` removes the last installed theme and icon set it asks (default no; no terminal: prints the `--nofilesystem` commands) whether to remove exactly the recorded entries. The sandbox is never widened silently.
 
 ## Contributing
 
