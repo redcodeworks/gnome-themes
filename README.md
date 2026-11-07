@@ -17,7 +17,7 @@ welcome to take anything here that looks useful, no need to ask.
 
 ## Requirements
 
-- To install: [`just`](https://github.com/casey/just), bash and git (`gum` makes the checklists nicer).
+- To install: [`just`](https://github.com/casey/just), bash and git.
 - To regenerate the CSS (`just generate`): python3, python3-gobject, GTK 3, GTK 4 and gnome-shell.
 
 ## Install
@@ -40,7 +40,7 @@ just switch-icons Papirus-Dark
 
 Themes go to `~/.themes` and icons to `~/.local/share/icons` as real copies (Flatpak apps see
 `~/.themes`, not `/usr/share/themes`, and cannot follow symlinks; give them
-`--filesystem=~/.themes:ro`). In the checklists `x` ticks an entry and enter confirms. Override the
+`--filesystem=~/.themes:ro`). In the checklists SPACE ticks an entry, ENTER confirms and q cancels (up/down or j/k move; a all, n none). Override the
 destinations with `THEMES_DEST` and `ICONS_DEST` (icons use the XDG path; GTK also reads the legacy `~/.icons`),
 and the papirus source with `ICONS_URL`.
 

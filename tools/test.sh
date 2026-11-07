@@ -130,5 +130,45 @@ cp -a "$T/icons-src/Fake-Dark" "$ICONS_DEST/Fake-Dark"; rm -rf "$ICONS_DEST/Fake
 just install-icons Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.gnome-themes" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
 just remove-icons Fake-Dark </dev/null >/dev/null 2>&1; just remove-icons Fake-Light </dev/null >/dev/null 2>&1
 
+# ---- checklist UI (pty): SPACE toggles, ENTER confirms, q cancels, preselection shown ---------------------------
+echo "=== checklist (pty)"
+cat > "$T/ptyrun.py" <<'PY'
+import os, pty, select, sys, time, fcntl, termios, struct, re
+keys = {'down': b'\x1b[B', 'up': b'\x1b[A', 'space': b' ', 'enter': b'\r', 'q': b'q', 'n': b'n', 'a': b'a', 'j': b'j'}
+seq = sys.argv[1].split(','); cmd = sys.argv[2:]
+pid, fd = pty.fork()
+if pid == 0: os.execvp(cmd[0], cmd)
+fcntl.ioctl(fd, termios.TIOCSWINSZ, struct.pack('HHHH', 50, 140, 0, 0))
+out = b''; i = 0; last = time.time(); t0 = last
+while time.time() - t0 < 30:
+    r, _, _ = select.select([fd], [], [], 0.2)
+    if r:
+        try: d = os.read(fd, 8192)
+        except OSError: break
+        if not d: break
+        out += d; last = time.time()
+    elif i < len(seq) and time.time() - last > 0.3:
+        os.write(fd, keys[seq[i]]); i += 1; last = time.time()
+    elif i >= len(seq) and time.time() - last > 5: break
+try: os.waitpid(pid, 0)
+except ChildProcessError: pass
+sys.stdout.write(re.sub(r'\x1b\[[0-9;?]*[A-Za-z]', '', out.decode(errors='replace')))
+PY
+pty() { python3 -I "$T/ptyrun.py" "$@"; }
+n_inst() { ls -d "$1"/*/ 2>/dev/null | wc -l; }
+PD="$T/pty-themes"; mkdir -p "$PD"
+out=$(THEMES_DEST=$PD pty q tools/themectl.sh themes install)
+echo "$out" | grep -q '\[x\]' && chk ok "checklist shows the preselection" || chk fail "checklist preselection not shown"
+echo "$out" | grep -q 'SPACE toggles' && chk ok "checklist hint says SPACE toggles" || chk fail "checklist hint"
+[ "$(n_inst "$PD")" -eq 0 ] && echo "$out" | grep -q Cancelled && chk ok "q cancels, nothing installed" || chk fail "q did not cancel"
+THEMES_DEST=$PD pty n,down,space,enter tools/themectl.sh themes install >/dev/null
+first_sc=$(ls -d */palette.toml | sed -n 2p | cut -d/ -f1); gname=$(awk -F'"' '/^gtk_name/ {print $2}' "$first_sc/palette.toml")
+[ -d "$PD/$gname" ] && chk ok "none, down, SPACE ticks one entry, ENTER installs it ($first_sc)" || chk fail "space did not tick the second entry"
+PD2="$T/pty-themes2"; mkdir -p "$PD2"; THEMES_DEST=$PD2 pty enter tools/themectl.sh themes install >/dev/null
+[ "$(n_inst "$PD2")" -gt 4 ] && chk ok "ENTER alone installs the preselected set (first run: every scheme)" || chk fail "enter alone installed $(n_inst "$PD2")"
+out=$(THEMES_DEST=$PD pty down,enter tools/themectl.sh themes switch "$first_sc")
+echo "$out" | grep -q 'current' && chk ok "accent submenu marks the current accent" || chk fail "accent submenu: no (current) mark"
+grep -q "^$first_sc=" "$XDG_STATE_HOME/gnome-themes/accents" && chk ok "accent chosen in the submenu is remembered" || chk fail "accent not remembered"
+
 echo; echo "TOTAL: $pass PASS, $fail FAIL"
 [ "$fail" -eq 0 ]

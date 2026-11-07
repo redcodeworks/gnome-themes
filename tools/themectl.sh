@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
 # Install, list, update, remove and switch themes (this repo) and icon sets (several icon repos, see
-# tools/icon-sources.conf) in the user's home. Needs only bash and git; gum is used for the checklists if present.
+# tools/icon-sources.conf) in the user's home. Needs only bash and git. Checklists are a built-in terminal UI (SPACE toggles).
 #   themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]
 # A theme is a top-level directory of this repo (a scheme, e.g. gruvbox-material); an icon set belongs to a source of
 # tools/icon-sources.conf (e.g. Papirus-Dark from papirus, Tela-nord from tela). Without a name, install/remove/switch ask.
@@ -84,15 +84,17 @@ choose_accent() {
     for i in "${!acc_names[@]}"; do
         l=$(accent_label "$i"); if [ "${acc_names[i]}" = "$cur" ]; then l="$l  (current)"; curlabel="$l"; fi; ls+=("$l")
     done
-    if have_gum; then
-        picked=$(gum choose --header "Accent colour for $sc" --selected="$curlabel" "${ls[@]}" || true)
-        for i in "${!acc_names[@]}"; do if [ "${ls[i]}" = "$picked" ]; then accent_pick="${acc_names[i]}"; fi; done
-    else
-        echo; echo "Accent colour for $sc (the scheme's terminal colours, plus orange where it has one):"
+    local savedl=("${labels[@]}") rc=0 idx=() cc=0
+    labels=("${ls[@]}"); for i in "${!ls[@]}"; do idx+=("$i"); if [ "${acc_names[i]}" = "$cur" ]; then cc=$i; fi; done
+    tui_cur=$cc; pick=""; tui_one "Accent colour for $sc" "${idx[@]}" || rc=$?; tui_cur=0; labels=("${savedl[@]}")
+    if [ "$rc" -eq 0 ] && [ -n "$pick" ]; then accent_pick="${acc_names[pick]}"
+    elif [ "$rc" -eq 2 ]; then
+        echo; echo "Accent colour for $sc (the scheme's terminal colours):"
         for i in "${!ls[@]}"; do printf ' %2d) %s\n' "$((i+1))" "${ls[i]}"; done
         read -r -p "Number (Enter keeps $cur): " a || a=""
         if [[ "$a" =~ ^[0-9]+$ ]] && [ "$a" -ge 1 ] && [ "$a" -le "${#acc_names[@]}" ]; then accent_pick="${acc_names[$((a-1))]}"; fi
     fi
+
 }
 
 # ---- sources -------------------------------------------------------------------------------------
@@ -235,18 +237,67 @@ is_installed() { local f; while read -r f; do [ -e "$dest/$f" ] && is_ours "$des
 index_of() { local i; for i in "${!items[@]}"; do [ "${items[i]}" = "$1" ] && { echo "$i"; return 0; }; done; return 1; }
 
 # ---- prompts -------------------------------------------------------------------------------------
-have_gum() { command -v gum >/dev/null 2>&1 && [ -t 0 ]; }
+# Terminal UI (no dependencies): up/down or j/k move, SPACE toggles, a all, n none, ENTER confirms, q cancels. Without a
+# terminal the numbered lists below are used.
+# Terminal checklist for bash: arrow keys or j/k move, SPACE toggles, a = all, n = none, Enter confirms, q cancels.
+# No dependencies. Draws on stderr, reads the keyboard from /dev/tty. Needs: labels[] (display text per index),
+# on[] (1 = ticked) for tui_many. Returns 2 when there is no terminal, so the caller can fall back to a numbered list.
+#   tui_many HEADER IDX...   sets chosen=(ticked indexes among IDX); returns 1 when cancelled
+#   tui_one  HEADER IDX...   sets pick=<index> (empty when cancelled); tui_cur=N (position within IDX) puts the cursor there
+_tui_read_key() {   # sets key to: up down space enter quit all none or the raw character
+    local k rest
+    IFS= read -rsn1 k </dev/tty || { key=quit; return; }
+    case "$k" in
+        $'\e') IFS= read -rsn2 -t 0.05 rest </dev/tty || rest=""
+               case "$rest" in '[A'|'OA') key=up ;; '[B'|'OB') key=down ;; *) key=quit ;; esac ;;
+        ' ') key=space ;; '') key=enter ;; k) key=up ;; j) key=down ;; a) key=all ;; n) key=none ;; q) key=quit ;;
+        *) key="$k" ;;
+    esac
+}
+_tui_end() { stty "$_tui_saved" </dev/tty 2>/dev/null; printf '\e[?25h' >&2; trap - INT; }
+_tui_run() {   # _tui_run MODE HEADER IDX... ; MODE many|one
+    local mode="$1" header="$2"; shift 2; local cand=("$@") n=$# cur="${tui_cur:-0}" i line first=1
+    [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] || return 2
+    _tui_saved=$(stty -g </dev/tty) || return 2
+    trap '_tui_end; exit 130' INT
+    stty -echo -icanon min 1 time 0 </dev/tty; printf '\e[?25l' >&2
+    local hint="up/down move, SPACE toggles, a all, n none, ENTER confirms, q cancels"
+    [ "$mode" = one ] && hint="up/down move, ENTER selects, q cancels"
+    while true; do
+        [ "$first" -eq 0 ] && printf '\e[%dA' "$((n+1))" >&2
+        first=0
+        printf '\r\e[K%s (%s)\n' "$header" "$hint" >&2
+        for i in "${!cand[@]}"; do
+            line="${labels[${cand[i]}]}"
+            if [ "$mode" = many ]; then
+                local mark=" "; [ "${on[${cand[i]}]:-0}" -eq 1 ] && mark="x"
+                line="[$mark] $line"
+            fi
+            if [ "$i" -eq "$cur" ]; then printf '\r\e[K\e[7m> %s\e[0m\n' "$line" >&2; else printf '\r\e[K  %s\n' "$line" >&2; fi
+        done
+        _tui_read_key
+        case "$key" in
+            up) cur=$(( (cur + n - 1) % n )) ;;
+            down) cur=$(( (cur + 1) % n )) ;;
+            space) [ "$mode" = many ] && on[${cand[cur]}]=$((1 - ${on[${cand[cur]}]:-0})) ;;
+            all) [ "$mode" = many ] && for i in "${cand[@]}"; do on[i]=1; done ;;
+            none) [ "$mode" = many ] && for i in "${cand[@]}"; do on[i]=0; done ;;
+            enter) if [ "$mode" = one ]; then pick="${cand[cur]}"; else chosen=(); for i in "${cand[@]}"; do [ "${on[i]:-0}" -eq 1 ] && chosen+=("$i"); done; fi; _tui_end; return 0 ;;
+            quit) if [ "$mode" = one ]; then pick=""; else chosen=(); fi; _tui_end; return 1 ;;
+        esac
+    done
+}
+tui_many() { chosen=(); _tui_run many "$@"; }
+tui_one()  { pick=""; _tui_run one "$@"; }
+
 # choose_many HEADER IDX... : tick entries from the candidate indexes; sets chosen=(indexes). Preselected = on[]
 chosen=(); on=()
 choose_many() {
-    local header="$1"; shift; local cand=("$@") i a pre="" picked mark
+    local header="$1"; shift; local cand=("$@") i a mark rc=0
     chosen=()
-    if have_gum; then
-        for i in "${cand[@]}"; do if [ "${on[i]:-0}" -eq 1 ]; then pre="${pre:+$pre,}${labels[i]}"; fi; done
-        local ls=(); for i in "${cand[@]}"; do ls+=("${labels[i]}"); done
-        picked=$(gum choose --no-limit --selected="$pre" --header "$header (x toggles, enter confirms)" "${ls[@]}" || true)
-        for i in "${cand[@]}"; do if printf '%s\n' "$picked" | grep -qxF -- "${labels[i]}"; then chosen+=("$i"); fi; done
-    else
+    tui_many "$header" "${cand[@]}" || rc=$?
+    if [ "$rc" -eq 1 ]; then echo "Cancelled."; exit 0
+    elif [ "$rc" -eq 2 ]; then
         while true; do
             echo; echo "$header:"
             for i in "${!cand[@]}"; do
@@ -269,13 +320,10 @@ choose_many() {
 # choose_one HEADER IDX... : pick exactly one; sets pick=index (empty when cancelled)
 pick=""
 choose_one() {
-    local header="$1"; shift; local cand=("$@") i a picked
+    local header="$1"; shift; local cand=("$@") i a rc=0
     pick=""
-    if have_gum; then
-        local ls=(); for i in "${cand[@]}"; do ls+=("${labels[i]}"); done
-        picked=$(gum choose --header "$header" "${ls[@]}" || true)
-        for i in "${cand[@]}"; do if [ "${labels[i]}" = "$picked" ]; then pick="$i"; fi; done
-    else
+    tui_one "$header" "$@" || rc=$?
+    if [ "$rc" -eq 2 ]; then
         echo; echo "$header:"
         for i in "${!cand[@]}"; do printf ' %2d) %s\n' "$((i+1))" "${labels[${cand[i]}]}"; done
         read -r -p "Number (Enter cancels): " a || a=""
