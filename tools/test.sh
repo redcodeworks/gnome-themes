@@ -54,7 +54,7 @@ case "$1" in
 esac
 SH
 chmod +x "$T/bin/dconf"
-export PTYXIS_PALETTES="$T/ptyxis-palettes"
+export PTYXIS_PALETTES="$T/ptyxis-palettes" GTKSOURCEVIEW_STYLES="$T/gsv-styles" FLATPAK_APPS="$T/var-app"
 export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" GNOME_THEMES_CACHE="$T/cache"
 export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
 # a stand-in flatpak (FLATPAK_DB: the global override's filesystems, one entry per line); only the calls themectl makes. Absent unless a test
@@ -62,7 +62,9 @@ export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER
 mkdir -p "$T/fpbin"; export FLATPAK_DB="$T/flatpak.db"; : > "$FLATPAK_DB"
 cat > "$T/fpbin/flatpak" <<'SH'
 #!/bin/sh
-db="${FLATPAK_DB:?}"; [ "$1" = override ] && [ "$2" = --user ] || exit 2
+db="${FLATPAK_DB:?}"
+if [ "$1" = info ]; then case " ${FLATPAK_INFO:-} " in *" $2 "*) exit 0 ;; esac; exit 1; fi
+[ "$1" = override ] && [ "$2" = --user ] || exit 2
 shift 2
 for a in "$@"; do case "$a" in
   --show) printf '[Context]\nfilesystems=%s\n' "$(tr '\n' ';' < "$db")" ;;
@@ -260,6 +262,75 @@ FORCE=1 THEMES_DEST=$PD just install-themes fairy-floss </dev/null >/dev/null 2>
 : > "$DCONF_DB"; out=$(THEMES_DEST=$PD just switch-theme fairy-floss </dev/null 2>&1)
 printf '%s\n' "$out" | grep -q "no Ptyxis profile found" && [ ! -s "$DCONF_DB" ] && chk ok "no Ptyxis settings: note and skip" || chk fail "missing Ptyxis settings not handled"
 THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; rm -rf "$PTYXIS_PALETTES"
+
+# ---- GtkSourceView style schemes: generated files, install/switch/update/remove, Flatpak editors, collision guard ------------------
+echo "=== gtksourceview styles"
+cat > "$T/gsvcheck.py" <<'PY'
+import sys, re, glob, os, xml.etree.ElementTree as ET
+sys.path.insert(0, 'tools'); import schemeroles as sr
+bad = []
+for f in sorted(glob.glob('*/gtksourceview/*.xml')):
+    scheme = f.split('/')[0]
+    try: root = ET.parse(f).getroot()
+    except ET.ParseError as e: bad.append('%s: %s' % (f, e)); continue
+    sid = root.get('id'); name = root.get('_name') or root.get('name')
+    if sid != os.path.basename(f)[:-4] or not re.fullmatch(r'([a-zA-Z0-9_]|-)+', sid) or not name: bad.append(f + ': id/name')
+    if 'gnome-themes: ' + scheme not in open(f).read(): bad.append(f + ': marker')
+    cols = {c.get('name'): c.get('value') for c in root.iter('color')}
+    meta = {p.get('name'): p.text for p in root.iter('property')}
+    if meta.get('variant') not in ('dark', 'light'): bad.append(f + ': variant')
+    for k in ('light-variant', 'dark-variant'):
+        if k in meta and not os.path.exists('%s/gtksourceview/%s.xml' % (scheme, meta[k])): bad.append('%s: %s %s does not resolve' % (f, k, meta[k]))
+    def val(v): return cols.get(v) if not v.startswith('#') else v
+    B, CL = val('bg-deep'), val('bg')
+    for s in root.iter('style'):
+        for a in ('foreground', 'background', 'line-background'):
+            v = s.get(a)
+            if v is not None and val(v) is None: bad.append('%s: style %s %s=%s does not resolve' % (f, s.get('name'), a, v))
+        fg = s.get('foreground')
+        if fg is None or s.get('name') in ('selection',): continue
+        need = 3.0 if s.get('name') == 'def:comment' else 4.5
+        bgs = [val(s.get('background'))] if s.get('background') and s.get('name') not in ('current-line-number',) else [B, CL]
+        if s.get('name') == 'search-match' or s.get('name').startswith('bracket') : bgs = [val(s.get('background'))]
+        for b in bgs:
+            if sr.contrast(val(fg), b) < need - 0.01: bad.append('%s: %s %.2f < %.1f on %s' % (f, s.get('name'), sr.contrast(val(fg), b), need, b))
+    if sr.contrast(cols['fg'], cols['selection']) < 4.5: bad.append(f + ': fg on selection')
+print('\n'.join(bad[:15])); sys.exit(1 if bad else 0)
+PY
+out=$(python3 -I "$T/gsvcheck.py" 2>&1) && chk ok "style schemes: XML parses, id = file name, markers, metadata and every colour reference resolve, syntax colours >= 4.5:1 (comments 3:1) on the editor background and current line, text on selection >= 4.5" || { chk fail "gtksourceview check"; printf '%s\n' "$out" | head -8; }
+if python3 -c "import gi; gi.require_version('GtkSource','5')" 2>/dev/null; then
+    out=$(python3 -I - <<'PY' 2>&1
+import gi, glob, os; gi.require_version('GtkSource', '5'); from gi.repository import GtkSource
+m = GtkSource.StyleSchemeManager.new(); m.set_search_path([os.path.abspath(d) for d in glob.glob('*/gtksourceview')])
+miss = [os.path.basename(f)[:-4] for f in glob.glob('*/gtksourceview/*.xml') if not m.get_scheme(os.path.basename(f)[:-4])]
+print(miss); raise SystemExit(1 if miss else 0)
+PY
+) && chk ok "GtkSourceView itself loads every generated style scheme" || { chk fail "GtkSourceView could not load: $out"; }
+else echo "  skip GtkSourceView load test (typelib not installed)"; fi
+rm -rf "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS"; PD="$T/themes-gsv"; : > "$DCONF_DB"; : > "$FLATPAK_DB"
+printf '%s\t%s\n' /org/gnome/Ptyxis/profile-uuids "['aaa']" >> "$DCONF_DB"
+mkdir -p "$FLATPAK_APPS/org.gnome.TextEditor"    # Text Editor: data dir exists; Builder: only known to flatpak
+out=$(FLATPAK_INFO="org.gnome.Builder" PATH="$T/fpbin:$PATH" THEMES_DEST=$PD just install-themes gruvbox-material </dev/null 2>&1)
+ids="gnome-themes-gruvbox-material-dark.xml gnome-themes-gruvbox-material-light.xml"; ok=1
+for d in "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor/data/gtksourceview-5/styles" "$FLATPAK_APPS/org.gnome.Builder/data/gtksourceview-5/styles"; do for f in $ids; do [ -f "$d/$f" ] || ok=0; done; done
+[ $ok = 1 ] && chk ok "install-themes copies the style schemes into the user dir and into the Flatpak editors' data dirs (Text Editor by dir, Builder via flatpak info)" || chk fail "gsv install ($(ls "$GTKSOURCEVIEW_STYLES" 2>&1 | tr '\n' ' '))"
+out=$(FLATPAK_INFO="org.gnome.Builder" PATH="$T/fpbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null 2>&1)
+[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'gnome-themes-gruvbox-material-dark'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'gnome-themes-gruvbox-material-dark'" ] && chk ok "switch-theme sets Text Editor and (Builder present) Builder to the -dark id while the desktop is dark" || chk fail "gsv switch dark ($(grep -E 'TextEditor|builder' "$DCONF_DB" | tr '\t\n' '= '))"
+lbin="$T/bin-light"; mkdir -p "$lbin"; printf '#!/bin/sh\ncase "$1" in set) : ;; get) case "$3" in color-scheme) echo "\x27default\x27";; *) echo "\x27x\x27";; esac ;; list-schemas) echo org.gnome.shell.extensions.user-theme ;; esac\n' > "$lbin/gsettings"; chmod +x "$lbin/gsettings"
+PATH="$lbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null >/dev/null 2>&1
+[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'gnome-themes-gruvbox-material-light'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'gnome-themes-gruvbox-material-dark'" ] && chk ok "light desktop: the -light id for Text Editor; Builder untouched when it is not installed" || chk fail "gsv switch light"
+PATH="$lbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null 2>&1 | grep -q "Builder not found" && chk ok "without Builder the skip is announced" || chk fail "no Builder note"
+echo "<!-- stale -->" >> "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml"; THEMES_DEST=$PD just update-themes </dev/null >/dev/null 2>&1
+grep -q stale "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml" && chk fail "update did not refresh the style scheme" || chk ok "update-themes refreshes the style schemes"
+THEMES_DEST=$PD just remove-themes gruvbox-material </dev/null >/dev/null 2>&1
+[ -z "$(ls "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor/data/gtksourceview-5/styles" 2>/dev/null)" ] && chk ok "remove-themes removes the style schemes everywhere" || chk fail "remove left style schemes"
+# collision: an unmarked file with our id is kept; dark-only scheme has only the dark id
+mkdir -p "$GTKSOURCEVIEW_STYLES"; echo mine > "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"
+out=$(THEMES_DEST=$PD just install-themes fairy-floss </dev/null 2>&1)
+[ "$(cat "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml")" = mine ] && printf '%s\n' "$out" | grep -q "not installed by gnome-themes" && chk ok "an unmarked style scheme file is not replaced" || chk fail "gsv collision"
+rm -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"; THEMES_DEST=$PD just install-themes fairy-floss </dev/null >/dev/null 2>&1
+[ -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml" ] && [ ! -e "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-light.xml" ] && chk ok "a dark-only scheme installs only its -dark style scheme" || chk fail "dark-only gsv"
+THEMES_DEST=$PD just remove-themes fairy-floss </dev/null >/dev/null 2>&1; THEMES_DEST=$PD just remove-themes gruvbox-material </dev/null >/dev/null 2>&1; rm -rf "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS" "$PTYXIS_PALETTES"
 
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
