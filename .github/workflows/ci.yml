@@ -25,12 +25,13 @@ jobs:
     runs-on: ubuntu-latest
     container: fedora:45
     steps:
-      - name: Install dependencies
-        run: |
-          dnf -y install git just python3 python3-gobject gtk3 gtk4 gnome-shell xorg-x11-server-Xvfb ShellCheck findutils which
+      - name: Install git (needed by checkout)
+        run: dnf -y install git
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Install the test dependencies (the same list the local test container uses)
+        run: dnf -y install $(cat tools/test-packages.txt)
       - name: Trust the workspace for git
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Run the test suite

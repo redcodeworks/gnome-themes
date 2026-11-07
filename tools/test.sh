@@ -3,21 +3,29 @@
 # Full test of the COMMITTED state of this repo (a fresh clone of HEAD, temp directories only, a stand-in gsettings,
 # a local fake icon repo): lint, hygiene, regeneration, per-scheme selftest, install/switch/update/remove for every
 # scheme and accent, and the icon recipes. Exits non-zero on any failure.
-#   tools/test.sh [scheme ...]      # default: every scheme
-# Needs: git, just, python3 + python3-gobject, GTK 3, GTK 4, gnome-shell (St typelib); shellcheck if present;
-# a display (re-executes itself under xvfb-run when there is none).
-# Runs with HOME pointed at a temp dir and checks at the end that the real ~/.themes, ~/.local/share/icons and ~/.config/gtk-4.0 are unchanged.
+#   tools/test.sh [--rebuild] [scheme ...]      # default: every scheme; --rebuild rebuilds the test image
+# Inside the container it needs git, just, python3 + python3-gobject, GTK 3, GTK 4, gnome-shell (St typelib) and a display
+# (tools/test-packages.txt lists them; it re-executes itself under xvfb-run when there is no display).
+# Isolation: the suite only runs inside a throwaway container. Run on a host, this script builds a cached test image from
+# tools/test.Containerfile (rebuilt automatically when that file or test-packages.txt changes) and re-runs itself in it with the
+# repo mounted read-only (podman or docker; CI already runs inside a container). Nothing on the host is touched.
 set -u
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+if [ ! -f /run/.containerenv ] && [ ! -f /.dockerenv ] && [ -z "${TEST_IN_CONTAINER:-}" ]; then
+    rt=$(command -v podman || command -v docker) || { echo "tools/test.sh runs in a container: install podman or docker"; exit 2; }
+    tag=$(cat "$root/tools/test.Containerfile" "$root/tools/test-packages.txt" | sha1sum | cut -c1-8)
+    img="gnome-themes-test:45-$tag"
+    args=(); for a in "$@"; do if [ "$a" = --rebuild ]; then "$rt" rmi -f "$img" >/dev/null 2>&1 || true; else args+=("$a"); fi; done
+    if ! "$rt" image inspect "$img" >/dev/null 2>&1; then
+        echo "building $img (first run downloads about 500 MB)"; "$rt" build -q -t "$img" -f "$root/tools/test.Containerfile" "$root/tools" >/dev/null || exit 2
+    fi
+    exec "$rt" run --rm --security-opt label=disable -e TEST_IN_CONTAINER=1 -v "$root":/src:ro "$img" /src/tools/test.sh "${args[@]}"
+fi
+if [ -n "${TEST_IN_CONTAINER:-}" ] || [ -f /run/.containerenv ] || [ -f /.dockerenv ]; then git config --global --add safe.directory '*' 2>/dev/null; fi
 if [ -z "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ] && [ -z "${TEST_UNDER_XVFB:-}" ] && command -v xvfb-run >/dev/null 2>&1; then
     TEST_UNDER_XVFB=1 exec xvfb-run -a "$0" "$@"
 fi
 T=$(mktemp -d); trap 'rm -rf "$T"' EXIT
-# The suite runs with a throwaway HOME, so a code path that ignores XDG_*/THEMES_DEST/ICONS_DEST can only write there; a canary
-# listing of the real ~/.themes, icons and ~/.config/gtk-4.0 is compared at the end.
-REAL_HOME="$HOME"; export HOME="$T/home"; mkdir -p "$HOME"
-canary() { local p; for p in "$REAL_HOME/.themes" "$REAL_HOME/.local/share/icons" "$REAL_HOME/.config/gtk-4.0"; do [ -e "$p" ] && find "$p" -printf '%p %s %T@\n'; done | sort | sha1sum; }
-canary0=$(canary)
 pass=0; fail=0
 chk() { if [ "$1" = ok ]; then pass=$((pass+1)); echo "  PASS $2"; else fail=$((fail+1)); echo "  FAIL $2"; fi; }
 git clone -q "$root" "$T/repo" && cd "$T/repo" || { echo "cannot clone $root"; exit 2; }
@@ -121,7 +129,6 @@ FORCE=1 just install-icons Fake-Light </dev/null >/dev/null 2>&1; [ ! -e "$ICONS
 cp -a "$T/icons-src/Fake-Dark" "$ICONS_DEST/Fake-Dark"; rm -rf "$ICONS_DEST/Fake-Dark/.git"; echo stale > "$ICONS_DEST/Fake-Dark/stale.txt"
 just install-icons Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.gnome-themes" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
 just remove-icons Fake-Dark </dev/null >/dev/null 2>&1; just remove-icons Fake-Light </dev/null >/dev/null 2>&1
-[ "$(canary)" = "$canary0" ] && chk ok "real home untouched (.themes, icons, gtk-4.0)" || chk fail "real home untouched (.themes, icons, gtk-4.0)"
 
 echo; echo "TOTAL: $pass PASS, $fail FAIL"
 [ "$fail" -eq 0 ]
