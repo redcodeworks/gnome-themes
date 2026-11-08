@@ -3,8 +3,11 @@
 # tools/gtk3-theme-gen.py, gtk4-theme-gen.py, shell-theme-gen.py and libadwaita-gen.py. Rules: see the script header.
 # derived: dark.surface derived: #002b36 16.0% towards fg
 # derived: dark.surface_high derived: #002b36 28.0% towards fg
+# derived: dark.fg_dim derived: fg 30% towards bg
 # derived: light.bg derived: #fdf6e3 3.0% towards fg
 # derived: light.surface derived: #fdf6e3 6.0% towards fg
+# derived: light.fg_dim derived: fg 30% towards bg
+# derived: light.comment derived: fg 55% towards bg
 # derived: dark.accent_fg #002b36 -> #002b3e (the text colour varies per accent: the default needs its own token)
 # derived: light.accent_fg #002b36 -> #002b3e (the text colour varies per accent: the default needs its own token)
 title = "Solarized"
@@ -15,10 +18,10 @@ default_accent = "blue"
 dark_only = false
 
 [dark]
-ramp = [[0,"#000000"],[45,"#002b36"],[53,"#073642"],[66,"#183e47"],
-        [91,"#294c54"],[145,"#586e75"],[238,"#93a1a1"],[255,"#93a1a1"]]
-fg = "#93a1a1"
-top = "#93a1a1"
+ramp = [[0,"#000000"],[45,"#002b36"],[53,"#073642"],[66,"#163d46"],
+        [91,"#274a53"],[145,"#586e75"],[238,"#8b9b9d"],[255,"#8b9b9d"]]
+fg = "#8b9b9d"
+top = "#8b9b9d"
 accent_fg = "#002b3e"
 view = "#002b36"
 [dark.fam]
@@ -30,12 +33,12 @@ green = ["#4e9a06","#859900"]
 "#26ab62" = "#859900"
 "#26a269" = "#859900"      # GTK4 stock success green
 "#3584e4" = "#268bd2"
-"#eeeeec" = "#93a1a1"
+"#eeeeec" = "#8b9b9d"
 
 [light]
-ramp = [[0,"#586e75"],[46,"#586e75"],[145,"#93a1a1"],[224,"#eee8d5"],
-        [237,"#f3eedc"],[246,"#f8f2e0"],[255,"#fdf6e3"]]
-fg = "#586e75"
+ramp = [[0,"#5c7077"],[46,"#5c7077"],[145,"#b2b8b1"],[224,"#eee8d5"],
+        [237,"#f3eedd"],[246,"#f8f2e0"],[255,"#fdf6e3"]]
+fg = "#5c7077"
 top = "#fdf6e3"
 accent_fg = "#002b3e"
 view = "#fdf6e3"
@@ -47,18 +50,18 @@ green = ["#4e9a06","#859900"]
 [light.exact]
 "#33d17a" = "#859900"
 "#2ec27e" = "#859900"      # GTK4 stock success green (light)
-"#2e3436" = "#586e75"
+"#2e3436" = "#5c7077"
 "#f6f5f4" = "#f8f2e0"
 
 # [shell.*]: stock Shell greys differ from GTK's, so the ramps have their own stops.
 
 [shell.dark]
 selected_ctx = false   # Shell's :selected is a plain hover/keyboard-focus state, not text on an accent fill
-ramp = [[0,"#002b36"],[34.67,"#002b36"],[55.33,"#073642"],[66.33,"#183e47"],
-        [86.67,"#294c54"],[156,"#839496"],[179,"#839496"],[250,"#93a1a1"],
-        [255,"#93a1a1"]]
-fg = "#93a1a1"
-top = "#93a1a1"
+ramp = [[0,"#002b36"],[34.67,"#002b36"],[55.33,"#073642"],[66.33,"#163d46"],
+        [86.67,"#274a53"],[156,"#637d82"],[179,"#637d82"],[250,"#8b9b9d"],
+        [255,"#8b9b9d"]]
+fg = "#8b9b9d"
+top = "#8b9b9d"
 accent_fg = "#002b3e"
 view = "#002b36"
 [shell.dark.fam]
@@ -68,15 +71,15 @@ orange = ["#ff7800","#cb4b16"]
 green = ["#26a269","#859900"]
 [shell.dark.exact]
 "#cd9309" = "#b58900"      # warning yellow (hue 43, would fall in the orange family)
-"#a5a5b7" = "#839496"      # web-login title, dim text
-"#54545a" = "#183e47"      # notification/message card: surface
-"#45454a" = "#103a44"      # message card stacked behind the front one: bg and surface mixed 50 %
+"#a5a5b7" = "#637d82"      # web-login title, dim text
+"#54545a" = "#163d46"      # notification/message card: surface
+"#45454a" = "#0e3a44"      # message card stacked behind the front one: bg and surface mixed 50 %
 
 [shell.light]
 selected_ctx = false   # Shell's :selected is a plain hover/keyboard-focus state, not text on an accent fill
-ramp = [[0,"#586e75"],[46,"#586e75"],[145,"#93a1a1"],[224,"#eee8d5"],
-        [237,"#f3eedc"],[250,"#fdf6e3"],[255,"#fdf6e3"]]
-fg = "#586e75"
+ramp = [[0,"#5c7077"],[46,"#5c7077"],[145,"#b2b8b1"],[224,"#eee8d5"],
+        [237,"#f3eedd"],[250,"#fdf6e3"],[255,"#fdf6e3"]]
+fg = "#5c7077"
 top = "#fdf6e3"
 accent_fg = "#002b3e"
 view = "#fdf6e3"
@@ -87,7 +90,7 @@ orange = ["#e66100","#cb4b16"]
 green = ["#26a269","#859900"]
 [shell.light.exact]
 "#e5a50a" = "#b58900"      # warning yellow
-"#a5a5b7" = "#93a1a1"
+"#a5a5b7" = "#b2b8b1"
 
 # accents: [accents.<variant>.<name>] color = the terminal's ANSI colour, fg = text on it (contrast in tools/selftest.py)
 [accents.dark.red]
@@ -137,10 +140,10 @@ fg = "#fdf6e3"
 [roles.dark]
 bg_deep = "#002b36"
 bg = "#073642"
-surface = "#183e47"
-surface_high = "#294c54"
-popover = "#294c54"
-fg = "#93a1a1"
+surface = "#163d46"
+surface_high = "#274a53"
+popover = "#274a53"
+fg = "#8b9b9d"
 red = "#dc322f"
 green = "#859900"
 yellow = "#b58900"
@@ -151,10 +154,10 @@ secondary_sidebar = "#073642"
 [roles.light]
 bg_deep = "#fdf6e3"
 bg = "#f8f2e0"
-surface = "#f3eedc"
+surface = "#f3eedd"
 surface_high = "#eee8d5"
 popover = "#fdf6e3"
-fg = "#586e75"
+fg = "#5c7077"
 red = "#dc322f"
 green = "#859900"
 yellow = "#b58900"

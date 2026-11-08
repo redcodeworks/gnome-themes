@@ -1,17 +1,24 @@
 # SPDX-License-Identifier: MIT
 # Tokyo Night as ported by folke/tokyonight.nvim (Apache-2.0): Night dark + Day light.
-# Dark ladder: view bg_dark, window bg, headers bg_highlight, popovers fg_gutter. Light: view bg, window bg_dark,
+# Dark ladder: view and window bg (the built-in's background; the view was bg_dark #16161e before), headers bg_highlight, popovers fg_gutter. Light: view bg, window bg_dark,
 # headers bg_highlight, popovers bg_visual. ANSI six = Ptyxis "Tokyo Night" / "Tokyo Night Day" Color1-6 (identical to
-# the tokyonight terminal tables). Default accent blue. Deviation: Day's fg is darkened (see [light]) to reach 4.5:1.
+# the tokyonight terminal tables). Default accent blue. Deviation: Day's fg is nudged off the built-in (see [light.nudge]) to reach 4.5:1.
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
+# Sources: Tokyo Night (dark: bg #1a1b26; Storm #24283b and Moon are other built-ins and not used because the scheme's window colour was Night's), Tokyo Night Day (light;
+# Tokyo Night Light is another palette). Dark: bg_deep #1a1b26 (was #16161e). Light: fg #3760bf is below 4.5:1 on the window, so it is nudged (listed).
 title = "Tokyo Night"
 gtk_name = "Tokyo-Night"
 shell_name = "Tokyo-Night-Shell"
 credit = "Tokyo Night by folke (tokyonight.nvim, Apache-2.0), Night and Day"
+ptyxis = "generated"
+ptyxis_reason = "Tokyo Night (dark) and Tokyo Night Day (light) are the sources, but they are two flat built-ins and one profile holds one palette name, so the pair cannot follow light/dark; the generated pair palette carries their colours, with the Day foreground nudged 5.3 dE for contrast on the window (listed in [light.nudge])"
 default_accent = "blue"
 
 [dark]
-bg_deep = "#16161e"
-bg = "#1a1b26"
+bg_deep = "#1a1b26"
 surface = "#292e42"
 surface_high = "#3b4261"
 fg = "#c0caf5"
@@ -41,7 +48,7 @@ bg_deep = "#e1e2e7"
 bg = "#d0d5e3"
 surface = "#c4c8da"
 surface_high = "#b7c1e3"
-fg = "#30519f"                  # Day fg #3760bf darkened 20 % towards #16161e: upstream gives 3.99:1 on the window, this 5.1:1
+fg = "#3258af"
 fg_dim = "#6172b0"
 comment = "#848cb5"
 selection = "#b7c1e3"
@@ -63,9 +70,35 @@ blue = "#2e7de9"
 magenta = "#9854f1"
 cyan = "#007197"
 
-# Terminal palette overrides (tools/ptyxis-gen.py). Source: the Ptyxis built-ins "Tokyo Night" / "Tokyo Night Day" (their six ANSI
-# colours equal ours): Color0 = their black. They have no real brights (Color9-14 equal Color1-6), so the defaults stay.
+# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
+# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
+# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+
 [dark.terminal]
-black = "#414868"   # Ptyxis built-in "Tokyo Night" Color0
+source = "Tokyo Night"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+black = "#414868"   # Color0
+white = "#a9b1d6"   # Color7
+bright_black = "#414868"   # Color8
+bright_red = "#f7768e"   # Color9
+bright_green = "#9ece6a"   # Color10
+bright_yellow = "#e0af68"   # Color11
+bright_blue = "#7aa2f7"   # Color12
+bright_magenta = "#bb9af7"   # Color13
+bright_cyan = "#7dcfff"   # Color14
+bright_white = "#c0caf5"   # Color15
+
 [light.terminal]
-black = "#e9e9ed"   # Ptyxis built-in "Tokyo Night Day" Color0
+source = "Tokyo Night Day"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+black = "#e9e9ed"   # Color0
+white = "#6172b0"   # Color7
+bright_black = "#a1a6c5"   # Color8
+bright_red = "#f52a65"   # Color9
+bright_green = "#587539"   # Color10
+bright_yellow = "#8c6c3e"   # Color11
+bright_blue = "#2e7de9"   # Color12
+bright_magenta = "#9854f1"   # Color13
+bright_cyan = "#007197"   # Color14
+bright_white = "#3760bf"   # Color15
+
+[light.nudge]
+Foreground = { from = "#3760bf", to = "#3258af", de = 5.3, why = "fg on the window #d0d5e3 is 3.99:1 with the built-in foreground (selftest needs 4.5:1); lightness lowered until 4.54:1 on the window" }

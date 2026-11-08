@@ -16,6 +16,13 @@ def load(scheme_dir):
     slots = [('light', 'light' if 'light' in roles else 'dark'), ('dark', 'dark')]
     return S, roles, slots
 
+def ptyxis_choice(S):
+    """The scheme's terminal palette declaration: None = a generated palette (`ptyxis = "generated"`), else the NAME of the Ptyxis
+    built-in to use (`ptyxis = "<built-in name>"`). Every scheme must declare it (with `ptyxis_reason`); exits when missing."""
+    v = S.get('ptyxis')
+    if not isinstance(v, str) or not v.strip(): raise SystemExit('scheme.toml: `ptyxis = "<built-in name>"` or `ptyxis = "generated"` is required (with ptyxis_reason)')
+    return None if v == 'generated' else v
+
 def nudge_to(color, bgs, need):
     """Change only the LIGHTNESS of `color` (hue and saturation kept), away from the backgrounds `bgs` (a colour or a list; lighter
     on dark ones, darker on light ones), in 1 % steps until it has contrast `need` on every one of them; returns (color, steps)."""

@@ -8,7 +8,7 @@
   <metadata><property name="variant">dark</property><property name="light-variant">gnome-themes-gruvbox-material-light</property></metadata>
   <color name="bg-deep" value="#282828"/>
   <color name="bg" value="#2d2c2c"/>
-  <color name="fg" value="#ddc7a1"/>
+  <color name="fg" value="#d4be98"/>
   <color name="selection" value="#504945"/>
   <color name="red" value="#eb6d66"/>
   <color name="orange" value="#e78a4e"/>

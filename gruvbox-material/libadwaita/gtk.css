@@ -77,34 +77,34 @@
     @define-color error_fg_color #282828;
 
     @define-color window_bg_color #32302f;
-    @define-color window_fg_color #ddc7a1;
+    @define-color window_fg_color #d4be98;
 
     @define-color view_bg_color #282828;
-    @define-color view_fg_color #ddc7a1;
+    @define-color view_fg_color #d4be98;
 
     @define-color headerbar_bg_color #45403d;
-    @define-color headerbar_fg_color #ddc7a1;
+    @define-color headerbar_fg_color #d4be98;
     @define-color headerbar_backdrop_color #32302f;
 
     @define-color sidebar_bg_color #45403d;
-    @define-color sidebar_fg_color #ddc7a1;
+    @define-color sidebar_fg_color #d4be98;
     @define-color sidebar_backdrop_color #32302f;
 
     @define-color secondary_sidebar_bg_color #32302f;
-    @define-color secondary_sidebar_fg_color #ddc7a1;
+    @define-color secondary_sidebar_fg_color #d4be98;
     @define-color secondary_sidebar_backdrop_color #32302f;
 
     @define-color card_bg_color alpha(white, .08);
-    @define-color card_fg_color #ddc7a1;
+    @define-color card_fg_color #d4be98;
 
     @define-color dialog_bg_color #5a524c;
-    @define-color dialog_fg_color #ddc7a1;
+    @define-color dialog_fg_color #d4be98;
 
     @define-color popover_bg_color #5a524c;
-    @define-color popover_fg_color #ddc7a1;
+    @define-color popover_fg_color #d4be98;
 
     @define-color thumbnail_bg_color #5a524c;
-    @define-color thumbnail_fg_color #ddc7a1;
+    @define-color thumbnail_fg_color #d4be98;
 }
 
 /* libadwaita hard-codes AdwToast as `toast { background: #505053; color: white; }` rather than going through any
@@ -112,5 +112,5 @@
  * dark mode; the values are the dark popover surface and dark foreground. */
 toast {
     background: #5a524c;
-    color: #ddc7a1;
+    color: #d4be98;
 }

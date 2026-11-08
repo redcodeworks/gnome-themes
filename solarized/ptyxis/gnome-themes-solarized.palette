@@ -2,11 +2,11 @@
 Name=Solarized (GNOME Themes)
 
 [Light]
-Foreground=#586E75
+Foreground=#5C7077
 Background=#FDF6E3
 TitlebarBackground=#FDF6E3
-TitlebarForeground=#586E75
-Cursor=#586E75
+TitlebarForeground=#5C7077
+Cursor=#5C7077
 Color0=#073642
 Color1=#DC322F
 Color2=#859900
@@ -14,7 +14,7 @@ Color3=#B58900
 Color4=#268BD2
 Color5=#D33682
 Color6=#2AA198
-Color7=#586E75
+Color7=#EEE8D5
 Color8=#002B36
 Color9=#CB4B16
 Color10=#586E75
@@ -25,11 +25,11 @@ Color14=#93A1A1
 Color15=#FDF6E3
 
 [Dark]
-Foreground=#93A1A1
+Foreground=#8B9B9D
 Background=#002B36
-TitlebarBackground=#183E47
-TitlebarForeground=#93A1A1
-Cursor=#93A1A1
+TitlebarBackground=#163D46
+TitlebarForeground=#8B9B9D
+Cursor=#8B9B9D
 Color0=#073642
 Color1=#DC322F
 Color2=#859900
@@ -37,8 +37,8 @@ Color3=#B58900
 Color4=#268BD2
 Color5=#D33682
 Color6=#2AA198
-Color7=#93A1A1
-Color8=#586E75
+Color7=#EEE8D5
+Color8=#002B36
 Color9=#CB4B16
 Color10=#586E75
 Color11=#657B83

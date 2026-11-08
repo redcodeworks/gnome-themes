@@ -4,6 +4,10 @@
 
   python3 -I tools/ptyxis-gen.py <scheme-dir> [--check]     # --check: print, write nothing
 
+Only for schemes that declare `ptyxis = "generated"` in scheme.toml (with `ptyxis_reason`). A scheme that declares `ptyxis = "<built-in name>"`
+uses that Ptyxis built-in palette (tools/ptyxis-compare.py decides which schemes may, its header has the rules): nothing is written for it, and a
+stale generated palette file of that scheme is removed (a file only counts as ours when it ends with the marker line).
+
 Format: the INI file Ptyxis reads from ~/.local/share/org.gnome.Ptyxis/palettes/ that follows the system colour scheme:
 [Palette] Name=..., then [Light] and [Dark], each with Foreground, Background, TitlebarBackground, TitlebarForeground,
 Cursor and Color0..Color15. The palette Name is "<title> (GNOME Themes)" so it never clashes with a Ptyxis built-in
@@ -74,9 +78,19 @@ def build(scheme_dir):
 def main():
     if len(sys.argv) < 2: sys.exit(__doc__)
     d = sys.argv[1].rstrip('/')
+    S, _, _ = sr.load(d)
+    scheme = os.path.basename(os.path.abspath(d))
+    out = '%s/ptyxis/gnome-themes-%s.palette' % (d, scheme)
+    builtin = sr.ptyxis_choice(S)
+    if builtin is not None:
+        if '--check' not in sys.argv and os.path.isfile(out) and open(out).read().rstrip().endswith('# gnome-themes: ' + scheme):
+            os.remove(out)
+            try: os.rmdir(os.path.dirname(out))
+            except OSError: pass
+            print('removed stale generated palette ' + out)
+        print('%s: uses the Ptyxis built-in palette "%s"; no palette generated' % (scheme, builtin)); return
     scheme, text = build(d)
     if '--check' in sys.argv: print(text); return
-    out = '%s/ptyxis/gnome-themes-%s.palette' % (d, scheme)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, 'w') as f: f.write(text)
     print('wrote ' + out)

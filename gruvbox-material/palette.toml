@@ -11,9 +11,9 @@ dark_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#282828"],[53,"#32302f"],[66,"#45403d"],
-        [91,"#5a524c"],[145,"#928374"],[238,"#ddc7a1"],[255,"#ddc7a1"]]
-fg = "#ddc7a1"
-top = "#ddc7a1"
+        [91,"#5a524c"],[145,"#928374"],[238,"#d4be98"],[255,"#d4be98"]]
+fg = "#d4be98"
+top = "#d4be98"
 accent_fg = "#282828"
 view = "#282828"
 [dark.fam]
@@ -25,7 +25,7 @@ green = ["#4e9a06","#a9b665"]
 "#26ab62" = "#a9b665"
 "#26a269" = "#a9b665"      # GTK4 stock success green
 "#3584e4" = "#7daea3"
-"#eeeeec" = "#ddc7a1"
+"#eeeeec" = "#d4be98"
 
 [light]
 ramp = [[0,"#4f3829"],[46,"#4f3829"],[145,"#928374"],[224,"#eee0b7"],
@@ -50,10 +50,10 @@ green = ["#4e9a06","#6c782e"]
 [shell.dark]
 selected_ctx = false   # Shell's :selected is a plain hover/keyboard-focus state, not text on an accent fill
 ramp = [[0,"#282828"],[34.67,"#282828"],[55.33,"#32302f"],[66.33,"#45403d"],
-        [86.67,"#5a524c"],[156,"#a89984"],[179,"#a89984"],[250,"#ddc7a1"],
-        [255,"#ddc7a1"]]
-fg = "#ddc7a1"
-top = "#ddc7a1"
+        [86.67,"#5a524c"],[156,"#a89984"],[179,"#a89984"],[250,"#d4be98"],
+        [255,"#d4be98"]]
+fg = "#d4be98"
+top = "#d4be98"
 accent_fg = "#282828"
 view = "#282828"
 [shell.dark.fam]
@@ -135,7 +135,7 @@ bg = "#32302f"
 surface = "#45403d"
 surface_high = "#5a524c"
 popover = "#5a524c"
-fg = "#ddc7a1"
+fg = "#d4be98"
 red = "#ea6962"
 green = "#a9b665"
 yellow = "#d8a657"

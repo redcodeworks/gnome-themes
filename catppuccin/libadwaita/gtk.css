@@ -25,7 +25,7 @@
 @define-color success_fg_color #eff1fd;
 
 @define-color warning_bg_color #df8e1d;
-@define-color warning_fg_color #181825;
+@define-color warning_fg_color #1e1e2e;
 
 @define-color error_bg_color #d20f39;
 @define-color error_fg_color #eff1fd;
@@ -62,37 +62,37 @@
 
 @media (prefers-color-scheme: dark) {
     @define-color accent_bg_color #89b4fa;
-    @define-color accent_fg_color #181825;
+    @define-color accent_fg_color #1e1e2e;
 
     @define-color destructive_bg_color #f38ba8;
-    @define-color destructive_fg_color #181825;
+    @define-color destructive_fg_color #1e1e2e;
 
     @define-color success_bg_color #a6e3a1;
-    @define-color success_fg_color #181825;
+    @define-color success_fg_color #1e1e2e;
 
     @define-color warning_bg_color #f9e2af;
-    @define-color warning_fg_color #181825;
+    @define-color warning_fg_color #1e1e2e;
 
     @define-color error_bg_color #f38ba8;
-    @define-color error_fg_color #181825;
+    @define-color error_fg_color #1e1e2e;
 
-    @define-color window_bg_color #1e1e2e;
+    @define-color window_bg_color #282839;
     @define-color window_fg_color #cdd6f4;
 
-    @define-color view_bg_color #181825;
+    @define-color view_bg_color #1e1e2e;
     @define-color view_fg_color #cdd6f4;
 
     @define-color headerbar_bg_color #313244;
     @define-color headerbar_fg_color #cdd6f4;
-    @define-color headerbar_backdrop_color #1e1e2e;
+    @define-color headerbar_backdrop_color #282839;
 
     @define-color sidebar_bg_color #313244;
     @define-color sidebar_fg_color #cdd6f4;
-    @define-color sidebar_backdrop_color #1e1e2e;
+    @define-color sidebar_backdrop_color #282839;
 
-    @define-color secondary_sidebar_bg_color #1e1e2e;
+    @define-color secondary_sidebar_bg_color #282839;
     @define-color secondary_sidebar_fg_color #cdd6f4;
-    @define-color secondary_sidebar_backdrop_color #1e1e2e;
+    @define-color secondary_sidebar_backdrop_color #282839;
 
     @define-color card_bg_color alpha(white, .08);
     @define-color card_fg_color #cdd6f4;

@@ -5,10 +5,11 @@
 # derived: dark.surface_high derived: #282a36 28.0% towards fg
 # derived: dark.fg_dim derived: fg 30% towards bg
 # derived: dark.comment derived: fg 55% towards bg
-# derived: light.bg derived: #fffbeb 3.0% towards fg
-# derived: light.surface derived: #fffbeb 6.0% towards fg
-# derived: light.surface_high derived: #fffbeb 9.0% towards fg
+# derived: light.bg derived: #ffffff 3.0% towards fg
+# derived: light.surface derived: #ffffff 6.0% towards fg
+# derived: light.surface_high derived: #ffffff 9.0% towards fg
 # derived: light.fg_dim derived: fg 30% towards bg
+# derived: light.comment derived: fg 55% towards bg
 title = "Dracula"
 gtk_name = "Dracula"
 shell_name = "Dracula-Shell"
@@ -35,12 +36,12 @@ green = ["#4e9a06","#50fa7b"]
 "#eeeeec" = "#f8f8f2"
 
 [light]
-ramp = [[0,"#1f1f1f"],[46,"#1f1f1f"],[145,"#6c664b"],[224,"#ebe7d9"],
-        [237,"#f2eedf"],[246,"#f8f4e5"],[255,"#fffbeb"]]
-fg = "#1f1f1f"
-top = "#fffbeb"
-accent_fg = "#fffbeb"
-view = "#fffbeb"
+ramp = [[0,"#282a36"],[46,"#282a36"],[145,"#9b9ca1"],[224,"#ececed"],
+        [237,"#f2f2f3"],[246,"#f9f9f9"],[255,"#ffffff"]]
+fg = "#282a36"
+top = "#ffffff"
+accent_fg = "#ffffff"
+view = "#ffffff"
 [light.fam]
 blue = ["#3584e4","#6946a3"]
 red = ["#cc0000","#cb3a2a"]
@@ -49,8 +50,8 @@ green = ["#4e9a06","#14710a"]
 [light.exact]
 "#33d17a" = "#14710a"
 "#2ec27e" = "#14710a"      # GTK4 stock success green (light)
-"#2e3436" = "#1f1f1f"
-"#f6f5f4" = "#f8f4e5"
+"#2e3436" = "#282a36"
+"#f6f5f4" = "#f9f9f9"
 
 # [shell.*]: stock Shell greys differ from GTK's, so the ramps have their own stops.
 
@@ -76,12 +77,12 @@ green = ["#26a269","#50fa7b"]
 
 [shell.light]
 selected_ctx = false   # Shell's :selected is a plain hover/keyboard-focus state, not text on an accent fill
-ramp = [[0,"#1f1f1f"],[46,"#1f1f1f"],[145,"#6c664b"],[224,"#ebe7d9"],
-        [237,"#f2eedf"],[250,"#fffbeb"],[255,"#fffbeb"]]
-fg = "#1f1f1f"
-top = "#fffbeb"
-accent_fg = "#fffbeb"
-view = "#fffbeb"
+ramp = [[0,"#282a36"],[46,"#282a36"],[145,"#9b9ca1"],[224,"#ececed"],
+        [237,"#f2f2f3"],[250,"#ffffff"],[255,"#ffffff"]]
+fg = "#282a36"
+top = "#ffffff"
+accent_fg = "#ffffff"
+view = "#ffffff"
 [shell.light.fam]
 blue = ["#3584e4","#6946a3"]
 red = ["#c01c28","#cb3a2a"]
@@ -89,7 +90,7 @@ orange = ["#e66100","#a34d14"]
 green = ["#26a269","#14710a"]
 [shell.light.exact]
 "#e5a50a" = "#846e15"      # warning yellow
-"#a5a5b7" = "#6c664b"
+"#a5a5b7" = "#9b9ca1"
 
 # accents: [accents.<variant>.<name>] color = the terminal's ANSI colour, fg = text on it (contrast in tools/selftest.py)
 [accents.dark.red]
@@ -115,25 +116,25 @@ color = "#ffb86c"
 fg = "#282a36"
 [accents.light.red]
 color = "#b60021"
-fg = "#fffbeb"
+fg = "#ffffff"
 [accents.light.green]
 color = "#006800"
-fg = "#fffbeb"
+fg = "#ffffff"
 [accents.light.yellow]
 color = "#515f00"
-fg = "#fffbeb"
+fg = "#ffffff"
 [accents.light.blue]
 color = "#6946a3"
-fg = "#fffbeb"
+fg = "#ffffff"
 [accents.light.magenta]
 color = "#a41d74"
-fg = "#fffbeb"
+fg = "#ffffff"
 [accents.light.cyan]
 color = "#006274"
-fg = "#fffbeb"
+fg = "#ffffff"
 [accents.light.orange]
 color = "#a34d14"
-fg = "#fffbeb"
+fg = "#ffffff"
 
 # roles for tools/libadwaita-gen.py
 [roles.dark]
@@ -151,16 +152,16 @@ accent_fg = "#282a36"
 warning_fg = "#282a36"
 secondary_sidebar = "#333540"
 [roles.light]
-bg_deep = "#fffbeb"
-bg = "#f8f4e5"
-surface = "#f2eedf"
-surface_high = "#ebe7d9"
-popover = "#fffbeb"
-fg = "#1f1f1f"
+bg_deep = "#ffffff"
+bg = "#f9f9f9"
+surface = "#f2f2f3"
+surface_high = "#ececed"
+popover = "#ffffff"
+fg = "#282a36"
 red = "#cb3a2a"
 green = "#14710a"
 yellow = "#846e15"
 accent = "#6946a3"
-accent_fg = "#fffbeb"
-warning_fg = "#1f1f1f"
-secondary_sidebar = "#f5f1e2"
+accent_fg = "#ffffff"
+warning_fg = "#282a36"
+secondary_sidebar = "#f6f6f6"

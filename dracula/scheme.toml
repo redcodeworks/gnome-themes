@@ -1,15 +1,23 @@
 # SPDX-License-Identifier: MIT
 # Dracula (dracula/dracula-theme, MIT, Copyright (c) 2023 Dracula Theme) dark + Alucard light.
 # The spec has only bg #282a36 and selection #44475a: bg_deep = bg, surface = selection, bg and surface_high are
-# DERIVED by mixing towards fg (dark ladder rule), fg_dim and comment likewise. Alucard (light) lists only bg #fffbeb
-# and fg #1f1f1f as surfaces: its ladder is derived (light rule).
+# DERIVED by mixing towards fg (dark ladder rule), fg_dim and comment likewise. The light ladder is derived (light rule)
+# from the Ptyxis [Light] background #ffffff and foreground #282a36 (Alucard's own bg #fffbeb and fg #1f1f1f were used before).
 # ANSI six: dark = Ptyxis "Dracula" [Dark] Color1-6, which settles the values the research file had marked unverified
 # (they match: blue #bd93f9 = Dracula purple). Light = Ptyxis "Dracula" [Light] Color1-6 (a Ptyxis-made light palette,
 # NOT Alucard's own colours, because the accents follow the terminal definition); the light role colours below are Alucard's.
+# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
+# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
+# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
+# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
+# Source: Dracula, [Dark] and [Light] sections as they are. Dark already equalled it. Light: bg_deep #ffffff (was Alucard's #fffbeb), fg #282a36 (was #1f1f1f),
+# the explicit light comment dropped (derived now). The light ROLE colours red..pink below stay Alucard's own (they are UI status colours, not terminal accents).
 title = "Dracula"
 gtk_name = "Dracula"
 shell_name = "Dracula-Shell"
 credit = "Dracula Theme (MIT), light variant Alucard"
+ptyxis = "Dracula"
+ptyxis_reason = "the Dracula built-in has [Light] and [Dark] sections and is the source of both variants (0.00 dE, no nudges), so it follows the system colour scheme by itself"
 default_accent = "blue"
 
 [dark]
@@ -36,10 +44,9 @@ magenta = "#ff79c6"
 cyan = "#8be9fd"
 
 [light]
-bg_deep = "#fffbeb"
-fg = "#1f1f1f"
+bg_deep = "#ffffff"
+fg = "#282a36"
 selection = "#cfcfde"
-comment = "#6c664b"
 red = "#cb3a2a"
 orange = "#a34d14"
 yellow = "#846e15"
@@ -58,12 +65,14 @@ blue = "#6946a3"
 magenta = "#a41d74"
 cyan = "#006274"
 
-# Terminal palette overrides (tools/ptyxis-gen.py). Source (checked 2026-11-07 with tools/ptyxis-palette.sh): the Ptyxis built-in palette(s) named below,
-# whose six ANSI colours equal this scheme's; their black and REAL brights are taken wherever they differ from the generator defaults
-# (a bright black equal to the background is skipped: it would be invisible; the default `comment` stays). Each key notes the Color it is.
-# dark variant <- Ptyxis "Dracula [Dark]"
+# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
+# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
+# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
+
 [dark.terminal]
+source = "Dracula"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
 black = "#21222c"   # Color0
+white = "#f8f8f2"   # Color7
 bright_black = "#6272a4"   # Color8
 bright_red = "#ff6e6e"   # Color9
 bright_green = "#69ff94"   # Color10
@@ -72,9 +81,11 @@ bright_blue = "#d6acff"   # Color12
 bright_magenta = "#ff92df"   # Color13
 bright_cyan = "#a4ffff"   # Color14
 bright_white = "#ffffff"   # Color15
-# light variant <- Ptyxis "Dracula [Light]"
+
 [light.terminal]
+source = "Dracula"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
 black = "#f1f2ff"   # Color0
+white = "#f8f8f2"   # Color7
 bright_black = "#8393c7"   # Color8
 bright_red = "#ac202f"   # Color9
 bright_green = "#006803"   # Color10
