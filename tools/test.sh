@@ -464,8 +464,42 @@ just --justfile justfile --working-directory . new-scheme 2>&1 | grep -qi "usage
 
 # ---- icons (fake icon repo) -----------------------------------------------------------------------------------
 echo "=== icons"
-printf 'fake|file://%s/icons-src|top|\n' "$T" > "$T/sources.conf"
+# a second fixture source and a git wrapper that logs every clone, to prove what is cloned and when
+mkdir -p "$T/icons-src2" && (cd "$T/icons-src2" && git init -q && mkdir Other-One && printf '[Icon Theme]\nName=Other-One\nDirectories=\n' > Other-One/index.theme && git add -A && git commit -q -m init)
+printf 'fake|file://%s/icons-src|top|Fake-Dark Fake-Light\nother|file://%s/icons-src2|top|Other-One\nbroken|file://%s/nonexistent|top|Broken-One\n' "$T" "$T" "$T" > "$T/sources.conf"
 export ICON_SOURCES="$T/sources.conf" ICONS_DEST="$T/icons"
+REAL_GIT=$(command -v git); GITLOG="$T/git.log"; mkdir -p "$T/gitw"
+printf '#!/bin/sh\necho "$*" >> "%s"\nexec "%s" "$@"\n' "$GITLOG" "$REAL_GIT" > "$T/gitw/git"; chmod +x "$T/gitw/git"
+rm -rf "$T/cache/icons"; : > "$GITLOG"
+out=$(PATH="$T/gitw:$PATH" just list-icons 2>&1)
+[ ! -e "$T/cache/icons" ] && ! grep -q . "$GITLOG" && printf '%s\n' "$out" | grep -q Fake-Dark && printf '%s\n' "$out" | grep -q Other-One && chk ok "list-icons works offline: no clone, no cache directory" || chk fail "list-icons cloned or lacked sets"
+# no name: the checklist is built from the registry (cache empty, no clone before the choice); q cancels
+out=$(printf 'q\n' | PATH="$T/gitw:$PATH" just install-icons 2>&1)
+[ ! -e "$T/cache/icons" ] && ! grep -q . "$GITLOG" && printf '%s\n' "$out" | grep -q "Fake-Light" && printf '%s\n' "$out" | grep -q "Other-One" && chk ok "install-icons: checklist shown with an empty cache and no clone before the choice" || chk fail "install-icons cloned before the choice"
+# choose set 1 only: just its source is cloned (the checklist lists fake's two sets first)
+printf '1\n\n' | PATH="$T/gitw:$PATH" just install-icons >/dev/null 2>&1
+[ -d "$ICONS_DEST/Fake-Dark" ] && grep -q "icons-src " "$GITLOG" && ! grep -q "icons-src2\|nonexistent" "$GITLOG" && [ ! -e "$T/cache/icons/other" ] && chk ok "install-icons: only the source of the chosen set was cloned" || chk fail "install-icons cloned unchosen sources"
+just remove-icons Fake-Dark >/dev/null 2>&1; rm -rf "$T/cache/icons"; : > "$GITLOG"
+# with names: only those sources; a failing source is skipped, the others install
+out=$(PATH="$T/gitw:$PATH" just install-icons Other-One 2>&1)
+[ -d "$ICONS_DEST/Other-One" ] && ! grep -q "icons-src " "$GITLOG" && ! grep -q nonexistent "$GITLOG" && chk ok "install-icons NAME: only that source cloned" || chk fail "install-icons NAME cloned more"
+out=$(PATH="$T/gitw:$PATH" just install-icons Broken-One 2>&1); printf '%s\n' "$out" | grep -q "could not clone broken" && [ ! -e "$ICONS_DEST/Broken-One" ] && chk ok "a failing clone is skipped with a message" || chk fail "failing clone not handled"
+printf '1\n4\n\n' | just install-icons >/dev/null 2>&1   # Fake-Dark and Broken-One in one run; the broken one must not stop the other
+[ -d "$ICONS_DEST/Fake-Dark" ] && [ ! -e "$ICONS_DEST/Broken-One" ] && chk ok "a failing source does not stop the other chosen sets" || chk fail "failing source blocked the run"
+# list, switch and remove never clone (cache wiped, installed sets stay)
+rm -rf "$T/cache/icons"; : > "$GITLOG"
+PATH="$T/gitw:$PATH" just list-icons >/dev/null 2>&1
+printf '1\n' | PATH="$T/gitw:$PATH" just switch-icons >/dev/null 2>&1; PATH="$T/gitw:$PATH" just switch-icons Fake-Dark >/dev/null 2>&1
+printf 'q\n' | PATH="$T/gitw:$PATH" just remove-icons >/dev/null 2>&1
+[ ! -e "$T/cache/icons" ] && ! grep -q . "$GITLOG" && chk ok "list, switch and remove-icons do not clone" || chk fail "list/switch/remove cloned ($(cat "$GITLOG"))"
+for n in Fake-Dark Other-One Fake-Light; do just remove-icons $n >/dev/null 2>&1; done; rm -rf "$T/cache/icons"
+# registry versus upstream: one warning per mismatch, install still succeeds
+mkdir -p "$T/icons-src3" && (cd "$T/icons-src3" && git init -q && for n in Real-One Extra-One; do mkdir $n; printf '[Icon Theme]\nName=%s\nDirectories=\n' $n > $n/index.theme; done && git add -A && git commit -q -m init)
+printf 'drift|file://%s/icons-src3|top|Real-One Ghost-One\n' "$T" > "$T/drift.conf"
+out=$(ICON_SOURCES="$T/drift.conf" just install-icons Real-One 2>&1)
+printf '%s\n' "$out" | grep -qF "registry says Ghost-One, upstream has no Ghost-One" && printf '%s\n' "$out" | grep -qF "upstream has Extra-One not in the registry" && [ -d "$ICONS_DEST/Real-One" ] && [ "$(printf '%s\n' "$out" | grep -c '^warning:')" = 2 ] && chk ok "registry mismatches: one warning line each, install carries on" || chk fail "registry mismatch warnings"
+ICON_SOURCES="$T/drift.conf" just remove-icons Real-One >/dev/null 2>&1; rm -rf "$T/cache/icons"
+printf 'fake|file://%s/icons-src|top|Fake-Dark Fake-Light\n' "$T" > "$T/sources.conf"
 just list-icons 2>&1 | grep -q Fake-Dark && chk ok "list-icons shows the sets" || chk fail "list-icons"
 just install-icons Fake-Dark >/dev/null 2>&1; [ -d "$ICONS_DEST/Fake-Dark" ] && chk ok "install-icons" || chk fail "install-icons"
 : > "$LOG"; just switch-icons Fake-Dark >/dev/null 2>&1; grep -q "icon-theme Fake-Dark" "$LOG" && chk ok "switch-icons" || chk fail "switch-icons"

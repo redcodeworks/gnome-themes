@@ -125,8 +125,10 @@ choose_accent() {
 # ---- sources -------------------------------------------------------------------------------------
 # Themes are copied straight from the checkout this script lives in (no cache, no network on install).
 # Icon sets come from the external repos listed in tools/icon-sources.conf (name|url|layout|extra), each with a
-# shallow clone under $cache/icons/<source>. Layouts: top (every top-level dir with index.theme is a set), root (the
+# shallow clone under $cache/icons/<source>. Layouts: top (top-level dirs with index.theme are the sets), root (the
 # repo root is the set), script (sets are built by the upstream install.sh, one variant per set, in a temp dir).
+# The registry DECLARES every set name (column 4), so listing needs no clone; a source is cloned only when one of its
+# sets is installed or updated, and then checked against its declaration (warnings only, see verify_source).
 conf="${ICON_SOURCES:-$root/tools/icon-sources.conf}"
 src_names=(); declare -A src_url src_layout src_extra
 load_sources() {
@@ -138,6 +140,7 @@ load_sources() {
     if [ -n "${ICONS_URL:-}" ]; then   # override (testing): replaces the papirus source's URL, adding the source if needed
         if [ -z "${src_url[papirus]:-}" ]; then src_names+=(papirus); src_layout[papirus]=top; src_extra[papirus]=""; fi
         src_url[papirus]="$ICONS_URL"
+        [ -n "${src_extra[papirus]}" ] || src_extra[papirus]="Papirus Papirus-Dark Papirus-Light"
     fi
 }
 clone_of() { echo "$cache/icons/$1"; }
@@ -148,14 +151,33 @@ ensure_clone() {   # clone source $1 when its cache dir is missing
     local d; d=$(clone_of "$1"); [ -d "$d/.git" ] && return 0
     mkdir -p "$cache/icons"; echo "Cloning $1 ..."
     git clone --quiet --depth 1 "${src_url[$1]}" "$d" 2>/dev/null || { rm -rf "${d:?}"; echo "(could not clone $1; skipping it)" >&2; return 1; }
+    verify_source "$1"
+}
+verify_source() {  # compare the clone of source $1 with the sets the registry declares; one warning line per mismatch, never fatal
+    local n="$1" d t dir nm dd b seen=" "; d=$(clone_of "$n")
+    case "${src_layout[$n]}" in
+        top)
+            for t in ${src_extra[$n]}; do
+                dir="${t%%=*}"; nm="${t#*=}"; seen="$seen$dir "
+                if [ ! -f "$d/$dir/index.theme" ] || [ "$(set_name "$d/$dir" "$dir")" != "$nm" ]; then echo "warning: $n: registry says $nm, upstream has no $nm" >&2; fi
+            done
+            for dd in "$d"/*/; do
+                [ -f "$dd/index.theme" ] || continue; b=$(basename "$dd")
+                case "$seen" in *" $b "*) ;; *) echo "warning: $n: upstream has $(set_name "$dd" "$b") not in the registry" >&2 ;; esac
+            done ;;
+        root)
+            nm=$(set_name "$d" "${src_extra[$n]}")
+            if [ ! -f "$d/index.theme" ] || [ "$nm" != "${src_extra[$n]}" ]; then echo "warning: $n: registry says ${src_extra[$n]}, upstream has no ${src_extra[$n]}" >&2; fi ;;
+    esac
+    return 0
 }
 refresh_source() { # bring the shallow clone of source $1 to the latest upstream; offline: keep the cache and say so
     local d; d=$(clone_of "$1")
     if [ -d "$d/.git" ]; then
-        git -C "$d" fetch --quiet --depth 1 origin HEAD 2>/dev/null && git -C "$d" reset --quiet --hard FETCH_HEAD || echo "(could not refresh $1; using the cached copy)"
+        if git -C "$d" fetch --quiet --depth 1 origin HEAD 2>/dev/null && git -C "$d" reset --quiet --hard FETCH_HEAD; then verify_source "$1"
+        else echo "(could not refresh $1; using the cached copy)"; fi
     else ensure_clone "$1" || true; fi
 }
-sync_icons() { local n; for n in "${src_names[@]}"; do ensure_clone "$n" || true; done; }
 sync_themes() {    # git fetch + pull --ff-only in this checkout; quiet on a detached HEAD or a branch without upstream
     git -C "$root" remote get-url origin >/dev/null 2>&1 || return 0
     git -C "$root" fetch --quiet 2>/dev/null || { echo "(could not fetch; using the checkout as it is)"; return 0; }
@@ -188,14 +210,11 @@ load_items() {
             items+=("$sc"); labels+=("$sc  ($what)")
         done
     else
-        local n d dd b v base
-        for n in "${src_names[@]}"; do
-            d=$(clone_of "$n"); [ -d "$d/.git" ] || continue
+        local n t v base
+        for n in "${src_names[@]}"; do   # from the registry only: no clone, no network
             case "${src_layout[$n]}" in
-                top) for dd in "$d"/*/; do
-                         [ -f "$dd/index.theme" ] || continue; b=$(basename "$dd"); add_item "$(set_name "$dd" "$b")" "$n" "$b" ""
-                     done ;;
-                root) add_item "$(set_name "$d" "${src_extra[$n]}")" "$n" "" "" ;;
+                top) for t in ${src_extra[$n]}; do add_item "${t#*=}" "$n" "${t%%=*}" ""; done ;;
+                root) add_item "${src_extra[$n]}" "$n" "" "" ;;
                 script) base="${n^}"
                         for v in ${src_extra[$n]}; do
                             if [ "$v" = standard ]; then add_item "$base" "$n" "" "$v"; else add_item "$base-$v" "$n" "" "$v"; fi
@@ -579,7 +598,6 @@ resolve() { index_of "$want" || { echo "'$want' is not a $noun here. Available: 
 
 case "$action" in
     list)
-        if [ "$kind" = icons ]; then sync_icons; fi
         load_items
         for i in "${!items[@]}"; do
             ac=""; if [ "$kind" = themes ]; then ac="  [accent: $(current_accent "${items[i]}")]"; fi
@@ -587,7 +605,6 @@ case "$action" in
         done ;;
 
     install)
-        if [ "$kind" = icons ]; then sync_icons; fi
         load_items
         [ "${#items[@]}" -gt 0 ] || { echo "No ${noun}s found"; exit 1; }
         if [ -n "$want" ]; then
@@ -599,30 +616,32 @@ case "$action" in
                     if [ "$kind" = themes ]; then on[i]=1; else case "${items[i]}" in Papirus|Papirus-Dark) on[i]=1 ;; esac; fi
                 done
             fi
+            if [ "$kind" = icons ]; then for i in "${!items[@]}"; do if [ "${on[i]}" -eq 1 ] && is_installed "${items[i]}"; then labels[i]="✓ ${labels[i]}"; fi; done; fi
             choose_many "${noun^}s to install into $dest" "${!items[@]}"
         fi
         [ "${#chosen[@]}" -gt 0 ] || { echo "Nothing selected (in the checklist, x ticks an entry and enter installs the ticked ones)."; exit 0; }
         names=(); for i in "${chosen[@]}"; do names+=("${items[i]}"); done
-        if [ "$kind" = icons ]; then refresh_for "${names[@]}"; load_items; fi   # icons: always refresh the clones first
-        for nm in "${names[@]}"; do copy_item "$nm"; if [ "$kind" = themes ]; then pty_install "$nm"; gsv_install "$nm"; fi; done
+        if [ "$kind" = icons ]; then refresh_for "${names[@]}"; fi   # icons: clone or refresh only the sources of the chosen sets
+        for nm in "${names[@]}"; do
+            if [ "$kind" = icons ] && [ ! -d "$(clone_of "${i_src[$nm]}")/.git" ]; then echo "Skipping $nm: its source ${i_src[$nm]} is not available." >&2; continue; fi
+            copy_item "$nm"; if [ "$kind" = themes ]; then pty_install "$nm"; gsv_install "$nm"; fi; done
         if [ "$installed_n" -eq 0 ]; then echo "Nothing was installed (see the messages above)."
         elif [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icons to use it."; fi ;;
 
     update)
         # themes: git fetch + pull --ff-only in this checkout; icons: refresh the clones of the installed sets' sources.
         # Then every installed set's folders are removed and copied fresh (the remembered accent is re-applied).
-        if [ "$kind" = icons ]; then sync_icons; fi
         load_items; n=0; inst=()
         for i in "${!items[@]}"; do if is_installed "${items[i]}"; then inst+=("${items[i]}"); fi; done
-        if [ "$kind" = icons ]; then refresh_for "${inst[@]}"; load_items; else sync_themes; fi
+        if [ "$kind" = icons ]; then refresh_for "${inst[@]}"; else sync_themes; fi
         for nm in "${inst[@]}"; do
+            if [ "$kind" = icons ] && [ ! -d "$(clone_of "${i_src[$nm]}")/.git" ]; then echo "Skipping $nm: its source ${i_src[$nm]} is not available." >&2; continue; fi
             if [ "$kind" = icons ]; then copy_item "$nm"; n=$((n+1))
             else while read -r f; do if [ -e "$dest/$f" ] && copy_folder "$f" "$nm"; then n=$((n+1)); fi; done < <(folders_of "$nm"); pty_refresh "$nm"; gsv_refresh "$nm"; fi
         done
         [ "$n" -gt 0 ] || echo "None of the ${noun}s from this source is installed in $dest." ;;
 
     remove)
-        if [ "$kind" = icons ]; then sync_icons; fi
         load_items; inst=()
         for i in "${!items[@]}"; do if is_installed "${items[i]}"; then inst+=("$i"); fi; done
         [ "${#inst[@]}" -gt 0 ] || { echo "No ${noun}s from this source are installed in $dest."; exit 0; }
@@ -657,7 +676,6 @@ case "$action" in
         fp_undo ;;
 
     switch)
-        if [ "$kind" = icons ]; then sync_icons; fi
         load_items; inst=()
         for i in "${!items[@]}"; do if is_installed "${items[i]}"; then inst+=("$i"); fi; done
         [ "${#inst[@]}" -gt 0 ] || { echo "No ${noun}s from this source are installed; install one first."; exit 1; }
