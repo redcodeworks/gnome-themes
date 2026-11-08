@@ -23,8 +23,8 @@ title = "Fairy Floss"
 gtk_name = "Fairy-Floss"
 shell_name = "Fairy-Floss-Shell"
 credit = "Fairy Floss by sailorhg (hex values only, no upstream licence; accents partly invented)"
-ptyxis = "generated"
-ptyxis_reason = "the official Fairy Floss colours (tmTheme coral, mint, yellow, pink) differ from both Fairy Floss built-ins, which map the slots differently (green is coral, magenta a dull violet; 77 dE in green); the generated palette carries the official colours"
+ptyxis = "Fairy Floss Dark"
+ptyxis_reason = "dark only. Fairy Floss and Fairy Floss Dark differ only in Background (#5a5475 vs #42395d); Fairy Floss Dark matches the scheme background exactly."
 default_accent = "magenta"
 
 [dark]

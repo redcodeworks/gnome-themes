@@ -8,8 +8,8 @@ title = "Nordic"
 gtk_name = "Nordic-Nord"
 shell_name = "Nordic-Nord-Shell"
 credit = "Nord by Sven Greb (MIT)"
-ptyxis = "Nord"
-ptyxis_reason = "the Nord built-in is the source and its colours equal Nordic's dark variant (0.00 dE, no nudges); it has a [Light] section, so under a light system colour scheme Ptyxis shows Nord's light terminal while the rest of Nordic stays dark, which Kevin accepted"
+ptyxis = "nord"
+ptyxis_reason = "the built-in (id lower case, Name Nord) has [Light] and [Dark] sections; under a light system colour scheme Ptyxis shows its [Light] section while the rest of Nordic stays dark (ptyxis_light_section_accepted)."
 ptyxis_light_section_accepted = true
 default_accent = "cyan"
 
@@ -43,7 +43,7 @@ cyan = "#88c0d0"
 # (`ptyxis_light_section_accepted` below). The dark values here are Nord's [Dark] section as it is.
 
 [dark.terminal]
-source = "Nord"   # Ptyxis built-in, its [Dark] section, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "nord"   # Ptyxis built-in, its [Dark] section, checked 2026-11-07 with tools/ptyxis-palette.sh
 black = "#3b4252"   # Color0
 white = "#e5e9f0"   # Color7
 bright_black = "#4c566a"   # Color8

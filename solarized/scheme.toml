@@ -15,8 +15,8 @@ title = "Solarized"
 gtk_name = "Solarized"
 shell_name = "Solarized-Shell"
 credit = "Solarized by Ethan Schoonover (MIT)"
-ptyxis = "generated"
-ptyxis_reason = "the Solarized built-in ([Light] and [Dark]) is the source of both variants, but fg is nudged off it in both (2.8 dE dark, 4.4 dE light, above the 3.0 close-match threshold) to reach 4.5:1 on the window, so the built-in no longer equals the scheme; the generated palette carries the nudged foreground"
+ptyxis = "solarized"
+ptyxis_reason = "the lower-case id `solarized` has [Light] and [Dark] sections and matches the scheme (dark 2.8 dE, light 4.4 dE, the foreground nudges); the capital-S `Solarized` is a different palette (63 dE away in dark)."
 default_accent = "blue"
 
 [dark]
@@ -69,7 +69,7 @@ cyan = "#2aa198"
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Solarized"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
+source = "solarized"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
 black = "#073642"   # Color0
 white = "#eee8d5"   # Color7
 bright_black = "#002b36"   # Color8
@@ -82,7 +82,7 @@ bright_cyan = "#93a1a1"   # Color14
 bright_white = "#fdf6e3"   # Color15
 
 [light.terminal]
-source = "Solarized"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
+source = "solarized"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
 black = "#073642"   # Color0
 white = "#eee8d5"   # Color7
 bright_black = "#002b36"   # Color8

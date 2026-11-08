@@ -19,7 +19,7 @@ gtk_name = "Aubergine"
 shell_name = "Aubergine-Shell"
 credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
 ptyxis = "Ubuntu"
-ptyxis_reason = "the Ubuntu built-in is the source and its colours equal this scheme's in every role (0.00 dE, no nudges); like the scheme it is flat and dark only"
+ptyxis_reason = "Ubuntu is the built-in; flat and dark only, like the scheme."
 default_accent = "orange"
 
 [dark]
@@ -49,7 +49,7 @@ cyan = "#06989a"
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Ubuntu"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Ubuntu"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
 black = "#2e3436"   # Color0
 white = "#d3d7cf"   # Color7
 bright_black = "#555753"   # Color8

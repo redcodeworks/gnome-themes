@@ -18,8 +18,8 @@ title = "Monokai"
 gtk_name = "Monokai"
 shell_name = "Monokai-Shell"
 credit = "Monokai by Wimer Hazenberg (palette values via Base16, tinted-theming/schemes, MIT); not Monokai Pro"
-ptyxis = "generated"
-ptyxis_reason = "the official Base16 Monokai cyan #a1efe4 differs from the Monokai Dark built-in's #2aa198 (30 dE); everything else equals it, but a built-in cannot carry the official cyan, so the palette is generated"
+ptyxis = "Monokai Dark"
+ptyxis_reason = "dark only; Monokai Dark is the closest of the Monokai built-ins (the Pro, Ristretto and Soda ones are 71-97 dE away)."
 default_accent = "green"
 
 [dark]

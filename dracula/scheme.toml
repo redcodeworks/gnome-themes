@@ -16,8 +16,8 @@ title = "Dracula"
 gtk_name = "Dracula"
 shell_name = "Dracula-Shell"
 credit = "Dracula Theme (MIT), light variant Alucard"
-ptyxis = "Dracula"
-ptyxis_reason = "the Dracula built-in has [Light] and [Dark] sections and is the source of both variants (0.00 dE, no nudges), so it follows the system colour scheme by itself"
+ptyxis = "dracula"
+ptyxis_reason = "the built-in (id lower case, Name Dracula) has [Light] and [Dark] sections and covers both modes."
 default_accent = "blue"
 
 [dark]
@@ -70,7 +70,7 @@ cyan = "#006274"
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Dracula"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
+source = "dracula"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
 black = "#21222c"   # Color0
 white = "#f8f8f2"   # Color7
 bright_black = "#6272a4"   # Color8
@@ -83,7 +83,7 @@ bright_cyan = "#a4ffff"   # Color14
 bright_white = "#ffffff"   # Color15
 
 [light.terminal]
-source = "Dracula"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
+source = "dracula"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
 black = "#f1f2ff"   # Color0
 white = "#f8f8f2"   # Color7
 bright_black = "#8393c7"   # Color8

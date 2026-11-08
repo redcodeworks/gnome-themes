@@ -14,7 +14,7 @@ gtk_name = "Everforest"
 shell_name = "Everforest-Shell"
 credit = "Everforest by sainnhe (MIT)"
 ptyxis = "Everforest"
-ptyxis_reason = "the Ptyxis built-in has [Light] and [Dark] sections (follows the system) and is the source of both variants: its roles, black, white and brights equal ours (0.00 dE, no nudges); only the titlebar colour differs, which a built-in never defines"
+ptyxis_reason = "the built-in has [Light] and [Dark] sections and covers both modes."
 default_accent = "green"
 
 [dark]
@@ -75,7 +75,7 @@ cyan = "#35a77c"
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Everforest"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
+source = "Everforest"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
 black = "#4b565c"   # Color0
 white = "#d3c6aa"   # Color7
 bright_black = "#5c6a72"   # Color8
@@ -88,7 +88,7 @@ bright_cyan = "#35a77c"   # Color14
 bright_white = "#dfddc8"   # Color15
 
 [light.terminal]
-source = "Everforest"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
+source = "Everforest"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
 black = "#5c6a72"   # Color0
 white = "#dfddc8"   # Color7
 bright_black = "#4b565c"   # Color8

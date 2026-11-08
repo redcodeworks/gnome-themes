@@ -13,8 +13,9 @@ title = "Tokyo Night"
 gtk_name = "Tokyo-Night"
 shell_name = "Tokyo-Night-Shell"
 credit = "Tokyo Night by folke (tokyonight.nvim, Apache-2.0), Night and Day"
-ptyxis = "generated"
-ptyxis_reason = "Tokyo Night (dark) and Tokyo Night Day (light) are the sources, but they are two flat built-ins and one profile holds one palette name, so the pair cannot follow light/dark; the generated pair palette carries their colours, with the Day foreground nudged 5.3 dE for contrast on the window (listed in [light.nudge])"
+ptyxis = "Tokyo Night"
+ptyxis_light = "Tokyo Night Day"
+ptyxis_reason = "two flat built-ins, one per mode; switch-theme picks the id by the system colour scheme."
 default_accent = "blue"
 
 [dark]
@@ -75,7 +76,7 @@ cyan = "#007197"
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Tokyo Night"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Tokyo Night"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
 black = "#414868"   # Color0
 white = "#a9b1d6"   # Color7
 bright_black = "#414868"   # Color8
@@ -88,7 +89,7 @@ bright_cyan = "#7dcfff"   # Color14
 bright_white = "#c0caf5"   # Color15
 
 [light.terminal]
-source = "Tokyo Night Day"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Tokyo Night Day"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
 black = "#e9e9ed"   # Color0
 white = "#6172b0"   # Color7
 bright_black = "#a1a6c5"   # Color8

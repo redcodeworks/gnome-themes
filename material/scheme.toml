@@ -26,8 +26,8 @@ title = "Material"
 gtk_name = "Material"
 shell_name = "Material-Shell"
 credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
-ptyxis = "generated"
-ptyxis_reason = "the official Darker tmTheme colours differ from the Material built-in (Gogh's own scheme: blue, magenta, yellow, cyan 10-58 dE); the generated pair palette carries the official dark colours and the Lighter light ones (no light built-in exists)"
+ptyxis = "Material"
+ptyxis_reason = "there is no light Material built-in, so the dark built-in is used in both modes."
 default_accent = "orange"
 
 [dark]

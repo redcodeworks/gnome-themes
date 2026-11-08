@@ -28,8 +28,9 @@ title = "Rose Pine"
 gtk_name = "Rose-Pine"
 shell_name = "Rose-Pine-Shell"
 credit = "Rose Pine (MIT), Main and Dawn"
-ptyxis = "generated"
-ptyxis_reason = "the official alacritty mapping has pine as green and foam as blue; the Rosé Pine and Rosé Pine Dawn built-ins swap them (36 dE dark, 19 dE Dawn); they are also two flat built-ins, so a generated pair palette carries the official colours"
+ptyxis = "Rosé Pine"
+ptyxis_light = "Rosé Pine Dawn"
+ptyxis_reason = "two flat built-ins, one per mode; switch-theme picks the id by the system colour scheme (the Moon built-in is not used)."
 default_accent = "magenta"
 
 [dark]

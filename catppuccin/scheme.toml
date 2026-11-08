@@ -13,8 +13,9 @@ title = "Catppuccin"
 gtk_name = "Catppuccin"
 shell_name = "Catppuccin-Shell"
 credit = "Catppuccin (MIT), Mocha and Latte"
-ptyxis = "generated"
-ptyxis_reason = "Mocha (dark) and Latte (light) are the sources and equal the scheme (0.00 dE, no nudges), but they are two flat built-ins and one profile holds one palette name, so the pair cannot follow light/dark; the generated pair palette carries exactly their colours"
+ptyxis = "Catppuccin Mocha"
+ptyxis_light = "Catppuccin Latte"
+ptyxis_reason = "two flat built-ins, one per mode; switch-theme picks the id by the system colour scheme."
 default_accent = "blue"
 
 [dark]
@@ -75,7 +76,7 @@ cyan = "#179299"
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Catppuccin Mocha"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Catppuccin Mocha"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
 black = "#45475a"   # Color0
 white = "#bac2de"   # Color7
 bright_black = "#585b70"   # Color8
@@ -88,7 +89,7 @@ bright_cyan = "#94e2d5"   # Color14
 bright_white = "#a6adc8"   # Color15
 
 [light.terminal]
-source = "Catppuccin Latte"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Catppuccin Latte"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
 black = "#5c5f77"   # Color0
 white = "#acb0be"   # Color7
 bright_black = "#6c6f85"   # Color8

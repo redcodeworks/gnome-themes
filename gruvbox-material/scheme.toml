@@ -12,8 +12,8 @@ title = "Gruvbox Material"
 gtk_name = "Gruvbox-Material"
 shell_name = "Gruvbox-Material-Shell"
 credit = "sainnhe/gruvbox-material (MIT)"
-ptyxis = "generated"
-ptyxis_reason = "the Gruvbox Material built-in is the dark source (0.00 dE, no nudges) but it is flat and dark only and there is no light built-in, so a flat built-in would lose light/dark switching; the generated pair palette carries the built-in's dark colours and this scheme's own light ones"
+ptyxis = "Gruvbox Material"
+ptyxis_reason = "there is no light Gruvbox Material built-in, so the dark built-in is used in both modes."
 default_accent = "blue"
 
 [dark]
@@ -76,7 +76,7 @@ secondary_sidebar = "#f3eac7"   # hand-picked in the old libadwaita file; the ru
 # are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
 
 [dark.terminal]
-source = "Gruvbox Material"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Gruvbox Material"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
 black = "#3c3836"   # Color0
 white = "#d4be98"   # Color7
 bright_black = "#3c3836"   # Color8

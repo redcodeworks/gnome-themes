@@ -17,8 +17,8 @@ title = "Sweet"
 gtk_name = "Sweet"
 shell_name = "Sweet-Shell"
 credit = "Sweet by EliverLara (palette values only; SCSS GPL-3.0 not used)"
-ptyxis = "generated"
-ptyxis_reason = "the official EliverLara background #161925 differs from the Sweet Eliverlara built-in's #282c34 (the accents and foreground are equal); a built-in cannot carry it, so the palette is generated"
+ptyxis = "Sweet Eliverlara"
+ptyxis_reason = "dark only; Sweet Eliverlara (9.6 dE background) beats Sweet Terminal (155 dE)."
 default_accent = "magenta"
 
 [dark]
