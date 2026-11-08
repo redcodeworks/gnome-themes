@@ -3,12 +3,11 @@
 # Dark ladder: view and window bg (the built-in's background; the view was bg_dark #16161e before), headers bg_highlight, popovers fg_gutter. Light: view bg, window bg_dark,
 # headers bg_highlight, popovers bg_visual. ANSI six = Ptyxis "Tokyo Night" / "Tokyo Night Day" Color1-6 (identical to
 # the tokyonight terminal tables). Default accent blue. Deviation: Day's fg is nudged off the built-in (see [light.nudge]) to reach 4.5:1.
-# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
-# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
-# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
-# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
-# Sources: Tokyo Night (dark: bg #1a1b26; Storm #24283b and Moon are other built-ins and not used because the scheme's window colour was Night's), Tokyo Night Day (light;
-# Tokyo Night Light is another palette). Dark: bg_deep #1a1b26 (was #16161e). Light: fg #3760bf is below 4.5:1 on the window, so it is nudged (listed).
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-ins "Tokyo Night" (Gogh port) and "Tokyo Night Day" (folke/tokyonight.nvim extras, per its header), two flat palettes: ptyxis / ptyxis_light, picked by switch-theme from the system colour scheme.
+# Dark bg_deep is #1a1b26 (was #16161e). Day's fg #3760bf is below 4.5:1 on the window, so it is nudged (listed in [light.nudge]).
 title = "Tokyo Night"
 gtk_name = "Tokyo-Night"
 shell_name = "Tokyo-Night-Shell"
@@ -49,10 +48,9 @@ bg_deep = "#e1e2e7"
 bg = "#d0d5e3"
 surface = "#c4c8da"
 surface_high = "#b7c1e3"
-fg = "#3258af"
-fg_dim = "#6172b0"
+fg = "#3258af"   # NUDGED from the built-in Foreground (see [light.nudge])
 comment = "#848cb5"
-selection = "#b7c1e3"
+selection = "#bfc8df"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
 red = "#f52a65"
 orange = "#b15c00"
 yellow = "#8c6c3e"
@@ -71,34 +69,18 @@ blue = "#2e7de9"
 magenta = "#9854f1"
 cyan = "#007197"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
-
 [dark.terminal]
-source = "Tokyo Night"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Tokyo Night"   # Ptyxis built-in id
 black = "#414868"   # Color0
 white = "#a9b1d6"   # Color7
 bright_black = "#414868"   # Color8
-bright_red = "#f7768e"   # Color9
-bright_green = "#9ece6a"   # Color10
-bright_yellow = "#e0af68"   # Color11
-bright_blue = "#7aa2f7"   # Color12
-bright_magenta = "#bb9af7"   # Color13
-bright_cyan = "#7dcfff"   # Color14
 bright_white = "#c0caf5"   # Color15
 
 [light.terminal]
-source = "Tokyo Night Day"   # Ptyxis built-in id, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Tokyo Night Day"   # Ptyxis built-in id
 black = "#e9e9ed"   # Color0
 white = "#6172b0"   # Color7
 bright_black = "#a1a6c5"   # Color8
-bright_red = "#f52a65"   # Color9
-bright_green = "#587539"   # Color10
-bright_yellow = "#8c6c3e"   # Color11
-bright_blue = "#2e7de9"   # Color12
-bright_magenta = "#9854f1"   # Color13
-bright_cyan = "#007197"   # Color14
 bright_white = "#3760bf"   # Color15
 
 [light.nudge]
