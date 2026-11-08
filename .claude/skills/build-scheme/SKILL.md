@@ -57,7 +57,7 @@ ptyxis_reason = "<one line: the numbers that decided it>"
 ```
 just generate <scheme>          # palette.toml, GTK3/GTK4/Shell, libadwaita, accent maps, Ptyxis palette (generated schemes only), GtkSourceView styles
 just test <scheme>              # contrast, structure, parse, accent maps, probes
-tools/test.sh <scheme>          # whole suite for the scheme, in its container (it tests the COMMITTED state: commit first)
+tools/test.sh <scheme>          # optional developer tool: whole suite in a container (tests the COMMITTED state); not used by agents, CI on the pull request is the test
 ```
 
 If `accent-maps-gen` reports `VERIFY FAILED`, two role colours collide with an accent token: nudge the derived role (orange first), see the header of `tools/palette-from-scheme.py`. Contrast exceptions (a pair under 4.5:1 that the tests report or that the generators document, e.g. the GtkSourceView `adjusted:` comments) go into your report; do not hide them.

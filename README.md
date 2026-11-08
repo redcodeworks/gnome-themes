@@ -67,7 +67,7 @@ Flatpak apps (on a fresh Fedora Atomic image the Calculator and Text Editor are 
 A new scheme starts with `just new-scheme <dir> "<Ptyxis palette name>"` (a draft `scheme.toml` from a built-in Ptyxis palette, see `tools/ptyxis-palette.sh list`), then `just generate <dir>`; `.claude/skills/build-scheme/SKILL.md` has the checklist.
 
 `main` is protected. Push your work to `testing` (`git push origin HEAD:testing`); CI runs the tests there
-(`tools/test.sh`, also runnable locally: it builds a Fedora 45 test image once and runs the suite in a throwaway podman or docker container, plus a secret scan). Open a pull request from `testing` into `main`;
+(`tools/test.sh` in a Fedora 45 container, plus a secret scan); the pull request's CI is the test. `tools/test.sh` can also be run locally (optional: it builds a Fedora 45 test image once and runs the suite in a throwaway podman or docker container), but that is not required. Open a pull request from `testing` into `main`;
 it can be merged only when both CI jobs pass.
 
 Licence: the tooling and docs are MIT (`LICENSE`). The generated theme files derive from GTK's and GNOME Shell's stock stylesheets and stay LGPL: each `*/themes/<Name>/` folder carries its own `LICENSE`. See `NOTICE` for the exact split and the credits.

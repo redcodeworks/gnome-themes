@@ -14,7 +14,7 @@ Development (private recipes; need python3-gobject, GTK 3, GTK 4 and gnome-shell
 - `just generate [scheme|all]` regenerates everything for a scheme (palette, GTK3/GTK4/Shell themes, libadwaita file, accent maps). Generated files are committed; never hand-edit them.
 - `just test <scheme>` or `python3 -I tools/selftest.py <scheme> [contrast|gtk3|gtk4|shell|all]` runs the checks for one scheme.
 - `just new-scheme <scheme-dir> <ptyxis-palette> [light-palette]` starts a new scheme: `tools/scheme-from-ptyxis.py` writes a DRAFT `scheme.toml` from a Ptyxis built-in palette (`tools/ptyxis-palette.sh list|show <name>`, `PTYXIS_BIN` overrides the binary; names are UTF-8, e.g. Rosé Pine, the helper reads the binary as 8-bit strings) and prints the TODO decisions (including `ptyxis`: run `python3 -I tools/ptyxis-compare.py <scheme-dir>` to see whether a built-in qualifies); then the normal pipeline. Private recipes still run by name (`just --justfile <file> new-scheme ...`, which is how the image's `ujust gnome-themes new-scheme` reaches them). The walk-through is the project skill `.claude/skills/build-scheme/SKILL.md`.
-- `tools/test.sh [--rebuild] [scheme ...]` is the whole suite (lint, hygiene, regeneration, selftest per scheme, install/switch/update/remove for every scheme and accent, icon recipes). It builds a cached Fedora 45 image from `tools/test.Containerfile` + `tools/test-packages.txt` and runs itself in a throwaway podman/docker container with the repo mounted read-only. It tests the **committed HEAD** (a fresh clone), so commit before running it.
+- `tools/test.sh [--rebuild] [scheme ...]` is the whole suite, an OPTIONAL developer tool: **CI on the pull request is the test**, and the local full run is not used (not by agents either; run only quick checks that fit a change: `tools/selftest.py` for the scheme, `tools/ptyxis-compare.py --check`, `bash -n`, shellcheck). It covers (lint, hygiene, regeneration, selftest per scheme, install/switch/update/remove for every scheme and accent, icon recipes). It builds a cached Fedora 45 image from `tools/test.Containerfile` + `tools/test-packages.txt` and runs itself in a throwaway podman/docker container with the repo mounted read-only. It tests the **committed HEAD** (a fresh clone), so commit before running it. The first full run of a change is therefore the CI run on its pull request.
 
 ## Principle: official source first, then the Ptyxis built-in, invented last
 
@@ -36,7 +36,7 @@ A variant's colours come from, in this order: (1) an OFFICIAL source (the scheme
 
 ## Scope and delegation
 
-- This repo is its own Claude project: work only inside it. Never edit anything outside it (other repos, the real themes or icons directories, home-directory configs, live gsettings/dconf). Tests use temp dirs and `THEMES_DEST` / `ICONS_DEST`, as `tools/test.sh` does.
+- This repo is its own Claude project: work only inside it. Never edit anything outside it (other repos, the real themes or icons directories, home-directory configs, live gsettings/dconf). Tests use temp dirs and `THEMES_DEST` / `ICONS_DEST`, as `tools/test.sh` does when it is used.
 - Anything that needs the outside (applying a theme on the desktop, a live check in the running Shell, a change in another repo) is not done here. Report it as a request under `Needs from hub:` to whoever spawned the session, who handles or delegates it.
 - Work on this repo from other sessions goes through a project agent spawned by that hub, not through direct edits to these files.
 

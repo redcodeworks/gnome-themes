@@ -97,5 +97,5 @@ new-scheme dir palette light="":
     python3 -I tools/scheme-from-ptyxis.py "{{dir}}" "{{palette}}" ${light:+"$light"}
     echo
     echo "Next: resolve the TODOs in {{dir}}/scheme.toml, then run:"
-    echo "  just generate {{dir}} && just test {{dir}} && tools/test.sh {{dir}}"
+    echo "  just generate {{dir}} && just test {{dir}} (optionally tools/test.sh {{dir}}; CI on the pull request is the test)"
     echo "and add the credit to NOTICE and the scheme to the list in README.md (see .claude/skills/build-scheme/SKILL.md)."
