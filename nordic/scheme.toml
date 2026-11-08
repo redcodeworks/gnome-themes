@@ -4,12 +4,16 @@
 # Ladder as in the brief: view nord0, window nord1, headers nord2, popovers nord3. fg_dim and comment are derived
 # by the fixed mixing rules (Nord has no dim-text step). ANSI six = Ptyxis "Nord" [Dark] Color1-6 (identical to
 # the Nord spec's typical terminal table); default accent cyan = nord8, Nord's primary UI colour.
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-in "nord" (id lower case, Name Nord), sectioned; Nordic is dark only and uses its [Dark] section (see the TERMINAL note below for the [Light] one).
 title = "Nordic"
 gtk_name = "Nordic-Nord"
 shell_name = "Nordic-Nord-Shell"
 credit = "Nord by Sven Greb (MIT)"
-ptyxis = "Nord"
-ptyxis_reason = "the Nord built-in is the source and its colours equal Nordic's dark variant (0.00 dE, no nudges); it has a [Light] section, so under a light system colour scheme Ptyxis shows Nord's light terminal while the rest of Nordic stays dark, which Kevin accepted"
+ptyxis = "nord"
+ptyxis_reason = "the built-in (id lower case, Name Nord) has [Light] and [Dark] sections; under a light system colour scheme Ptyxis shows its [Light] section while the rest of Nordic stays dark (ptyxis_light_section_accepted)."
 ptyxis_light_section_accepted = true
 default_accent = "cyan"
 
@@ -37,20 +41,14 @@ blue = "#81a1c1"
 magenta = "#b48ead"
 cyan = "#88c0d0"
 
-
 # TERMINAL (2026-11-07, Kevin's decision): Nordic uses the Ptyxis built-in "Nord" (source of truth; official Nord terminal colours). Nord has [Light] and [Dark] sections and
 # Nordic is dark only, so under a LIGHT system colour scheme Ptyxis shows Nord's [Light] section while the rest of Nordic (GTK, Shell) stays dark; this was accepted on purpose
 # (`ptyxis_light_section_accepted` below). The dark values here are Nord's [Dark] section as it is.
 
 [dark.terminal]
-source = "Nord"   # Ptyxis built-in, its [Dark] section, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "nord"   # Ptyxis built-in id (its [Dark] section)
 black = "#3b4252"   # Color0
 white = "#e5e9f0"   # Color7
 bright_black = "#4c566a"   # Color8
-bright_red = "#bf616a"   # Color9
-bright_green = "#a3be8c"   # Color10
-bright_yellow = "#ebcb8b"   # Color11
-bright_blue = "#81a1c1"   # Color12
-bright_magenta = "#b48ead"   # Color13
-bright_cyan = "#8fbcbb"   # Color14
 bright_white = "#eceff4"   # Color15
+bright_cyan = "#8fbcbb"   # Color14

@@ -2,29 +2,26 @@
 # Solarized (altercation/solarized, MIT, Copyright (c) 2011 Ethan Schoonover), dark (base03/base02) + light (base3/base2).
 # Only two real background layers per variant: the missing ladder steps are DERIVED by mixing towards the foreground
 # (dark: surface +16 %, surface_high +28 %; light: bg +3 %, surface +6 %; see tools/palette-from-scheme.py).
-# fg is base1 (dark) / base01 (light), the "emphasised" tones, because the body tones base0/base00 are below 4.5:1 on
-# the backgrounds (Solarized's documented low contrast); base0/base00 serve as fg_dim. ANSI six = Ptyxis "Solarized"
-# Color1-6 (the 16 Solarized accents, same in both variants). Default accent blue.
-# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
-# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
-# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
-# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
-# Sources: Solarized [Dark] and [Light] as they are: fg #839496 / #657b83 (were #93a1a1 / #586e75). Both fail 4.5:1 on the window (4.11 and 3.98), so fg carries a listed
-# nudge in each variant. fg_dim (and the light comment) were dropped and are derived now (they would sit on or past fg).
+# Default accent blue. The accents are the 16 Solarized colours, same in both variants.
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-in "solarized" (lower case; the capital-S "Solarized" is a different palette), sectioned ([Dark] and [Light]). Its foregrounds #839496 / #657b83 fail 4.5:1 on the window (4.11 and 3.98),
+# so fg carries a listed nudge in each variant; fg_dim (and the light comment) are derived (they would sit on or past fg).
 title = "Solarized"
 gtk_name = "Solarized"
 shell_name = "Solarized-Shell"
 credit = "Solarized by Ethan Schoonover (MIT)"
-ptyxis = "generated"
-ptyxis_reason = "the Solarized built-in ([Light] and [Dark]) is the source of both variants, but fg is nudged off it in both (2.8 dE dark, 4.4 dE light, above the 3.0 close-match threshold) to reach 4.5:1 on the window, so the built-in no longer equals the scheme; the generated palette carries the nudged foreground"
+ptyxis = "solarized"
+ptyxis_reason = "the lower-case id `solarized` has [Light] and [Dark] sections and matches the scheme (dark 2.8 dE, light 4.4 dE, the foreground nudges); the capital-S `Solarized` is a different palette (63 dE away in dark)."
 default_accent = "blue"
 
 [dark]
 bg_deep = "#002b36"
 bg = "#073642"
-fg = "#8b9b9d"
+fg = "#8b9b9d"   # NUDGED from the built-in Foreground (see [dark.nudge])
 comment = "#586e75"
-selection = "#073642"
+selection = "#1a4049"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
 red = "#dc322f"
 orange = "#cb4b16"
 yellow = "#b58900"
@@ -45,8 +42,8 @@ cyan = "#2aa198"
 [light]
 bg_deep = "#fdf6e3"
 surface_high = "#eee8d5"
-fg = "#5c7077"
-selection = "#eee8d5"
+fg = "#5c7077"   # NUDGED from the built-in Foreground (see [light.nudge])
+selection = "#dfddd0"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
 red = "#dc322f"
 orange = "#cb4b16"
 yellow = "#b58900"
@@ -64,35 +61,31 @@ blue = "#268bd2"
 magenta = "#d33682"
 cyan = "#2aa198"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
-
 [dark.terminal]
-source = "Solarized"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
+source = "solarized"   # Ptyxis built-in id (its [Dark] section)
 black = "#073642"   # Color0
 white = "#eee8d5"   # Color7
 bright_black = "#002b36"   # Color8
+bright_white = "#fdf6e3"   # Color15
 bright_red = "#cb4b16"   # Color9
 bright_green = "#586e75"   # Color10
 bright_yellow = "#657b83"   # Color11
 bright_blue = "#839496"   # Color12
 bright_magenta = "#6c71c4"   # Color13
 bright_cyan = "#93a1a1"   # Color14
-bright_white = "#fdf6e3"   # Color15
 
 [light.terminal]
-source = "Solarized"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
+source = "solarized"   # Ptyxis built-in id (its [Light] section)
 black = "#073642"   # Color0
 white = "#eee8d5"   # Color7
 bright_black = "#002b36"   # Color8
+bright_white = "#fdf6e3"   # Color15
 bright_red = "#cb4b16"   # Color9
 bright_green = "#586e75"   # Color10
 bright_yellow = "#657b83"   # Color11
 bright_blue = "#839496"   # Color12
 bright_magenta = "#6c71c4"   # Color13
 bright_cyan = "#93a1a1"   # Color14
-bright_white = "#fdf6e3"   # Color15
 
 [dark.nudge]
 Foreground = { from = "#839496", to = "#8b9b9d", de = 2.8, why = "fg on the window #073642 is 4.11:1 with the built-in foreground (selftest needs 4.5:1); lightness raised until 4.50:1" }

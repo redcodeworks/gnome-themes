@@ -1,57 +1,43 @@
 # SPDX-License-Identifier: MIT
-# Material Theme by Mattia Astorino, Sublime Text port (SublimeText/material-theme, MIT, Copyright (c) 2016 Mattia Astorino):
-# Darker dark + Lighter light. The official VS Code "Material Theme" is a commercial product and was NOT used or consulted.
-# VERIFIED against the raw schemes/Material-Theme-{Darker,Lighter}.tmTheme (2026-11-07): Darker background #212121, red #F07178,
-# orange #F78C6C, yellow #FFCB6B, green #C3E88D, cyan #89DDFF, blue #82AAFF, purple #C792EA, selection/gutter #424242; Lighter
-# background #FAFAFA, red #E53935, orange #F76D47, yellow #FFB62C, green #91B859, cyan #39ADB5, blue #6182B8, purple #7C4DFF,
-# greys #E7EAEC and #CFD8DC. NOT verifiable from the raw files: the text colours fg #B0BEC5 (Darker) and #546E7A (Lighter) are the
-# Material UI text colours from the project documentation (the Sublime tmTheme uses #EEFFFF and #80CBC4 as editor foregrounds,
-# which are glaring or too faint for a desktop UI); Lighter's bg_deep is the tmTheme background, its window step is DERIVED.
-# Ladder dark: Darker publishes none, so bg, surface and surface_high are DERIVED from #212121 towards fg by the fixed rules.
-# Light: also DERIVED (light rule, 3/6/9 %): the tmTheme's greys #e7eaec/#cfd8dc were tried as surface/surface_high but give
-# #546e7a text only 4.5:1 and 3.7:1 (selection #cfd8dc is kept). fg_dim and comment derived.
-# ANSI six, light: the Material accents of the tmTheme above (magenta = purple); Ptyxis has no light Material, so these stay. Dark: see
-# TERMINAL FIRST below (it used to follow the tmTheme as well).
-# Default accent orange (the seventh accent, the scheme's own orange role colour): Darker's UI accent is orange #FF9800, and Darker's
-# tmTheme orange is #F78C6C. The single default_accent serves both variants, so Lighter gets its orange #F76D47 too (Lighter's own
-# UI accent is cyan #00BCD4; cyan stays selectable).
-# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
-# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
-# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
-# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
-# Source dark: official (Darker tmTheme, raw file): bg #212121, red #f07178, green #c3e88d, yellow #ffcb6b, blue #82aaff, magenta = purple #c792ea, cyan #89ddff; fg #b0bec5 is the
-# project's documented UI text colour (not in the raw file; kept as documented). The built-in Material is a different (Gogh) palette. Light: no built-in, Lighter tmTheme values (official) stay.
-# The built-in's black, white, bright black and bright white are used for the terminal.
+# Material Theme by Mattia Astorino, Sublime Text port (SublimeText/material-theme, MIT, Copyright (c) 2016 Mattia Astorino): Darker dark + Lighter light.
+# The official VS Code "Material Theme" is a commercial product and was NOT used or consulted.
+# DARK: the Ptyxis built-in "Material" (a Gogh port, https://github.com/Gogh-Co/Gogh, per its header) is the source of truth for bg_deep, fg, the six
+# accents and the black/white/brights (so the terminal and the toolkit themes agree); the Darker tmTheme colours are no longer used for those. Role colours
+# that are not terminal accents (orange, selection, ladder) stay: orange #F78C6C is Darker's, the ladder is DERIVED from the built-in background.
+# LIGHT: NO built-in Material is light, so the Lighter tmTheme values stay (VERIFIED earlier against schemes/Material-Theme-Lighter.tmTheme: background
+# #FAFAFA, red #E53935, orange #F76D47, yellow #FFB62C, green #91B859, cyan #39ADB5, blue #6182B8, purple #7C4DFF; text #546E7A is the Material UI text colour from
+# the project documentation). The terminal shows the dark built-in in both modes (no_builtin in [light.terminal]).
+# Default accent orange (the seventh accent, the scheme's own orange role colour): the single default_accent serves both variants.
 title = "Material"
 gtk_name = "Material"
 shell_name = "Material-Shell"
 credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
-ptyxis = "generated"
-ptyxis_reason = "the official Darker tmTheme colours differ from the Material built-in (Gogh's own scheme: blue, magenta, yellow, cyan 10-58 dE); the generated pair palette carries the official dark colours and the Lighter light ones (no light built-in exists)"
+ptyxis = "Material"
+ptyxis_reason = "there is no light Material built-in, so the dark built-in is used in both modes."
 default_accent = "orange"
 
 [dark]
-bg_deep = "#212121"
-fg = "#b0bec5"
-selection = "#424242"
-red = "#f07178"
+bg_deep = "#1e282c"
+fg = "#c3c7d1"
+selection = "#3f484d"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#eb606b"
 orange = "#f78c6c"
-yellow = "#ffcb6b"
+yellow = "#f7eb95"
 green = "#c3e88d"
-cyan = "#89ddff"
-blue = "#82aaff"
-magenta = "#c792ea"
-purple = "#c792ea"
+cyan = "#aeddff"
+blue = "#80cbc3"
+magenta = "#ff2490"
+purple = "#ff2490"
 pink = "#ff5370"
 
 [dark.ansi]
 orange = "#f78c6c"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
-red = "#f07178"
+red = "#eb606b"
 green = "#c3e88d"
-yellow = "#ffcb6b"
-blue = "#82aaff"
-magenta = "#c792ea"
-cyan = "#89ddff"
+yellow = "#f7eb95"
+blue = "#80cbc3"
+magenta = "#ff2490"
+cyan = "#aeddff"
 
 [light]
 bg_deep = "#fafafa"
@@ -75,17 +61,15 @@ blue = "#6182b8"
 magenta = "#7c4dff"
 cyan = "#39adb5"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
-
 [dark.terminal]
-source = "official: SublimeText/material-theme schemes/Material-Theme-Darker.tmTheme, raw file, verified 2026-11-07 (fg #b0bec5 is the project's documented UI text colour, not in the raw file)"
-builtin_differs = { name = "Material", de = 60.5, note = "the Darker tmTheme accents are official; the built-in Material is Gogh's separate terminal scheme (teal blue, hot-pink magenta)" }
-black = "#073641"   # Color0 (the built-in's)
-white = "#ffffff"   # Color7 (the built-in's)
-bright_black = "#002b36"   # Color8 (the built-in's)
-bright_white = "#ffffff"   # Color15 (the built-in's)
+source = "Material"   # Ptyxis built-in id
+black = "#073641"   # Color0
+white = "#ffffff"   # Color7
+bright_black = "#002b36"   # Color8
+bright_white = "#ffffff"   # Color15
+bright_blue = "#7dc6bf"   # Color12
+bright_magenta = "#6c71c3"   # Color13
+bright_cyan = "#34434d"   # Color14
 
 [light.terminal]
 no_builtin = "no Ptyxis built-in has a light Material (the built-in of that name is dark only); the values stay as before"

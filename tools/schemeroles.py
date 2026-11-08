@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-"""Shared by tools/ptyxis-gen.py and tools/gtksourceview-gen.py: load a scheme's roles (with the derived ones filled in
+"""Shared by tools/ptyxis-compare.py, tools/scheme-from-ptyxis.py and tools/gtksourceview-gen.py: load a scheme's roles (with the derived ones filled in
 by the rules of palette-from-scheme.py) and the colour helpers. Not a program."""
 import os, tomllib, importlib.util, colorsys
 
@@ -16,12 +16,34 @@ def load(scheme_dir):
     slots = [('light', 'light' if 'light' in roles else 'dark'), ('dark', 'dark')]
     return S, roles, slots
 
-def ptyxis_choice(S):
-    """The scheme's terminal palette declaration: None = a generated palette (`ptyxis = "generated"`), else the NAME of the Ptyxis
-    built-in to use (`ptyxis = "<built-in name>"`). Every scheme must declare it (with `ptyxis_reason`); exits when missing."""
-    v = S.get('ptyxis')
-    if not isinstance(v, str) or not v.strip(): raise SystemExit('scheme.toml: `ptyxis = "<built-in name>"` or `ptyxis = "generated"` is required (with ptyxis_reason)')
-    return None if v == 'generated' else v
+NAMES = ('red', 'green', 'yellow', 'blue', 'magenta', 'cyan')
+
+def ptyxis_ids(S):
+    """(dark_id, light_id) of the scheme's Ptyxis built-in(s): `ptyxis = "<id>"` is required; `ptyxis_light = "<id>"` is for a scheme whose light
+    variant is a separate flat built-in; without it the light mode uses `ptyxis` too. The id is what Ptyxis stores in a profile's `palette`
+    key (the resource file name without `.palette`, case-sensitive), not the display Name. Exits when `ptyxis` is missing."""
+    v = S.get('ptyxis'); lt = S.get('ptyxis_light')
+    if not isinstance(v, str) or not v.strip(): raise SystemExit('scheme.toml: `ptyxis = "<Ptyxis built-in id>"` is required (with ptyxis_reason; see tools/ptyxis-ids.py list)')
+    if lt is not None and (not isinstance(lt, str) or not lt.strip()): raise SystemExit('scheme.toml: ptyxis_light must be a built-in id')
+    return v, (lt or v)
+
+def slot_colors(S, roles, variant):
+    """The 18 terminal colours (Background, Foreground, Color0..15, upper-case hex) a variant stands for: Background = bg_deep, Foreground = fg,
+    Color1..6 = the accents, Color0/7/8..15 from the `[<variant>.terminal]` table (else defaults); what compare tools measure built-ins against."""
+    R, T = roles[variant], S[variant].get('terminal', {})
+    A = S[variant]['ansi']
+    c = {}
+    fg = T.get('foreground', R['fg']); c['Foreground'] = fg
+    c['Background'] = T.get('background', R['bg_deep'])
+    c['Cursor'] = T.get('cursor', fg)
+    c['Color0'] = T.get('black', R['surface'])
+    for i, n in enumerate(NAMES):
+        c['Color%d' % (i + 1)] = A[n]
+        c['Color%d' % (i + 9)] = T.get('bright_' + n, A[n])
+    c['Color7'] = T.get('white', fg)
+    c['Color8'] = T.get('bright_black', R['comment'])
+    c['Color15'] = T.get('bright_white', c['Color7'])
+    return {k: v.upper() for k, v in c.items()}
 
 def nudge_to(color, bgs, need):
     """Change only the LIGHTNESS of `color` (hue and saturation kept), away from the backgrounds `bgs` (a colour or a list; lighter

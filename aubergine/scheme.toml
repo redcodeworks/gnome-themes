@@ -9,17 +9,16 @@
 # ANSI six = Ptyxis "Ubuntu" Color1-6 (Tango red, green, yellow, blue, magenta, cyan).
 # Default accent orange #E95420: Ubuntu's brand accent. Orange is the seventh accent, next to the six terminal colours (it is the
 # scheme's own orange role colour, not an ANSI colour).
-# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
-# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
-# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
-# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
-# Source: Ubuntu (flat, dark only). bg_deep #300a24 replaces the brand #2c001e; the ANSI colours and brights were already Ubuntu's.
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-in "Ubuntu" (flat, dark only; Ptyxis generated it from Gogh "Clone Of Ubuntu", https://github.com/Gogh-Co/Gogh). bg_deep is its #300a24 (the brand #2c001e was the view before).
 title = "Aubergine"
 gtk_name = "Aubergine"
 shell_name = "Aubergine-Shell"
 credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
 ptyxis = "Ubuntu"
-ptyxis_reason = "the Ubuntu built-in is the source and its colours equal this scheme's in every role (0.00 dE, no nudges); like the scheme it is flat and dark only"
+ptyxis_reason = "Ubuntu is the built-in; flat and dark only, like the scheme."
 default_accent = "orange"
 
 [dark]
@@ -44,19 +43,15 @@ blue = "#3465a4"
 magenta = "#75507b"
 cyan = "#06989a"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
-
 [dark.terminal]
-source = "Ubuntu"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh
+source = "Ubuntu"   # Ptyxis built-in id
 black = "#2e3436"   # Color0
 white = "#d3d7cf"   # Color7
 bright_black = "#555753"   # Color8
+bright_white = "#eeeeec"   # Color15
 bright_red = "#ef2929"   # Color9
 bright_green = "#8ae234"   # Color10
 bright_yellow = "#fce94f"   # Color11
 bright_blue = "#729fcf"   # Color12
 bright_magenta = "#ad7fa8"   # Color13
 bright_cyan = "#34e2e2"   # Color14
-bright_white = "#eeeeec"   # Color15

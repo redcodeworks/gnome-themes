@@ -3,6 +3,7 @@
 # tools/gtk3-theme-gen.py, gtk4-theme-gen.py, shell-theme-gen.py and libadwaita-gen.py. Rules: see the script header.
 # derived: dark.fg_dim derived: fg 30% towards bg
 # derived: dark.comment derived: fg 55% towards bg
+# derived: dark.accent_fg #c2ffdf -> #c2ffe7 (the text colour varies per accent: the default needs its own token)
 title = "Fairy Floss"
 gtk_name = "Fairy-Floss"
 shell_name = "Fairy-Floss-Shell"
@@ -12,62 +13,62 @@ dark_only = true
 
 [dark]
 ramp = [[0,"#000000"],[45,"#42395d"],[53,"#5a5475"],[66,"#67617f"],
-        [91,"#736e89"],[145,"#a19ead"],[238,"#f8f8f2"],[255,"#f8f8f2"]]
-fg = "#f8f8f2"
-top = "#f8f8f2"
-accent_fg = "#42395d"
+        [91,"#736e89"],[145,"#89a1a5"],[238,"#c2ffdf"],[255,"#c2ffdf"]]
+fg = "#c2ffdf"
+top = "#c2ffdf"
+accent_fg = "#c2ffe7"
 view = "#42395d"
 [dark.fam]
-blue = ["#15539e","#ffb8d1"]
-red = ["#cc0000","#ff857f"]
+blue = ["#15539e","#716799"]
+red = ["#cc0000","#a8757b"]
 orange = ["#f57900","#e6c000"]
-green = ["#4e9a06","#c2ffdf"]
+green = ["#4e9a06","#ff857f"]
 [dark.exact]
-"#26ab62" = "#c2ffdf"
-"#26a269" = "#c2ffdf"      # GTK4 stock success green
-"#3584e4" = "#ffb8d1"
-"#eeeeec" = "#f8f8f2"
+"#26ab62" = "#ff857f"
+"#26a269" = "#ff857f"      # GTK4 stock success green
+"#3584e4" = "#716799"
+"#eeeeec" = "#c2ffdf"
 
 # [shell.*]: stock Shell greys differ from GTK's, so the ramps have their own stops.
 
 [shell.dark]
 selected_ctx = false   # Shell's :selected is a plain hover/keyboard-focus state, not text on an accent fill
 ramp = [[0,"#42395d"],[34.67,"#42395d"],[55.33,"#5a5475"],[66.33,"#67617f"],
-        [86.67,"#736e89"],[156,"#c9c7cc"],[179,"#c9c7cc"],[250,"#f8f8f2"],
-        [255,"#f8f8f2"]]
-fg = "#f8f8f2"
-top = "#f8f8f2"
-accent_fg = "#42395d"
+        [86.67,"#736e89"],[156,"#a3ccbf"],[179,"#a3ccbf"],[250,"#c2ffdf"],
+        [255,"#c2ffdf"]]
+fg = "#c2ffdf"
+top = "#c2ffdf"
+accent_fg = "#c2ffe7"
 view = "#42395d"
 [shell.dark.fam]
-blue = ["#3584e4","#ffb8d1"]
-red = ["#c01c28","#ff857f"]
+blue = ["#3584e4","#716799"]
+red = ["#c01c28","#a8757b"]
 orange = ["#ff7800","#f69a53"]
-green = ["#26a269","#c2ffdf"]
+green = ["#26a269","#ff857f"]
 [shell.dark.exact]
 "#cd9309" = "#e6c000"      # warning yellow (hue 43, would fall in the orange family)
-"#a5a5b7" = "#c9c7cc"      # web-login title, dim text
+"#a5a5b7" = "#a3ccbf"      # web-login title, dim text
 "#54545a" = "#67617f"      # notification/message card: surface
 "#45454a" = "#605a7a"      # message card stacked behind the front one: bg and surface mixed 50 %
 
 # accents: [accents.<variant>.<name>] color = the terminal's ANSI colour, fg = text on it (contrast in tools/selftest.py)
 [accents.dark.red]
-color = "#ff857f"
-fg = "#42395d"
+color = "#a8757b"
+fg = "#c2ffe7"
 [accents.dark.green]
-color = "#c2ffdf"
+color = "#ff857f"
 fg = "#42395d"
 [accents.dark.yellow]
 color = "#e6c000"
 fg = "#42395d"
 [accents.dark.blue]
-color = "#aac3f8"
+color = "#ae81ff"
 fg = "#42395d"
 [accents.dark.magenta]
-color = "#ffb8d1"
-fg = "#42395d"
+color = "#716799"
+fg = "#c2ffe7"
 [accents.dark.cyan]
-color = "#8fe3f0"
+color = "#c2ffdf"
 fg = "#42395d"
 
 # roles for tools/libadwaita-gen.py
@@ -77,11 +78,11 @@ bg = "#5a5475"
 surface = "#67617f"
 surface_high = "#736e89"
 popover = "#736e89"
-fg = "#f8f8f2"
-red = "#ff857f"
-green = "#c2ffdf"
+fg = "#c2ffdf"
+red = "#a8757b"
+green = "#ff857f"
 yellow = "#e6c000"
-accent = "#ffb8d1"
-accent_fg = "#42395d"
+accent = "#716799"
+accent_fg = "#c2ffe7"
 warning_fg = "#42395d"
 secondary_sidebar = "#5a5475"

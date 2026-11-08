@@ -21,7 +21,7 @@
 @define-color destructive_bg_color #b4637a;
 @define-color destructive_fg_color #19172c;
 
-@define-color success_bg_color #286983;
+@define-color success_bg_color #56949f;
 @define-color success_fg_color #19172c;
 
 @define-color warning_bg_color #ea9d34;
@@ -30,34 +30,34 @@
 @define-color error_bg_color #b4637a;
 @define-color error_fg_color #19172c;
 
-@define-color window_bg_color #faf4ed;
+@define-color window_bg_color #f5efea;
 @define-color window_fg_color #575279;
 
-@define-color view_bg_color #fffaf3;
+@define-color view_bg_color #faf4ed;
 @define-color view_fg_color #575279;
 
-@define-color headerbar_bg_color #fffaf3;
+@define-color headerbar_bg_color #faf4ed;
 @define-color headerbar_fg_color #575279;
-@define-color headerbar_backdrop_color #faf4ed;
+@define-color headerbar_backdrop_color #f5efea;
 
-@define-color sidebar_bg_color #f2e9e1;
+@define-color sidebar_bg_color #f0eae6;
 @define-color sidebar_fg_color #575279;
-@define-color sidebar_backdrop_color #dfdad9;
+@define-color sidebar_backdrop_color #ebe5e3;
 
-@define-color secondary_sidebar_bg_color #f6eee7;
+@define-color secondary_sidebar_bg_color #f2ece8;
 @define-color secondary_sidebar_fg_color #575279;
-@define-color secondary_sidebar_backdrop_color #faf4ed;
+@define-color secondary_sidebar_backdrop_color #f5efea;
 
-@define-color card_bg_color #fffaf3;
+@define-color card_bg_color #faf4ed;
 @define-color card_fg_color #575279;
 
-@define-color dialog_bg_color #faf4ed;
+@define-color dialog_bg_color #f5efea;
 @define-color dialog_fg_color #575279;
 
-@define-color popover_bg_color #fffaf3;
+@define-color popover_bg_color #faf4ed;
 @define-color popover_fg_color #575279;
 
-@define-color thumbnail_bg_color #fffaf3;
+@define-color thumbnail_bg_color #faf4ed;
 @define-color thumbnail_fg_color #575279;
 
 @media (prefers-color-scheme: dark) {
@@ -67,7 +67,7 @@
     @define-color destructive_bg_color #eb6f92;
     @define-color destructive_fg_color #1f1d36;
 
-    @define-color success_bg_color #31748f;
+    @define-color success_bg_color #9ccfd8;
     @define-color success_fg_color #1f1d36;
 
     @define-color warning_bg_color #f6c177;

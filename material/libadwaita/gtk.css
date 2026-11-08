@@ -16,19 +16,19 @@
  */
 
 @define-color accent_bg_color #f76d47;
-@define-color accent_fg_color #212129;
+@define-color accent_fg_color #1e2834;
 
 @define-color destructive_bg_color #e53935;
-@define-color destructive_fg_color #212129;
+@define-color destructive_fg_color #1e2834;
 
 @define-color success_bg_color #91b859;
-@define-color success_fg_color #212129;
+@define-color success_fg_color #1e2834;
 
 @define-color warning_bg_color #ffb62c;
-@define-color warning_fg_color #212121;
+@define-color warning_fg_color #1e282c;
 
 @define-color error_bg_color #e53935;
-@define-color error_fg_color #212129;
+@define-color error_fg_color #1e2834;
 
 @define-color window_bg_color #f5f6f6;
 @define-color window_fg_color #546e7a;
@@ -62,55 +62,55 @@
 
 @media (prefers-color-scheme: dark) {
     @define-color accent_bg_color #f78c6c;
-    @define-color accent_fg_color #212121;
+    @define-color accent_fg_color #1e282c;
 
-    @define-color destructive_bg_color #f07178;
-    @define-color destructive_fg_color #212121;
+    @define-color destructive_bg_color #eb606b;
+    @define-color destructive_fg_color #1e282c;
 
     @define-color success_bg_color #c3e88d;
-    @define-color success_fg_color #212121;
+    @define-color success_fg_color #1e282c;
 
-    @define-color warning_bg_color #ffcb6b;
-    @define-color warning_fg_color #212121;
+    @define-color warning_bg_color #f7eb95;
+    @define-color warning_fg_color #1e282c;
 
-    @define-color error_bg_color #f07178;
-    @define-color error_fg_color #212121;
+    @define-color error_bg_color #eb606b;
+    @define-color error_fg_color #1e282c;
 
-    @define-color window_bg_color #292a2a;
-    @define-color window_fg_color #b0bec5;
+    @define-color window_bg_color #273135;
+    @define-color window_fg_color #c3c7d1;
 
-    @define-color view_bg_color #212121;
-    @define-color view_fg_color #b0bec5;
+    @define-color view_bg_color #1e282c;
+    @define-color view_fg_color #c3c7d1;
 
-    @define-color headerbar_bg_color #383a3b;
-    @define-color headerbar_fg_color #b0bec5;
-    @define-color headerbar_backdrop_color #292a2a;
+    @define-color headerbar_bg_color #384146;
+    @define-color headerbar_fg_color #c3c7d1;
+    @define-color headerbar_backdrop_color #273135;
 
-    @define-color sidebar_bg_color #383a3b;
-    @define-color sidebar_fg_color #b0bec5;
-    @define-color sidebar_backdrop_color #292a2a;
+    @define-color sidebar_bg_color #384146;
+    @define-color sidebar_fg_color #c3c7d1;
+    @define-color sidebar_backdrop_color #273135;
 
-    @define-color secondary_sidebar_bg_color #292a2a;
-    @define-color secondary_sidebar_fg_color #b0bec5;
-    @define-color secondary_sidebar_backdrop_color #292a2a;
+    @define-color secondary_sidebar_bg_color #273135;
+    @define-color secondary_sidebar_fg_color #c3c7d1;
+    @define-color secondary_sidebar_backdrop_color #273135;
 
     @define-color card_bg_color alpha(white, .08);
-    @define-color card_fg_color #b0bec5;
+    @define-color card_fg_color #c3c7d1;
 
-    @define-color dialog_bg_color #494d4f;
-    @define-color dialog_fg_color #b0bec5;
+    @define-color dialog_bg_color #4c555a;
+    @define-color dialog_fg_color #c3c7d1;
 
-    @define-color popover_bg_color #494d4f;
-    @define-color popover_fg_color #b0bec5;
+    @define-color popover_bg_color #4c555a;
+    @define-color popover_fg_color #c3c7d1;
 
-    @define-color thumbnail_bg_color #494d4f;
-    @define-color thumbnail_fg_color #b0bec5;
+    @define-color thumbnail_bg_color #4c555a;
+    @define-color thumbnail_fg_color #c3c7d1;
 }
 
 /* libadwaita hard-codes AdwToast as `toast { background: #505053; color: white; }` rather than going through any
  * *_bg_color named colour, so the overrides above cannot reach it. Like stock Adwaita it stays dark in light and
  * dark mode; the values are the dark popover surface and dark foreground. */
 toast {
-    background: #494d4f;
-    color: #b0bec5;
+    background: #4c555a;
+    color: #c3c7d1;
 }

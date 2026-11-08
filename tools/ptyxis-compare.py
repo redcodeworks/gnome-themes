@@ -1,66 +1,55 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Compare each scheme's terminal colours with the Ptyxis built-in palette(s) of the same name (decides `ptyxis = ...` in scheme.toml).
+"""Compare each scheme's terminal colours with the Ptyxis built-in palettes (checks the `ptyxis` / `ptyxis_light` ids in scheme.toml).
 
-  python3 -I tools/ptyxis-compare.py [scheme ...]            # the table
-  python3 -I tools/ptyxis-compare.py --check [scheme ...]    # fail when a declaration or a source contradicts the data
-PTYXIS_BIN overrides the binary (see tools/ptyxis-palette.sh).
+  python3 -I tools/ptyxis-compare.py [scheme ...]            # the table: every candidate built-in with its distance, declared ones marked
+  python3 -I tools/ptyxis-compare.py --check [scheme ...]    # fail when a declared id or a source declaration contradicts the data
+PTYXIS_BIN overrides the binary (see tools/ptyxis-ids.py).
 
-PRINCIPLE (source order): an OFFICIAL source (the scheme's own repo, tmTheme, terminal port) comes first, the Ptyxis built-in of the same name
-second, invented values last. A scheme is built on its built-in as the starting point; where it has no official source, scheme.toml differing
-from the built-in is wrong, not the built-in. Where an official source exists and differs, the official colours win and the scheme says so
-(`source = "official: <repo/url, date verified>"` plus `builtin_differs = { name = "<built-in>", de = <max delta E over the 18 colours>, note = "<why>" }`;
-`--check` recomputes de, 0.1 tolerance) and declares `ptyxis = "generated"`. So every variant of every scheme says where it comes from, in its
-[<variant>.terminal] table: `source = "<built-in name>"` (for a built-in with [Light] and [Dark] sections the section of the variant is used, for
-two flat built-ins such as Catppuccin Mocha and Latte each variant names its own) or `no_builtin = "<why>"` (no built-in exists for that variant;
-the scheme's own values stay). `--check` then requires, per variant with a source, that the colours the generator writes (slot_colors in
-ptyxis-gen.py: Background = bg_deep, Foreground = fg, Color1..6 = the accents, Color0/7/8..15 = the terminal table) equal the built-in's 18
-colours (Background, Foreground, Color0..15), except those listed in `[<variant>.nudge]` (a nudge is a deviation the repo's contrast checks force,
-for example fg on the window under 4.5:1):
+THE TERMINAL IS A PTYXIS BUILT-IN, ALWAYS. Ptyxis keys a profile's `palette` setting by palette ID (the resource file name without
+`.palette`, case-sensitive), never by display Name, and there are no generated palettes. A scheme declares `ptyxis = "<id>"`, and for a
+scheme with a dark and a light variant whose built-ins are two separate flat palettes also `ptyxis_light = "<id>"` (switch-theme picks one by
+the system colour scheme); a built-in with [Light] and [Dark] sections needs only `ptyxis`; a scheme whose light variant has no built-in keeps
+the dark one for both modes (`ptyxis_reason` says so). `--check` verifies that every declared id exists in the Ptyxis binary (ids are
+case-sensitive: `solarized` and `Solarized` are two palettes), that `ptyxis_light` is only used where it makes sense, and `ptyxis_reason` is set.
+
+PRINCIPLE: the Ptyxis built-in palette (by id) is the SOURCE OF TRUTH for every scheme variant that has one: bg_deep and fg are its Background and
+Foreground, the six accents its Color1..6, the real black, white and brights (Color0, 7, 8..15) sit in `[<variant>.terminal]`. Every variant says so
+there: `source = "<built-in id>"` (for a built-in with [Light] and [Dark] sections the section of the variant is used) or `no_builtin = "<why>"` (no
+built-in exists for that variant; the scheme's own values stay and the dark built-in serves both modes). `--check` requires, per variant with a
+source, that the source is the id the scheme declares for that variant and that the 18 colours slot_colors() derives (Background, Foreground,
+Color0..15) equal the built-in's, except those listed in a nudge, a deviation a contrast check of the GTK colours forces (the selftest needs fg on the
+window at 4.5:1):
     [<variant>.nudge]
     Foreground = { from = "<built-in value>", to = "<our value>", de = <delta E>, why = "<reason>" }
-`from` must be the built-in's value, `to` the value in use, `de` the CIE76 delta E between them (within 0.1), `why` a real reason, and the delta E at
-most NUDGE_MAX (for an official source `from` is the official value). A nudge for a colour that no longer differs is stale and fails.
+`from` must be the built-in's value, `to` the value in use, `de` the CIE76 delta E between them (within 0.1), `why` a real reason, at most NUDGE_MAX;
+a nudge for a colour that no longer differs is stale. The terminal itself shows the built-in unchanged (a nudge only moves the GTK/Shell colour).
+The delta E of every declared id is printed as information (the table, and `--check` on stderr).
 
-For every scheme variant it prints the colour distance to each candidate built-in (names that start with the scheme title, plus HINTS). What is
-compared are the colours the generator (tools/ptyxis-gen.py) would write for that variant, so scheme.toml's [<variant>.terminal] overrides count.
-Distance per colour = CIE76 delta E in CIELAB (D65); a variant's distance is the MAXIMUM over the colours compared. 0.00 = identical.
+Distance per colour = CIE76 delta E in CIELAB (D65); a variant's distance is the MAXIMUM over the colours compared.
   roles   the colours scheme.toml actually defines: Background, Foreground, Color1..6 (the six accents) and each of Color0, 7, 8, 9..14, 15 that a
-          [<variant>.terminal] table sets. This decides. Colours the generator only fills with a default (Color7 = foreground, Color9..14 = the
-          normal colour, ...) are not the scheme's own data, and a built-in's real white or brights would simply replace them.
+          [<variant>.terminal] table sets.
   all18   all 18 colours (Background, Foreground, Color0..15), shown for information.
-Cursor and titlebar are never compared (see below).
-
-THRESHOLD (below) is the one place that defines a "close match": roles max delta E <= THRESHOLD. About 2.3 is a just noticeable difference, so 3
-allows only rounding-level drift and a few units in one channel; anything visibly different (another shade of red, say) fails.
-
-A built-in qualifies (`ptyxis = "<name>"` in scheme.toml) only when ALL of these hold:
-  1. its roles distance is <= THRESHOLD for every variant the scheme has;
-  2. the scheme has two variants: the built-in has [Light] and [Dark] sections, so it follows the system colour scheme. Two flat built-ins (Catppuccin
-     Latte and Mocha) do not qualify: Ptyxis stores ONE palette name per profile, so a pair cannot follow light/dark; one flat built-in does not
-     either (it would stay dark or light in the other mode);
-  3. the scheme has one variant: the built-in is flat (a sectioned built-in switches to a light terminal under a light system setting, which a
-     dark-only scheme never does: its GTK light slot is the dark values too), unless scheme.toml says `ptyxis_light_section_accepted = true` (Nordic with Nord: the
-     terminal follows the system light/dark, the rest of the theme stays dark; a deliberate decision).
-The generated palette also carries a titlebar colour; flat built-ins have none (only 7 of the 244 built-ins define one), so a built-in never
-reproduces it. `--check` verifies the declarations in scheme.toml (`ptyxis = "<built-in name>"` must qualify, `ptyxis = "generated"` must have
-no qualifying built-in, `ptyxis_reason` is required) and needs the Ptyxis binary or PTYXIS_BIN.
+Cursor and titlebar are never compared. THRESHOLD marks a "close match" in the table (roles max delta E <= THRESHOLD; about 2.3 is a just
+noticeable difference).
+A dark-only scheme that declares a sectioned built-in shows that built-in's [Light] section under a light system colour scheme; scheme.toml must
+say `ptyxis_light_section_accepted = true` (Nordic with Nord: a deliberate decision).
 """
-import sys, os, re, glob, subprocess, unicodedata
+import sys, os, re, glob, unicodedata
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # python3 -I does not add the script dir
 import schemeroles as sr
 import importlib.util
 HERE = os.path.dirname(os.path.abspath(__file__))
-_s = importlib.util.spec_from_file_location('ptyxis_gen', os.path.join(HERE, 'ptyxis-gen.py'))
-pg = importlib.util.module_from_spec(_s); _s.loader.exec_module(pg)
+_s = importlib.util.spec_from_file_location('ptyxis_ids', os.path.join(HERE, 'ptyxis-ids.py'))
+pids = importlib.util.module_from_spec(_s); _s.loader.exec_module(pids)
 
-THRESHOLD = 3.0    # max CIE76 delta E over the roles; the single definition of "close match"
-NUDGE_MAX = 6.0    # max CIE76 delta E of one listed nudge (a colour moved off its built-in because a contrast check forces it); the single definition of "small"
+THRESHOLD = 3.0    # max CIE76 delta E over the roles; marks a "close match" in the table
+NUDGE_MAX = 6.0    # max CIE76 delta E of one listed nudge (a colour moved off its source because a contrast check forces it); the single definition of "small"
 KEYS = ['Background', 'Foreground'] + ['Color%d' % i for i in range(16)]
 # built-in names that do not start with the scheme title (the Ubuntu terminal palette is Aubergine; Nordic is the Nord palette)
 HINTS = {'aubergine': ['Ubuntu'], 'nordic': ['Nord']}
 TERMINAL_KEYS = {'black': 'Color0', 'white': 'Color7', 'bright_black': 'Color8', 'bright_white': 'Color15',
-                 **{'bright_' + n: 'Color%d' % (i + 9) for i, n in enumerate(pg.NAMES)}}
+                 **{'bright_' + n: 'Color%d' % (i + 9) for i, n in enumerate(sr.NAMES)}}
 
 def norm(s): return re.sub(r'[^a-z0-9]', '', unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower())
 
@@ -82,96 +71,99 @@ def ini(text):
         if '=' in l and not l.startswith('#'): k, v = l.split('=', 1); sec.setdefault(cur, {})[k.strip()] = v.strip()
     return sec
 
-def tool(*a): return subprocess.run([os.path.join(HERE, 'ptyxis-palette.sh'), *a], capture_output=True, text=True, encoding='utf-8')
-
+_cache = {}
 def builtins():
-    r = tool('list')
-    if r.returncode: sys.exit(r.stderr.strip())
-    return [l.split('\t') for l in r.stdout.splitlines() if l]
+    """{id: (Name, sections, text)} of the Ptyxis binary (PTYXIS_BIN)."""
+    key = os.environ.get('PTYXIS_BIN')
+    if key not in _cache: _cache[key] = {i: (n, s, t) for i, n, s, t in pids.builtins()}
+    return _cache[key]
 
-def builtin_set(name, variant):
-    """The colour set of built-in `name` for the variant ('dark'|'light'): its own section, else the flat one."""
-    sec = ini(tool('show', name).stdout)
+def builtin_set(pid, variant):
+    """The colour set of built-in `pid` for the variant ('dark'|'light'): its own section, else the flat one; None when there is none."""
+    if pid not in builtins(): return None
+    sec = ini(builtins()[pid][2])
     for key in (variant.capitalize(), 'Palette'):
         if sec.get(key, {}).get('Color1'): return {k: v.upper() for k, v in sec[key].items()}
     return None
 
-def candidates(scheme, title, names):
+def candidates(scheme, title):
+    """[(id, Name, sections)] of built-ins whose id or Name starts with the scheme title (or a HINT)."""
     stems = [norm(title)] + [norm(h) for h in HINTS.get(scheme, [])]
-    out = []
-    for n, sections in names:
-        if any(norm(n).startswith(s) for s in stems) and n not in [o[0] for o in out]: out.append((n, sections))
-    return out
+    return [(i, n, sec) for i, (n, sec, _) in sorted(builtins().items(), key=lambda kv: kv[1][0]) if any(norm(x).startswith(st) for st in stems for x in (i, n))]
 
 def role_keys(S, variant):
     """The colours scheme.toml defines for the variant (see the header)."""
     T = S[variant].get('terminal', {})
     return ['Background', 'Foreground'] + ['Color%d' % i for i in range(1, 7)] + sorted((TERMINAL_KEYS[k] for k in T if k in TERMINAL_KEYS), key=lambda k: int(k[5:]))
 
-def compare(scheme_dir):
-    """[(variant, builtin, sections, roles max dE, roles worst colour, all18 max dE)] for every variant and candidate built-in."""
-    S, roles, slots = sr.load(scheme_dir)
-    scheme = os.path.basename(os.path.abspath(scheme_dir))
-    names = builtins(); rows = []
-    for slot, variant in slots:
-        if slot == 'light' and variant == 'dark': continue   # dark-only scheme: the light slot is the dark variant
-        mine = pg.slot_colors(S, roles, variant)
-        for n, sections in candidates(scheme, S['title'], names):
-            b = builtin_set(n, variant)
-            if not b: continue
-            d = {k: de(mine[k], b[k]) for k in KEYS if k in b}
-            rk = {k: d[k] for k in role_keys(S, variant) if k in d}
-            rows.append((variant, n, sections, max(rk.values()), max(rk, key=rk.get), max(d.values())))
+def distance(S, roles, variant, pid):
+    """(roles max dE, worst role colour, all18 max dE) of the scheme's `variant` against built-in `pid`, or None when it has no palette for it."""
+    b = builtin_set(pid, variant)
+    if not b: return None
+    mine = sr.slot_colors(S, roles, variant)
+    d = {k: de(mine[k], b[k]) for k in KEYS if k in b}
+    rk = {k: d[k] for k in role_keys(S, variant) if k in d}
+    return max(rk.values()), max(rk, key=rk.get), max(d.values())
+
+def declared(scheme_dir):
+    """[(variant, id, sections, roles max dE, worst, all18)] for the ids the scheme declares: dark -> `ptyxis`, light -> `ptyxis_light` (else `ptyxis`);
+    a dark-only scheme has the dark row only."""
+    S, roles, _ = sr.load(scheme_dir); dk, lt = sr.ptyxis_ids(S); rows = []
+    for variant, pid in (('dark', dk), ('light', lt)):
+        if variant not in S or pid not in builtins(): continue
+        dist = distance(S, roles, variant, pid)
+        if dist: rows.append((variant, pid, builtins()[pid][1], *dist))
     return rows
 
-def qualifying(scheme_dir):
-    """Built-in names that qualify for the scheme under rules 1-3 of the header."""
+def compare(scheme_dir):
+    """[(variant, id, Name, sections, roles max dE, worst, all18)] for every variant and candidate built-in."""
     S, roles, slots = sr.load(scheme_dir)
-    variants = [v for v in ('dark', 'light') if v in S]
-    rows = compare(scheme_dir); out = []
-    for n, sections in {(r[1], r[2]) for r in rows}:
-        mine = [r for r in rows if r[1] == n]
-        if sorted(r[0] for r in mine) != sorted(variants) or any(r[3] > THRESHOLD for r in mine): continue
-        if len(variants) == 2 and sections != 'Light,Dark': continue
-        if len(variants) == 1 and sections != 'flat' and not S.get('ptyxis_light_section_accepted'): continue   # a sectioned built-in shows its [Light] section under a light system scheme: only when scheme.toml accepts that
-        out.append(n)
-    return sorted(out)
+    scheme = os.path.basename(os.path.abspath(scheme_dir)); rows = []
+    for slot, variant in slots:
+        if slot == 'light' and variant == 'dark': continue   # dark-only scheme: the light slot is the dark variant
+        for i, n, sec in candidates(scheme, S['title']):
+            dist = distance(S, roles, variant, i)
+            if dist: rows.append((variant, i, n, sec, *dist))
+    return rows
+
+def id_problems(scheme_dir):
+    """Problems with the `ptyxis` / `ptyxis_light` / `ptyxis_reason` declarations of one scheme (see the header); [] when fine."""
+    S, _, _ = sr.load(scheme_dir); scheme = os.path.basename(os.path.abspath(scheme_dir)); bad = []
+    dk, lt = sr.ptyxis_ids(S); two = 'light' in S
+    if not S.get('ptyxis_reason', '').strip(): bad.append('%s: ptyxis_reason missing' % scheme)
+    for key, pid in (('ptyxis', dk), ('ptyxis_light', S.get('ptyxis_light'))):
+        if pid is not None and pid not in builtins():
+            alt = [i for i in builtins() if i.lower() == pid.lower()]
+            bad.append('%s: %s = "%s" is not a Ptyxis built-in id%s (Ptyxis would fall back to its default palette)' % (scheme, key, pid, '; did you mean "%s"? ids are case-sensitive' % alt[0] if alt else ''))
+    if bad: return bad
+    if S.get('ptyxis_light') is not None:
+        if not two: bad.append('%s: ptyxis_light is set but the scheme has no light variant' % scheme)
+        if builtins()[dk][1] != 'flat': bad.append('%s: ptyxis_light is set but "%s" has [Light] and [Dark] sections and covers both modes' % (scheme, dk))
+        if builtins()[lt][1] != 'flat': bad.append('%s: ptyxis_light "%s" must be a flat built-in' % (scheme, lt))
+    if not two and builtins()[dk][1] != 'flat' and not S.get('ptyxis_light_section_accepted'):
+        bad.append('%s: a sectioned built-in ("%s") on a dark-only scheme shows its [Light] section under a light system scheme; set ptyxis_light_section_accepted = true to accept that' % (scheme, dk))
+    return bad
 
 def terminal_problems(scheme_dir):
     """Problems with the `source` / `no_builtin` / nudge declarations of one scheme (see the header); [] when fine."""
     S, roles, _ = sr.load(scheme_dir)
     scheme = os.path.basename(os.path.abspath(scheme_dir)); bad = []
+    dk, lt = sr.ptyxis_ids(S)
     for v in [v for v in ('dark', 'light') if v in S]:
         T = S[v].get('terminal', {}); N = S[v].get('nudge', {}); src = str(T.get('source', '')).strip(); nob = str(T.get('no_builtin', '')).strip()
         who = '%s %s' % (scheme, v)
-        if bool(src) == bool(nob): bad.append('%s: [%s.terminal] needs exactly one of source = "<built-in>" or no_builtin = "<why>"' % (who, v)); continue
+        if bool(src) == bool(nob): bad.append('%s: [%s.terminal] needs exactly one of source = "<built-in id>" or no_builtin = "<why>"' % (who, v)); continue
         if nob:
             if N: bad.append('%s: nudges listed but the variant has no built-in source' % who)
             continue
-        mine = pg.slot_colors(S, roles, v)
-        if src.startswith('official:'):
-            # an official source wins over the built-in: the built-in must be named with its measured distance, and a scheme that differs from it generates its palette
-            bd = T.get('builtin_differs')
-            if not isinstance(bd, dict) or not bd.get('name') or len(str(bd.get('note', '')).strip()) < 10:
-                bad.append('%s: an official source needs builtin_differs = { name, de, note } (the built-in it differs from, the delta E, why official wins)' % who); continue
-            bb = builtin_set(bd['name'], v)
-            if not bb: bad.append('%s: builtin_differs names "%s", which is not a Ptyxis built-in with a %s palette' % (who, bd['name'], v)); continue
-            d = max(de(mine[k], bb[k]) for k in KEYS if k in bb)
-            if abs(bd.get('de', -1) - d) > 0.1: bad.append('%s: builtin_differs de %s is not the computed %.1f' % (who, bd.get('de'), d))
-            if d <= THRESHOLD: bad.append('%s: official source equals the built-in "%s" within THRESHOLD (%.1f dE): use the built-in as source' % (who, bd['name'], d))
-            if sr.ptyxis_choice(S) is not None: bad.append('%s: differs from the built-in, so `ptyxis = "generated"` is required' % who)
-            for k, n in N.items():   # nudges are measured against the official value (`from`), which only scheme.toml knows
-                if k not in KEYS or k not in mine: bad.append('%s: nudge key %s unknown' % (who, k)); continue
-                if n.get('to', '').upper() != mine[k]: bad.append('%s: nudge %s: to %s is not the value in use %s' % (who, k, n.get('to'), mine[k]))
-                nd = de(n.get('from', '#000000'), mine[k])
-                if abs(n.get('de', -1) - nd) > 0.1: bad.append('%s: nudge %s: de %s is not the computed %.2f' % (who, k, n.get('de'), nd))
-                if nd > NUDGE_MAX: bad.append('%s: nudge %s is %.2f dE, above NUDGE_MAX %.1f' % (who, k, nd, NUDGE_MAX))
-                if len(str(n.get('why', '')).strip()) < 10: bad.append('%s: nudge %s has no reason' % (who, k))
-            continue
+        want = dk if v == 'dark' else lt
+        if src != want: bad.append('%s: source "%s" is not the id declared for this variant ("%s")' % (who, src, want))
+        if 'builtin_differs' in T: bad.append('%s: builtin_differs is gone: the built-in is the source of truth' % who)
         b = builtin_set(src, v)
-        if not b: bad.append('%s: source "%s" is not a Ptyxis built-in with a %s palette' % (who, src, v)); continue
+        if not b: bad.append('%s: source "%s" is not a Ptyxis built-in id with a %s palette' % (who, src, v)); continue
+        mine = sr.slot_colors(S, roles, v)
         for k in KEYS:
-            if k not in b or k not in mine: bad.append('%s: %s missing' % (who, k)); continue
+            if k not in b or k not in mine: continue
             d = de(mine[k], b[k]); n = N.get(k)
             if d > 0.001:
                 if not n: bad.append('%s: %s %s differs from %s %s (dE %.2f) and is not listed in [%s.nudge]' % (who, k, mine[k], src, b[k], d, v)); continue
@@ -190,21 +182,26 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
     schemes = args or sorted(os.path.basename(os.path.dirname(p)) for p in glob.glob(os.path.join(root, '*', 'scheme.toml')))
     path = lambda s: s if os.path.isdir(s) else os.path.join(root, s)
+    sys.stdout.reconfigure(encoding='utf-8'); sys.stderr.reconfigure(encoding='utf-8')
     if '--check' in sys.argv:
         bad = []
         for s in schemes:
-            S, _, _ = sr.load(path(s)); choice = sr.ptyxis_choice(S); q = qualifying(path(s))
-            if choice is None and q: bad.append('%s: declared generated but %s qualifies' % (s, ', '.join(q)))
-            if choice is not None and choice not in q: bad.append('%s: declared built-in "%s" does not qualify (qualifying: %s)' % (s, choice, ', '.join(q) or 'none'))
-            if not S.get('ptyxis_reason', '').strip(): bad.append('%s: ptyxis_reason missing' % s)
-            bad += terminal_problems(path(s))
+            p = path(s); prob = id_problems(p); bad += prob + terminal_problems(p)
+            if not prob:
+                Sx, _, _ = sr.load(p)
+                for v, pid, sec, mx, w, a in declared(p):
+                    if Sx[v].get('terminal', {}).get('no_builtin'):
+                        print('info: %s %s has no built-in of its own; the terminal shows "%s" (%.1f dE from this variant)' % (s, v, pid, mx), file=sys.stderr); continue
+                    print('info: %s %s -> built-in id "%s" (%s): roles max dE %.2f (%s), all18 %.2f' % (s, v, pid, sec, mx, w, a), file=sys.stderr)
         print('\n'.join(bad)); sys.exit(1 if bad else 0)
-    print('close match = roles max delta E (CIE76) <= %.1f\n' % THRESHOLD)
-    print('%-16s %-7s %-32s %-11s %7s %-9s %7s' % ('scheme', 'variant', 'built-in', 'sections', 'roles', 'worst', 'all18'))
+    print('close match = roles max delta E (CIE76) <= %.1f; "declared" marks the id scheme.toml names\n' % THRESHOLD)
+    print('%-16s %-7s %-32s %-26s %-11s %7s %-9s %7s' % ('scheme', 'variant', 'id', 'Name', 'sections', 'roles', 'worst', 'all18'))
     for s in schemes:
+        S, _, _ = sr.load(path(s)); dk, lt = sr.ptyxis_ids(S)
         rows = compare(path(s))
         if not rows: print('%-16s %-7s %s' % (s, '-', '(no built-in of that name)')); continue
-        for v, n, sec, mx, w, a in rows:
-            print('%-16s %-7s %-32s %-11s %7.2f %-9s %7.2f%s' % (s, v, n, sec, mx, w, a, '   close' if mx <= THRESHOLD else ''))
+        for v, i, n, sec, mx, w, a in rows:
+            mark = 'declared' if i == (dk if v == 'dark' else lt) else ('close' if mx <= THRESHOLD else '')
+            print('%-16s %-7s %-32s %-26s %-11s %7.2f %-9s %7.2f   %s' % (s, v, i, n, sec, mx, w, a, mark))
 
 if __name__ == '__main__': main()

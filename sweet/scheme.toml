@@ -1,32 +1,21 @@
 # SPDX-License-Identifier: MIT
 # Sweet (EliverLara/Sweet), dark only. Only hex values are used; the repository's SCSS/CSS (GPL-3.0) is not used in any way.
-# VERIFIED 2026-11-07 against the raw gtk-3.0/gtk-dark.css of EliverLara/Sweet: window #161925, view #181b28, foreground #C3C7D1,
-# raised surface #292F45, selection teal #00D3A7. The accents are the Sweet palette (red #ED254E, green #71F79F, yellow #F9DC5C,
-# blue #7CB7FF, purple #C74DED, cyan #00C1E4, orange #FF6A00) = Ptyxis "Sweet Eliverlara" Color1-6 (the closest to EliverLara's Sweet;
-# Ptyxis' "Sweet Terminal" is a different scheme: #222235, yellow #9700BE).
-# Ladder (2026-11-07): bg_deep = the built-in's #282c34 and every step above it DERIVED (fixed rules). EliverLara's own greys (window #161925,
-# view #181b28, surface #292f45, all darker than #282c34) are no longer used. Sweet's selection teal #00D3A7 is not one of the six (nearest: cyan); purple stays the default.
-# Default accent magenta = Sweet's primary purple #C74DED (Kevin's brief).
-# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
-# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
-# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
-# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
-# Source: official (EliverLara/Sweet gtk-dark.css): window #161925 (bg_deep), view #181b28, surface #292f45, fg #c3c7d1, the accents equal the built-in's. Only the background differs from Sweet
-# Eliverlara (#282c34). The built-in's white and bright white are used; its black and bright black equal ITS background (#282c34), which would be nearly invisible on #161925, so they are skipped.
+# The colours are the Ptyxis built-in "Sweet Eliverlara" (a Gogh port, https://github.com/Gogh-Co/Gogh, per its header): background #282c34, foreground #c3c7d1,
+# accents red #ed254e, green #71f79f, yellow #f9dc5c, blue #7cb7ff, magenta #c74ded, cyan #00c1e4; "Sweet Terminal" is a different scheme (155 dE away).
+# EliverLara's own greys (window #161925, view #181b28, surface #292f45) are no longer used: every step above bg_deep is DERIVED (fixed rules).
+# Orange #FF6A00 is Sweet's own (the seventh accent). Default accent magenta = Sweet's primary purple #C74DED (Kevin's brief).
 title = "Sweet"
 gtk_name = "Sweet"
 shell_name = "Sweet-Shell"
 credit = "Sweet by EliverLara (palette values only; SCSS GPL-3.0 not used)"
-ptyxis = "generated"
-ptyxis_reason = "the official EliverLara background #161925 differs from the Sweet Eliverlara built-in's #282c34 (the accents and foreground are equal); a built-in cannot carry it, so the palette is generated"
+ptyxis = "Sweet Eliverlara"
+ptyxis_reason = "dark only; Sweet Eliverlara (9.6 dE background) beats Sweet Terminal (155 dE)."
 default_accent = "magenta"
 
 [dark]
-bg_deep = "#161925"
-bg = "#181b28"
-surface = "#292f45"
+bg_deep = "#282c34"
 fg = "#c3c7d1"
-selection = "#00d3a7"
+selection = "#474b53"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
 red = "#ed254e"
 orange = "#ff6a00"
 yellow = "#f9dc5c"
@@ -46,7 +35,8 @@ magenta = "#c74ded"
 cyan = "#00c1e4"
 
 [dark.terminal]
-source = "official: EliverLara/Sweet gtk-3.0/gtk-dark.css, raw file, verified 2026-11-07"
-builtin_differs = { name = "Sweet Eliverlara", de = 26.3, note = "EliverLara's own greys (window #161925, view #181b28, surface #292f45) are official; the built-in's background is #282c34" }
-white = "#dcdfe4"   # Color7 (the built-in's)
-bright_white = "#dcdfe4"   # Color15 (the built-in's)
+source = "Sweet Eliverlara"   # Ptyxis built-in id
+black = "#282c34"   # Color0
+white = "#dcdfe4"   # Color7
+bright_black = "#282c34"   # Color8
+bright_white = "#dcdfe4"   # Color15

@@ -4,17 +4,16 @@
 # ANSI six = Ptyxis "Everforest" Color1-6 ([Dark] and [Light]): red green yellow blue, purple as magenta, aqua as cyan.
 # Default accent green (Everforest's primary). Light accent_fg is Everforest dark bg_dim #232a2e: the light accents are
 # too bright for cream text (green #8da101 would give 2.7:1).
-# SOURCE ORDER (2026-11-07): official source first, the Ptyxis built-in of the same name second, invented last. Each variant's [<variant>.terminal] says which
-# it uses: `source = "official: <repo/url, date verified>"` (with `builtin_differs` where the official palette differs from the built-in: name, max delta E, why
-# official wins) or `source = "<built-in name>"` (bg_deep, fg, the six accents and the real black, white and brights ARE the built-in's) or `no_builtin`. A
-# colour that still differs from its source is a listed nudge ([<variant>.nudge], with the reason). Where an older note above gives other values, THIS block wins.
-# Source: Everforest, [Dark] and [Light] sections. The values already equalled it; the terminal tables now carry its black, white and brights too.
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-in "Everforest", sectioned ([Dark] and [Light] give the two variants; Ptyxis's own palette).
 title = "Everforest"
 gtk_name = "Everforest"
 shell_name = "Everforest-Shell"
 credit = "Everforest by sainnhe (MIT)"
 ptyxis = "Everforest"
-ptyxis_reason = "the Ptyxis built-in has [Light] and [Dark] sections (follows the system) and is the source of both variants: its roles, black, white and brights equal ours (0.00 dE, no nudges); only the titlebar colour differs, which a built-in never defines"
+ptyxis_reason = "the built-in has [Light] and [Dark] sections and covers both modes."
 default_accent = "green"
 
 [dark]
@@ -70,32 +69,28 @@ blue = "#3a94c5"
 magenta = "#df69ba"
 cyan = "#35a77c"
 
-# Terminal palette: the Ptyxis built-in named in `source` is the starting point and the source of truth for the variant (the terminal comes first,
-# the toolkit themes follow). Background and Foreground are bg_deep and fg above, the six accents are [<variant>.ansi]; the real black, white and brights
-# are below. A colour that differs from its source is listed in [<variant>.nudge] with the reason (tools/ptyxis-compare.py --check enforces this).
-
 [dark.terminal]
-source = "Everforest"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Dark] section)
+source = "Everforest"   # Ptyxis built-in id (its [Dark] section)
 black = "#4b565c"   # Color0
 white = "#d3c6aa"   # Color7
 bright_black = "#5c6a72"   # Color8
+bright_white = "#dfddc8"   # Color15
 bright_red = "#f85552"   # Color9
 bright_green = "#8da101"   # Color10
 bright_yellow = "#dfa000"   # Color11
 bright_blue = "#3a94c5"   # Color12
 bright_magenta = "#df69ba"   # Color13
 bright_cyan = "#35a77c"   # Color14
-bright_white = "#dfddc8"   # Color15
 
 [light.terminal]
-source = "Everforest"   # Ptyxis built-in, checked 2026-11-07 with tools/ptyxis-palette.sh (its [Light] section)
+source = "Everforest"   # Ptyxis built-in id (its [Light] section)
 black = "#5c6a72"   # Color0
 white = "#dfddc8"   # Color7
 bright_black = "#4b565c"   # Color8
+bright_white = "#d3c6aa"   # Color15
 bright_red = "#e67e80"   # Color9
 bright_green = "#a7c080"   # Color10
 bright_yellow = "#dbbc7f"   # Color11
 bright_blue = "#7fbbb3"   # Color12
 bright_magenta = "#d699b6"   # Color13
 bright_cyan = "#83c092"   # Color14
-bright_white = "#d3c6aa"   # Color15
