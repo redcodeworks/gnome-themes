@@ -180,7 +180,8 @@ mkold() { printf '[Palette]\nName=Old (GNOME Themes)\n# gnome-themes: rose-pine\
 printf '[Palette]\nName=mine\n# see gnome-themes for the idea\n' > "$PTYXIS_PALETTES/catppuccin-dynamic.palette"
 for verb in install-themes update-themes switch-theme remove-themes; do
     THEMES_DEST=$PD PTYXIS_BIN="$FIX" just install-themes everforest </dev/null >/dev/null 2>&1; mkold
-    out=$(THEMES_DEST=$PD PTYXIS_BIN="$FIX" just $verb $([ $verb = update-themes ] || echo everforest) </dev/null 2>&1)
+    vargs=(); [ "$verb" = update-themes ] || vargs=(everforest)
+    out=$(THEMES_DEST=$PD PTYXIS_BIN="$FIX" just "$verb" "${vargs[@]}" </dev/null 2>&1)
     n=$(printf '%s\n' "$out" | grep -c 'Removed old generated Ptyxis palette')
     [ ! -e "$PTYXIS_PALETTES/gnome-themes-rose-pine.palette" ] && [ ! -e "$PTYXIS_PALETTES/gnome-themes-sweet.palette" ] && [ "$n" = 2 ] && [ -f "$PTYXIS_PALETTES/catppuccin-dynamic.palette" ] && grep -q mine "$PTYXIS_PALETTES/catppuccin-dynamic.palette" && chk ok "$verb deletes the old marked palette files (one line each) and keeps the unmarked one" || chk fail "$verb palette cleanup ($n lines; $(ls "$PTYXIS_PALETTES" | tr '\n' ' '))"
 done
