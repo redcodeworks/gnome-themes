@@ -59,7 +59,7 @@ replaced or removed after you confirm.
 | `aubergine` | dark | red green yellow blue magenta cyan orange (the Ubuntu terminal look) |
 
 Icon sets: Papirus, Gruvbox Plus, Zafiro, candy, Tela and Fluent (sources in `tools/icon-sources.conf`).
-`switch-theme` also selects the matching Ptyxis palette and the Text Editor colour scheme.
+`switch-theme` also selects the matching Ptyxis built-in palette (the light or dark one, by the system setting, for schemes that have two) and the Text Editor colour scheme.
 
 ## Flatpak apps
 

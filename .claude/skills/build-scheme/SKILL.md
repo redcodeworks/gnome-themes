@@ -1,61 +1,50 @@
 ---
 name: build-scheme
-description: Add a new colour scheme (a new top-level theme directory) to gnome-themes. Starts from a Ptyxis built-in palette, falls back to researching the scheme's official palette, then hands off to the deterministic generators. Use when asked to add, port or build a scheme or theme from a colour palette.
+description: Add a new colour scheme (a new top-level theme directory) to gnome-themes. Starts from a Ptyxis built-in palette (by id), then hands off to the deterministic generators. Use when asked to add, port or build a scheme or theme from a colour palette.
 ---
 
 # Add a scheme to gnome-themes
 
-A scheme is a top-level directory with one `scheme.toml`; everything else (GTK 3/4, Shell, libadwaita file, accent maps, Ptyxis palette, GtkSourceView styles) is generated. Your job is only the decisions about colours; the scripts do the rest. Read `CLAUDE.md` first (colour values only, generated files are never hand-edited, structure check stays at 0 differing lines).
+A scheme is a top-level directory with one `scheme.toml`; everything else (GTK 3/4, Shell, libadwaita file, accent maps, GtkSourceView styles; the terminal is a Ptyxis built-in, nothing is generated for it) is generated. Your job is only the decisions about colours; the scripts do the rest. Read `CLAUDE.md` first (colour values only, generated files are never hand-edited, structure check stays at 0 differing lines).
 
 ## 1. Decide what you are building
 
 - The scheme's directory name (lowercase, hyphens: `tokyo-night`), its display title and whether it has a dark variant, a light variant or both (a dark-only scheme fills the GTK light slot from the dark values; do not invent a light variant).
 - Check `just list-themes` and the existing `*/scheme.toml` for an existing scheme with that name.
 
-## 2. Find the palette (in this order)
+## 2. Find the palette
 
-Source order: official source first, Ptyxis built-in second, invented last. Where research (step b) finds an official palette, its values win over the built-in; record `source = "official: <repo/url, date verified>"` and `builtin_differs = { name, de, note }` and declare `ptyxis = "generated"`.
+Principle: the Ptyxis built-in palette, by ID, is the source of truth for every variant that has one (no "official source" override, no generated palette). Ptyxis keys a profile's palette by id (the resource file name, case-sensitive: `nord`, `Gruvbox Material`), never by display Name.
 
-a. **Ptyxis built-in palettes (the starting point; the source where there is no official one).** Without an official source the built-in of the same name wins for the scheme's background, foreground, six accents, blacks and brights: where your scheme and the built-in differ, your scheme is wrong. Pick the built-in that corresponds to each variant (mode-split families take their own, e.g. Rosé Pine / Rosé Pine Dawn; sectioned ones their [Light] and [Dark]) and say why in `scheme.toml` when several share a family. A variant with no built-in keeps researched values and says `no_builtin`. Deviate only by a listed nudge (below). `tools/ptyxis-palette.sh list` shows the names and their sections (`Light,Dark` or `flat`); `tools/ptyxis-palette.sh show "<name>"` prints one. Match by name, including light and dark variants (some schemes have one palette with `[Light]`/`[Dark]` sections, others two flat palettes such as "Catppuccin Latte" and "Catppuccin Mocha"). Many built-ins are Gogh ports: treat them as a starting point, not as the scheme's official values.
+a. **Pick the built-in id per variant.** `tools/ptyxis-palette.sh list` prints `<id> <Name> <sections>` (`Light,Dark` or `flat`); `show "<id>"` prints one (`PTYXIS_BIN` overrides the binary). Mode-split families take their own flat palettes (`ptyxis = "Rosé Pine"` and `ptyxis_light = "Rosé Pine Dawn"`; switch-theme picks one by the system colour scheme); a sectioned built-in (Light and Dark in one palette) needs only `ptyxis`; where only a dark built-in exists the light variant says `no_builtin` and the dark built-in serves both modes. Several ids in one family (`solarized` vs `Solarized`, `Fairy Floss` vs `Fairy Floss Dark`): compare with `python3 -I tools/ptyxis-compare.py <scheme>` (delta E per candidate) and give the reason in `ptyxis_reason`. Many built-ins are Gogh ports (their header comment says so): credit them accordingly.
 
-b. **Research** when no built-in matches (or to verify one): find the scheme's official specification or repository and take hex values from the raw files, not from screenshots or summaries. Record the licence and the attribution text that licence requires, and which values were verified against the source and which were not. A session without web tools must not guess: return `Needs from hub: palette research for <scheme>` (the official repo URL if known, the variants wanted) and stop.
+b. **Research only for what the built-in cannot give** (a light variant that has none, licence and credit text of the project the theme follows). A session without web tools must not guess: return `Needs from hub: research for <scheme>` and stop.
 
-c. **Never invent colours silently.** If the scheme has no orange, no surface steps, no light variant and so on, derived or invented values are allowed only when marked as such in `scheme.toml` comments and in `NOTICE` (see `fairy-floss/scheme.toml` for the pattern: a header that separates "from the source", "derived by the fixed rules" and "invented").
+c. **Never invent colours silently.** If the scheme has no orange, no surface steps, no light variant and so on, derived or invented values are allowed only when marked as such in `scheme.toml` comments and in `NOTICE` (see `fairy-floss/scheme.toml`).
 
 ## 3. Draft with the script
 
 ```
-just new-scheme <scheme-dir> "<ptyxis palette name or file>" ["<light palette>"]
-# = python3 -I tools/scheme-from-ptyxis.py <scheme-dir> <palette> [<light-palette>]
+just new-scheme <scheme-dir> "<ptyxis id>" ["<light id>"]
+# = python3 -I tools/scheme-from-ptyxis.py <scheme-dir> <id> [<light-id>]
 ```
 
-It writes a DRAFT `<scheme-dir>/scheme.toml` (it refuses to overwrite an existing scheme): Color1-6 become the six accents per variant, Foreground/Background become `fg`/`bg_deep`, a black, white, brights or cursor that differ from the generator defaults go to `[<variant>.terminal]` with the palette as source, title/gtk_name/shell_name come from the directory name. It prints a `# TODO` list; resolve each item in the file and delete the TODO lines:
+It writes a DRAFT `<scheme-dir>/scheme.toml` (it refuses to overwrite an existing scheme): Color1-6 become the six accents per variant, Foreground/Background become `fg`/`bg_deep`, black, white, brights or cursor that differ from the defaults go to `[<variant>.terminal]` with `source = "<id>"`, and `ptyxis` / `ptyxis_light` carry the ids. title/gtk_name/shell_name come from the directory name. It prints a `# TODO` list; resolve each item in the file and delete the TODO lines:
 
-- credit line, licence and provenance notes (verified vs invented),
+- credit line, licence and provenance notes (the colours are Ptyxis's palette of that name; credit the project that inspired the theme),
+- `ptyxis_reason`: one line on which built-in and why,
 - the orange role (derived by default; a scheme's own orange also needs a seventh `orange` entry in `[<variant>.ansi]`, otherwise there is none),
 - the surface ladder (`bg`, `surface`, `surface_high`) and `fg_dim`/`comment`/`selection` when the scheme defines them,
 - `accent_fg` overrides where an accent fails 4.5:1 with the default ink,
-- `default_accent` with a one-line reason (the draft proposes the best-contrast accent; the scheme's signature colour is usually the better choice),
-- dark-only or not,
-- `ptyxis`: the draft says `ptyxis = "generated"` with a TODO reason; step 4 decides it.
+- `default_accent` with a one-line reason,
+- dark-only or not.
 
-Also replace the Ptyxis-derived values with the official ones wherever the research (step 2b) found different hex values; the Ptyxis copy is often slightly off.
+## 4. Check and build with the existing pipeline
 
-## 4. Terminal palette: built-in or generated, then build with the existing pipeline
-
-Every variant needs `[<variant>.terminal]` with `source = "<built-in name>"` (or `source = "official: ..."` plus `builtin_differs`, see step 2) (plus the built-in's black, white and brights as `black`, `white`, `bright_black`, `bright_red` ... `bright_white`) or `no_builtin = "<why>"`. A colour that must differ from its source because a contrast check forces it (selftest: fg on the window under 4.5:1) is a nudge, recorded in the scheme as `[<variant>.nudge]` / `Foreground = { from = "<built-in>", to = "<ours>", de = <delta E>, why = "<reason>" }`; keep it small (NUDGE_MAX in `tools/ptyxis-compare.py`). `python3 -I tools/ptyxis-compare.py --check <scheme>` fails on an unlisted difference from the source.
-
-Do not generate a Ptyxis palette that duplicates a built-in. Once the scheme's colours are final, run `python3 -I tools/ptyxis-compare.py <scheme>` (needs the Ptyxis binary or `PTYXIS_BIN`; the table lists the same-named built-ins with a colour distance per variant). A built-in qualifies by the rules in that script's header (close = within its single THRESHOLD for every variant; it must have `[Light]`/`[Dark]` sections when the scheme has two variants, because one Ptyxis profile holds one palette name and two flat built-ins cannot follow the system light/dark setting; a flat one for a dark-only scheme). Then set in `scheme.toml`, next to `credit`:
+Every variant needs `[<variant>.terminal]` with `source = "<built-in id>"` (the id it declares) plus the built-in's black, white and brights, or `no_builtin = "<why>"`. A colour that must differ from the built-in because a contrast check forces it (selftest: fg on the window under 4.5:1) is a nudge, recorded as `[<variant>.nudge]` / `Foreground = { from = "<built-in>", to = "<ours>", de = <delta E>, why = "<reason>" }`; keep it small (NUDGE_MAX in `tools/ptyxis-compare.py`). `python3 -I tools/ptyxis-compare.py --check <scheme>` (needs the Ptyxis binary or `PTYXIS_BIN`) fails on an id that does not exist, a source that is not the declared id, an unlisted difference from the built-in or a bad nudge.
 
 ```
-ptyxis = "<built-in name>"      # or "generated"
-ptyxis_reason = "<one line: the numbers that decided it>"
-```
-
-`python3 -I tools/ptyxis-compare.py --check <scheme>` fails when the declaration contradicts the data. A generated scheme's palette is written by `just generate`; for a built-in nothing is written.
-
-```
-just generate <scheme>          # palette.toml, GTK3/GTK4/Shell, libadwaita, accent maps, Ptyxis palette (generated schemes only), GtkSourceView styles
+just generate <scheme>          # palette.toml, GTK3/GTK4/Shell, libadwaita, accent maps, GtkSourceView styles
 just test <scheme>              # contrast, structure, parse, accent maps, probes
 tools/test.sh <scheme>          # optional developer tool: whole suite in a container (tests the COMMITTED state); not used by agents, CI on the pull request is the test
 ```

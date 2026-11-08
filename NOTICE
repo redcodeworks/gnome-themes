@@ -29,31 +29,32 @@ Palettes
   Solarized   Solarized (https://github.com/altercation/solarized). MIT License, Copyright (c) 2011 Ethan Schoonover.
   Everforest  Everforest (https://github.com/sainnhe/everforest). MIT License, Copyright (c) 2019 sainnhe.
   Fairy Floss Fairy Floss by sailorhg (https://github.com/sailorhg/fairyfloss). The repository has NO licence (all rights
-              reserved by default), so only a few plain hex values are used as facts (background #5A5475, foreground #F8F8F2, pink,
-              lavender, mint, coral, yellow) and no file of it is copied. The original is a thin syntax theme: the surface ladder,
-              orange, blue and cyan accents are INVENTED or DERIVED here, and the other accents were picked from the tmTheme and the
-              Ptyxis "Fairy Floss" palette; fairy-floss/scheme.toml says which is which. If the author objects, the scheme goes.
-  Material    Material Theme by Mattia Astorino, Sublime Text port (https://github.com/SublimeText/material-theme), Darker and
-              Lighter. MIT License, Copyright (c) 2016 Mattia Astorino. The official Material Theme for VS Code is a commercial
+              reserved by default), so no file or text of it is used: the colours are the plain hex values of the Ptyxis built-in
+              "Fairy Floss Dark" (Ptyxis generates it from Gogh, https://github.com/Gogh-Co/Gogh). The surface ladder and orange are
+              DERIVED here; fairy-floss/scheme.toml says which is which. If the author objects, the scheme goes.
+  Material    Material Theme by Mattia Astorino, Sublime Text port (https://github.com/SublimeText/material-theme). MIT License,
+              Copyright (c) 2016 Mattia Astorino. The dark terminal and accent colours are the Ptyxis built-in "Material" (generated
+              from Gogh); the light variant keeps the Lighter tmTheme values. The official Material Theme for VS Code is a commercial
               product and was not used.
-  Monokai     Monokai by Wimer Hazenberg (https://monokai.nl), the classic palette, taken as plain hex values from Base16 Monokai in
-              tinted-theming/schemes (https://github.com/tinted-theming/schemes, MIT, Copyright (c) 2022 Tinted Theming; the original
-              Monokai itself has no licence of its own). Monokai Pro (monokai.pro) is proprietary and is deliberately NOT used.
-  Rose Pine   Rose Pine Main and Dawn (https://github.com/rose-pine/rose-pine-palette). MIT License, Copyright (c) mvllow; the terminal
-              mapping is from rose-pine/alacritty (MIT, Copyright (c) Rose Pine). The Dawn text colour is #575279 (alacritty port, site);
-              palette.json lists #464261, see rose-pine/scheme.toml.
-  Sweet       Colour values of Sweet by EliverLara (https://github.com/EliverLara/Sweet, GPL-3.0). None of its SCSS, CSS or assets is
-              used, only plain hex values (window, view, text, accents), as for Nordic.
+  Monokai     Monokai by Wimer Hazenberg (https://monokai.nl), the classic palette, as plain hex values of the Ptyxis built-in
+              "Monokai Dark" (generated from Gogh); the ladder and comment tones follow Base16 Monokai in tinted-theming/schemes
+              (https://github.com/tinted-theming/schemes, MIT, Copyright (c) 2022 Tinted Theming; the original Monokai itself has no
+              licence of its own). Monokai Pro (monokai.pro) is proprietary and is deliberately NOT used.
+  Rose Pine   Rose Pine Main and Dawn (https://github.com/rose-pine/rose-pine-palette). MIT License, Copyright (c) mvllow; the
+              terminal and accent colours are the Ptyxis built-ins "Rosé Pine" and "Rosé Pine Dawn" (generated from Gogh); the ladder
+              roles are from the Rose Pine palette, see rose-pine/scheme.toml.
+  Sweet       Colour values of Sweet by EliverLara (https://github.com/EliverLara/Sweet, GPL-3.0), taken as plain hex values from the
+              Ptyxis built-in "Sweet Eliverlara" (generated from Gogh). None of its SCSS, CSS or assets is used, as for Nordic.
   Aubergine   The Ubuntu terminal colours: Ubuntu brand colours (https://design.ubuntu.com/brand/colour-palette) and the Ubuntu terminal
               palette (Tango ANSI colours, as shipped in the Ptyxis "Ubuntu" palette, generated from Gogh). Only hex values are used; no
               logos, fonts or artwork. "Ubuntu" and its logos are Canonical trademarks (https://ubuntu.com/legal/intellectual-property-policy),
               which is why the theme is called Aubergine. The licence of the Tango palette itself was not verified.
-  Terminal accents (the six per scheme, plus orange as a seventh accent, taken from the scheme's own orange role colour) follow the Ptyxis built-in palettes of the same names, which Ptyxis generates
-  from Gogh (https://github.com/Gogh-Co/Gogh, MIT); they match each scheme's own terminal tables, see the scheme.toml comments.
-  Exceptions (each documented in its scheme.toml): Fairy Floss (partly invented), Material (the tmTheme accents; Ptyxis' Material is a
-  different scheme), Monokai (cyan from Base16) and Rose Pine (the official Rose Pine terminal mapping, no Ptyxis palette).
-  Orange: every scheme has the seventh accent except Rose Pine (its upstream palette has no orange; the orange role is a derived
-  gold/love mix) and Fairy Floss (orange is invented here). Aubergine is dark only (Ubuntu orange #E95420).
+  Terminal colours: every scheme takes bg_deep, fg, the six accents and the black, white and brights from the Ptyxis built-in palette of
+  the same name (by id; Most carry a Ptyxis header saying they were generated from Gogh, https://github.com/Gogh-Co/Gogh, MIT; Tokyo Night Day says
+  folke/tokyonight.nvim extras; the sectioned nord, dracula, solarized and Everforest carry no origin header); the terminal always shows that built-in. Where a built-in has no light variant (Gruvbox
+  Material, Material) the light variant keeps its own values and the dark built-in serves both modes. A foreground that fails the contrast
+  rule is a listed nudge in scheme.toml (Solarized, Tokyo Night Day). Orange (a seventh accent) is each scheme's own orange role colour,
+  except Rose Pine (derived gold/love mix), Fairy Floss (derived) and Aubergine (Ubuntu orange #E95420).
   The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of
   each project.
 

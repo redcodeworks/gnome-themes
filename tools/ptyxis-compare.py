@@ -13,17 +13,18 @@ the system colour scheme); a built-in with [Light] and [Dark] sections needs onl
 the dark one for both modes (`ptyxis_reason` says so). `--check` verifies that every declared id exists in the Ptyxis binary (ids are
 case-sensitive: `solarized` and `Solarized` are two palettes), that `ptyxis_light` is only used where it makes sense, and `ptyxis_reason` is set.
 
-PRINCIPLE (source order): an OFFICIAL source (the scheme's own repo, tmTheme, terminal port) comes first, the Ptyxis built-in second, invented
-values last. Every variant says where it comes from, in its [<variant>.terminal] table: `source = "<built-in id>"` (for a built-in with [Light]
-and [Dark] sections the section of the variant is used, for two flat built-ins each variant names its own), `source = "official: <repo/url, date>"`
-plus `builtin_differs = { name = "<built-in id>", de = <max delta E over the 18 colours>, note = "<why>" }` (`--check` recomputes de, 0.1 tolerance), or
-`no_builtin = "<why>"` (no built-in exists for that variant; the scheme's own values stay).
-The scheme's colours and the built-in the terminal really shows are NOT forced to be equal any more: the delta E is information (printed by the
-table and, for the declared ids, by `--check` on stderr). What stays enforced: a listed nudge
+PRINCIPLE: the Ptyxis built-in palette (by id) is the SOURCE OF TRUTH for every scheme variant that has one: bg_deep and fg are its Background and
+Foreground, the six accents its Color1..6, the real black, white and brights (Color0, 7, 8..15) sit in `[<variant>.terminal]`. Every variant says so
+there: `source = "<built-in id>"` (for a built-in with [Light] and [Dark] sections the section of the variant is used) or `no_builtin = "<why>"` (no
+built-in exists for that variant; the scheme's own values stay and the dark built-in serves both modes). `--check` requires, per variant with a
+source, that the source is the id the scheme declares for that variant and that the 18 colours slot_colors() derives (Background, Foreground,
+Color0..15) equal the built-in's, except those listed in a nudge, a deviation a contrast check of the GTK colours forces (the selftest needs fg on the
+window at 4.5:1):
     [<variant>.nudge]
-    Foreground = { from = "<source value>", to = "<our value>", de = <delta E>, why = "<reason>" }
-(a colour moved off its source because a contrast check of the GTK colours forces it) must be true: `from` the source's value, `to` the value in use,
-`de` the CIE76 delta E between them (within 0.1), `why` a real reason, at most NUDGE_MAX; a nudge for a colour that no longer differs is stale.
+    Foreground = { from = "<built-in value>", to = "<our value>", de = <delta E>, why = "<reason>" }
+`from` must be the built-in's value, `to` the value in use, `de` the CIE76 delta E between them (within 0.1), `why` a real reason, at most NUDGE_MAX;
+a nudge for a colour that no longer differs is stale. The terminal itself shows the built-in unchanged (a nudge only moves the GTK/Shell colour).
+The delta E of every declared id is printed as information (the table, and `--check` on stderr).
 
 Distance per colour = CIE76 delta E in CIELAB (D65); a variant's distance is the MAXIMUM over the colours compared.
   roles   the colours scheme.toml actually defines: Background, Foreground, Color1..6 (the six accents) and each of Color0, 7, 8, 9..14, 15 that a
@@ -144,9 +145,10 @@ def id_problems(scheme_dir):
     return bad
 
 def terminal_problems(scheme_dir):
-    """Problems with the `source` / `no_builtin` / `builtin_differs` / nudge declarations of one scheme (see the header); [] when fine."""
+    """Problems with the `source` / `no_builtin` / nudge declarations of one scheme (see the header); [] when fine."""
     S, roles, _ = sr.load(scheme_dir)
     scheme = os.path.basename(os.path.abspath(scheme_dir)); bad = []
+    dk, lt = sr.ptyxis_ids(S)
     for v in [v for v in ('dark', 'light') if v in S]:
         T = S[v].get('terminal', {}); N = S[v].get('nudge', {}); src = str(T.get('source', '')).strip(); nob = str(T.get('no_builtin', '')).strip()
         who = '%s %s' % (scheme, v)
@@ -154,36 +156,23 @@ def terminal_problems(scheme_dir):
         if nob:
             if N: bad.append('%s: nudges listed but the variant has no built-in source' % who)
             continue
-        mine = sr.slot_colors(S, roles, v)
-        if src.startswith('official:'):
-            # an official source wins over the built-in: the built-in is named with its measured distance (information)
-            bd = T.get('builtin_differs')
-            if not isinstance(bd, dict) or not bd.get('name') or len(str(bd.get('note', '')).strip()) < 10:
-                bad.append('%s: an official source needs builtin_differs = { name, de, note } (the built-in it differs from, the delta E, why official wins)' % who); continue
-            bb = builtin_set(bd['name'], v)
-            if not bb: bad.append('%s: builtin_differs names "%s", which is not a Ptyxis built-in id with a %s palette' % (who, bd['name'], v)); continue
-            d = max(de(mine[k], bb[k]) for k in KEYS if k in bb)
-            if abs(bd.get('de', -1) - d) > 0.1: bad.append('%s: builtin_differs de %s is not the computed %.1f' % (who, bd.get('de'), d))
-            for k, n in N.items():   # nudges are measured against the official value (`from`), which only scheme.toml knows
-                if k not in KEYS or k not in mine: bad.append('%s: nudge key %s unknown' % (who, k)); continue
-                if n.get('to', '').upper() != mine[k]: bad.append('%s: nudge %s: to %s is not the value in use %s' % (who, k, n.get('to'), mine[k]))
-                nd = de(n.get('from', '#000000'), mine[k])
-                if abs(n.get('de', -1) - nd) > 0.1: bad.append('%s: nudge %s: de %s is not the computed %.2f' % (who, k, n.get('de'), nd))
-                if nd > NUDGE_MAX: bad.append('%s: nudge %s is %.2f dE, above NUDGE_MAX %.1f' % (who, k, nd, NUDGE_MAX))
-                if len(str(n.get('why', '')).strip()) < 10: bad.append('%s: nudge %s has no reason' % (who, k))
-            continue
+        want = dk if v == 'dark' else lt
+        if src != want: bad.append('%s: source "%s" is not the id declared for this variant ("%s")' % (who, src, want))
+        if 'builtin_differs' in T: bad.append('%s: builtin_differs is gone: the built-in is the source of truth' % who)
         b = builtin_set(src, v)
         if not b: bad.append('%s: source "%s" is not a Ptyxis built-in id with a %s palette' % (who, src, v)); continue
+        mine = sr.slot_colors(S, roles, v)
         for k in KEYS:
             if k not in b or k not in mine: continue
             d = de(mine[k], b[k]); n = N.get(k)
-            if n:
-                if d <= 0.001: bad.append('%s: nudge %s is listed but %s equals the built-in (stale)' % (who, k, k)); continue
+            if d > 0.001:
+                if not n: bad.append('%s: %s %s differs from %s %s (dE %.2f) and is not listed in [%s.nudge]' % (who, k, mine[k], src, b[k], d, v)); continue
                 if n.get('from', '').upper() != b[k]: bad.append('%s: nudge %s: from %s is not the built-in value %s' % (who, k, n.get('from'), b[k]))
                 if n.get('to', '').upper() != mine[k]: bad.append('%s: nudge %s: to %s is not the value in use %s' % (who, k, n.get('to'), mine[k]))
                 if abs(n.get('de', -1) - d) > 0.1: bad.append('%s: nudge %s: de %s is not the computed %.2f' % (who, k, n.get('de'), d))
                 if d > NUDGE_MAX: bad.append('%s: nudge %s is %.2f dE, above NUDGE_MAX %.1f' % (who, k, d, NUDGE_MAX))
                 if len(str(n.get('why', '')).strip()) < 10: bad.append('%s: nudge %s has no reason' % (who, k))
+            elif n: bad.append('%s: nudge %s is listed but %s equals the built-in (stale)' % (who, k, k))
         for k in N:
             if k not in KEYS: bad.append('%s: nudge key %s is not one of %s' % (who, k, ', '.join(KEYS[:3]) + ' ...'))
     return bad
@@ -199,7 +188,10 @@ def main():
         for s in schemes:
             p = path(s); prob = id_problems(p); bad += prob + terminal_problems(p)
             if not prob:
+                Sx, _, _ = sr.load(p)
                 for v, pid, sec, mx, w, a in declared(p):
+                    if Sx[v].get('terminal', {}).get('no_builtin'):
+                        print('info: %s %s has no built-in of its own; the terminal shows "%s" (%.1f dE from this variant)' % (s, v, pid, mx), file=sys.stderr); continue
                     print('info: %s %s -> built-in id "%s" (%s): roles max dE %.2f (%s), all18 %.2f' % (s, v, pid, sec, mx, w, a), file=sys.stderr)
         print('\n'.join(bad)); sys.exit(1 if bad else 0)
     print('close match = roles max delta E (CIE76) <= %.1f; "declared" marks the id scheme.toml names\n' % THRESHOLD)

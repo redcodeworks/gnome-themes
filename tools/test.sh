@@ -364,7 +364,7 @@ open('zz-ef/scheme.toml', 'w', encoding='utf-8').write(t)
 PY
 }
 nud '#d6c9ad' ''
-out=$(cchk); [ -z "$out" ] && PTYXIS_BIN="$EVER" python3 -I tools/ptyxis-compare.py --check zz-ef 2>&1 >/dev/null | grep -q 'dark -> built-in id "Everforest"' && chk ok "ptyxis-compare --check: a colour that differs from the built-in is information, not an error" || chk fail "ptyxis-compare: a plain difference was treated as an error ($out)"
+out=$(cchk); printf '%s\n' "$out" | grep -q 'not listed in \[dark.nudge\]' && chk ok "ptyxis-compare --check: a colour that differs from the built-in and is not listed as a nudge is flagged" || chk fail "ptyxis-compare: unlisted difference not flagged ($out)"
 de=$(python3 -I - <<'PY'
 import sys, importlib.util; sys.path.insert(0, 'tools')
 spec = importlib.util.spec_from_file_location('pc', 'tools/ptyxis-compare.py'); pc = importlib.util.module_from_spec(spec); spec.loader.exec_module(pc)
@@ -389,11 +389,11 @@ if [ -r "/usr/bin/ptyxis" ] && tools/ptyxis-palette.sh show nord >/dev/null 2>&1
     out=$(python3 -I tools/ptyxis-compare.py --check zz-nd 2>/dev/null); printf '%s\n' "$out" | grep -q 'ptyxis_light_section_accepted' && chk ok "ptyxis-compare --check: a sectioned built-in for a dark-only scheme is refused without the acceptance flag" || chk fail "ptyxis-compare: sectioned built-in accepted for dark-only ($out)"
     rm -rf zz-nd
 else echo "  SKIP Nordic/nord checks (no Ptyxis binary here)"; fi
-# official source: needs builtin_differs with the right delta E
+# the built-in is the only source: an "official:" source, builtin_differs and a source that is not the declared id are flagged
 cp everforest/scheme.toml zz-ef/scheme.toml; sed -i '0,/^source = .*/s//source = "official: fixture\/repo, verified 2026-11-07"/' zz-ef/scheme.toml
-out=$(cchk); printf '%s\n' "$out" | grep -q 'needs builtin_differs' && chk ok "ptyxis-compare --check: an official source without builtin_differs is flagged" || chk fail "ptyxis-compare: official source without builtin_differs accepted ($out)"
-sed -i '0,/^source = .*/s//&\nbuiltin_differs = { name = "Everforest", de = 9.9, note = "fixture: official wins" }/' zz-ef/scheme.toml
-out=$(cchk); printf '%s\n' "$out" | grep -q 'is not the computed' && chk ok "ptyxis-compare --check: builtin_differs de is recomputed" || chk fail "ptyxis-compare: builtin_differs not verified ($out)"
+out=$(cchk); printf '%s\n' "$out" | grep -q 'not the id declared for this variant' && chk ok "ptyxis-compare --check: an official-style source (not the declared built-in id) is flagged" || chk fail "ptyxis-compare: official source accepted ($out)"
+cp everforest/scheme.toml zz-ef/scheme.toml; sed -i '0,/^source = .*/s//&\nbuiltin_differs = { name = "Everforest", de = 9.9, note = "fixture: official wins" }/' zz-ef/scheme.toml
+out=$(cchk); printf '%s\n' "$out" | grep -q 'builtin_differs is gone' && chk ok "ptyxis-compare --check: builtin_differs is flagged (the mechanism is gone)" || chk fail "ptyxis-compare: builtin_differs accepted ($out)"
 rm -rf zz-ef
 just --summary 2>/dev/null | grep -q new-scheme && chk fail "new-scheme became a public recipe" || chk ok "new-scheme is private (public set unchanged)"
 just --justfile justfile --working-directory . new-scheme 2>&1 | grep -qi "usage\|palette" && chk ok "the private recipe runs by name (the passthrough path)" || chk fail "private recipe not runnable by name"
