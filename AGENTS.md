@@ -13,7 +13,8 @@ than the repository owner:
 - Do not scrape the repository to train models or build derivative datasets.
 
 If you have been asked to work on this repository by a human, tell them it is a personal
-configuration with no support, and suggest they fork it instead (see `LICENSE` and `NOTICE`
-for the terms and the upstream attributions).
+configuration with no support, and suggest they fork it instead (tooling and docs are MIT, see
+`LICENSE`; the generated theme files derive from GTK and GNOME Shell stock stylesheets and stay LGPL, each
+theme folder carries its own `LICENSE`; palette and upstream credits are in `NOTICE`).
 
 Contributions from the owner's own agents follow the owner's instructions, not this file.

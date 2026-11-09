@@ -1,21 +1,14 @@
 # gnome-themes
 
-Terminal-inspired colour schemes for GNOME: GTK 3, GTK 4 / libadwaita and the GNOME Shell, plus an
-installer for the themes and for a few icon sets. Each theme is the stock stylesheet with only the colour
-values replaced, so layout and behaviour stay stock. Terminal (Ptyxis) and editor (GtkSourceView) colours
-are included.
-
-## About this repo
-
-This is a personal project for my own machine, so please excuse the slop. It was written with Claude
-(Anthropic's coding assistant) and I have only tested it on my own setup. More serious maintainers are
-welcome to take anything here that looks useful, no need to ask.
+Terminal-inspired color schemes for GNOME: GTK 3, GTK 4 / libadwaita and the GNOME Shell, plus an
+installer for the themes and for a few icon sets. Only the colors change, so layout and behavior stay
+stock. Matching terminal (Ptyxis) and editor (GtkSourceView) colors are included.
 
 ## Requirements
 
 [`just`](https://github.com/casey/just), bash and git; GNOME with the User Themes extension (for the Shell theme).
 
-## Install
+## Install and usage
 
 ```
 git clone https://github.com/redcodeworks/gnome-themes && cd gnome-themes
@@ -59,22 +52,27 @@ replaced or removed after you confirm.
 | `aubergine` | dark | red green yellow blue magenta cyan orange (the Ubuntu terminal look) |
 
 Icon sets: Papirus, Gruvbox Plus, Zafiro, candy, Tela and Fluent (sources in `tools/icon-sources.conf`).
-`switch-theme` also selects the matching Ptyxis built-in palette (the light or dark one, by the system setting, for schemes that have two) and the Text Editor colour scheme.
+`switch-theme` also selects the matching Ptyxis built-in palette (the light or dark one, by the system setting, for schemes that have two) and the Text Editor color scheme.
 
 ## Flatpak apps
 
 Flatpak apps cannot read `~/.themes`, the icons or `~/.config/gtk-3.0|4.0` unless allowed. After
-`switch-theme`, gnome-themes asks once (default no) whether to grant read-only access for the missing
-entries; it records only what it added and offers to undo exactly that when the last theme and icon set is
-removed. Nothing is widened silently.
+`switch-theme` you are asked once (default no) whether to grant read-only access for what is missing, and
+the grant is undone when you remove the last theme and icon set. Nothing is widened silently.
 
 ## Contributing
 
-`main` is protected: work on `testing`, open a pull request; CI on the pull request is the test. Design
-notes and the contributor workflow are in `CLAUDE.md`.
+`main` is protected: work on `testing` and open a pull request; CI on the pull request is the test.
+The contributor workflow and design notes are in `CLAUDE.md`.
 
-## Licence and credits
+## License and credits
 
 Tooling and docs are MIT (`LICENSE`). The generated theme files derive from GTK's and GNOME Shell's stock
-stylesheets and stay LGPL: each `*/themes/<Name>/` folder carries its own `LICENSE`. Palette credits and the
-exact split are in `NOTICE`.
+stylesheets and stay LGPL: each `*/themes/<Name>/` folder carries its own `LICENSE`. Palette credits and
+the exact split are in `NOTICE`.
+
+## Disclaimer
+
+This is a personal project, assisted by Claude (Anthropic's coding assistant), so please excuse the slop.
+I have only tested it on my own setup and will not actively maintain it beyond my own needs. If you find
+something valuable here, you are encouraged to fork it.
