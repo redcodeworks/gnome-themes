@@ -57,8 +57,8 @@ espresso	Espresso	-	excluded	ptyxis-compare: info: espresso dark -> built-in id 
 espresso-libre	Espresso Libre	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso%20Libre.yml
 everblush	Everblush	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Everblush.yml
 everforest	Everforest	-	existing	covered by the existing scheme	-
-fairy-floss	Fairy Floss	-	excluded	directory exists	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss.yml
 fairy-floss	Fairy Floss Dark	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss%20Dark.yml
+fairy-floss-classic	Fairy Floss	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202153 bytes | libadwaita 2934 bytes | accent red: token #c2ffdf maps to far-apart tokens {'#a8757b': 582, '#ae9592': 14, '#a8777d': 4, '#ac8a8a': 38, '#b4b5a9': 4, '#aa7e81': 6, '#aa8284': 6, '#b5baad': 2, '#ae9492': 6, '#b09d98': 4, '#ae9391': 4, '#aa7f83': 4, '#ac88	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss.yml
 fishtank	Fishtank	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Fishtank.yml
 flat	Flat	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat.yml
 flat-remix	Flat Remix	-	excluded	ptyxis-compare: info: flat-remix dark -> built-in id "Flat Remix" (flat): roles max dE 0.00 (Background), all18 8.71	https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat%20Remix.yml

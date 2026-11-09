@@ -37,7 +37,7 @@ GENERIC = {'campbell': 'generic terminal preset (Windows Terminal default)', 'gn
            'Ibm 3270 (High Contrast)': 'IBM 3270 mainframe preset, not a colour scheme'}
 for _m in ('Amber', 'Cyan', 'Green', 'Red', 'White', 'Yellow'): GENERIC['Mono ' + _m] = 'single-hue palette: the six accents cannot be told apart'
 
-RENAME = {'Solarized': 'solarized-classic'}   # ids whose kebab name would clash with an existing scheme
+RENAME = {'Solarized': 'solarized-classic', 'Fairy Floss': 'fairy-floss-classic'}   # ids whose kebab name would clash with an existing scheme
 
 def kebab(s):
     s = unicodedata.normalize('NFKD', s); s = ''.join(c for c in s if not unicodedata.combining(c))
@@ -136,7 +136,7 @@ def build(args):
         ok, why = build_one(r)
         if ok: r[3], r[4] = 'built', ''
         else:
-            shutil.rmtree(os.path.join(ROOT, r[0]), ignore_errors=True)
+            if why != 'directory exists': shutil.rmtree(os.path.join(ROOT, r[0]), ignore_errors=True)   # never delete a folder this run did not create
             r[3], r[4] = 'excluded', why
         print('%-32s %s %s' % (r[0], r[3], r[4])); write(rows)
     status()
