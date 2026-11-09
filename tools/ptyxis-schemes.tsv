@@ -87,40 +87,40 @@ hemisu	Hemisu	-	excluded	ptyxis-compare: info: hemisu light -> built-in id "Hemi
 highway	Highway	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Highway.yml
 hipster-green	Hipster Green	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hipster%20Green.yml
 homebrew	Homebrew	Homebrew Light	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew.yml
-homebrew-ocean	Homebrew Ocean	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew%20Ocean.yml
-horizon	Horizon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Horizon%20Bright.yml
-hurtado	Hurtado	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hurtado.yml
-hybrid	Hybrid	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hybrid.yml
+homebrew-ocean	Homebrew Ocean	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew%20Ocean.yml
+horizon	Horizon	-	excluded	ptyxis-compare: info: horizon light -> built-in id "Horizon" (Light,Dark): roles max dE 0.00 (Background), all18 0.00	https://github.com/Gogh-Co/Gogh/tree/master/themes/Horizon%20Bright.yml
+hurtado	Hurtado	-	excluded	ptyxis-compare: info: hurtado dark -> built-in id "Hurtado" (flat): roles max dE 0.00 (Background), all18 5.50	https://github.com/Gogh-Co/Gogh/tree/master/themes/Hurtado.yml
+hybrid	Hybrid	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hybrid.yml
 ibm-3270-high-contrast	Ibm 3270 (High Contrast)	-	excluded	IBM 3270 mainframe preset, not a colour scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ibm%203270%20(High%20Contrast).yml
 ibm3270	Ibm3270	-	excluded	IBM 3270 mainframe preset, not a colour scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ibm3270.yml
-ic-green-ppl	Ic Green Ppl	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Green%20Ppl.yml
-ic-orange-ppl	Ic Orange Ppl	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Orange%20Ppl.yml
-idle-toes	Idle Toes	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Idle%20Toes.yml
-ir-black	Ir Black	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ir%20Black.yml
-jackie-brown	Jackie Brown	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jackie%20Brown.yml
-japanesque	Japanesque	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Japanesque.yml
-jellybeans	Jellybeans	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jellybeans.yml
-jup	Jup	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jup.yml
-kanagawa	Kanagawa	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kanagawa.yml
-kibble	Kibble	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kibble.yml
-kokuban	Kokuban	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kokuban.yml
-laserwave	Laserwave	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Laserwave.yml
-later-this-evening	Later This Evening	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Later%20This%20Evening.yml
-lavandula	Lavandula	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Lavandula.yml
+ic-green-ppl	Ic Green Ppl	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Green%20Ppl.yml
+ic-orange-ppl	Ic Orange Ppl	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Orange%20Ppl.yml
+idle-toes	Idle Toes	-	excluded	ptyxis-compare: info: idle-toes dark -> built-in id "Idle Toes" (flat): roles max dE 0.00 (Background), all18 6.04	https://github.com/Gogh-Co/Gogh/tree/master/themes/Idle%20Toes.yml
+ir-black	Ir Black	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202091 bytes | libadwaita 2906 bytes | VERIFY FAILED: ir-black accent red Ir-Black-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ir%20Black.yml
+jackie-brown	Jackie Brown	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jackie%20Brown.yml
+japanesque	Japanesque	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Japanesque.yml
+jellybeans	Jellybeans	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jellybeans.yml
+jup	Jup	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.35)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Jup.yml
+kanagawa	Kanagawa	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kanagawa.yml
+kibble	Kibble	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kibble.yml
+kokuban	Kokuban	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kokuban.yml
+laserwave	Laserwave	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Laserwave.yml
+later-this-evening	Later This Evening	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Later%20This%20Evening.yml
+lavandula	Lavandula	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.03)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Lavandula.yml
 linux	linux	-	excluded	generic terminal preset (Linux console)	-
-liquid-carbon	Liquid Carbon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon.yml
-liquid-carbon-transparent	Liquid Carbon Transparent	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon%20Transparent.yml
-lunaria	Lunaria	-	todo		-
-lunaria-eclipse	Lunaria Eclipse	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Lunaria%20Eclipse.yml
-maia	Maia	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Maia.yml
+liquid-carbon	Liquid Carbon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon.yml
+liquid-carbon-transparent	Liquid Carbon Transparent	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon%20Transparent.yml
+lunaria	Lunaria	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199298 bytes | libadwaita 4345 bytes | VERIFY FAILED: lunaria accent red gtk-3.0/gtk.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+lunaria-eclipse	Lunaria Eclipse	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Lunaria%20Eclipse.yml
+maia	Maia	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Maia.yml
 man-page	Man Page	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Man%20Page.yml
 mar	Mar	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mar.yml
 material	Material	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Material.yml
-mathias	Mathias	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mathias.yml
-medallion	Medallion	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Medallion.yml
-misterioso	Misterioso	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Misterioso.yml
-molokai	Molokai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Molokai.yml
-mona-lisa	Mona Lisa	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mona%20Lisa.yml
+mathias	Mathias	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mathias.yml
+medallion	Medallion	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Medallion.yml
+misterioso	Misterioso	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Misterioso.yml
+molokai	Molokai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Molokai.yml
+mona-lisa	Mona Lisa	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mona%20Lisa.yml
 mono-amber	Mono Amber	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Amber.yml
 mono-cyan	Mono Cyan	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Cyan.yml
 mono-green	Mono Green	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Green.yml
@@ -128,25 +128,25 @@ mono-red	Mono Red	-	excluded	single-hue palette: the six accents cannot be told 
 mono-white	Mono White	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20White.yml
 mono-yellow	Mono Yellow	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Yellow.yml
 monokai	Monokai Dark	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Dark.yml
-monokai-pro	Monokai Pro	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro.yml
-monokai-pro-ristretto	Monokai Pro Ristretto	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro%20Ristretto.yml
-monokai-soda	Monokai Soda	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Soda.yml
-moonfly	Moonfly	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Moonfly.yml
-morada	Morada	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Morada.yml
-n0tch2k	N0Tch2K	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/N0Tch2K.yml
-neon-night	Neon Night	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neon%20Night.yml
-neopolitan	Neopolitan	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neopolitan.yml
-nep	Nep	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nep.yml
-neutron	Neutron	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neutron.yml
-night-owl	Night Owl	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Night%20Owl.yml
-nightfly	Nightfly	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightfly.yml
-nightlion-v1	Nightlion V1	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V1.yml
-nightlion-v2	Nightlion V2	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V2.yml
-nighty	Nighty	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nighty.yml
+monokai-pro	Monokai Pro	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro.yml
+monokai-pro-ristretto	Monokai Pro Ristretto	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro%20Ristretto.yml
+monokai-soda	Monokai Soda	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Soda.yml
+moonfly	Moonfly	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Moonfly.yml
+morada	Morada	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Morada.yml
+n0tch2k	N0Tch2K	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202100 bytes | libadwaita 2900 bytes | accent red: token #909090 maps to far-apart tokens {'#793d3a': 40, '#7b4341': 2} | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/N0Tch2K.yml
+neon-night	Neon Night	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neon%20Night.yml
+neopolitan	Neopolitan	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neopolitan.yml
+nep	Nep	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.35)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nep.yml
+neutron	Neutron	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neutron.yml
+night-owl	Night Owl	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Night%20Owl.yml
+nightfly	Nightfly	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightfly.yml
+nightlion-v1	Nightlion V1	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202107 bytes | libadwaita 2922 bytes | VERIFY FAILED: nightlion-v1 accent red Nightlion-V1-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V1.yml
+nightlion-v2	Nightlion V2	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202125 bytes | libadwaita 2922 bytes | VERIFY FAILED: nightlion-v2 accent red Nightlion-V2-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V2.yml
+nighty	Nighty	-	excluded	ptyxis-compare: info: nighty dark -> built-in id "Nighty" (flat): roles max dE 0.00 (Background), all18 34.46	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nighty.yml
 nordic	nord	-	existing	covered by the existing scheme	-
 novel	Novel	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml
-obsidian	Obsidian	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml
-ocean-dark	Ocean Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml
+obsidian	Obsidian	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml
+ocean-dark	Ocean Dark	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml
 oceanic-next	Oceanic Next	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oceanic%20Next.yml
 ollie	Ollie	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml
 omni	Omni	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml

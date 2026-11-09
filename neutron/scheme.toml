@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Neutron'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Neutron.yml.
+title = "Neutron"
+gtk_name = "Neutron"
+shell_name = "Neutron-Shell"
+credit = "Neutron (colours of the Ptyxis built-in 'Neutron'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Neutron.yml)"
+ptyxis = "Neutron"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Neutron' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1c1e22"
+fg = "#e6e8ef"
+selection = "#44464b"   # DERIVED
+red = "#b54036"
+orange = "#ca7a4e"   # DERIVED
+yellow = "#deb566"
+green = "#5ab977"
+cyan = "#3f94a8"
+blue = "#6a7c93"
+magenta = "#a4799d"
+purple = "#a4799d"   # = magenta
+# palette Color8 (bright black) = #23252b: a candidate for `comment`
+[dark.ansi]
+red = "#b54036"
+green = "#5ab977"
+yellow = "#deb566"
+blue = "#6a7c93"
+magenta = "#a4799d"
+cyan = "#3f94a8"
+[dark.terminal]
+source = "Neutron"   # Ptyxis built-in id
+black = "#23252b"   # Ptyxis Color0
+bright_black = "#23252b"   # Ptyxis Color8
+bright_white = "#ebedf2"   # Ptyxis Color15

@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Maia'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Maia.yml.
+title = "Maia"
+gtk_name = "Maia"
+shell_name = "Maia-Shell"
+credit = "Maia (colours of the Ptyxis built-in 'Maia'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Maia.yml)"
+ptyxis = "Maia"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Maia' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#31363b"
+fg = "#bdc3c7"
+selection = "#4d5257"   # DERIVED
+red = "#ba2922"
+orange = "#833c38"   # DERIVED
+yellow = "#4c4f4d"
+green = "#7e807e"
+cyan = "#00cccc"
+blue = "#16a085"
+magenta = "#43746a"
+purple = "#43746a"   # = magenta
+# palette Color8 (bright black) = #282928: a candidate for `comment`
+[dark.ansi]
+red = "#ba2922"
+green = "#7e807e"
+yellow = "#4c4f4d"
+blue = "#16a085"
+magenta = "#43746a"
+cyan = "#00cccc"
+[dark.terminal]
+source = "Maia"   # Ptyxis built-in id
+black = "#232423"   # Ptyxis Color0
+white = "#e0e0e0"   # Ptyxis Color7
+bright_black = "#282928"   # Ptyxis Color8
+bright_red = "#cc372c"   # Ptyxis Color9
+bright_green = "#8d8f8d"   # Ptyxis Color10
+bright_yellow = "#4e524f"   # Ptyxis Color11
+bright_blue = "#13bf9d"   # Ptyxis Color12
+bright_magenta = "#487d72"   # Ptyxis Color13
+bright_cyan = "#00d1d1"   # Ptyxis Color14
+bright_white = "#e8e8e8"   # Ptyxis Color15

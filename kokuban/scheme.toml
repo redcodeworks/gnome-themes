@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Kokuban'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Kokuban.yml.
+title = "Kokuban"
+gtk_name = "Kokuban"
+shell_name = "Kokuban-Shell"
+credit = "Kokuban (colours of the Ptyxis built-in 'Kokuban'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Kokuban.yml)"
+ptyxis = "Kokuban"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Kokuban' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#0d4a08"
+fg = "#d8e2d7"
+selection = "#366831"   # DERIVED
+red = "#d84e4c"
+orange = "#d79858"   # DERIVED
+yellow = "#d6e264"
+green = "#95da5a"
+cyan = "#d89b25"
+blue = "#4b9ed7"
+magenta = "#945fc5"
+purple = "#945fc5"   # = magenta
+# palette Color8 (bright black) = #34934f: a candidate for `comment`
+[dark.ansi]
+red = "#d84e4c"
+green = "#95da5a"
+yellow = "#d6e264"
+blue = "#4b9ed7"
+magenta = "#945fc5"
+cyan = "#d89b25"
+[dark.terminal]
+source = "Kokuban"   # Ptyxis built-in id
+black = "#2e8744"   # Ptyxis Color0
+bright_black = "#34934f"   # Ptyxis Color8
+bright_red = "#ff4f59"   # Ptyxis Color9
+bright_green = "#aff56a"   # Ptyxis Color10
+bright_yellow = "#fcff75"   # Ptyxis Color11
+bright_blue = "#57aeff"   # Ptyxis Color12
+bright_magenta = "#ae63e9"   # Ptyxis Color13
+bright_cyan = "#ffaa2b"   # Ptyxis Color14
+bright_white = "#fffefe"   # Ptyxis Color15

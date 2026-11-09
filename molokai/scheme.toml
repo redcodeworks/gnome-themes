@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Molokai'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Molokai.yml.
+title = "Molokai"
+gtk_name = "Molokai"
+shell_name = "Molokai-Shell"
+credit = "Molokai (colours of the Ptyxis built-in 'Molokai'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Molokai.yml)"
+ptyxis = "Molokai"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Molokai' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#1b1d1e"
+fg = "#bbbbbb"
+selection = "#3b3d3d"   # DERIVED
+red = "#7325fa"
+orange = "#6a7cec"   # DERIVED
+yellow = "#60d4df"
+green = "#23e298"
+cyan = "#d0a843"
+blue = "#d08010"
+magenta = "#ff0087"
+purple = "#ff0087"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#7325fa"
+green = "#23e298"
+yellow = "#60d4df"
+blue = "#d08010"
+magenta = "#ff0087"
+cyan = "#d0a843"
+[dark.terminal]
+source = "Molokai"   # Ptyxis built-in id
+black = "#1b1d1e"   # Ptyxis Color0
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#9d66f6"   # Ptyxis Color9
+bright_green = "#5fe0b1"   # Ptyxis Color10
+bright_yellow = "#6df2ff"   # Ptyxis Color11
+bright_blue = "#ffaf00"   # Ptyxis Color12
+bright_magenta = "#ff87af"   # Ptyxis Color13
+bright_cyan = "#ffce51"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

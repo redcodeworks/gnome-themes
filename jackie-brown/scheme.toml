@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Jackie Brown'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Jackie%20Brown.yml.
+title = "Jackie Brown"
+gtk_name = "Jackie-Brown"
+shell_name = "Jackie-Brown-Shell"
+credit = "Jackie Brown (colours of the Ptyxis built-in 'Jackie Brown'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Jackie%20Brown.yml)"
+ptyxis = "Jackie Brown"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Jackie Brown' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2c1d16"
+fg = "#ffcc2f"
+selection = "#56401b"   # DERIVED
+red = "#ef5734"
+orange = "#d68b1a"   # DERIVED
+yellow = "#bebf00"
+green = "#2baf2b"
+cyan = "#00acee"
+blue = "#246eb2"
+magenta = "#d05ec1"
+purple = "#d05ec1"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[dark.ansi]
+red = "#ef5734"
+green = "#2baf2b"
+yellow = "#bebf00"
+blue = "#246eb2"
+magenta = "#d05ec1"
+cyan = "#00acee"
+[dark.terminal]
+source = "Jackie Brown"   # Ptyxis built-in id
+black = "#2c1d16"   # Ptyxis Color0
+white = "#bfbfbf"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#e50000"   # Ptyxis Color9
+bright_green = "#86a93e"   # Ptyxis Color10
+bright_yellow = "#e5e500"   # Ptyxis Color11
+bright_blue = "#0000ff"   # Ptyxis Color12
+bright_magenta = "#e500e5"   # Ptyxis Color13
+bright_cyan = "#00e5e5"   # Ptyxis Color14
+bright_white = "#e5e5e5"   # Ptyxis Color15
