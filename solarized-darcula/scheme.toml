@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Solarized Darcula'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Darcula.yml.
+title = "Solarized Darcula"
+gtk_name = "Solarized-Darcula"
+shell_name = "Solarized-Darcula-Shell"
+credit = "Solarized Darcula (colours of the Ptyxis built-in 'Solarized Darcula'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Darcula.yml)"
+ptyxis = "Solarized Darcula"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Solarized Darcula' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#3d3f41"
+fg = "#d2d8d9"
+selection = "#5b5e5f"   # DERIVED
+red = "#f24840"
+orange = "#d46820"   # DERIVED
+yellow = "#b68800"
+green = "#629655"
+cyan = "#15968d"
+blue = "#2075c7"
+magenta = "#797fd4"
+purple = "#797fd4"   # = magenta
+# palette Color8 (bright black) = #25292a: a candidate for `comment`
+[dark.ansi]
+red = "#f24840"
+green = "#629655"
+yellow = "#b68800"
+blue = "#2075c7"
+magenta = "#797fd4"
+cyan = "#15968d"
+[dark.terminal]
+source = "Solarized Darcula"   # Ptyxis built-in id
+black = "#25292a"   # Ptyxis Color0
+bright_black = "#25292a"   # Ptyxis Color8

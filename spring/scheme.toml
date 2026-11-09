@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Spring'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Spring.yml.
+title = "Spring"
+gtk_name = "Spring"
+shell_name = "Spring-Shell"
+credit = "Spring (colours of the Ptyxis built-in 'Spring'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Spring.yml)"
+ptyxis = "Spring"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Spring' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "blue"
+
+[dark]
+bg_deep = "#0a1e24"
+fg = "#ecf0c1"
+selection = "#374843"   # DERIVED
+red = "#ff4d83"
+orange = "#8f8b6f"   # DERIVED
+yellow = "#1fc95b"
+green = "#1f8c3b"
+cyan = "#3e999f"
+blue = "#1dd3ee"
+magenta = "#8959a8"
+purple = "#8959a8"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#ff4d83"
+green = "#1f8c3b"
+yellow = "#1fc95b"
+blue = "#1dd3ee"
+magenta = "#8959a8"
+cyan = "#3e999f"
+[dark.terminal]
+source = "Spring"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#ffffff"   # Ptyxis Color7
+bright_black = "#000000"   # Ptyxis Color8
+bright_red = "#ff0021"   # Ptyxis Color9
+bright_green = "#1fc231"   # Ptyxis Color10
+bright_yellow = "#d5b807"   # Ptyxis Color11
+bright_blue = "#15a9fd"   # Ptyxis Color12
+bright_white = "#ffffff"   # Ptyxis Color15

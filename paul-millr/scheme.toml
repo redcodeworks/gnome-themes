@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Paul Millr'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Paul%20Millr.yml.
+title = "Paul Millr"
+gtk_name = "Paul-Millr"
+shell_name = "Paul-Millr-Shell"
+credit = "Paul Millr (colours of the Ptyxis built-in 'Paul Millr'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Paul%20Millr.yml)"
+ptyxis = "Paul Millr"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Paul Millr' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#000000"
+fg = "#f2f2f2"
+selection = "#303030"   # DERIVED
+red = "#ff0000"
+orange = "#e96000"   # DERIVED
+yellow = "#d3bf00"
+green = "#79ff0f"
+cyan = "#66ccff"
+blue = "#396bd7"
+magenta = "#b449be"
+purple = "#b449be"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[dark.ansi]
+red = "#ff0000"
+green = "#79ff0f"
+yellow = "#d3bf00"
+blue = "#396bd7"
+magenta = "#b449be"
+cyan = "#66ccff"
+[dark.terminal]
+source = "Paul Millr"   # Ptyxis built-in id
+black = "#2a2a2a"   # Ptyxis Color0
+white = "#bbbbbb"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#ff0080"   # Ptyxis Color9
+bright_green = "#66ff66"   # Ptyxis Color10
+bright_yellow = "#f3d64e"   # Ptyxis Color11
+bright_blue = "#709aed"   # Ptyxis Color12
+bright_magenta = "#db67e6"   # Ptyxis Color13
+bright_cyan = "#7adff2"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

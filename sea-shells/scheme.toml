@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Sea Shells'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Sea%20Shells.yml.
+title = "Sea Shells"
+gtk_name = "Sea-Shells"
+shell_name = "Sea-Shells-Shell"
+credit = "Sea Shells (colours of the Ptyxis built-in 'Sea Shells'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Sea%20Shells.yml)"
+ptyxis = "Sea Shells"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Sea Shells' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#09141b"
+fg = "#deb88d"
+selection = "#343532"   # DERIVED
+red = "#d15123"
+orange = "#e67829"   # DERIVED
+yellow = "#fca02f"
+green = "#027c9b"
+cyan = "#50a3b5"
+blue = "#1e4950"
+magenta = "#68d4f1"
+purple = "#68d4f1"   # = magenta
+# palette Color8 (bright black) = #434b53: a candidate for `comment`
+[dark.ansi]
+red = "#d15123"
+green = "#027c9b"
+yellow = "#fca02f"
+blue = "#1e4950"
+magenta = "#68d4f1"
+cyan = "#50a3b5"
+[dark.terminal]
+source = "Sea Shells"   # Ptyxis built-in id
+black = "#17384c"   # Ptyxis Color0
+bright_black = "#434b53"   # Ptyxis Color8
+bright_red = "#d48678"   # Ptyxis Color9
+bright_green = "#628d98"   # Ptyxis Color10
+bright_yellow = "#fdd39f"   # Ptyxis Color11
+bright_blue = "#1bbcdd"   # Ptyxis Color12
+bright_magenta = "#bbe3ee"   # Ptyxis Color13
+bright_cyan = "#87acb4"   # Ptyxis Color14
+bright_white = "#fee4ce"   # Ptyxis Color15

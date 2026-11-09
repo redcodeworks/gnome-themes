@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Later This Evening'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Later%20This%20Evening.yml.
+title = "Later This Evening"
+gtk_name = "Later-This-Evening"
+shell_name = "Later-This-Evening-Shell"
+credit = "Later This Evening (colours of the Ptyxis built-in 'Later This Evening'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Later%20This%20Evening.yml)"
+ptyxis = "Later This Evening"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Later This Evening' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#222222"
+fg = "#959595"
+selection = "#393939"   # DERIVED
+red = "#d45a60"
+orange = "#dc9674"   # DERIVED
+yellow = "#e5d289"
+green = "#afba67"
+cyan = "#91bfb7"
+blue = "#a0bad6"
+magenta = "#c092d6"
+purple = "#c092d6"   # = magenta
+# palette Color8 (bright black) = #454747: a candidate for `comment`
+[dark.ansi]
+red = "#d45a60"
+green = "#afba67"
+yellow = "#e5d289"
+blue = "#a0bad6"
+magenta = "#c092d6"
+cyan = "#91bfb7"
+[dark.terminal]
+source = "Later This Evening"   # Ptyxis built-in id
+black = "#2b2b2b"   # Ptyxis Color0
+white = "#3c3d3d"   # Ptyxis Color7
+bright_black = "#454747"   # Ptyxis Color8
+bright_red = "#d3232f"   # Ptyxis Color9
+bright_green = "#aabb39"   # Ptyxis Color10
+bright_yellow = "#e5be39"   # Ptyxis Color11
+bright_blue = "#6699d6"   # Ptyxis Color12
+bright_magenta = "#ab53d6"   # Ptyxis Color13
+bright_cyan = "#5fc0ae"   # Ptyxis Color14
+bright_white = "#c1c2c2"   # Ptyxis Color15

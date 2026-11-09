@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Vag'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vag.yml.
+title = "Vag"
+gtk_name = "Vag"
+shell_name = "Vag-Shell"
+credit = "Vag (colours of the Ptyxis built-in 'Vag'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vag.yml)"
+ptyxis = "Vag"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Vag' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#191f1d"
+fg = "#d9e6f2"
+selection = "#3f4748"   # DERIVED
+red = "#a87139"
+orange = "#8c8c39"   # DERIVED
+yellow = "#71a839"
+green = "#39a871"
+cyan = "#3971a8"
+blue = "#7139a8"
+magenta = "#a83971"
+purple = "#a83971"   # = magenta
+# palette Color8 (bright black) = #494949: a candidate for `comment`
+[dark.ansi]
+red = "#a87139"
+green = "#39a871"
+yellow = "#71a839"
+blue = "#7139a8"
+magenta = "#a83971"
+cyan = "#3971a8"
+[dark.terminal]
+source = "Vag"   # Ptyxis built-in id
+black = "#303030"   # Ptyxis Color0
+white = "#8a8a8a"   # Ptyxis Color7
+bright_black = "#494949"   # Ptyxis Color8
+bright_red = "#b0763b"   # Ptyxis Color9
+bright_green = "#3bb076"   # Ptyxis Color10
+bright_yellow = "#76b03b"   # Ptyxis Color11
+bright_blue = "#763bb0"   # Ptyxis Color12
+bright_magenta = "#b03b76"   # Ptyxis Color13
+bright_cyan = "#3b76b0"   # Ptyxis Color14
+bright_white = "#cfcfcf"   # Ptyxis Color15

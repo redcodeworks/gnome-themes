@@ -1,0 +1,14 @@
+git
+just
+python3
+python3-gobject
+gtk3
+gtk4
+gnome-shell
+xorg-x11-server-Xvfb
+ShellCheck
+findutils
+which
+util-linux-script
+gtksourceview5
+binutils

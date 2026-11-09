@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Grape'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Grape.yml.
+title = "Grape"
+gtk_name = "Grape"
+shell_name = "Grape-Shell"
+credit = "Grape (colours of the Ptyxis built-in 'Grape'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Grape.yml)"
+ptyxis = "Grape"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Grape' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#171423"
+fg = "#9f9fa1"
+selection = "#32303c"   # DERIVED
+red = "#ed2261"
+orange = "#bd7f40"   # DERIVED
+yellow = "#8ddc20"
+green = "#1fa91b"
+cyan = "#3bdeed"
+blue = "#487df4"
+magenta = "#8d35c9"
+purple = "#8d35c9"   # = magenta
+# palette Color8 (bright black) = #59516a: a candidate for `comment`
+[dark.ansi]
+red = "#ed2261"
+green = "#1fa91b"
+yellow = "#8ddc20"
+blue = "#487df4"
+magenta = "#8d35c9"
+cyan = "#3bdeed"
+[dark.terminal]
+source = "Grape"   # Ptyxis built-in id
+black = "#2d283f"   # Ptyxis Color0
+white = "#9e9ea0"   # Ptyxis Color7
+bright_black = "#59516a"   # Ptyxis Color8
+bright_red = "#f0729a"   # Ptyxis Color9
+bright_green = "#53aa5e"   # Ptyxis Color10
+bright_yellow = "#b2dc87"   # Ptyxis Color11
+bright_blue = "#a9bcec"   # Ptyxis Color12
+bright_magenta = "#ad81c2"   # Ptyxis Color13
+bright_cyan = "#9de3eb"   # Ptyxis Color14
+bright_white = "#a288f7"   # Ptyxis Color15

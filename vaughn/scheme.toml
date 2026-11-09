@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Vaughn'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vaughn.yml.
+title = "Vaughn"
+gtk_name = "Vaughn"
+shell_name = "Vaughn-Shell"
+credit = "Vaughn (colours of the Ptyxis built-in 'Vaughn'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vaughn.yml)"
+ptyxis = "Vaughn"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Vaughn' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#25234f"
+fg = "#dcdccc"
+selection = "#4a4868"   # DERIVED
+red = "#705050"
+orange = "#a88070"   # DERIVED
+yellow = "#dfaf8f"
+green = "#60b48a"
+cyan = "#8cd0d3"
+blue = "#5555ff"
+magenta = "#f08cc3"
+purple = "#f08cc3"   # = magenta
+# palette Color8 (bright black) = #709080: a candidate for `comment`
+[dark.ansi]
+red = "#705050"
+green = "#60b48a"
+yellow = "#dfaf8f"
+blue = "#5555ff"
+magenta = "#f08cc3"
+cyan = "#8cd0d3"
+[dark.terminal]
+source = "Vaughn"   # Ptyxis built-in id
+black = "#25234f"   # Ptyxis Color0
+white = "#709080"   # Ptyxis Color7
+bright_black = "#709080"   # Ptyxis Color8
+bright_red = "#dca3a3"   # Ptyxis Color9
+bright_yellow = "#f0dfaf"   # Ptyxis Color11
+bright_magenta = "#ec93d3"   # Ptyxis Color13
+bright_cyan = "#93e0e3"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

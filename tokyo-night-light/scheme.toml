@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Tokyo Night Light'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Light.yml.
+title = "Tokyo Night Light"
+gtk_name = "Tokyo-Night-Light"
+shell_name = "Tokyo-Night-Light-Shell"
+credit = "Tokyo Night Light (colours of the Ptyxis built-in 'Tokyo Night Light'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Light.yml)"
+ptyxis = "Tokyo Night Light"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Tokyo Night Light' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[light]
+bg_deep = "#d5d6db"
+fg = "#565a6e"
+selection = "#bcbdc5"   # DERIVED
+red = "#8c4351"
+orange = "#8e5033"   # DERIVED
+yellow = "#8f5e15"
+green = "#485e30"
+cyan = "#0f4b6e"
+blue = "#34548a"
+magenta = "#5a4a78"
+purple = "#5a4a78"   # = magenta
+# palette Color8 (bright black) = #9699a3: a candidate for `comment`
+[light.ansi]
+red = "#8c4351"
+green = "#485e30"
+yellow = "#8f5e15"
+blue = "#34548a"
+magenta = "#5a4a78"
+cyan = "#0f4b6e"
+[light.terminal]
+source = "Tokyo Night Light"   # Ptyxis built-in id
+black = "#0f0f14"   # Ptyxis Color0
+white = "#343b58"   # Ptyxis Color7
+bright_black = "#9699a3"   # Ptyxis Color8
+bright_white = "#343b58"   # Ptyxis Color15

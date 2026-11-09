@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Elio'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Elio.yml.
+title = "Elio"
+gtk_name = "Elio"
+shell_name = "Elio-Shell"
+credit = "Elio (colours of the Ptyxis built-in 'Elio'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Elio.yml)"
+ptyxis = "Elio"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Elio' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#041a3b"
+fg = "#f2f2f2"
+selection = "#344560"   # DERIVED
+red = "#e1321a"
+orange = "#f07910"   # DERIVED
+yellow = "#ffc005"
+green = "#6ab017"
+cyan = "#2aa7e7"
+blue = "#729fcf"
+magenta = "#ec0048"
+purple = "#ec0048"   # = magenta
+# palette Color8 (bright black) = #5d5d5d: a candidate for `comment`
+[dark.ansi]
+red = "#e1321a"
+green = "#6ab017"
+yellow = "#ffc005"
+blue = "#729fcf"
+magenta = "#ec0048"
+cyan = "#2aa7e7"
+[dark.terminal]
+source = "Elio"   # Ptyxis built-in id
+black = "#303030"   # Ptyxis Color0
+bright_black = "#5d5d5d"   # Ptyxis Color8
+bright_red = "#ff361e"   # Ptyxis Color9
+bright_green = "#7bc91f"   # Ptyxis Color10
+bright_yellow = "#ffd00a"   # Ptyxis Color11
+bright_blue = "#0071ff"   # Ptyxis Color12
+bright_magenta = "#ff1d62"   # Ptyxis Color13
+bright_cyan = "#4bb8fd"   # Ptyxis Color14
+bright_white = "#a020f0"   # Ptyxis Color15

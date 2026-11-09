@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Sweet (EliverLara/Sweet), dark only. Only hex values are used; the repository's SCSS/CSS (GPL-3.0) is not used in any way.
+# The colours are the Ptyxis built-in "Sweet Eliverlara" (a Gogh port, https://github.com/Gogh-Co/Gogh, per its header): background #282c34, foreground #c3c7d1,
+# accents red #ed254e, green #71f79f, yellow #f9dc5c, blue #7cb7ff, magenta #c74ded, cyan #00c1e4; "Sweet Terminal" is a different scheme (155 dE away).
+# EliverLara's own greys (window #161925, view #181b28, surface #292f45) are no longer used: every step above bg_deep is DERIVED (fixed rules).
+# Orange #FF6A00 is Sweet's own (the seventh accent). Default accent magenta = Sweet's primary purple #C74DED (Kevin's brief).
+title = "Sweet"
+gtk_name = "Sweet"
+shell_name = "Sweet-Shell"
+credit = "Sweet by EliverLara (palette values only; SCSS GPL-3.0 not used)"
+ptyxis = "Sweet Eliverlara"
+ptyxis_reason = "dark only; Sweet Eliverlara (9.6 dE background) beats Sweet Terminal (155 dE)."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#282c34"
+fg = "#c3c7d1"
+selection = "#474b53"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#ed254e"
+orange = "#ff6a00"
+yellow = "#f9dc5c"
+green = "#71f79f"
+cyan = "#00c1e4"
+blue = "#7cb7ff"
+magenta = "#c74ded"
+purple = "#c74ded"
+
+[dark.ansi]
+orange = "#ff6a00"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#ed254e"
+green = "#71f79f"
+yellow = "#f9dc5c"
+blue = "#7cb7ff"
+magenta = "#c74ded"
+cyan = "#00c1e4"
+
+[dark.terminal]
+source = "Sweet Eliverlara"   # Ptyxis built-in id
+black = "#282c34"   # Color0
+white = "#dcdfe4"   # Color7
+bright_black = "#282c34"   # Color8
+bright_white = "#dcdfe4"   # Color15

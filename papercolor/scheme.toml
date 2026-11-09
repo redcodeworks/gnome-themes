@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Papercolor'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. The built-in's header names no origin.
+title = "Papercolor"
+gtk_name = "Papercolor"
+shell_name = "Papercolor-Shell"
+credit = "Papercolor (colours of the Ptyxis built-in 'Papercolor'; the built-in's header names no origin)"
+ptyxis = "Papercolor"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Papercolor' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1c1c1c"
+fg = "#d0d0d0"
+selection = "#404040"   # DERIVED
+red = "#af005f"
+orange = "#c3585f"   # DERIVED
+yellow = "#d7af5f"
+green = "#5faf00"
+cyan = "#d7875f"
+blue = "#5fafd7"
+magenta = "#808080"
+purple = "#808080"   # = magenta
+# palette Color8 (bright black) = #585858: a candidate for `comment`
+[dark.ansi]
+red = "#af005f"
+green = "#5faf00"
+yellow = "#d7af5f"
+blue = "#5fafd7"
+magenta = "#808080"
+cyan = "#d7875f"
+[dark.terminal]
+source = "Papercolor"   # Ptyxis built-in id
+black = "#1c1c1c"   # Ptyxis Color0
+bright_black = "#585858"   # Ptyxis Color8
+bright_red = "#5faf5f"   # Ptyxis Color9
+bright_green = "#afd700"   # Ptyxis Color10
+bright_yellow = "#af87d7"   # Ptyxis Color11
+bright_blue = "#ffaf00"   # Ptyxis Color12
+bright_magenta = "#ff5faf"   # Ptyxis Color13
+bright_cyan = "#00afaf"   # Ptyxis Color14
+bright_white = "#5f8787"   # Ptyxis Color15
+
+[light]
+bg_deep = "#eeeeee"
+fg = "#444444"
+selection = "#cccccc"   # DERIVED
+red = "#af0000"
+orange = "#874400"   # DERIVED
+yellow = "#5f8700"
+green = "#008700"
+cyan = "#005f87"
+blue = "#0087af"
+magenta = "#878787"
+purple = "#878787"   # = magenta
+# palette Color8 (bright black) = #bcbcbc: a candidate for `comment`
+[light.ansi]
+red = "#af0000"
+green = "#008700"
+yellow = "#5f8700"
+blue = "#0087af"
+magenta = "#878787"
+cyan = "#005f87"
+[light.terminal]
+source = "Papercolor"   # Ptyxis built-in id
+black = "#eeeeee"   # Ptyxis Color0
+bright_black = "#bcbcbc"   # Ptyxis Color8
+bright_red = "#d70000"   # Ptyxis Color9
+bright_green = "#d70087"   # Ptyxis Color10
+bright_yellow = "#8700af"   # Ptyxis Color11
+bright_blue = "#d75f00"   # Ptyxis Color12
+bright_magenta = "#d75f00"   # Ptyxis Color13
+bright_cyan = "#005faf"   # Ptyxis Color14
+bright_white = "#005f87"   # Ptyxis Color15

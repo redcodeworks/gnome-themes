@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Flat Remix'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat%20Remix.yml.
+title = "Flat Remix"
+gtk_name = "Flat-Remix"
+shell_name = "Flat-Remix-Shell"
+credit = "Flat Remix (colours of the Ptyxis built-in 'Flat Remix'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat%20Remix.yml)"
+ptyxis = "Flat Remix"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Flat Remix' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#272a34"
+fg = "#ffffff"
+selection = "#52555d"   # DERIVED
+red = "#d41919"
+orange = "#e95e32"   # DERIVED
+yellow = "#fea44c"
+green = "#5ebdab"
+cyan = "#49aee6"
+blue = "#367bf0"
+magenta = "#bf2e5d"
+purple = "#bf2e5d"   # = magenta
+# palette Color8 (bright black) = #8c42ab: a candidate for `comment`
+[dark.ansi]
+red = "#d41919"
+green = "#5ebdab"
+yellow = "#fea44c"
+blue = "#367bf0"
+magenta = "#bf2e5d"
+cyan = "#49aee6"
+[dark.terminal]
+source = "Flat Remix"   # Ptyxis built-in id
+black = "#1f2229"   # Ptyxis Color0
+white = "#e6e6e6"   # Ptyxis Color7
+bright_black = "#8c42ab"   # Ptyxis Color8
+bright_red = "#ec0101"   # Ptyxis Color9
+bright_green = "#47d4b9"   # Ptyxis Color10
+bright_yellow = "#ff8a18"   # Ptyxis Color11
+bright_blue = "#277fff"   # Ptyxis Color12
+bright_magenta = "#d71655"   # Ptyxis Color13
+bright_cyan = "#05a1f7"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Morada'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Morada.yml.
+title = "Morada"
+gtk_name = "Morada"
+shell_name = "Morada-Shell"
+credit = "Morada (colours of the Ptyxis built-in 'Morada'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Morada.yml)"
+ptyxis = "Morada"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Morada' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#211f46"
+fg = "#ffffff"
+selection = "#4d4c6b"   # DERIVED
+red = "#0f49c4"
+orange = "#7c5e74"   # DERIVED
+yellow = "#e87324"
+green = "#48b117"
+cyan = "#70a699"
+blue = "#bc0116"
+magenta = "#665b93"
+purple = "#665b93"   # = magenta
+# palette Color8 (bright black) = #4f7cbf: a candidate for `comment`
+[dark.ansi]
+red = "#0f49c4"
+green = "#48b117"
+yellow = "#e87324"
+blue = "#bc0116"
+magenta = "#665b93"
+cyan = "#70a699"
+[dark.terminal]
+source = "Morada"   # Ptyxis built-in id
+black = "#040404"   # Ptyxis Color0
+white = "#f5dcbe"   # Ptyxis Color7
+bright_black = "#4f7cbf"   # Ptyxis Color8
+bright_red = "#1c96c7"   # Ptyxis Color9
+bright_green = "#3bff6f"   # Ptyxis Color10
+bright_yellow = "#efc31c"   # Ptyxis Color11
+bright_blue = "#fb605b"   # Ptyxis Color12
+bright_magenta = "#975b5a"   # Ptyxis Color13
+bright_cyan = "#1eff8e"   # Ptyxis Color14
+bright_white = "#f6f5fb"   # Ptyxis Color15

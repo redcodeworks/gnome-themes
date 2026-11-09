@@ -1,0 +1,87 @@
+# SPDX-License-Identifier: MIT
+# Tokyo Night as ported by folke/tokyonight.nvim (Apache-2.0): Night dark + Day light.
+# Dark ladder: view and window bg (the built-in's background; the view was bg_dark #16161e before), headers bg_highlight, popovers fg_gutter. Light: view bg, window bg_dark,
+# headers bg_highlight, popovers bg_visual. ANSI six = Ptyxis "Tokyo Night" / "Tokyo Night Day" Color1-6 (identical to
+# the tokyonight terminal tables). Default accent blue. Deviation: Day's fg is nudged off the built-in (see [light.nudge]) to reach 4.5:1.
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-ins "Tokyo Night" (Gogh port) and "Tokyo Night Day" (folke/tokyonight.nvim extras, per its header), two flat palettes: ptyxis / ptyxis_light, picked by switch-theme from the system colour scheme.
+# Dark bg_deep is #1a1b26 (was #16161e). Day's fg #3760bf is below 4.5:1 on the window, so it is nudged (listed in [light.nudge]).
+title = "Tokyo Night"
+gtk_name = "Tokyo-Night"
+shell_name = "Tokyo-Night-Shell"
+credit = "Tokyo Night by folke (tokyonight.nvim, Apache-2.0), Night and Day"
+ptyxis = "Tokyo Night"
+ptyxis_light = "Tokyo Night Day"
+ptyxis_reason = "two flat built-ins, one per mode; switch-theme picks the id by the system colour scheme."
+default_accent = "blue"
+
+[dark]
+bg_deep = "#1a1b26"
+surface = "#292e42"
+surface_high = "#3b4261"
+fg = "#c0caf5"
+fg_dim = "#a9b1d6"
+comment = "#737aa2"
+selection = "#283457"
+red = "#f7768e"
+orange = "#ff9e64"
+yellow = "#e0af68"
+green = "#9ece6a"
+cyan = "#7dcfff"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+purple = "#9d7cd8"
+pink = "#ff007c"
+[dark.ansi]
+orange = "#ff9e64"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#f7768e"
+green = "#9ece6a"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+cyan = "#7dcfff"
+
+[light]
+bg_deep = "#e1e2e7"
+bg = "#d0d5e3"
+surface = "#c4c8da"
+surface_high = "#b7c1e3"
+fg = "#3258af"   # NUDGED from the built-in Foreground (see [light.nudge])
+comment = "#848cb5"
+selection = "#bfc8df"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#f52a65"
+orange = "#b15c00"
+yellow = "#8c6c3e"
+green = "#587539"
+cyan = "#007197"
+blue = "#2e7de9"
+magenta = "#9854f1"
+purple = "#7847bd"
+pink = "#d20065"
+[light.ansi]
+orange = "#b15c00"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#f52a65"
+green = "#587539"
+yellow = "#8c6c3e"
+blue = "#2e7de9"
+magenta = "#9854f1"
+cyan = "#007197"
+
+[dark.terminal]
+source = "Tokyo Night"   # Ptyxis built-in id
+black = "#414868"   # Color0
+white = "#a9b1d6"   # Color7
+bright_black = "#414868"   # Color8
+bright_white = "#c0caf5"   # Color15
+
+[light.terminal]
+source = "Tokyo Night Day"   # Ptyxis built-in id
+black = "#e9e9ed"   # Color0
+white = "#6172b0"   # Color7
+bright_black = "#a1a6c5"   # Color8
+bright_white = "#3760bf"   # Color15
+
+[light.nudge]
+Foreground = { from = "#3760bf", to = "#3258af", de = 5.3, why = "fg on the window #d0d5e3 is 3.99:1 with the built-in foreground (selftest needs 4.5:1); lightness lowered until 4.54:1 on the window" }

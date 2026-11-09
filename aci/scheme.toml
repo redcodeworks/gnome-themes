@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Aci'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Aci.yml.
+title = "Aci"
+gtk_name = "Aci"
+shell_name = "Aci-Shell"
+credit = "Aci (colours of the Ptyxis built-in 'Aci'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Aci.yml)"
+ptyxis = "Aci"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Aci' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#0d1926"
+fg = "#b4e1fd"
+selection = "#2e4151"   # DERIVED
+red = "#ff0883"
+orange = "#ff4646"   # DERIVED
+yellow = "#ff8308"
+green = "#83ff08"
+cyan = "#08ff83"
+blue = "#0883ff"
+magenta = "#8308ff"
+purple = "#8308ff"   # = magenta
+# palette Color8 (bright black) = #424242: a candidate for `comment`
+[dark.ansi]
+red = "#ff0883"
+green = "#83ff08"
+yellow = "#ff8308"
+blue = "#0883ff"
+magenta = "#8308ff"
+cyan = "#08ff83"
+[dark.terminal]
+source = "Aci"   # Ptyxis built-in id
+black = "#363636"   # Ptyxis Color0
+white = "#b6b6b6"   # Ptyxis Color7
+bright_black = "#424242"   # Ptyxis Color8
+bright_red = "#ff1e8e"   # Ptyxis Color9
+bright_green = "#8eff1e"   # Ptyxis Color10
+bright_yellow = "#ff8e1e"   # Ptyxis Color11
+bright_blue = "#1e8eff"   # Ptyxis Color12
+bright_magenta = "#8e1eff"   # Ptyxis Color13
+bright_cyan = "#1eff8e"   # Ptyxis Color14
+bright_white = "#c2c2c2"   # Ptyxis Color15

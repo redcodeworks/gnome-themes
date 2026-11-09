@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Japanesque'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Japanesque.yml.
+title = "Japanesque"
+gtk_name = "Japanesque"
+shell_name = "Japanesque-Shell"
+credit = "Japanesque (colours of the Ptyxis built-in 'Japanesque'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Japanesque.yml)"
+ptyxis = "Japanesque"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Japanesque' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1e1e1e"
+fg = "#f7f6ec"
+selection = "#494947"   # DERIVED
+red = "#cf3f61"
+orange = "#dc7946"   # DERIVED
+yellow = "#e9b32a"
+green = "#7bb75b"
+cyan = "#389aad"
+blue = "#4c9ad4"
+magenta = "#a57fc4"
+purple = "#a57fc4"   # = magenta
+# palette Color8 (bright black) = #595b59: a candidate for `comment`
+[dark.ansi]
+red = "#cf3f61"
+green = "#7bb75b"
+yellow = "#e9b32a"
+blue = "#4c9ad4"
+magenta = "#a57fc4"
+cyan = "#389aad"
+[dark.terminal]
+source = "Japanesque"   # Ptyxis built-in id
+black = "#343935"   # Ptyxis Color0
+white = "#fafaf6"   # Ptyxis Color7
+bright_black = "#595b59"   # Ptyxis Color8
+bright_red = "#d18fa6"   # Ptyxis Color9
+bright_green = "#767f2c"   # Ptyxis Color10
+bright_yellow = "#78592f"   # Ptyxis Color11
+bright_blue = "#135979"   # Ptyxis Color12
+bright_magenta = "#604291"   # Ptyxis Color13
+bright_cyan = "#76bbca"   # Ptyxis Color14
+bright_white = "#b2b5ae"   # Ptyxis Color15

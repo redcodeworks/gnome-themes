@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Monokai Soda'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Soda.yml.
+title = "Monokai Soda"
+gtk_name = "Monokai-Soda"
+shell_name = "Monokai-Soda-Shell"
+credit = "Monokai Soda (colours of the Ptyxis built-in 'Monokai Soda'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Soda.yml)"
+ptyxis = "Monokai Soda"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Monokai Soda' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#1a1a1a"
+fg = "#c4c5b5"
+selection = "#3c3c39"   # DERIVED
+red = "#f4005f"
+orange = "#f7423c"   # DERIVED
+yellow = "#fa8419"
+green = "#98e024"
+cyan = "#58d1eb"
+blue = "#9d65ff"
+magenta = "#f4005f"
+purple = "#f4005f"   # = magenta
+# palette Color8 (bright black) = #625e4c: a candidate for `comment`
+[dark.ansi]
+red = "#f4005f"
+green = "#98e024"
+yellow = "#fa8419"
+blue = "#9d65ff"
+magenta = "#f4005f"
+cyan = "#58d1eb"
+[dark.terminal]
+source = "Monokai Soda"   # Ptyxis built-in id
+black = "#1a1a1a"   # Ptyxis Color0
+bright_black = "#625e4c"   # Ptyxis Color8
+bright_yellow = "#e0d561"   # Ptyxis Color11
+bright_white = "#f6f6ef"   # Ptyxis Color15

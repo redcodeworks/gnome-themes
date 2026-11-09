@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Mar'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Mar.yml.
+title = "Mar"
+gtk_name = "Mar"
+shell_name = "Mar-Shell"
+credit = "Mar (colours of the Ptyxis built-in 'Mar'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Mar.yml)"
+ptyxis = "Mar"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Mar' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[light]
+bg_deep = "#ffffff"
+fg = "#23476a"
+selection = "#d3dae1"   # DERIVED
+red = "#b5407b"
+orange = "#b55e5e"   # DERIVED
+yellow = "#b57b40"
+green = "#7bb540"
+cyan = "#40b57b"
+blue = "#407bb5"
+magenta = "#7b40b5"
+purple = "#7b40b5"   # = magenta
+# palette Color8 (bright black) = #737373: a candidate for `comment`
+[light.ansi]
+red = "#b5407b"
+green = "#7bb540"
+yellow = "#b57b40"
+blue = "#407bb5"
+magenta = "#7b40b5"
+cyan = "#40b57b"
+[light.terminal]
+source = "Mar"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#f8f8f8"   # Ptyxis Color7
+bright_black = "#737373"   # Ptyxis Color8
+bright_red = "#cd73a0"   # Ptyxis Color9
+bright_green = "#a0cd73"   # Ptyxis Color10
+bright_yellow = "#cda073"   # Ptyxis Color11
+bright_blue = "#73a0cd"   # Ptyxis Color12
+bright_magenta = "#a073cd"   # Ptyxis Color13
+bright_cyan = "#73cda0"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Idle Toes'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Idle%20Toes.yml.
+title = "Idle Toes"
+gtk_name = "Idle-Toes"
+shell_name = "Idle-Toes-Shell"
+credit = "Idle Toes (colours of the Ptyxis built-in 'Idle Toes'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Idle%20Toes.yml)"
+ptyxis = "Idle Toes"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Idle Toes' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#323232"
+fg = "#ffffff"
+selection = "#5b5b5b"   # DERIVED
+red = "#d25252"
+orange = "#e88c60"   # DERIVED
+yellow = "#ffc66d"
+green = "#7fe173"
+cyan = "#bed6ff"
+blue = "#4099ff"
+magenta = "#f680ff"
+purple = "#f680ff"   # = magenta
+# palette Color8 (bright black) = #535353: a candidate for `comment`
+[dark.ansi]
+red = "#d25252"
+green = "#7fe173"
+yellow = "#ffc66d"
+blue = "#4099ff"
+magenta = "#f680ff"
+cyan = "#bed6ff"
+[dark.terminal]
+source = "Idle Toes"   # Ptyxis built-in id
+black = "#323232"   # Ptyxis Color0
+white = "#eeeeec"   # Ptyxis Color7
+bright_black = "#535353"   # Ptyxis Color8
+bright_red = "#f07070"   # Ptyxis Color9
+bright_green = "#9dff91"   # Ptyxis Color10
+bright_yellow = "#ffe48b"   # Ptyxis Color11
+bright_blue = "#5eb7f7"   # Ptyxis Color12
+bright_magenta = "#ff9dff"   # Ptyxis Color13
+bright_cyan = "#dcf4ff"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Afterglow'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Afterglow.yml.
+title = "Afterglow"
+gtk_name = "Afterglow"
+shell_name = "Afterglow-Shell"
+credit = "Afterglow (colours of the Ptyxis built-in 'Afterglow'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Afterglow.yml)"
+ptyxis = "Afterglow"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Afterglow' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#222222"
+fg = "#d0d0d0"
+selection = "#454545"   # DERIVED
+red = "#a53c23"
+orange = "#bc6e38"   # DERIVED
+yellow = "#d3a04d"
+green = "#7b9246"
+cyan = "#7dd6cf"
+blue = "#6c99bb"
+magenta = "#9f4e85"
+purple = "#9f4e85"   # = magenta
+# palette Color8 (bright black) = #505050: a candidate for `comment`
+[dark.ansi]
+red = "#a53c23"
+green = "#7b9246"
+yellow = "#d3a04d"
+blue = "#6c99bb"
+magenta = "#9f4e85"
+cyan = "#7dd6cf"
+[dark.terminal]
+source = "Afterglow"   # Ptyxis built-in id
+black = "#151515"   # Ptyxis Color0
+bright_black = "#505050"   # Ptyxis Color8
+bright_blue = "#547c99"   # Ptyxis Color12
+bright_white = "#f5f5f5"   # Ptyxis Color15

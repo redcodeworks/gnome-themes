@@ -1,0 +1,102 @@
+gnome-themes: colour schemes for GTK3, GTK4, libadwaita and GNOME Shell.
+
+Palettes
+  Gruvbox Material colour palette: https://github.com/sainnhe/gruvbox-material
+  (palette based on gruvbox by morhetz). MIT License, Copyright (c) 2020 sainnhe.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this
+    software and associated documentation files (the "Software"), to deal in the Software
+    without restriction, including without limitation the rights to use, copy, modify, merge,
+    publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+    to whom the Software is furnished to do so, subject to the following conditions: The above
+    copyright notice and this permission notice shall be included in all copies or substantial
+    portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+  Nordic      Nord palette values (https://github.com/arcticicestudio/nord). MIT License,
+              Copyright (c) 2016-present Sven Greb. The "Nordic" GTK theme by EliverLara
+              (https://github.com/EliverLara/Nordic, GPL-3.0) is the inspiration for using Nord on GTK; none of its
+              stylesheets or assets are used, only the Nord palette values.
+  Dracula     Dracula colour palette and the Alucard light variant (https://draculatheme.com). MIT License,
+              Copyright (c) 2023 Dracula Theme. The terminal accents come from the Ptyxis "Dracula" palette
+              (generated from Gogh, https://github.com/Gogh-Co/Gogh); the Alucard role colours from the Dracula spec.
+  Catppuccin  Catppuccin Mocha and Latte (https://github.com/catppuccin/catppuccin). MIT License,
+              Copyright (c) 2021 Catppuccin.
+  Tokyo Night Tokyo Night Night and Day, as in folke/tokyonight.nvim (https://github.com/folke/tokyonight.nvim),
+              licensed under the Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0). Attribution as
+              required by the licence: the palette values are taken from tokyonight.nvim, Copyright folke and
+              contributors; this project changes them only in that Day's foreground is darkened for contrast
+              (tokyo-night/scheme.toml says so).
+  Solarized   Solarized (https://github.com/altercation/solarized). MIT License, Copyright (c) 2011 Ethan Schoonover.
+  Everforest  Everforest (https://github.com/sainnhe/everforest). MIT License, Copyright (c) 2019 sainnhe.
+  Fairy Floss Fairy Floss by sailorhg (https://github.com/sailorhg/fairyfloss). The repository has NO licence (all rights
+              reserved by default), so no file or text of it is used: the colours are the plain hex values of the Ptyxis built-in
+              "Fairy Floss Dark" (Ptyxis generates it from Gogh, https://github.com/Gogh-Co/Gogh). The surface ladder and orange are
+              DERIVED here; fairy-floss/scheme.toml says which is which. If the author objects, the scheme goes.
+  Material    Material Theme by Mattia Astorino, Sublime Text port (https://github.com/SublimeText/material-theme). MIT License,
+              Copyright (c) 2016 Mattia Astorino. The dark terminal and accent colours are the Ptyxis built-in "Material" (generated
+              from Gogh); the light variant keeps the Lighter tmTheme values. The official Material Theme for VS Code is a commercial
+              product and was not used.
+  Monokai     Monokai by Wimer Hazenberg (https://monokai.nl), the classic palette, as plain hex values of the Ptyxis built-in
+              "Monokai Dark" (generated from Gogh); the ladder and comment tones follow Base16 Monokai in tinted-theming/schemes
+              (https://github.com/tinted-theming/schemes, MIT, Copyright (c) 2022 Tinted Theming; the original Monokai itself has no
+              licence of its own). Monokai Pro (monokai.pro) is proprietary and is deliberately NOT used.
+  Rose Pine   Rose Pine Main and Dawn (https://github.com/rose-pine/rose-pine-palette). MIT License, Copyright (c) mvllow; the
+              terminal and accent colours are the Ptyxis built-ins "Rosé Pine" and "Rosé Pine Dawn" (generated from Gogh); the ladder
+              roles are from the Rose Pine palette, see rose-pine/scheme.toml.
+  Sweet       Colour values of Sweet by EliverLara (https://github.com/EliverLara/Sweet, GPL-3.0), taken as plain hex values from the
+              Ptyxis built-in "Sweet Eliverlara" (generated from Gogh). None of its SCSS, CSS or assets is used, as for Nordic.
+  Aubergine   The Ubuntu terminal colours: Ubuntu brand colours (https://design.ubuntu.com/brand/colour-palette) and the Ubuntu terminal
+              palette (Tango ANSI colours, as shipped in the Ptyxis "Ubuntu" palette, generated from Gogh). Only hex values are used; no
+              logos, fonts or artwork. "Ubuntu" and its logos are Canonical trademarks (https://ubuntu.com/legal/intellectual-property-policy),
+              which is why the theme is called Aubergine. The licence of the Tango palette itself was not verified.
+  Terminal colours: every scheme takes bg_deep, fg, the six accents and the black, white and brights from the Ptyxis built-in palette of
+  the same name (by id; Most carry a Ptyxis header saying they were generated from Gogh, https://github.com/Gogh-Co/Gogh, MIT; Tokyo Night Day says
+  folke/tokyonight.nvim extras; the sectioned nord, dracula, solarized and Everforest carry no origin header); the terminal always shows that built-in. Where a built-in has no light variant (Gruvbox
+  Material, Material) the light variant keeps its own values and the dark built-in serves both modes. A foreground that fails the contrast
+  rule is a listed nudge in scheme.toml (Solarized, Tokyo Night Day). Orange (a seventh accent) is each scheme's own orange role colour,
+  except Rose Pine (derived gold/love mix), Fairy Floss (derived) and Aubergine (Ubuntu orange #E95420).
+  The Nord, Dracula, Catppuccin, Solarized and Everforest licences are the MIT text above with the copyright line of
+  each project.
+
+Stock stylesheets these themes are built on (colour values replaced, structure unchanged)
+  gtk-3.0     gtk.css and gtk-dark.css are generated from GTK 3.24's built-in Adwaita stylesheet
+              (gtk-contained.css, gtk-contained-dark.css). GTK is LGPL-2.0-or-later,
+              Copyright the GTK contributors (https://gitlab.gnome.org/GNOME/gtk).
+  gtk-4.0     gtk.css and gtk-dark.css are generated from GTK 4's built-in stylesheet
+              (Default-light.css, Default-dark.css, GTK 4.24; the former "Adwaita" theme).
+              GTK is LGPL-2.0-or-later, Copyright the GTK contributors. The bitmaps in
+              gtk-3.0/assets and gtk-4.0/assets are unmodified stock files.
+  Shell       Gruvbox-Material-Shell-{Dark,Light}/gnome-shell/gnome-shell.css are generated from
+              GNOME Shell's stock stylesheets (gnome-shell-dark.css, gnome-shell-light.css from
+              gnome-shell-theme.gresource), colour values replaced, structure unchanged except one
+              marked override block appended at the end (calendar flat: transparent
+              background rules for days, headings, month label and arrows). The stock
+              header is kept in each file: "Copyright 2009, 2015 Red Hat, Inc. Portions adapted from
+              Mx's data/style/default.css, Copyright 2009 Intel Corporation", GNU Lesser General
+              Public License version 2.1 (https://gitlab.gnome.org/GNOME/gnome-shell).
+              pad-osd.css is the unmodified stock file.
+  libadwaita/ gtk.css (generated by tools/libadwaita-gen.py) overrides libadwaita's public named colours (libadwaita is
+              LGPL-2.1-or-later, https://gitlab.gnome.org/GNOME/libadwaita).
+
+Palettes taken from the Ptyxis built-ins (the schemes listed in tools/ptyxis-schemes.tsv with status "built")
+  Their colours are the palettes built into Ptyxis (https://gitlab.gnome.org/chergert/ptyxis, GPL-3.0-or-later), which
+  mostly come from Gogh (https://github.com/Gogh-Co/Gogh) and from the upstream colour schemes it ports; colour values
+  are facts about a design, not code, and no stylesheet or asset of those projects is used. The `origin` column of
+  tools/ptyxis-schemes.tsv is the URL the built-in's own header names, "-" when it names none (then the origin of the
+  palette is not stated and no further credit can be given); each scheme.toml header repeats it. A palette named
+  after a proprietary product (for example Monokai Pro) is used for its colour values only, as in Ptyxis itself.
+
+Shared assets
+  assets/gtk-3.0 and assets/gtk-4.0 are GTK's own stock PNG and SVG files (the ones the stock stylesheets refer to as url("assets/...")),
+  copied unmodified by tools/assets-gen.py from the installed GTK (LGPL-2.0-or-later; assets/LICENSE is the LGPL text). They are stored once;
+  the installer copies them into every installed theme folder, so installed themes carry them together with their LICENSE.
+
+Licences by path
+  themes/<Name>/ and assets/   the generated and recoloured theme files derive from the LGPL works above, so they
+                   stay under the LGPL: the GTK files LGPL-2.0-or-later (use them under LGPL-2.1-or-later),
+                   the GNOME Shell files LGPL-2.1 (version 2.1 only, as in their source header). The LGPL
+                   text is the LICENSE file inside each theme folder, so installed copies carry it. Keep
+                   the notices in the file headers when you copy the files.
+  everything else  tools/, justfile, README, scheme.toml, palette.toml, accents/ and <scheme>/libadwaita/gtk.css are
+                   original work under the MIT licence (LICENSE at the repo root). The palette values come
+                   from the projects credited above (MIT, Tokyo Night Apache-2.0; Fairy Floss has no licence, Sweet's source is GPL-3.0 and not used, see the entries above).

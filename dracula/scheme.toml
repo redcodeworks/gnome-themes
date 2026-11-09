@@ -1,0 +1,91 @@
+# SPDX-License-Identifier: MIT
+# Dracula (dracula/dracula-theme, MIT, Copyright (c) 2023 Dracula Theme) dark + Alucard light.
+# The spec has only bg #282a36 and selection #44475a: bg_deep = bg, surface = selection, bg and surface_high are
+# DERIVED by mixing towards fg (dark ladder rule), fg_dim and comment likewise. The light ladder is derived (light rule)
+# from the Ptyxis [Light] background #ffffff and foreground #282a36 (Alucard's own bg #fffbeb and fg #1f1f1f were used before).
+# ANSI six: dark = Ptyxis "Dracula" [Dark] Color1-6, which settles the values the research file had marked unverified
+# (they match: blue #bd93f9 = Dracula purple). Light = Ptyxis "Dracula" [Light] Color1-6 (a Ptyxis-made light palette,
+# NOT Alucard's own colours, because the accents follow the terminal definition); the light role colours below are Alucard's.
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-in "dracula" (id lower case, Name Dracula), sectioned: [Dark] gives the dark variant, [Light] the light one (Ptyxis-made, NOT Alucard's own terminal colours).
+# Light: bg_deep #ffffff, fg #282a36 (Alucard's #fffbeb and #1f1f1f were used before). The light ROLE colours red..pink stay Alucard's own (UI status colours, not terminal accents).
+title = "Dracula"
+gtk_name = "Dracula"
+shell_name = "Dracula-Shell"
+credit = "Dracula Theme (MIT), light variant Alucard"
+ptyxis = "dracula"
+ptyxis_reason = "the built-in (id lower case, Name Dracula) has [Light] and [Dark] sections and covers both modes."
+default_accent = "blue"
+
+[dark]
+bg_deep = "#282a36"
+surface = "#44475a"
+fg = "#f8f8f2"
+selection = "#44475a"
+red = "#ff5555"
+orange = "#ffb86c"
+yellow = "#f1fa8c"
+green = "#50fa7b"
+cyan = "#8be9fd"
+blue = "#bd93f9"
+magenta = "#ff79c6"
+purple = "#bd93f9"
+pink = "#ff79c6"
+[dark.ansi]
+orange = "#ffb86c"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#bd93f9"
+magenta = "#ff79c6"
+cyan = "#8be9fd"
+
+[light]
+bg_deep = "#ffffff"
+fg = "#282a36"
+selection = "#cfcfde"
+red = "#cb3a2a"
+orange = "#a34d14"
+yellow = "#846e15"
+green = "#14710a"
+cyan = "#036a96"
+blue = "#644ac9"
+magenta = "#a3144d"
+purple = "#644ac9"
+pink = "#a3144d"
+[light.ansi]
+orange = "#a34d14"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#b60021"
+green = "#006800"
+yellow = "#515f00"
+blue = "#6946a3"
+magenta = "#a41d74"
+cyan = "#006274"
+
+[dark.terminal]
+source = "dracula"   # Ptyxis built-in id (its [Dark] section)
+black = "#21222c"   # Color0
+white = "#f8f8f2"   # Color7
+bright_black = "#6272a4"   # Color8
+bright_white = "#ffffff"   # Color15
+bright_red = "#ff6e6e"   # Color9
+bright_green = "#69ff94"   # Color10
+bright_yellow = "#ffffa5"   # Color11
+bright_blue = "#d6acff"   # Color12
+bright_magenta = "#ff92df"   # Color13
+bright_cyan = "#a4ffff"   # Color14
+
+[light.terminal]
+source = "dracula"   # Ptyxis built-in id (its [Light] section)
+black = "#f1f2ff"   # Color0
+white = "#f8f8f2"   # Color7
+bright_black = "#8393c7"   # Color8
+bright_white = "#595959"   # Color15
+bright_red = "#ac202f"   # Color9
+bright_green = "#006803"   # Color10
+bright_yellow = "#585e06"   # Color11
+bright_blue = "#6c4993"   # Color12
+bright_magenta = "#962f7c"   # Color13
+bright_cyan = "#006465"   # Color14

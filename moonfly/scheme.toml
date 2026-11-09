@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Moonfly'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Moonfly.yml.
+title = "Moonfly"
+gtk_name = "Moonfly"
+shell_name = "Moonfly-Shell"
+credit = "Moonfly (colours of the Ptyxis built-in 'Moonfly'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Moonfly.yml)"
+ptyxis = "Moonfly"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Moonfly' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#080808"
+fg = "#bdbdbd"
+selection = "#2c2c2c"   # DERIVED
+red = "#ff5454"
+orange = "#f18e6f"   # DERIVED
+yellow = "#e3c78a"
+green = "#8cc85f"
+cyan = "#79dac8"
+blue = "#80a0ff"
+magenta = "#cf87e8"
+purple = "#cf87e8"   # = magenta
+# palette Color8 (bright black) = #949494: a candidate for `comment`
+[dark.ansi]
+red = "#ff5454"
+green = "#8cc85f"
+yellow = "#e3c78a"
+blue = "#80a0ff"
+magenta = "#cf87e8"
+cyan = "#79dac8"
+[dark.terminal]
+source = "Moonfly"   # Ptyxis built-in id
+cursor = "#9e9e9e"   # Ptyxis Cursor
+black = "#323437"   # Ptyxis Color0
+white = "#c6c6c6"   # Ptyxis Color7
+bright_black = "#949494"   # Ptyxis Color8
+bright_red = "#ff5189"   # Ptyxis Color9
+bright_green = "#36c692"   # Ptyxis Color10
+bright_yellow = "#c2c292"   # Ptyxis Color11
+bright_blue = "#74b2ff"   # Ptyxis Color12
+bright_magenta = "#ae81ff"   # Ptyxis Color13
+bright_cyan = "#85dc85"   # Ptyxis Color14
+bright_white = "#e4e4e4"   # Ptyxis Color15

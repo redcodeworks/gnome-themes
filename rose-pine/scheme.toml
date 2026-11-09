@@ -1,0 +1,84 @@
+# SPDX-License-Identifier: MIT
+# Rose Pine (rose-pine/rose-pine-palette, MIT, Copyright (c) mvllow and contributors): Main dark + Dawn light.
+# The terminal and the accents are the Ptyxis built-ins "Rosé Pine" (dark) and "Rosé Pine Dawn" (light), two flat Gogh ports (https://github.com/Gogh-Co/Gogh, per
+# their headers): bg_deep, fg, the six accents and the black/white/brights are theirs: love red, FOAM green, gold yellow, PINE blue, iris magenta, rose cyan (the
+# official alacritty port has pine green and foam blue; the built-in swaps them and the built-in wins now). The roles green and blue follow.
+# Ladder dark (kept, same bg_deep #191724): window surface #1f1d2e, headers overlay #26233a, popovers highlight-med #403d52. Light: the built-in Dawn background
+# is #faf4ed (the view was #fffaf3 before), so the light ladder is DERIVED (the fixed rules). fg_dim = subtle, comment = muted (dark).
+# Rose Pine has no orange: orange is DERIVED (gold mixed 35 % towards love); no seventh accent. Default accent magenta = iris (best contrast on the dark window).
+# accent_fg (dark): text on an accent is the window colour #1f1d2e (generator limit: the single libadwaita file cannot tell two variants' nudged ink tokens apart).
+# Moon is not used. Dawn text is the built-in's #575279.
+title = "Rose Pine"
+gtk_name = "Rose-Pine"
+shell_name = "Rose-Pine-Shell"
+credit = "Rose Pine (MIT), Main and Dawn"
+ptyxis = "Rosé Pine"
+ptyxis_light = "Rosé Pine Dawn"
+ptyxis_reason = "two flat built-ins, one per mode; switch-theme picks the id by the system colour scheme (the Moon built-in is not used)."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#191724"
+bg = "#1f1d2e"
+surface = "#26233a"
+surface_high = "#403d52"
+fg = "#e0def4"
+accent_fg = "#1f1d2e"
+fg_dim = "#908caa"
+comment = "#6e6a86"
+selection = "#403d52"
+red = "#eb6f92"
+orange = "#f2a480"
+yellow = "#f6c177"
+green = "#9ccfd8"
+cyan = "#ebbcba"
+blue = "#31748f"
+magenta = "#c4a7e7"
+purple = "#c4a7e7"
+pink = "#ebbcba"
+
+[dark.ansi]
+red = "#eb6f92"
+green = "#9ccfd8"
+yellow = "#f6c177"
+blue = "#31748f"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+
+[light]
+bg_deep = "#faf4ed"
+fg = "#575279"
+fg_dim = "#797593"
+comment = "#9893a5"
+selection = "#d9d4d6"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#b4637a"
+orange = "#d7894c"
+yellow = "#ea9d34"
+green = "#56949f"
+cyan = "#d7827e"
+blue = "#286983"
+magenta = "#907aa9"
+purple = "#907aa9"
+pink = "#d7827e"
+
+[light.ansi]
+red = "#b4637a"
+green = "#56949f"
+yellow = "#ea9d34"
+blue = "#286983"
+magenta = "#907aa9"
+cyan = "#d7827e"
+
+[dark.terminal]
+source = "Rosé Pine"   # Ptyxis built-in id
+black = "#26233a"   # Color0
+white = "#e0def4"   # Color7
+bright_black = "#6e6a86"   # Color8
+bright_white = "#e0def4"   # Color15
+
+[light.terminal]
+source = "Rosé Pine Dawn"   # Ptyxis built-in id
+black = "#f2e9e1"   # Color0
+white = "#575279"   # Color7
+bright_black = "#9893a5"   # Color8
+bright_white = "#575279"   # Color15

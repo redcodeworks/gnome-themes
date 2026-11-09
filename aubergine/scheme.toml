@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: MIT
+# Aubergine: the Ubuntu terminal look, dark only. Only hex values are used (no Ubuntu logos, fonts or artwork); "Ubuntu" is a
+# Canonical trademark, which is why the theme folders are called Aubergine. Brand colours from design.ubuntu.com/brand/colour-palette
+# (dark aubergine #2C001E, mid aubergine #5E2750, orange #E95420); terminal table = Ptyxis "Ubuntu" (background #300A24, foreground
+# #FFFFFF; gnome-terminal's own profile has #EEEEEC) with the Tango ANSI colours. The Tango palette's licence was not verified;
+# the values come from the Ptyxis palette (Gogh, MIT) and the research file, NOT re-read from a raw upstream file (not reachable).
+# Ladder: view and terminal background #300a24 (Ubuntu's own; the brand dark aubergine #2c001e was the view before), window DERIVED,
+# headers mid aubergine #5e2750, popovers DERIVED (fixed rule, 28 % towards fg). fg_dim and comment derived.
+# ANSI six = Ptyxis "Ubuntu" Color1-6 (Tango red, green, yellow, blue, magenta, cyan).
+# Default accent orange #E95420: Ubuntu's brand accent. Orange is the seventh accent, next to the six terminal colours (it is the
+# scheme's own orange role colour, not an ANSI colour).
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-in "Ubuntu" (flat, dark only; Ptyxis generated it from Gogh "Clone Of Ubuntu", https://github.com/Gogh-Co/Gogh). bg_deep is its #300a24 (the brand #2c001e was the view before).
+title = "Aubergine"
+gtk_name = "Aubergine"
+shell_name = "Aubergine-Shell"
+credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
+ptyxis = "Ubuntu"
+ptyxis_reason = "Ubuntu is the built-in; flat and dark only, like the scheme."
+default_accent = "orange"
+
+[dark]
+bg_deep = "#300a24"
+surface = "#5e2750"
+fg = "#ffffff"
+selection = "#5e2750"
+red = "#cc0000"
+orange = "#e95420"
+yellow = "#c4a000"
+green = "#4e9a06"
+cyan = "#06989a"
+blue = "#3465a4"
+magenta = "#75507b"
+purple = "#75507b"
+[dark.ansi]
+orange = "#e95420"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#cc0000"
+green = "#4e9a06"
+yellow = "#c4a000"
+blue = "#3465a4"
+magenta = "#75507b"
+cyan = "#06989a"
+
+[dark.terminal]
+source = "Ubuntu"   # Ptyxis built-in id
+black = "#2e3436"   # Color0
+white = "#d3d7cf"   # Color7
+bright_black = "#555753"   # Color8
+bright_white = "#eeeeec"   # Color15
+bright_red = "#ef2929"   # Color9
+bright_green = "#8ae234"   # Color10
+bright_yellow = "#fce94f"   # Color11
+bright_blue = "#729fcf"   # Color12
+bright_magenta = "#ad7fa8"   # Color13
+bright_cyan = "#34e2e2"   # Color14

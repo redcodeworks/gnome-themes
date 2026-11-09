@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: MIT
+# Fairy Floss (sailorhg/fairyfloss), dark only. NO UPSTREAM LICENCE (all rights reserved by default; the raw LICENSE returns 404): no file or text of the
+# repository is used. Every colour of the terminal and of the role table comes from the Ptyxis built-in "Fairy Floss Dark" (a Gogh port, Ptyxis header:
+# https://github.com/Gogh-Co/Gogh, Fairy Floss Dark.yml), plain hex values: background #42395d, foreground #c2ffdf, accents red #a8757b, green #ff857f,
+# yellow #e6c000, blue #ae81ff, magenta #716799, cyan #c2ffdf. (Fairy Floss and Fairy Floss Dark differ only in Background, #5a5475 vs #42395d; Dark is
+# the one whose background the scheme already used.) The built-in maps the slots differently from the tmTheme (green is coral, cyan is mint): that is the
+# built-in's choice and now the scheme's.
+# INVENTED or DERIVED here (a palette gives none of these): the surface ladder (fixed rules), fg_dim, comment, orange (coral mixed 35 % towards yellow),
+# selection, purple = lavender #c5a3ff (kept); pink follows magenta. No seventh "orange" accent: upstream has no orange.
+# Default accent magenta (now the built-in's dull violet #716799; the signature pink #ffb8d1 is a bright colour only).
+title = "Fairy Floss"
+gtk_name = "Fairy-Floss"
+shell_name = "Fairy-Floss-Shell"
+credit = "Fairy Floss by sailorhg (hex values only, no upstream licence; accents partly invented)"
+ptyxis = "Fairy Floss Dark"
+ptyxis_reason = "dark only. Fairy Floss and Fairy Floss Dark differ only in Background (#5a5475 vs #42395d); Fairy Floss Dark matches the scheme background exactly."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#42395d"
+bg = "#5a5475"
+surface = "#67617f"
+surface_high = "#736e89"
+fg = "#c2ffdf"
+selection = "#5c6177"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#a8757b"
+orange = "#f69a53"
+yellow = "#e6c000"
+green = "#ff857f"
+cyan = "#c2ffdf"
+blue = "#ae81ff"
+magenta = "#716799"
+purple = "#c5a3ff"
+pink = "#716799"
+
+[dark.ansi]
+red = "#a8757b"
+green = "#ff857f"
+yellow = "#e6c000"
+blue = "#ae81ff"
+magenta = "#716799"
+cyan = "#c2ffdf"
+
+[dark.terminal]
+source = "Fairy Floss Dark"   # Ptyxis built-in id
+black = "#42395d"   # Color0
+white = "#f8f8f2"   # Color7
+bright_black = "#75507b"   # Color8
+bright_white = "#f8f8f0"   # Color15
+bright_red = "#ffb8d1"   # Color9
+bright_green = "#f1568e"   # Color10
+bright_yellow = "#d5a425"   # Color11
+bright_blue = "#c5a3ff"   # Color12
+bright_magenta = "#8077a8"   # Color13
+bright_cyan = "#c2ffff"   # Color14

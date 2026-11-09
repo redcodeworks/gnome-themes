@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Pali'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Pali.yml.
+title = "Pali"
+gtk_name = "Pali"
+shell_name = "Pali-Shell"
+credit = "Pali (colours of the Ptyxis built-in 'Pali'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Pali.yml)"
+ptyxis = "Pali"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Pali' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#232e37"
+fg = "#d9e6f2"
+selection = "#47535c"   # DERIVED
+red = "#ab8f74"
+orange = "#9d9d74"   # DERIVED
+yellow = "#8fab74"
+green = "#74ab8f"
+cyan = "#748fab"
+blue = "#8f74ab"
+magenta = "#ab748f"
+purple = "#ab748f"   # = magenta
+# palette Color8 (bright black) = #5d5d5d: a candidate for `comment`
+[dark.ansi]
+red = "#ab8f74"
+green = "#74ab8f"
+yellow = "#8fab74"
+blue = "#8f74ab"
+magenta = "#ab748f"
+cyan = "#748fab"
+[dark.terminal]
+source = "Pali"   # Ptyxis built-in id
+black = "#0a0a0a"   # Ptyxis Color0
+white = "#f2f2f2"   # Ptyxis Color7
+bright_black = "#5d5d5d"   # Ptyxis Color8
+bright_red = "#ff1d62"   # Ptyxis Color9
+bright_green = "#9cc3af"   # Ptyxis Color10
+bright_yellow = "#ffd00a"   # Ptyxis Color11
+bright_blue = "#af9cc3"   # Ptyxis Color12
+bright_magenta = "#ff1d62"   # Ptyxis Color13
+bright_cyan = "#4bb8fd"   # Ptyxis Color14
+bright_white = "#a020f0"   # Ptyxis Color15

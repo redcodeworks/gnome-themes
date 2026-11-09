@@ -1,0 +1,94 @@
+# SPDX-License-Identifier: MIT
+# Solarized (altercation/solarized, MIT, Copyright (c) 2011 Ethan Schoonover), dark (base03/base02) + light (base3/base2).
+# Only two real background layers per variant: the missing ladder steps are DERIVED by mixing towards the foreground
+# (dark: surface +16 %, surface_high +28 %; light: bg +3 %, surface +6 %; see tools/palette-from-scheme.py).
+# Default accent blue. The accents are the 16 Solarized colours, same in both variants.
+# COLOURS (the Ptyxis built-in palette is the source of truth, ids in tools/ptyxis-ids.py): bg_deep, fg, the six [<variant>.ansi] accents and the real
+# black, white and brights in [<variant>.terminal] are the built-in's, so the terminal and the toolkit themes show the same colours. A colour that
+# differs from it is a listed nudge ([<variant>.nudge], with the reason; tools/ptyxis-compare.py --check enforces this).
+# Built-in "solarized" (lower case; the capital-S "Solarized" is a different palette), sectioned ([Dark] and [Light]). Its foregrounds #839496 / #657b83 fail 4.5:1 on the window (4.11 and 3.98),
+# so fg carries a listed nudge in each variant; fg_dim (and the light comment) are derived (they would sit on or past fg).
+title = "Solarized"
+gtk_name = "Solarized"
+shell_name = "Solarized-Shell"
+credit = "Solarized by Ethan Schoonover (MIT)"
+ptyxis = "solarized"
+ptyxis_reason = "the lower-case id `solarized` has [Light] and [Dark] sections and matches the scheme (dark 2.8 dE, light 4.4 dE, the foreground nudges); the capital-S `Solarized` is a different palette (63 dE away in dark)."
+default_accent = "blue"
+
+[dark]
+bg_deep = "#002b36"
+bg = "#073642"
+fg = "#8b9b9d"   # NUDGED from the built-in Foreground (see [dark.nudge])
+comment = "#586e75"
+selection = "#1a4049"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#dc322f"
+orange = "#cb4b16"
+yellow = "#b58900"
+green = "#859900"
+cyan = "#2aa198"
+blue = "#268bd2"
+magenta = "#d33682"
+purple = "#6c71c4"
+[dark.ansi]
+orange = "#cb4b16"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#dc322f"
+green = "#859900"
+yellow = "#b58900"
+blue = "#268bd2"
+magenta = "#d33682"
+cyan = "#2aa198"
+
+[light]
+bg_deep = "#fdf6e3"
+surface_high = "#eee8d5"
+fg = "#5c7077"   # NUDGED from the built-in Foreground (see [light.nudge])
+selection = "#dfddd0"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#dc322f"
+orange = "#cb4b16"
+yellow = "#b58900"
+green = "#859900"
+cyan = "#2aa198"
+blue = "#268bd2"
+magenta = "#d33682"
+purple = "#6c71c4"
+[light.ansi]
+orange = "#cb4b16"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#dc322f"
+green = "#859900"
+yellow = "#b58900"
+blue = "#268bd2"
+magenta = "#d33682"
+cyan = "#2aa198"
+
+[dark.terminal]
+source = "solarized"   # Ptyxis built-in id (its [Dark] section)
+black = "#073642"   # Color0
+white = "#eee8d5"   # Color7
+bright_black = "#002b36"   # Color8
+bright_white = "#fdf6e3"   # Color15
+bright_red = "#cb4b16"   # Color9
+bright_green = "#586e75"   # Color10
+bright_yellow = "#657b83"   # Color11
+bright_blue = "#839496"   # Color12
+bright_magenta = "#6c71c4"   # Color13
+bright_cyan = "#93a1a1"   # Color14
+
+[light.terminal]
+source = "solarized"   # Ptyxis built-in id (its [Light] section)
+black = "#073642"   # Color0
+white = "#eee8d5"   # Color7
+bright_black = "#002b36"   # Color8
+bright_white = "#fdf6e3"   # Color15
+bright_red = "#cb4b16"   # Color9
+bright_green = "#586e75"   # Color10
+bright_yellow = "#657b83"   # Color11
+bright_blue = "#839496"   # Color12
+bright_magenta = "#6c71c4"   # Color13
+bright_cyan = "#93a1a1"   # Color14
+
+[dark.nudge]
+Foreground = { from = "#839496", to = "#8b9b9d", de = 2.8, why = "fg on the window #073642 is 4.11:1 with the built-in foreground (selftest needs 4.5:1); lightness raised until 4.50:1" }
+
+[light.nudge]
+Foreground = { from = "#657b83", to = "#5c7077", de = 4.4, why = "fg on the window #f8f2e0 is 3.98:1 with the built-in foreground (selftest needs 4.5:1); lightness lowered until 4.65:1 on the window" }

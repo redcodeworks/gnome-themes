@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Liquid Carbon'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon.yml.
+title = "Liquid Carbon"
+gtk_name = "Liquid-Carbon"
+shell_name = "Liquid-Carbon-Shell"
+credit = "Liquid Carbon (colours of the Ptyxis built-in 'Liquid Carbon'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon.yml)"
+ptyxis = "Liquid Carbon"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Liquid Carbon' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#303030"
+fg = "#afc2c2"
+selection = "#494d4d"   # DERIVED
+red = "#ff3030"
+orange = "#e66e18"   # DERIVED
+yellow = "#ccac00"
+green = "#559a70"
+cyan = "#7ac4cc"
+blue = "#0099cc"
+magenta = "#cc69c8"
+purple = "#cc69c8"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#ff3030"
+green = "#559a70"
+yellow = "#ccac00"
+blue = "#0099cc"
+magenta = "#cc69c8"
+cyan = "#7ac4cc"
+[dark.terminal]
+source = "Liquid Carbon"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bccccc"   # Ptyxis Color7
+bright_black = "#000000"   # Ptyxis Color8
+bright_white = "#bccccc"   # Ptyxis Color15

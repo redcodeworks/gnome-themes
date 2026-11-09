@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Predawn'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Predawn.yml.
+title = "Predawn"
+gtk_name = "Predawn"
+shell_name = "Predawn-Shell"
+credit = "Predawn (colours of the Ptyxis built-in 'Predawn'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Predawn.yml)"
+ptyxis = "Predawn"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Predawn' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#282828"
+fg = "#f1f1f1"
+selection = "#505050"   # DERIVED
+red = "#b51a20"
+orange = "#da762d"   # DERIVED
+yellow = "#fed33a"
+green = "#a6cc75"
+cyan = "#81b2b1"
+blue = "#81b2b1"
+magenta = "#eb6c4e"
+purple = "#eb6c4e"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[dark.ansi]
+red = "#b51a20"
+green = "#a6cc75"
+yellow = "#fed33a"
+blue = "#81b2b1"
+magenta = "#eb6c4e"
+cyan = "#81b2b1"
+[dark.terminal]
+source = "Predawn"   # Ptyxis built-in id
+black = "#f18260"   # Ptyxis Color0
+white = "#eaeaea"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#ff000b"   # Ptyxis Color9
+bright_green = "#c4ee94"   # Ptyxis Color10
+bright_yellow = "#e8e06d"   # Ptyxis Color11
+bright_blue = "#a5ebea"   # Ptyxis Color12
+bright_magenta = "#ef8a50"   # Ptyxis Color13
+bright_cyan = "#a5ebea"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

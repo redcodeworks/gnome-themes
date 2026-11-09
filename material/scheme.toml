@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: MIT
+# Material Theme by Mattia Astorino, Sublime Text port (SublimeText/material-theme, MIT, Copyright (c) 2016 Mattia Astorino): Darker dark + Lighter light.
+# The official VS Code "Material Theme" is a commercial product and was NOT used or consulted.
+# DARK: the Ptyxis built-in "Material" (a Gogh port, https://github.com/Gogh-Co/Gogh, per its header) is the source of truth for bg_deep, fg, the six
+# accents and the black/white/brights (so the terminal and the toolkit themes agree); the Darker tmTheme colours are no longer used for those. Role colours
+# that are not terminal accents (orange, selection, ladder) stay: orange #F78C6C is Darker's, the ladder is DERIVED from the built-in background.
+# LIGHT: NO built-in Material is light, so the Lighter tmTheme values stay (VERIFIED earlier against schemes/Material-Theme-Lighter.tmTheme: background
+# #FAFAFA, red #E53935, orange #F76D47, yellow #FFB62C, green #91B859, cyan #39ADB5, blue #6182B8, purple #7C4DFF; text #546E7A is the Material UI text colour from
+# the project documentation). The terminal shows the dark built-in in both modes (no_builtin in [light.terminal]).
+# Default accent orange (the seventh accent, the scheme's own orange role colour): the single default_accent serves both variants.
+title = "Material"
+gtk_name = "Material"
+shell_name = "Material-Shell"
+credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
+ptyxis = "Material"
+ptyxis_reason = "there is no light Material built-in, so the dark built-in is used in both modes."
+default_accent = "orange"
+
+[dark]
+bg_deep = "#1e282c"
+fg = "#c3c7d1"
+selection = "#3f484d"   # DERIVED: bg_deep 20 % towards fg (the built-in background changed)
+red = "#eb606b"
+orange = "#f78c6c"
+yellow = "#f7eb95"
+green = "#c3e88d"
+cyan = "#aeddff"
+blue = "#80cbc3"
+magenta = "#ff2490"
+purple = "#ff2490"
+pink = "#ff5370"
+
+[dark.ansi]
+orange = "#f78c6c"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#eb606b"
+green = "#c3e88d"
+yellow = "#f7eb95"
+blue = "#80cbc3"
+magenta = "#ff2490"
+cyan = "#aeddff"
+
+[light]
+bg_deep = "#fafafa"
+fg = "#546e7a"
+selection = "#cfd8dc"
+red = "#e53935"
+orange = "#f76d47"
+yellow = "#ffb62c"
+green = "#91b859"
+cyan = "#39adb5"
+blue = "#6182b8"
+magenta = "#7c4dff"
+purple = "#7c4dff"
+pink = "#ff5370"
+[light.ansi]
+orange = "#f76d47"   # seventh accent: the scheme's own orange role colour (not a terminal colour)
+red = "#e53935"
+green = "#91b859"
+yellow = "#ffb62c"
+blue = "#6182b8"
+magenta = "#7c4dff"
+cyan = "#39adb5"
+
+[dark.terminal]
+source = "Material"   # Ptyxis built-in id
+black = "#073641"   # Color0
+white = "#ffffff"   # Color7
+bright_black = "#002b36"   # Color8
+bright_white = "#ffffff"   # Color15
+bright_blue = "#7dc6bf"   # Color12
+bright_magenta = "#6c71c3"   # Color13
+bright_cyan = "#34434d"   # Color14
+
+[light.terminal]
+no_builtin = "no Ptyxis built-in has a light Material (the built-in of that name is dark only); the values stay as before"

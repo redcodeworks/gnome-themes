@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Desert'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Desert.yml.
+title = "Desert"
+gtk_name = "Desert"
+shell_name = "Desert-Shell"
+credit = "Desert (colours of the Ptyxis built-in 'Desert'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Desert.yml)"
+ptyxis = "Desert"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Desert' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#333333"
+fg = "#ffffff"
+selection = "#5c5c5c"   # DERIVED
+red = "#ff2b2b"
+orange = "#f8885c"   # DERIVED
+yellow = "#f0e68c"
+green = "#98fb98"
+cyan = "#ffa0a0"
+blue = "#cd853f"
+magenta = "#ffdead"
+purple = "#ffdead"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#ff2b2b"
+green = "#98fb98"
+yellow = "#f0e68c"
+blue = "#cd853f"
+magenta = "#ffdead"
+cyan = "#ffa0a0"
+[dark.terminal]
+source = "Desert"   # Ptyxis built-in id
+black = "#4d4d4d"   # Ptyxis Color0
+white = "#f5deb3"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#ff5555"   # Ptyxis Color9
+bright_green = "#55ff55"   # Ptyxis Color10
+bright_yellow = "#ffff55"   # Ptyxis Color11
+bright_blue = "#87ceff"   # Ptyxis Color12
+bright_magenta = "#ff55ff"   # Ptyxis Color13
+bright_cyan = "#ffd700"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

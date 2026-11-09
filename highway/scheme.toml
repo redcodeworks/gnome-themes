@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Highway'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Highway.yml.
+title = "Highway"
+gtk_name = "Highway"
+shell_name = "Highway-Shell"
+credit = "Highway (colours of the Ptyxis built-in 'Highway'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Highway.yml)"
+ptyxis = "Highway"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Highway' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#222225"
+fg = "#ededed"
+selection = "#4b4b4d"   # DERIVED
+red = "#d00e18"
+orange = "#e86c2b"   # DERIVED
+yellow = "#ffcb3e"
+green = "#138034"
+cyan = "#384564"
+blue = "#006bb3"
+magenta = "#6b2775"
+purple = "#6b2775"   # = magenta
+# palette Color8 (bright black) = #5d504a: a candidate for `comment`
+[dark.ansi]
+red = "#d00e18"
+green = "#138034"
+yellow = "#ffcb3e"
+blue = "#006bb3"
+magenta = "#6b2775"
+cyan = "#384564"
+[dark.terminal]
+source = "Highway"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+bright_black = "#5d504a"   # Ptyxis Color8
+bright_red = "#f07e18"   # Ptyxis Color9
+bright_green = "#b1d130"   # Ptyxis Color10
+bright_yellow = "#fff120"   # Ptyxis Color11
+bright_blue = "#4fc2fd"   # Ptyxis Color12
+bright_magenta = "#de0071"   # Ptyxis Color13
+bright_cyan = "#5d504a"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

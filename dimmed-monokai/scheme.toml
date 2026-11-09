@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Dimmed Monokai'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dimmed%20Monokai.yml.
+title = "Dimmed Monokai"
+gtk_name = "Dimmed-Monokai"
+shell_name = "Dimmed-Monokai-Shell"
+credit = "Dimmed Monokai (colours of the Ptyxis built-in 'Dimmed Monokai'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dimmed%20Monokai.yml)"
+ptyxis = "Dimmed Monokai"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Dimmed Monokai' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1f1f1f"
+fg = "#b9bcba"
+selection = "#3e3e3e"   # DERIVED
+red = "#be3f48"
+orange = "#c2723e"   # DERIVED
+yellow = "#c5a635"
+green = "#879a3b"
+cyan = "#578fa4"
+blue = "#4f76a1"
+magenta = "#855c8d"
+purple = "#855c8d"   # = magenta
+# palette Color8 (bright black) = #888987: a candidate for `comment`
+[dark.ansi]
+red = "#be3f48"
+green = "#879a3b"
+yellow = "#c5a635"
+blue = "#4f76a1"
+magenta = "#855c8d"
+cyan = "#578fa4"
+[dark.terminal]
+source = "Dimmed Monokai"   # Ptyxis built-in id
+black = "#3a3d43"   # Ptyxis Color0
+bright_black = "#888987"   # Ptyxis Color8
+bright_red = "#fb001f"   # Ptyxis Color9
+bright_green = "#0f722f"   # Ptyxis Color10
+bright_yellow = "#c47033"   # Ptyxis Color11
+bright_blue = "#186de3"   # Ptyxis Color12
+bright_magenta = "#fb0067"   # Ptyxis Color13
+bright_cyan = "#2e706d"   # Ptyxis Color14
+bright_white = "#fdffb9"   # Ptyxis Color15

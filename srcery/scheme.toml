@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Srcery'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Srcery.yml.
+title = "Srcery"
+gtk_name = "Srcery"
+shell_name = "Srcery-Shell"
+credit = "Srcery (colours of the Ptyxis built-in 'Srcery'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Srcery.yml)"
+ptyxis = "Srcery"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Srcery' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1c1b19"
+fg = "#fce8c3"
+selection = "#49443b"   # DERIVED
+red = "#ef2f27"
+orange = "#f57428"   # DERIVED
+yellow = "#fbb829"
+green = "#519f50"
+cyan = "#0aaeb3"
+blue = "#2c78bf"
+magenta = "#e02c6d"
+purple = "#e02c6d"   # = magenta
+# palette Color8 (bright black) = #918175: a candidate for `comment`
+[dark.ansi]
+red = "#ef2f27"
+green = "#519f50"
+yellow = "#fbb829"
+blue = "#2c78bf"
+magenta = "#e02c6d"
+cyan = "#0aaeb3"
+[dark.terminal]
+source = "Srcery"   # Ptyxis built-in id
+cursor = "#fbb829"   # Ptyxis Cursor
+black = "#1c1b19"   # Ptyxis Color0
+white = "#baa67f"   # Ptyxis Color7
+bright_black = "#918175"   # Ptyxis Color8
+bright_red = "#f75341"   # Ptyxis Color9
+bright_green = "#98bc37"   # Ptyxis Color10
+bright_yellow = "#fed06e"   # Ptyxis Color11
+bright_blue = "#68a8e4"   # Ptyxis Color12
+bright_magenta = "#ff5c8f"   # Ptyxis Color13
+bright_cyan = "#2be4d0"   # Ptyxis Color14
+bright_white = "#fce8c3"   # Ptyxis Color15

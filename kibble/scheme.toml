@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Kibble'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Kibble.yml.
+title = "Kibble"
+gtk_name = "Kibble"
+shell_name = "Kibble-Shell"
+credit = "Kibble (colours of the Ptyxis built-in 'Kibble'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Kibble.yml)"
+ptyxis = "Kibble"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Kibble' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#0e100a"
+fg = "#f7f7f7"
+selection = "#3d3e39"   # DERIVED
+red = "#c70031"
+orange = "#d07220"   # DERIVED
+yellow = "#d8e30e"
+green = "#29cf13"
+cyan = "#0798ab"
+blue = "#3449d1"
+magenta = "#8400ff"
+purple = "#8400ff"   # = magenta
+# palette Color8 (bright black) = #5a5a5a: a candidate for `comment`
+[dark.ansi]
+red = "#c70031"
+green = "#29cf13"
+yellow = "#d8e30e"
+blue = "#3449d1"
+magenta = "#8400ff"
+cyan = "#0798ab"
+[dark.terminal]
+source = "Kibble"   # Ptyxis built-in id
+black = "#4d4d4d"   # Ptyxis Color0
+white = "#e2d1e3"   # Ptyxis Color7
+bright_black = "#5a5a5a"   # Ptyxis Color8
+bright_red = "#f01578"   # Ptyxis Color9
+bright_green = "#6ce05c"   # Ptyxis Color10
+bright_yellow = "#f3f79e"   # Ptyxis Color11
+bright_blue = "#97a4f7"   # Ptyxis Color12
+bright_magenta = "#c495f0"   # Ptyxis Color13
+bright_cyan = "#68f2e0"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Vibrant Ink'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vibrant%20Ink.yml.
+title = "Vibrant Ink"
+gtk_name = "Vibrant-Ink"
+shell_name = "Vibrant-Ink-Shell"
+credit = "Vibrant Ink (colours of the Ptyxis built-in 'Vibrant Ink'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vibrant%20Ink.yml)"
+ptyxis = "Vibrant Ink"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Vibrant Ink' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#000000"
+fg = "#ffffff"
+selection = "#333333"   # DERIVED
+red = "#ff6600"
+orange = "#ff9900"   # DERIVED
+yellow = "#ffcc00"
+green = "#ccff04"
+cyan = "#44b4cc"
+blue = "#44b4cc"
+magenta = "#9933cc"
+purple = "#9933cc"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#ff6600"
+green = "#ccff04"
+yellow = "#ffcc00"
+blue = "#44b4cc"
+magenta = "#9933cc"
+cyan = "#44b4cc"
+[dark.terminal]
+source = "Vibrant Ink"   # Ptyxis built-in id
+black = "#878787"   # Ptyxis Color0
+white = "#f5f5f5"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#ff0000"   # Ptyxis Color9
+bright_green = "#00ff00"   # Ptyxis Color10
+bright_yellow = "#ffff00"   # Ptyxis Color11
+bright_blue = "#0000ff"   # Ptyxis Color12
+bright_magenta = "#ff00ff"   # Ptyxis Color13
+bright_cyan = "#00ffff"   # Ptyxis Color14
+bright_white = "#e5e5e5"   # Ptyxis Color15

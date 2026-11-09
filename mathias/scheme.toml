@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Mathias'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Mathias.yml.
+title = "Mathias"
+gtk_name = "Mathias"
+shell_name = "Mathias-Shell"
+credit = "Mathias (colours of the Ptyxis built-in 'Mathias'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Mathias.yml)"
+ptyxis = "Mathias"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Mathias' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#000000"
+fg = "#bbbbbb"
+selection = "#252525"   # DERIVED
+red = "#e52222"
+orange = "#f05c20"   # DERIVED
+yellow = "#fc951e"
+green = "#a6e32d"
+cyan = "#67d9f0"
+blue = "#c48dff"
+magenta = "#fa2573"
+purple = "#fa2573"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#e52222"
+green = "#a6e32d"
+yellow = "#fc951e"
+blue = "#c48dff"
+magenta = "#fa2573"
+cyan = "#67d9f0"
+[dark.terminal]
+source = "Mathias"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#f2f2f2"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#ff5555"   # Ptyxis Color9
+bright_green = "#55ff55"   # Ptyxis Color10
+bright_yellow = "#ffff55"   # Ptyxis Color11
+bright_blue = "#5555ff"   # Ptyxis Color12
+bright_magenta = "#ff55ff"   # Ptyxis Color13
+bright_cyan = "#55ffff"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

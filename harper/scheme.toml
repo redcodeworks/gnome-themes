@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Harper'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Harper.yml.
+title = "Harper"
+gtk_name = "Harper"
+shell_name = "Harper-Shell"
+credit = "Harper (colours of the Ptyxis built-in 'Harper'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Harper.yml)"
+ptyxis = "Harper"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Harper' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#010101"
+fg = "#a8a49d"
+selection = "#222220"   # DERIVED
+red = "#f8b63f"
+orange = "#e7c832"   # DERIVED
+yellow = "#d6da25"
+green = "#7fb5e1"
+cyan = "#f5bfd7"
+blue = "#489e48"
+magenta = "#b296c6"
+purple = "#b296c6"   # = magenta
+# palette Color8 (bright black) = #726e6a: a candidate for `comment`
+[dark.ansi]
+red = "#f8b63f"
+green = "#7fb5e1"
+yellow = "#d6da25"
+blue = "#489e48"
+magenta = "#b296c6"
+cyan = "#f5bfd7"
+[dark.terminal]
+source = "Harper"   # Ptyxis built-in id
+black = "#010101"   # Ptyxis Color0
+bright_black = "#726e6a"   # Ptyxis Color8
+bright_white = "#fefbea"   # Ptyxis Color15

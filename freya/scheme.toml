@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Freya'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Freya.yml.
+title = "Freya"
+gtk_name = "Freya"
+shell_name = "Freya-Shell"
+credit = "Freya (colours of the Ptyxis built-in 'Freya'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Freya.yml)"
+ptyxis = "Freya"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Freya' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#252e32"
+fg = "#94a3a5"
+selection = "#3b4549"   # DERIVED
+red = "#dc322f"
+orange = "#c85e18"   # DERIVED
+yellow = "#b58900"
+green = "#859900"
+cyan = "#2aa198"
+blue = "#268bd2"
+magenta = "#ec0048"
+purple = "#ec0048"   # = magenta
+# palette Color8 (bright black) = #586e75: a candidate for `comment`
+[dark.ansi]
+red = "#dc322f"
+green = "#859900"
+yellow = "#b58900"
+blue = "#268bd2"
+magenta = "#ec0048"
+cyan = "#2aa198"
+[dark.terminal]
+source = "Freya"   # Ptyxis built-in id
+cursor = "#839496"   # Ptyxis Cursor
+black = "#073642"   # Ptyxis Color0
+bright_black = "#586e75"   # Ptyxis Color8
+bright_red = "#cb4b16"   # Ptyxis Color9
+bright_magenta = "#d33682"   # Ptyxis Color13
+bright_white = "#6c71c4"   # Ptyxis Color15

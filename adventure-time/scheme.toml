@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Adventure Time'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Adventure%20Time.yml.
+title = "Adventure Time"
+gtk_name = "Adventure-Time"
+shell_name = "Adventure-Time-Shell"
+credit = "Adventure Time (colours of the Ptyxis built-in 'Adventure Time'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Adventure%20Time.yml)"
+ptyxis = "Adventure Time"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Adventure Time' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#1f1d45"
+fg = "#f8dcc0"
+selection = "#4a435e"   # DERIVED
+red = "#bd0013"
+orange = "#d23a18"   # DERIVED
+yellow = "#e7741e"
+green = "#4ab118"
+cyan = "#70a598"
+blue = "#0f4ac6"
+magenta = "#665993"
+purple = "#665993"   # = magenta
+# palette Color8 (bright black) = #4e7cbf: a candidate for `comment`
+[dark.ansi]
+red = "#bd0013"
+green = "#4ab118"
+yellow = "#e7741e"
+blue = "#0f4ac6"
+magenta = "#665993"
+cyan = "#70a598"
+[dark.terminal]
+source = "Adventure Time"   # Ptyxis built-in id
+black = "#050404"   # Ptyxis Color0
+bright_black = "#4e7cbf"   # Ptyxis Color8
+bright_red = "#fc5f5a"   # Ptyxis Color9
+bright_green = "#9eff6e"   # Ptyxis Color10
+bright_yellow = "#efc11a"   # Ptyxis Color11
+bright_blue = "#1997c6"   # Ptyxis Color12
+bright_magenta = "#9b5953"   # Ptyxis Color13
+bright_cyan = "#c8faf4"   # Ptyxis Color14
+bright_white = "#f6f5fb"   # Ptyxis Color15

@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Toy Chest'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Toy%20Chest.yml.
+title = "Toy Chest"
+gtk_name = "Toy-Chest"
+shell_name = "Toy-Chest-Shell"
+credit = "Toy Chest (colours of the Ptyxis built-in 'Toy Chest'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Toy%20Chest.yml)"
+ptyxis = "Toy Chest"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Toy Chest' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#24364b"
+fg = "#31d07b"
+selection = "#275555"   # DERIVED
+red = "#be2d26"
+orange = "#cc5e26"   # DERIVED
+yellow = "#db8e27"
+green = "#1a9172"
+cyan = "#35a08f"
+blue = "#325d96"
+magenta = "#8a5edc"
+purple = "#8a5edc"   # = magenta
+# palette Color8 (bright black) = #336889: a candidate for `comment`
+[dark.ansi]
+red = "#be2d26"
+green = "#1a9172"
+yellow = "#db8e27"
+blue = "#325d96"
+magenta = "#8a5edc"
+cyan = "#35a08f"
+[dark.terminal]
+source = "Toy Chest"   # Ptyxis built-in id
+black = "#2c3f58"   # Ptyxis Color0
+white = "#23d183"   # Ptyxis Color7
+bright_black = "#336889"   # Ptyxis Color8
+bright_red = "#dd5944"   # Ptyxis Color9
+bright_green = "#31d07b"   # Ptyxis Color10
+bright_yellow = "#e7d84b"   # Ptyxis Color11
+bright_blue = "#34a6da"   # Ptyxis Color12
+bright_magenta = "#ae6bdc"   # Ptyxis Color13
+bright_cyan = "#42c3ae"   # Ptyxis Color14
+bright_white = "#d5d5d5"   # Ptyxis Color15

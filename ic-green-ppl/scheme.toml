@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Ic Green Ppl'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Green%20Ppl.yml.
+title = "Ic Green Ppl"
+gtk_name = "Ic-Green-Ppl"
+shell_name = "Ic-Green-Ppl-Shell"
+credit = "Ic Green Ppl (colours of the Ptyxis built-in 'Ic Green Ppl'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Green%20Ppl.yml)"
+ptyxis = "Ic Green Ppl"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Ic Green Ppl' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#3a3d3f"
+fg = "#d9efd3"
+selection = "#5a615d"   # DERIVED
+red = "#fb002a"
+orange = "#b04e28"   # DERIVED
+yellow = "#659b25"
+green = "#339c24"
+cyan = "#2cb868"
+blue = "#149b45"
+magenta = "#53b82c"
+purple = "#53b82c"   # = magenta
+# palette Color8 (bright black) = #032710: a candidate for `comment`
+[dark.ansi]
+red = "#fb002a"
+green = "#339c24"
+yellow = "#659b25"
+blue = "#149b45"
+magenta = "#53b82c"
+cyan = "#2cb868"
+[dark.terminal]
+source = "Ic Green Ppl"   # Ptyxis built-in id
+black = "#1f1f1f"   # Ptyxis Color0
+white = "#e0ffef"   # Ptyxis Color7
+bright_black = "#032710"   # Ptyxis Color8
+bright_red = "#a7ff3f"   # Ptyxis Color9
+bright_green = "#9fff6d"   # Ptyxis Color10
+bright_yellow = "#d2ff6d"   # Ptyxis Color11
+bright_blue = "#72ffb5"   # Ptyxis Color12
+bright_magenta = "#50ff3e"   # Ptyxis Color13
+bright_cyan = "#22ff71"   # Ptyxis Color14
+bright_white = "#daefd0"   # Ptyxis Color15

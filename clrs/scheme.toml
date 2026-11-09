@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Clrs'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml.
+title = "Clrs"
+gtk_name = "Clrs"
+shell_name = "Clrs-Shell"
+credit = "Clrs (colours of the Ptyxis built-in 'Clrs'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml)"
+ptyxis = "Clrs"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Clrs' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[light]
+bg_deep = "#ffffff"
+fg = "#262626"
+selection = "#d4d4d4"   # DERIVED
+red = "#f8282a"
+orange = "#f94c24"   # DERIVED
+yellow = "#fa701d"
+green = "#328a5d"
+cyan = "#33c3c1"
+blue = "#135cd0"
+magenta = "#9f00bd"
+purple = "#9f00bd"   # = magenta
+# palette Color8 (bright black) = #555753: a candidate for `comment`
+[light.ansi]
+red = "#f8282a"
+green = "#328a5d"
+yellow = "#fa701d"
+blue = "#135cd0"
+magenta = "#9f00bd"
+cyan = "#33c3c1"
+[light.terminal]
+source = "Clrs"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#b3b3b3"   # Ptyxis Color7
+bright_black = "#555753"   # Ptyxis Color8
+bright_red = "#fb0416"   # Ptyxis Color9
+bright_green = "#2cc631"   # Ptyxis Color10
+bright_yellow = "#fdd727"   # Ptyxis Color11
+bright_blue = "#1670ff"   # Ptyxis Color12
+bright_magenta = "#e900b0"   # Ptyxis Color13
+bright_cyan = "#3ad5ce"   # Ptyxis Color14
+bright_white = "#eeeeec"   # Ptyxis Color15

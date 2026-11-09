@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Wryan'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wryan.yml.
+title = "Wryan"
+gtk_name = "Wryan"
+shell_name = "Wryan-Shell"
+credit = "Wryan (colours of the Ptyxis built-in 'Wryan'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wryan.yml)"
+ptyxis = "Wryan"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Wryan' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#101010"
+fg = "#999993"
+selection = "#2b2b2a"   # DERIVED
+red = "#8c4665"
+orange = "#84617f"   # DERIVED
+yellow = "#7c7c99"
+green = "#287373"
+cyan = "#31658c"
+blue = "#395573"
+magenta = "#5e468c"
+purple = "#5e468c"   # = magenta
+# palette Color8 (bright black) = #3d3d3d: a candidate for `comment`
+[dark.ansi]
+red = "#8c4665"
+green = "#287373"
+yellow = "#7c7c99"
+blue = "#395573"
+magenta = "#5e468c"
+cyan = "#31658c"
+[dark.terminal]
+source = "Wryan"   # Ptyxis built-in id
+black = "#333333"   # Ptyxis Color0
+white = "#899ca1"   # Ptyxis Color7
+bright_black = "#3d3d3d"   # Ptyxis Color8
+bright_red = "#bf4d80"   # Ptyxis Color9
+bright_green = "#53a6a6"   # Ptyxis Color10
+bright_yellow = "#9e9ecb"   # Ptyxis Color11
+bright_blue = "#477ab3"   # Ptyxis Color12
+bright_magenta = "#7e62b3"   # Ptyxis Color13
+bright_cyan = "#6096bf"   # Ptyxis Color14
+bright_white = "#c0c0c0"   # Ptyxis Color15

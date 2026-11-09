@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Argonaut'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Argonaut.yml.
+title = "Argonaut"
+gtk_name = "Argonaut"
+shell_name = "Argonaut-Shell"
+credit = "Argonaut (colours of the Ptyxis built-in 'Argonaut'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Argonaut.yml)"
+ptyxis = "Argonaut"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Argonaut' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#0e1019"
+fg = "#fffaf4"
+selection = "#3e3f45"   # DERIVED
+red = "#ff000f"
+orange = "#ff5c08"   # DERIVED
+yellow = "#ffb900"
+green = "#8ce10b"
+cyan = "#00d8eb"
+blue = "#008df8"
+magenta = "#6d43a6"
+purple = "#6d43a6"   # = magenta
+# palette Color8 (bright black) = #444444: a candidate for `comment`
+[dark.ansi]
+red = "#ff000f"
+green = "#8ce10b"
+yellow = "#ffb900"
+blue = "#008df8"
+magenta = "#6d43a6"
+cyan = "#00d8eb"
+[dark.terminal]
+source = "Argonaut"   # Ptyxis built-in id
+black = "#232323"   # Ptyxis Color0
+white = "#ffffff"   # Ptyxis Color7
+bright_black = "#444444"   # Ptyxis Color8
+bright_red = "#ff2740"   # Ptyxis Color9
+bright_green = "#abe15b"   # Ptyxis Color10
+bright_yellow = "#ffd242"   # Ptyxis Color11
+bright_blue = "#0092ff"   # Ptyxis Color12
+bright_magenta = "#9a5feb"   # Ptyxis Color13
+bright_cyan = "#67fff0"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

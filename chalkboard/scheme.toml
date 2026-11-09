@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Chalkboard'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalkboard.yml.
+title = "Chalkboard"
+gtk_name = "Chalkboard"
+shell_name = "Chalkboard-Shell"
+credit = "Chalkboard (colours of the Ptyxis built-in 'Chalkboard'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalkboard.yml)"
+ptyxis = "Chalkboard"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Chalkboard' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#29262f"
+fg = "#d9e6f2"
+selection = "#4c4c56"   # DERIVED
+red = "#c37372"
+orange = "#c29b72"   # DERIVED
+yellow = "#c2c372"
+green = "#72c373"
+cyan = "#72c2c3"
+blue = "#7372c3"
+magenta = "#c372c2"
+purple = "#c372c2"   # = magenta
+# palette Color8 (bright black) = #323232: a candidate for `comment`
+[dark.ansi]
+red = "#c37372"
+green = "#72c373"
+yellow = "#c2c372"
+blue = "#7372c3"
+magenta = "#c372c2"
+cyan = "#72c2c3"
+[dark.terminal]
+source = "Chalkboard"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#d9d9d9"   # Ptyxis Color7
+bright_black = "#323232"   # Ptyxis Color8
+bright_red = "#dbaaaa"   # Ptyxis Color9
+bright_green = "#aadbaa"   # Ptyxis Color10
+bright_yellow = "#dadbaa"   # Ptyxis Color11
+bright_blue = "#aaaadb"   # Ptyxis Color12
+bright_magenta = "#dbaada"   # Ptyxis Color13
+bright_cyan = "#aadadb"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

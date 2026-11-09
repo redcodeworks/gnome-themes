@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Bluloco Light'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Light.yml.
+title = "Bluloco Light"
+gtk_name = "Bluloco-Light"
+shell_name = "Bluloco-Light-Shell"
+credit = "Bluloco Light (colours of the Ptyxis built-in 'Bluloco Light'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Light.yml)"
+ptyxis = "Bluloco Light"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Bluloco Light' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[light]
+bg_deep = "#f9f9f9"
+fg = "#383a42"
+selection = "#d2d3d4"   # DERIVED
+red = "#d52753"
+orange = "#da4538"   # DERIVED
+yellow = "#df631c"
+green = "#23974a"
+cyan = "#27618d"
+blue = "#275fe4"
+magenta = "#823ff1"
+purple = "#823ff1"   # = magenta
+# palette Color8 (bright black) = #e4e5ed: a candidate for `comment`
+[light.ansi]
+red = "#d52753"
+green = "#23974a"
+yellow = "#df631c"
+blue = "#275fe4"
+magenta = "#823ff1"
+cyan = "#27618d"
+[light.terminal]
+source = "Bluloco Light"   # Ptyxis built-in id
+black = "#d5d6dd"   # Ptyxis Color0
+white = "#000000"   # Ptyxis Color7
+bright_black = "#e4e5ed"   # Ptyxis Color8
+bright_red = "#ff6480"   # Ptyxis Color9
+bright_green = "#3cbc66"   # Ptyxis Color10
+bright_yellow = "#c5a332"   # Ptyxis Color11
+bright_blue = "#0099e1"   # Ptyxis Color12
+bright_magenta = "#ce33c0"   # Ptyxis Color13
+bright_cyan = "#6d93bb"   # Ptyxis Color14
+bright_white = "#26272d"   # Ptyxis Color15

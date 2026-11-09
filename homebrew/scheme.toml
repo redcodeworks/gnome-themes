@@ -1,0 +1,77 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Homebrew' and 'Homebrew Light'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew.yml.
+title = "Homebrew"
+gtk_name = "Homebrew"
+shell_name = "Homebrew-Shell"
+credit = "Homebrew (colours of the Ptyxis built-in 'Homebrew' and 'Homebrew Light'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew.yml)"
+ptyxis = "Homebrew"
+ptyxis_light = "Homebrew Light"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Homebrew' and 'Homebrew Light' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#000000"
+fg = "#00ff00"
+selection = "#003300"   # DERIVED
+red = "#990000"
+orange = "#994c00"   # DERIVED
+yellow = "#999900"
+green = "#00a600"
+cyan = "#00a6b2"
+blue = "#0000b2"
+magenta = "#b200b2"
+purple = "#b200b2"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[dark.ansi]
+red = "#990000"
+green = "#00a600"
+yellow = "#999900"
+blue = "#0000b2"
+magenta = "#b200b2"
+cyan = "#00a6b2"
+[dark.terminal]
+source = "Homebrew"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bfbfbf"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#e50000"   # Ptyxis Color9
+bright_green = "#00d900"   # Ptyxis Color10
+bright_yellow = "#e5e500"   # Ptyxis Color11
+bright_blue = "#0000ff"   # Ptyxis Color12
+bright_magenta = "#e500e5"   # Ptyxis Color13
+bright_cyan = "#00e5e5"   # Ptyxis Color14
+bright_white = "#e5e5e5"   # Ptyxis Color15
+
+[light]
+bg_deep = "#ffffff"
+fg = "#000000"
+selection = "#cccccc"   # DERIVED
+red = "#990000"
+orange = "#994c00"   # DERIVED
+yellow = "#999900"
+green = "#00a600"
+cyan = "#00a6b2"
+blue = "#0000b2"
+magenta = "#b200b2"
+purple = "#b200b2"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[light.ansi]
+red = "#990000"
+green = "#00a600"
+yellow = "#999900"
+blue = "#0000b2"
+magenta = "#b200b2"
+cyan = "#00a6b2"
+[light.terminal]
+source = "Homebrew Light"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bfbfbf"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#e50000"   # Ptyxis Color9
+bright_green = "#00d900"   # Ptyxis Color10
+bright_yellow = "#e5e500"   # Ptyxis Color11
+bright_blue = "#0000ff"   # Ptyxis Color12
+bright_magenta = "#e500e5"   # Ptyxis Color13
+bright_cyan = "#00e5e5"   # Ptyxis Color14
+bright_white = "#e5e5e5"   # Ptyxis Color15

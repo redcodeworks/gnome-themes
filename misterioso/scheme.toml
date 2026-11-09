@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Misterioso'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Misterioso.yml.
+title = "Misterioso"
+gtk_name = "Misterioso"
+shell_name = "Misterioso-Shell"
+credit = "Misterioso (colours of the Ptyxis built-in 'Misterioso'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Misterioso.yml)"
+ptyxis = "Misterioso"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Misterioso' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#2d3743"
+fg = "#e1e1e0"
+selection = "#515962"   # DERIVED
+red = "#ff4242"
+orange = "#ff7836"   # DERIVED
+yellow = "#ffad29"
+green = "#74af68"
+cyan = "#23d7d7"
+blue = "#338f86"
+magenta = "#9414e6"
+purple = "#9414e6"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#ff4242"
+green = "#74af68"
+yellow = "#ffad29"
+blue = "#338f86"
+magenta = "#9414e6"
+cyan = "#23d7d7"
+[dark.terminal]
+source = "Misterioso"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#ff3242"   # Ptyxis Color9
+bright_green = "#74cd68"   # Ptyxis Color10
+bright_yellow = "#ffb929"   # Ptyxis Color11
+bright_blue = "#23d7d7"   # Ptyxis Color12
+bright_magenta = "#ff37ff"   # Ptyxis Color13
+bright_cyan = "#00ede1"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

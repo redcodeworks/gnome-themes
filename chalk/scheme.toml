@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Chalk'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalk.yml.
+title = "Chalk"
+gtk_name = "Chalk"
+shell_name = "Chalk-Shell"
+credit = "Chalk (colours of the Ptyxis built-in 'Chalk'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalk.yml)"
+ptyxis = "Chalk"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Chalk' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2d2d2d"
+fg = "#d4d4d4"
+selection = "#4e4e4e"   # DERIVED
+red = "#f58e8e"
+orange = "#fab086"   # DERIVED
+yellow = "#fed37e"
+green = "#a9d3ab"
+cyan = "#79d4d5"
+blue = "#7aabd4"
+magenta = "#d6add5"
+purple = "#d6add5"   # = magenta
+# palette Color8 (bright black) = #646464: a candidate for `comment`
+[dark.ansi]
+red = "#f58e8e"
+green = "#a9d3ab"
+yellow = "#fed37e"
+blue = "#7aabd4"
+magenta = "#d6add5"
+cyan = "#79d4d5"
+[dark.terminal]
+source = "Chalk"   # Ptyxis built-in id
+black = "#646464"   # Ptyxis Color0
+bright_black = "#646464"   # Ptyxis Color8

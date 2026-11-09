@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Thayer Bright'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Thayer%20Bright.yml.
+title = "Thayer Bright"
+gtk_name = "Thayer-Bright"
+shell_name = "Thayer-Bright-Shell"
+credit = "Thayer Bright (colours of the Ptyxis built-in 'Thayer Bright'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Thayer%20Bright.yml)"
+ptyxis = "Thayer Bright"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Thayer Bright' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1b1d1e"
+fg = "#f8f8f8"
+selection = "#47494a"   # DERIVED
+red = "#f92672"
+orange = "#f6924a"   # DERIVED
+yellow = "#f4fd22"
+green = "#4df840"
+cyan = "#38c8b5"
+blue = "#2757d6"
+magenta = "#8c54fe"
+purple = "#8c54fe"   # = magenta
+# palette Color8 (bright black) = #505354: a candidate for `comment`
+[dark.ansi]
+red = "#f92672"
+green = "#4df840"
+yellow = "#f4fd22"
+blue = "#2757d6"
+magenta = "#8c54fe"
+cyan = "#38c8b5"
+[dark.terminal]
+source = "Thayer Bright"   # Ptyxis built-in id
+black = "#1b1d1e"   # Ptyxis Color0
+white = "#ccccc6"   # Ptyxis Color7
+bright_black = "#505354"   # Ptyxis Color8
+bright_red = "#ff5995"   # Ptyxis Color9
+bright_green = "#b6e354"   # Ptyxis Color10
+bright_yellow = "#feed6c"   # Ptyxis Color11
+bright_blue = "#3f78ff"   # Ptyxis Color12
+bright_magenta = "#9e6ffe"   # Ptyxis Color13
+bright_cyan = "#23cfd5"   # Ptyxis Color14
+bright_white = "#f8f8f2"   # Ptyxis Color15

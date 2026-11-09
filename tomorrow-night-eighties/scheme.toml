@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Tomorrow Night Eighties'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Eighties.yml.
+title = "Tomorrow Night Eighties"
+gtk_name = "Tomorrow-Night-Eighties"
+shell_name = "Tomorrow-Night-Eighties-Shell"
+credit = "Tomorrow Night Eighties (colours of the Ptyxis built-in 'Tomorrow Night Eighties'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Eighties.yml)"
+ptyxis = "Tomorrow Night Eighties"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Tomorrow Night Eighties' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2c2c2c"
+fg = "#cccccc"
+selection = "#4c4c4c"   # DERIVED
+red = "#f27779"
+orange = "#f8a270"   # DERIVED
+yellow = "#ffcc66"
+green = "#99cc99"
+cyan = "#66cccc"
+blue = "#6699cc"
+magenta = "#cc99cc"
+purple = "#cc99cc"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#f27779"
+green = "#99cc99"
+yellow = "#ffcc66"
+blue = "#6699cc"
+magenta = "#cc99cc"
+cyan = "#66cccc"
+[dark.terminal]
+source = "Tomorrow Night Eighties"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#fffefe"   # Ptyxis Color7
+bright_black = "#000000"   # Ptyxis Color8
+bright_red = "#f17779"   # Ptyxis Color9
+bright_white = "#fffefe"   # Ptyxis Color15

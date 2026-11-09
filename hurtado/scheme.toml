@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Hurtado'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Hurtado.yml.
+title = "Hurtado"
+gtk_name = "Hurtado"
+shell_name = "Hurtado-Shell"
+credit = "Hurtado (colours of the Ptyxis built-in 'Hurtado'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Hurtado.yml)"
+ptyxis = "Hurtado"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Hurtado' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#000000"
+fg = "#dbdbdb"
+selection = "#2c2c2c"   # DERIVED
+red = "#ff1b00"
+orange = "#fd8125"   # DERIVED
+yellow = "#fbe74a"
+green = "#a5e055"
+cyan = "#86e9fe"
+blue = "#496487"
+magenta = "#fd5ff1"
+purple = "#fd5ff1"   # = magenta
+# palette Color8 (bright black) = #262626: a candidate for `comment`
+[dark.ansi]
+red = "#ff1b00"
+green = "#a5e055"
+yellow = "#fbe74a"
+blue = "#496487"
+magenta = "#fd5ff1"
+cyan = "#86e9fe"
+[dark.terminal]
+source = "Hurtado"   # Ptyxis built-in id
+black = "#575757"   # Ptyxis Color0
+white = "#cbcccb"   # Ptyxis Color7
+bright_black = "#262626"   # Ptyxis Color8
+bright_red = "#d51d00"   # Ptyxis Color9
+bright_green = "#a5df55"   # Ptyxis Color10
+bright_yellow = "#fbe84a"   # Ptyxis Color11
+bright_blue = "#89beff"   # Ptyxis Color12
+bright_magenta = "#c001c1"   # Ptyxis Color13
+bright_cyan = "#86eafe"   # Ptyxis Color14
+bright_white = "#dbdbdb"   # Ptyxis Color15

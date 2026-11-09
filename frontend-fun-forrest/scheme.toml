@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Frontend Fun Forrest'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Fun%20Forrest.yml.
+title = "Frontend Fun Forrest"
+gtk_name = "Frontend-Fun-Forrest"
+shell_name = "Frontend-Fun-Forrest-Shell"
+credit = "Frontend Fun Forrest (colours of the Ptyxis built-in 'Frontend Fun Forrest'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Fun%20Forrest.yml)"
+ptyxis = "Frontend Fun Forrest"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Frontend Fun Forrest' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#251200"
+fg = "#dec165"
+selection = "#4a3514"   # DERIVED
+red = "#d6262b"
+orange = "#ca581f"   # DERIVED
+yellow = "#be8a13"
+green = "#919c00"
+cyan = "#da8213"
+blue = "#4699a3"
+magenta = "#8d4331"
+purple = "#8d4331"   # = magenta
+# palette Color8 (bright black) = #7f6a55: a candidate for `comment`
+[dark.ansi]
+red = "#d6262b"
+green = "#919c00"
+yellow = "#be8a13"
+blue = "#4699a3"
+magenta = "#8d4331"
+cyan = "#da8213"
+[dark.terminal]
+source = "Frontend Fun Forrest"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#ddc265"   # Ptyxis Color7
+bright_black = "#7f6a55"   # Ptyxis Color8
+bright_red = "#e55a1c"   # Ptyxis Color9
+bright_green = "#bfc65a"   # Ptyxis Color10
+bright_yellow = "#ffcb1b"   # Ptyxis Color11
+bright_blue = "#7cc9cf"   # Ptyxis Color12
+bright_magenta = "#d26349"   # Ptyxis Color13
+bright_cyan = "#e6a96b"   # Ptyxis Color14
+bright_white = "#ffeaa3"   # Ptyxis Color15

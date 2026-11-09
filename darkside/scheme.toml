@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Darkside'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Darkside.yml.
+title = "Darkside"
+gtk_name = "Darkside"
+shell_name = "Darkside-Shell"
+credit = "Darkside (colours of the Ptyxis built-in 'Darkside'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Darkside.yml)"
+ptyxis = "Darkside"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Darkside' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#222324"
+fg = "#bababa"
+selection = "#404142"   # DERIVED
+red = "#e8341c"
+orange = "#ed8424"   # DERIVED
+yellow = "#f2d42c"
+green = "#68c256"
+cyan = "#1c98e8"
+blue = "#1c98e8"
+magenta = "#8e69c9"
+purple = "#8e69c9"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#e8341c"
+green = "#68c256"
+yellow = "#f2d42c"
+blue = "#1c98e8"
+magenta = "#8e69c9"
+cyan = "#1c98e8"
+[dark.terminal]
+source = "Darkside"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+bright_black = "#000000"   # Ptyxis Color8
+bright_red = "#e05a4f"   # Ptyxis Color9
+bright_green = "#77b869"   # Ptyxis Color10
+bright_yellow = "#efd64b"   # Ptyxis Color11
+bright_blue = "#387cd3"   # Ptyxis Color12
+bright_magenta = "#957bbe"   # Ptyxis Color13
+bright_cyan = "#3d97e2"   # Ptyxis Color14

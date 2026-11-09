@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Smyck'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Smyck.yml.
+title = "Smyck"
+gtk_name = "Smyck"
+shell_name = "Smyck-Shell"
+credit = "Smyck (colours of the Ptyxis built-in 'Smyck'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Smyck.yml)"
+ptyxis = "Smyck"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Smyck' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#242424"
+fg = "#f7f7f7"
+selection = "#4e4e4e"   # DERIVED
+red = "#c75646"
+orange = "#cc8341"   # DERIVED
+yellow = "#d0b03c"
+green = "#8eb33b"
+cyan = "#218693"
+blue = "#72b3cc"
+magenta = "#c8a0d1"
+purple = "#c8a0d1"   # = magenta
+# palette Color8 (bright black) = #5d5d5d: a candidate for `comment`
+[dark.ansi]
+red = "#c75646"
+green = "#8eb33b"
+yellow = "#d0b03c"
+blue = "#72b3cc"
+magenta = "#c8a0d1"
+cyan = "#218693"
+[dark.terminal]
+source = "Smyck"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#b0b0b0"   # Ptyxis Color7
+bright_black = "#5d5d5d"   # Ptyxis Color8
+bright_red = "#e09690"   # Ptyxis Color9
+bright_green = "#cdee69"   # Ptyxis Color10
+bright_yellow = "#ffe377"   # Ptyxis Color11
+bright_blue = "#9cd9f0"   # Ptyxis Color12
+bright_magenta = "#fbb1f9"   # Ptyxis Color13
+bright_cyan = "#77dfd8"   # Ptyxis Color14
+bright_white = "#f7f7f7"   # Ptyxis Color15

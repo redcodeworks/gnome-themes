@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Fishtank'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Fishtank.yml.
+title = "Fishtank"
+gtk_name = "Fishtank"
+shell_name = "Fishtank-Shell"
+credit = "Fishtank (colours of the Ptyxis built-in 'Fishtank'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Fishtank.yml)"
+ptyxis = "Fishtank"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Fishtank' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#232537"
+fg = "#ecf0fe"
+selection = "#4b4e5f"   # DERIVED
+red = "#c6004a"
+orange = "#e26654"   # DERIVED
+yellow = "#fecd5e"
+green = "#acf157"
+cyan = "#968763"
+blue = "#525fb8"
+magenta = "#986f82"
+purple = "#986f82"   # = magenta
+# palette Color8 (bright black) = #6c5b30: a candidate for `comment`
+[dark.ansi]
+red = "#c6004a"
+green = "#acf157"
+yellow = "#fecd5e"
+blue = "#525fb8"
+magenta = "#986f82"
+cyan = "#968763"
+[dark.terminal]
+source = "Fishtank"   # Ptyxis built-in id
+black = "#03073c"   # Ptyxis Color0
+white = "#ecf0fc"   # Ptyxis Color7
+bright_black = "#6c5b30"   # Ptyxis Color8
+bright_red = "#da4b8a"   # Ptyxis Color9
+bright_green = "#dbffa9"   # Ptyxis Color10
+bright_yellow = "#fee6a9"   # Ptyxis Color11
+bright_blue = "#b2befa"   # Ptyxis Color12
+bright_magenta = "#fda5cd"   # Ptyxis Color13
+bright_cyan = "#a5bd86"   # Ptyxis Color14
+bright_white = "#f6ffec"   # Ptyxis Color15

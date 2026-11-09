@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Geohot'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Geohot.yml.
+title = "Geohot"
+gtk_name = "Geohot"
+shell_name = "Geohot-Shell"
+credit = "Geohot (colours of the Ptyxis built-in 'Geohot'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Geohot.yml)"
+ptyxis = "Geohot"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Geohot' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1f1e1f"
+fg = "#ffffff"
+selection = "#4c4b4c"   # DERIVED
+red = "#cc0000"
+orange = "#bc5008"   # DERIVED
+yellow = "#ada110"
+green = "#1f1e1f"
+cyan = "#06919a"
+blue = "#ff004e"
+magenta = "#75507b"
+purple = "#75507b"   # = magenta
+# palette Color8 (bright black) = #555753: a candidate for `comment`
+[dark.ansi]
+red = "#cc0000"
+green = "#1f1e1f"
+yellow = "#ada110"
+blue = "#ff004e"
+magenta = "#75507b"
+cyan = "#06919a"
+[dark.terminal]
+source = "Geohot"   # Ptyxis built-in id
+black = "#f9f5f5"   # Ptyxis Color0
+bright_black = "#555753"   # Ptyxis Color8
+bright_red = "#ef2929"   # Ptyxis Color9
+bright_green = "#ff0000"   # Ptyxis Color10
+bright_blue = "#5f4aa6"   # Ptyxis Color12
+bright_magenta = "#b74438"   # Ptyxis Color13
+bright_cyan = "#408f0c"   # Ptyxis Color14
