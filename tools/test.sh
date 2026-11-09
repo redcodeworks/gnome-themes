@@ -197,6 +197,11 @@ if [ -d bluloco-light ]; then
     THEMES_DEST=$LO just remove-theme bluloco-light >/dev/null 2>&1
 fi
 
+# ---- built-in picker: scrolling in a small terminal (pty with a terminal emulator) ----------------------------------------------------
+echo "=== picker scrolling"
+SCROLL_THEMES="$T/scroll-themes"; mkdir -p "$SCROLL_THEMES"
+THEMES_DEST=$SCROLL_THEMES python3 -I tools/pty-scroll-test.py 10 24 > "$T/scroll.out" 2>&1 && chk ok "built-in picker: the cursor row stays on screen and the window scrolls by at most one row per key (10 and 24 rows, filter, resize, Home/End/PgUp/PgDn)" || { chk fail "pty scroll test"; grep -B1 -A12 FAIL "$T/scroll.out" | head -30; }
+
 # ---- collision guard (themes): unrelated folders with our names are never replaced or removed without asking ---------
 echo "=== collision guard"
 G="$T/guard-themes"; mkdir -p "$G/Dracula"; echo mine > "$G/Dracula/mine.txt"; printf '[Desktop Entry]\nName=Dracula\n' > "$G/Dracula/index.theme"
