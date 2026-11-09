@@ -37,55 +37,55 @@ chalkboard	Chalkboard	-	built		https://github.com/Gogh-Co/Gogh/tree/master/theme
 chameleon	Chameleon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml
 ciapre	Ciapre	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202095 bytes | libadwaita 2896 bytes | VERIFY FAILED: ciapre accent red Ciapre-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ciapre.yml
 clrs	Clrs	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml
-cobalt-2	Cobalt 2	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml
-cobalt-neon	Cobalt Neon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%20Neon.yml
+cobalt-2	Cobalt 2	-	excluded	ptyxis-compare: info: cobalt-2 dark -> built-in id "Cobalt 2" (flat): roles max dE 0.00 (Background), all18 24.12	https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml
+cobalt-neon	Cobalt Neon	-	excluded	ptyxis-compare: info: cobalt-neon dark -> built-in id "Cobalt Neon" (flat): roles max dE 0.00 (Background), all18 141.47	https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%20Neon.yml
 colorcli	Colorcli	-	excluded	palette repeats colours (red = magenta, green = yellow, blue = foreground): the accent maps cannot tell accents and roles apart (accent-maps-gen VERIFY FAILED)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Colorcli.yml
-crayon-pony-fish	Crayon Pony Fish	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Crayon%20Pony%20Fish.yml
-dark-pastel	Dark Pastel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dark%20Pastel.yml
-darkside	Darkside	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Darkside.yml
-dehydration	Dehydration	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dehydration.yml
-desert	Desert	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Desert.yml
-dimmed-monokai	Dimmed Monokai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dimmed%20Monokai.yml
-dissonance	Dissonance	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dissonance.yml
+crayon-pony-fish	Crayon Pony Fish	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.68)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Crayon%20Pony%20Fish.yml
+dark-pastel	Dark Pastel	-	excluded	ptyxis-compare: info: dark-pastel dark -> built-in id "Dark Pastel" (flat): roles max dE 0.00 (Background), all18 24.12	https://github.com/Gogh-Co/Gogh/tree/master/themes/Dark%20Pastel.yml
+darkside	Darkside	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Darkside.yml
+dehydration	Dehydration	-	excluded	ptyxis-compare: info: dehydration dark -> built-in id "Dehydration" (flat): roles max dE 0.00 (Background), all18 18.82	https://github.com/Gogh-Co/Gogh/tree/master/themes/Dehydration.yml
+desert	Desert	-	excluded	ptyxis-compare: info: desert dark -> built-in id "Desert" (flat): roles max dE 0.00 (Background), all18 26.31	https://github.com/Gogh-Co/Gogh/tree/master/themes/Desert.yml
+dimmed-monokai	Dimmed Monokai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dimmed%20Monokai.yml
+dissonance	Dissonance	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dissonance.yml
 dracula	dracula	-	existing	covered by the existing scheme	-
-earthsong	Earthsong	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Earthsong.yml
-elemental	Elemental	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elemental.yml
-elementary	Elementary	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elementary.yml
-elic	Elic	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elic.yml
-elio	Elio	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elio.yml
-espresso	Espresso	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso.yml
-espresso-libre	Espresso Libre	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso%20Libre.yml
-everblush	Everblush	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Everblush.yml
+earthsong	Earthsong	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Earthsong.yml
+elemental	Elemental	-	excluded	selftest: FAIL dark fg on window >= 4.5 (3.57)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Elemental.yml
+elementary	Elementary	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elementary.yml
+elic	Elic	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202091 bytes | libadwaita 2888 bytes | accent red: token #f2f2f2 maps to far-apart tokens {'#e1321a': 582, '#e55f4c': 14, '#e1351d': 4, '#e4503b': 38, '#e98b7e': 4, '#e23e28': 6, '#e3442e': 2, '#e99286': 2, '#e55e4b': 6, '#e66a59': 4, '#e55c49': 4, '#e3432e': 4, '#e241	https://github.com/Gogh-Co/Gogh/tree/master/themes/Elic.yml
+elio	Elio	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elio.yml
+espresso	Espresso	-	excluded	ptyxis-compare: info: espresso dark -> built-in id "Espresso" (flat): roles max dE 0.00 (Background), all18 6.04	https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso.yml
+espresso-libre	Espresso Libre	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso%20Libre.yml
+everblush	Everblush	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Everblush.yml
 everforest	Everforest	-	existing	covered by the existing scheme	-
-fairy-floss	Fairy Floss	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss.yml
+fairy-floss	Fairy Floss	-	excluded	directory exists	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss.yml
 fairy-floss	Fairy Floss Dark	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss%20Dark.yml
-fishtank	Fishtank	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Fishtank.yml
-flat	Flat	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat.yml
-flat-remix	Flat Remix	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat%20Remix.yml
-flatland	Flatland	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flatland.yml
-foxnightly	Foxnightly	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Foxnightly.yml
-freya	Freya	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Freya.yml
-frontend-delight	Frontend Delight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Delight.yml
-frontend-fun-forrest	Frontend Fun Forrest	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Fun%20Forrest.yml
-frontend-galaxy	Frontend Galaxy	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Galaxy.yml
-geohot	Geohot	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Geohot.yml
+fishtank	Fishtank	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Fishtank.yml
+flat	Flat	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat.yml
+flat-remix	Flat Remix	-	excluded	ptyxis-compare: info: flat-remix dark -> built-in id "Flat Remix" (flat): roles max dE 0.00 (Background), all18 8.71	https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat%20Remix.yml
+flatland	Flatland	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flatland.yml
+foxnightly	Foxnightly	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Foxnightly.yml
+freya	Freya	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Freya.yml
+frontend-delight	Frontend Delight	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Delight.yml
+frontend-fun-forrest	Frontend Fun Forrest	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Fun%20Forrest.yml
+frontend-galaxy	Frontend Galaxy	-	excluded	ptyxis-compare: info: frontend-galaxy dark -> built-in id "Frontend Galaxy" (flat): roles max dE 0.00 (Background), all18 24.12	https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Galaxy.yml
+geohot	Geohot	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Geohot.yml
 github	Github	-	built		-
 gnome	gnome	-	excluded	generic terminal preset	-
 gnome-high-contrast	gnome-high-contrast	-	excluded	generic terminal preset	-
 gnome-legacy	GNOME Legacy	-	excluded	generic terminal preset	-
-gogh	Gogh	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gogh.yml
-gooey	Gooey	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gooey.yml
-google	Google	-	todo		-
-gotham	Gotham	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gotham.yml
-grape	Grape	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Grape.yml
-grass	Grass	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Grass.yml
-gruvbox	Gruvbox	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox.yml
+gogh	Gogh	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gogh.yml
+gooey	Gooey	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gooey.yml
+google	Google	-	built		-
+gotham	Gotham	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gotham.yml
+grape	Grape	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Grape.yml
+grass	Grass	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.42)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Grass.yml
+gruvbox	Gruvbox	-	excluded	ptyxis-compare: info: gruvbox light -> built-in id "Gruvbox" (Light,Dark): roles max dE 0.00 (Background), all18 24.70	https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox.yml
 gruvbox-material	Gruvbox Material	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox%20Material.yml
-hardcore	Hardcore	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hardcore.yml
-harper	Harper	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Harper.yml
-hemisu	Hemisu	-	todo		-
-highway	Highway	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Highway.yml
-hipster-green	Hipster Green	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hipster%20Green.yml
+hardcore	Hardcore	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hardcore.yml
+harper	Harper	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Harper.yml
+hemisu	Hemisu	-	excluded	ptyxis-compare: info: hemisu light -> built-in id "Hemisu" (Light,Dark): roles max dE 0.00 (Background), all18 0.00	-
+highway	Highway	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Highway.yml
+hipster-green	Hipster Green	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hipster%20Green.yml
 homebrew	Homebrew	Homebrew Light	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew.yml
 homebrew-ocean	Homebrew Ocean	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew%20Ocean.yml
 horizon	Horizon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Horizon%20Bright.yml

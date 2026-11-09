@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Frontend Delight'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Delight.yml.
+title = "Frontend Delight"
+gtk_name = "Frontend-Delight"
+shell_name = "Frontend-Delight-Shell"
+credit = "Frontend Delight (colours of the Ptyxis built-in 'Frontend Delight'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Delight.yml)"
+ptyxis = "Frontend Delight"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Frontend Delight' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1b1c1d"
+fg = "#adadad"
+selection = "#38393a"   # DERIVED
+red = "#f8511b"
+orange = "#f9641c"   # DERIVED
+yellow = "#fa771d"
+green = "#565747"
+cyan = "#3ca1a6"
+blue = "#2c70b7"
+magenta = "#f02e4f"
+purple = "#f02e4f"   # = magenta
+# palette Color8 (bright black) = #5fac6d: a candidate for `comment`
+[dark.ansi]
+red = "#f8511b"
+green = "#565747"
+yellow = "#fa771d"
+blue = "#2c70b7"
+magenta = "#f02e4f"
+cyan = "#3ca1a6"
+[dark.terminal]
+source = "Frontend Delight"   # Ptyxis built-in id
+black = "#242526"   # Ptyxis Color0
+bright_black = "#5fac6d"   # Ptyxis Color8
+bright_red = "#f74319"   # Ptyxis Color9
+bright_green = "#74ec4c"   # Ptyxis Color10
+bright_yellow = "#fdc325"   # Ptyxis Color11
+bright_blue = "#3393ca"   # Ptyxis Color12
+bright_magenta = "#e75e4f"   # Ptyxis Color13
+bright_cyan = "#4fbce6"   # Ptyxis Color14
+bright_white = "#8c735b"   # Ptyxis Color15

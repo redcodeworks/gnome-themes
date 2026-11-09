@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Earthsong'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Earthsong.yml.
+title = "Earthsong"
+gtk_name = "Earthsong"
+shell_name = "Earthsong-Shell"
+credit = "Earthsong (colours of the Ptyxis built-in 'Earthsong'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Earthsong.yml)"
+ptyxis = "Earthsong"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Earthsong' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#292520"
+fg = "#e5c7a9"
+selection = "#4f453b"   # DERIVED
+red = "#c94234"
+orange = "#df7831"   # DERIVED
+yellow = "#f5ae2e"
+green = "#85c54c"
+cyan = "#509552"
+blue = "#1398b9"
+magenta = "#d0633d"
+purple = "#d0633d"   # = magenta
+# palette Color8 (bright black) = #675f54: a candidate for `comment`
+[dark.ansi]
+red = "#c94234"
+green = "#85c54c"
+yellow = "#f5ae2e"
+blue = "#1398b9"
+magenta = "#d0633d"
+cyan = "#509552"
+[dark.terminal]
+source = "Earthsong"   # Ptyxis built-in id
+black = "#121418"   # Ptyxis Color0
+white = "#e5c6aa"   # Ptyxis Color7
+bright_black = "#675f54"   # Ptyxis Color8
+bright_red = "#ff645a"   # Ptyxis Color9
+bright_green = "#98e036"   # Ptyxis Color10
+bright_yellow = "#e0d561"   # Ptyxis Color11
+bright_blue = "#5fdaff"   # Ptyxis Color12
+bright_magenta = "#ff9269"   # Ptyxis Color13
+bright_cyan = "#84f088"   # Ptyxis Color14
+bright_white = "#f6f7ec"   # Ptyxis Color15

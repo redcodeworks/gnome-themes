@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Everblush'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Everblush.yml.
+title = "Everblush"
+gtk_name = "Everblush"
+shell_name = "Everblush-Shell"
+credit = "Everblush (colours of the Ptyxis built-in 'Everblush'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Everblush.yml)"
+ptyxis = "Everblush"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Everblush' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#141b1e"
+fg = "#dadada"
+selection = "#3c4144"   # DERIVED
+red = "#e57474"
+orange = "#e59e70"   # DERIVED
+yellow = "#e5c76b"
+green = "#8ccf7e"
+cyan = "#6cbfbf"
+blue = "#67b0e8"
+magenta = "#c47fd5"
+purple = "#c47fd5"   # = magenta
+# palette Color8 (bright black) = #2d3437: a candidate for `comment`
+[dark.ansi]
+red = "#e57474"
+green = "#8ccf7e"
+yellow = "#e5c76b"
+blue = "#67b0e8"
+magenta = "#c47fd5"
+cyan = "#6cbfbf"
+[dark.terminal]
+source = "Everblush"   # Ptyxis built-in id
+black = "#232a2d"   # Ptyxis Color0
+white = "#b3b9b8"   # Ptyxis Color7
+bright_black = "#2d3437"   # Ptyxis Color8
+bright_red = "#ef7e7e"   # Ptyxis Color9
+bright_green = "#96d988"   # Ptyxis Color10
+bright_yellow = "#f4d67a"   # Ptyxis Color11
+bright_blue = "#71baf2"   # Ptyxis Color12
+bright_magenta = "#ce89df"   # Ptyxis Color13
+bright_cyan = "#67cbe7"   # Ptyxis Color14
+bright_white = "#bdc3c2"   # Ptyxis Color15

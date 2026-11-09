@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Foxnightly'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Foxnightly.yml.
+title = "Foxnightly"
+gtk_name = "Foxnightly"
+shell_name = "Foxnightly-Shell"
+credit = "Foxnightly (colours of the Ptyxis built-in 'Foxnightly'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Foxnightly.yml)"
+ptyxis = "Foxnightly"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Foxnightly' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#2a2a2e"
+fg = "#d7d7db"
+selection = "#4d4d51"   # DERIVED
+red = "#b98eff"
+orange = "#9696e7"   # DERIVED
+yellow = "#729fcf"
+green = "#ff7de9"
+cyan = "#acacae"
+blue = "#66a05b"
+magenta = "#75507b"
+purple = "#75507b"   # = magenta
+# palette Color8 (bright black) = #a40000: a candidate for `comment`
+[dark.ansi]
+red = "#b98eff"
+green = "#ff7de9"
+yellow = "#729fcf"
+blue = "#66a05b"
+magenta = "#75507b"
+cyan = "#acacae"
+[dark.terminal]
+source = "Foxnightly"   # Ptyxis built-in id
+black = "#2a2a2e"   # Ptyxis Color0
+white = "#ffffff"   # Ptyxis Color7
+bright_black = "#a40000"   # Ptyxis Color8
+bright_red = "#bf4040"   # Ptyxis Color9
+bright_green = "#66a05b"   # Ptyxis Color10
+bright_yellow = "#ffb86c"   # Ptyxis Color11
+bright_blue = "#729fcf"   # Ptyxis Color12
+bright_magenta = "#8f5902"   # Ptyxis Color13
+bright_cyan = "#c4a000"   # Ptyxis Color14
+bright_white = "#5c3566"   # Ptyxis Color15

@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Gooey'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Gooey.yml.
+title = "Gooey"
+gtk_name = "Gooey"
+shell_name = "Gooey-Shell"
+credit = "Gooey (colours of the Ptyxis built-in 'Gooey'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Gooey.yml)"
+ptyxis = "Gooey"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Gooey' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#0d101b"
+fg = "#ebeef9"
+selection = "#393c47"   # DERIVED
+red = "#bb4f6c"
+orange = "#c05654"   # DERIVED
+yellow = "#c65e3d"
+green = "#72ccae"
+cyan = "#8d84c6"
+blue = "#58b6ca"
+magenta = "#6488c4"
+purple = "#6488c4"   # = magenta
+# palette Color8 (bright black) = #1f222d: a candidate for `comment`
+[dark.ansi]
+red = "#bb4f6c"
+green = "#72ccae"
+yellow = "#c65e3d"
+blue = "#58b6ca"
+magenta = "#6488c4"
+cyan = "#8d84c6"
+[dark.terminal]
+source = "Gooey"   # Ptyxis built-in id
+black = "#000009"   # Ptyxis Color0
+white = "#858893"   # Ptyxis Color7
+bright_black = "#1f222d"   # Ptyxis Color8
+bright_red = "#ee829f"   # Ptyxis Color9
+bright_green = "#a5ffe1"   # Ptyxis Color10
+bright_yellow = "#f99170"   # Ptyxis Color11
+bright_blue = "#8be9fd"   # Ptyxis Color12
+bright_magenta = "#97bbf7"   # Ptyxis Color13
+bright_cyan = "#c0b7f9"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

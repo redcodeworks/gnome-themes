@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Dissonance'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dissonance.yml.
+title = "Dissonance"
+gtk_name = "Dissonance"
+shell_name = "Dissonance-Shell"
+credit = "Dissonance (colours of the Ptyxis built-in 'Dissonance'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dissonance.yml)"
+ptyxis = "Dissonance"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Dissonance' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#000000"
+fg = "#ffffff"
+selection = "#333333"   # DERIVED
+red = "#dc322f"
+orange = "#ee5b18"   # DERIVED
+yellow = "#ff8400"
+green = "#56db3a"
+cyan = "#ccccff"
+blue = "#0084d4"
+magenta = "#b729d9"
+purple = "#b729d9"   # = magenta
+# palette Color8 (bright black) = #d6dbe5: a candidate for `comment`
+[dark.ansi]
+red = "#dc322f"
+green = "#56db3a"
+yellow = "#ff8400"
+blue = "#0084d4"
+magenta = "#b729d9"
+cyan = "#ccccff"
+[dark.terminal]
+source = "Dissonance"   # Ptyxis built-in id
+cursor = "#dc322f"   # Ptyxis Cursor
+black = "#000000"   # Ptyxis Color0
+bright_black = "#d6dbe5"   # Ptyxis Color8
