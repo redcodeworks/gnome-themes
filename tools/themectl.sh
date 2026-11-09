@@ -48,6 +48,23 @@ set -euo pipefail
 # the guard asks on a copy of the original stdin (fd 3): the loops below read their own input from process substitutions
 tty_in=0; if [ -t 0 ]; then tty_in=1; exec 3<&0; fi
 kind="${1:-}"; action="${2:-}"; want="${3:-}"; accent_arg="${4:-}"
+case "$kind" in help|--help|-h) cat <<'HELP'
+gnome-themes: themes and icon sets (just <recipe>; behind the image: ujust gnome-candy <recipe>).
+
+  list-themes / list-icons       what is available, with the installed ones marked and the active accent of each theme
+  install-theme [name]           copy a theme (all its GTK, Shell and libadwaita parts) into ~/.themes with its remembered accent;
+                                 without a name pick from a checklist (nothing is ticked); a named theme skips the checklist
+  update-theme                   pull this checkout when it has a remote, then replace every installed theme and re-apply its accent
+  remove-theme [name]            remove an installed theme (checklist without a name); folders gnome-themes did not install are not touched
+  switch-theme [name] [accent]   make a theme the GTK, Shell and libadwaita theme and select the matching Ptyxis palette and Text Editor
+                                 style; the accent is one of the theme's own colors (asked when omitted)
+  install-icon [name]            install an icon set from its source repo (cloned into ~/.cache/gnome-themes) into ~/.local/share/icons
+  update-icon, remove-icon [name], switch-icon [name]   as for themes
+
+Checklists use gum when it is installed, otherwise a built-in picker (arrows or j/k, SPACE, / filter, ENTER, q). THEMES_PICKER=gum|builtin
+chooses. Other environment variables: see the header of tools/themectl.sh. FORCE=1 replaces folders gnome-themes did not install.
+HELP
+exit 0 ;; esac
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cache="${GNOME_THEMES_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/gnome-themes}"
 cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -58,7 +75,7 @@ pty_dir="${PTYXIS_PALETTES:-${XDG_DATA_HOME:-$HOME/.local/share}/org.gnome.Ptyxi
 case "$kind" in
     themes) dest="${THEMES_DEST:-$HOME/.themes}"; noun="theme" ;;
     icons)  dest="${ICONS_DEST:-${XDG_DATA_HOME:-$HOME/.local/share}/icons}"; noun="icon set" ;;
-    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]"; exit 2 ;;
+    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]   (themectl.sh help for details)"; exit 2 ;;
 esac
 
 # ---- accents (themes only) -----------------------------------------------------------------------------------
@@ -419,11 +436,55 @@ _tui_run() {
 tui_many() { chosen=(); _tui_run many "$@"; }
 tui_one()  { pick=""; _tui_run one "$@"; }
 
+# ---- gum picker -------------------------------------------------------------------------------------
+# The checklists use `gum choose` (Bluefin style: ◉ / ○ / ▸ prefixes, section headings as plain items that are never returned) when gum is on PATH
+# and there is a terminal; otherwise the built-in picker above (with its `/` filter and viewport), and without a terminal the numbered list.
+# THEMES_PICKER=gum|builtin forces one (gum missing: a warning and the built-in; a forced gum does not need a terminal, which the tests use).
+pick_handler() {
+    case "${THEMES_PICKER:-}" in
+        builtin) echo builtin; return ;;
+        gum) if command -v gum >/dev/null 2>&1; then echo gum; else echo "THEMES_PICKER=gum requested but gum is not on PATH; using the built-in picker." >&2; echo builtin; fi; return ;;
+    esac
+    if [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] && command -v gum >/dev/null 2>&1; then echo gum; else echo builtin; fi
+}
+# gum_run MODE HEADER IDX... : sets chosen=(indexes) (many) or pick=index (one); an empty result (Esc, nothing ticked) leaves them empty
+gum_run() {
+    local mode="$1" header="$2"; shift 2; local cand=("$@") i lab l out line hn rows=24 sz h sel="" nfeat=0 items=()
+    local -A idx_of=()
+    for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] && nfeat=$((nfeat+1)); done
+    if [ "$nfeat" -gt 0 ]; then   # section headings are ordinary items; they are skipped when mapping back
+        items+=("── Featured ───"); for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] && items+=("${labels[i]}"); done
+        items+=("── All themes ───"); for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] || items+=("${labels[i]}"); done
+    else for i in "${cand[@]}"; do items+=("${labels[i]}"); done; fi
+    for i in "${cand[@]}"; do idx_of[${labels[i]}]=$i; [ "$mode" = many ] && [ "${on[i]:-0}" -eq 1 ] && sel+="${sel:+,}${labels[i]}"; done
+    sz=$(stty size </dev/tty 2>/dev/null) && rows=${sz% *}
+    h=$((rows - 4)); [ "$h" -gt "${#items[@]}" ] && h=${#items[@]}; [ "$h" -lt 5 ] && h=5
+    local args=(choose --height "$h" --cursor "▸  " --selected-prefix "◉  " --unselected-prefix "○  ")
+    if [ "$mode" = many ]; then args+=(--no-limit --header "$header (x or SPACE marks, ENTER confirms, Esc cancels)"); [ -n "$sel" ] && args+=(--selected "$sel")
+    else args+=(--limit 1 --header "$header (ENTER selects, Esc cancels)"); fi
+    out=$(gum "${args[@]}" "${items[@]}" || true)
+    chosen=(); pick=""
+    while IFS= read -r line; do
+        [ -n "$line" ] || continue
+        case "$line" in "──"*) continue ;; esac
+        if [ -n "${idx_of[$line]+x}" ]; then i=${idx_of[$line]}; else   # a label that came back changed: match by name (star and description stripped)
+            lab="${line#★ }"; lab="${lab%%  (*}"; i=""
+            for hn in "${cand[@]}"; do l="${labels[hn]#★ }"; l="${l%%  (*}"; if [ "$l" = "$lab" ]; then i=$hn; break; fi; done
+            [ -n "$i" ] || continue
+        fi
+        if [ "$mode" = many ]; then chosen+=("$i"); else pick="$i"; break; fi
+    done <<< "$out"
+}
+
 # choose_many HEADER IDX... : tick entries from the candidate indexes; sets chosen=(indexes). Preselected = on[]
 chosen=(); on=()
 choose_many() {
-    local header="$1"; shift; local cand=("$@") i a mark rc=0
+    local header="$1"; shift; local cand=("$@") i a mark rc=0 handler
     chosen=()
+    handler=$(pick_handler)
+    if [ "$handler" = gum ]; then
+        gum_run many "$header" "${cand[@]}"; return 0
+    fi
     tui_many "$header" "${cand[@]}" || rc=$?
     if [ "$rc" -eq 1 ]; then echo "Cancelled."; exit 0
     elif [ "$rc" -eq 2 ]; then
@@ -449,8 +510,10 @@ choose_many() {
 # choose_one HEADER IDX... : pick exactly one; sets pick=index (empty when cancelled)
 pick=""
 choose_one() {
-    local header="$1"; shift; local cand=("$@") i a rc=0
+    local header="$1"; shift; local cand=("$@") i a rc=0 handler
     pick=""
+    handler=$(pick_handler)
+    if [ "$handler" = gum ]; then gum_run one "$header" "${cand[@]}"; return 0; fi
     tui_one "$header" "$@" || rc=$?
     if [ "$rc" -eq 2 ]; then
         echo; echo "$header:"
