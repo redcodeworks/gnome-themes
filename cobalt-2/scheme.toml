@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Cobalt 2'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml.
+title = "Cobalt 2"
+gtk_name = "Cobalt-2"
+shell_name = "Cobalt-2-Shell"
+credit = "Cobalt 2 (colours of the Ptyxis built-in 'Cobalt 2'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml)"
+ptyxis = "Cobalt 2"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Cobalt 2' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#132738"
+fg = "#ffffff"
+selection = "#425260"   # DERIVED
+red = "#ff0000"
+orange = "#ff7205"   # DERIVED
+yellow = "#ffe50a"
+green = "#38de21"
+cyan = "#00bbbb"
+blue = "#1460d2"
+magenta = "#ff005d"
+purple = "#ff005d"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#ff0000"
+green = "#38de21"
+yellow = "#ffe50a"
+blue = "#1460d2"
+magenta = "#ff005d"
+cyan = "#00bbbb"
+[dark.terminal]
+source = "Cobalt 2"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bbbbbb"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#f40e17"   # Ptyxis Color9
+bright_green = "#3bd01d"   # Ptyxis Color10
+bright_yellow = "#edc809"   # Ptyxis Color11
+bright_blue = "#5555ff"   # Ptyxis Color12
+bright_magenta = "#ff55ff"   # Ptyxis Color13
+bright_cyan = "#6ae3fa"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

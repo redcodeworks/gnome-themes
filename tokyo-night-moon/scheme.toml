@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Tokyo Night Moon'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/folke/tokyonight.nvim/tree/main/extras.
+title = "Tokyo Night Moon"
+gtk_name = "Tokyo-Night-Moon"
+shell_name = "Tokyo-Night-Moon-Shell"
+credit = "Tokyo Night Moon (colours of the Ptyxis built-in 'Tokyo Night Moon'; origin named in the built-in's header: https://github.com/folke/tokyonight.nvim/tree/main/extras)"
+ptyxis = "Tokyo Night Moon"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Tokyo Night Moon' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#222436"
+fg = "#c8d3f5"
+selection = "#43475c"   # DERIVED
+red = "#ff757f"
+orange = "#ff9e7b"   # DERIVED
+yellow = "#ffc777"
+green = "#c3e88d"
+cyan = "#86e1fc"
+blue = "#82aaff"
+magenta = "#c099ff"
+purple = "#c099ff"   # = magenta
+# palette Color8 (bright black) = #444a73: a candidate for `comment`
+[dark.ansi]
+red = "#ff757f"
+green = "#c3e88d"
+yellow = "#ffc777"
+blue = "#82aaff"
+magenta = "#c099ff"
+cyan = "#86e1fc"
+[dark.terminal]
+source = "Tokyo Night Moon"   # Ptyxis built-in id
+black = "#1b1d2b"   # Ptyxis Color0
+white = "#828bb8"   # Ptyxis Color7
+bright_black = "#444a73"   # Ptyxis Color8
+bright_white = "#c8d3f5"   # Ptyxis Color15

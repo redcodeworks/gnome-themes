@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Hemisu'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. The built-in's header names no origin.
+title = "Hemisu"
+gtk_name = "Hemisu"
+shell_name = "Hemisu-Shell"
+credit = "Hemisu (colours of the Ptyxis built-in 'Hemisu'; the built-in's header names no origin)"
+ptyxis = "Hemisu"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Hemisu' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#000000"
+fg = "#ffffff"
+selection = "#333333"   # DERIVED
+red = "#ff0054"
+orange = "#ce4459"   # DERIVED
+yellow = "#9d895e"
+green = "#b1d630"
+cyan = "#569a9f"
+blue = "#67bee3"
+magenta = "#b576bc"
+purple = "#b576bc"   # = magenta
+# palette Color8 (bright black) = #777777: a candidate for `comment`
+[dark.ansi]
+red = "#ff0054"
+green = "#b1d630"
+yellow = "#9d895e"
+blue = "#67bee3"
+magenta = "#b576bc"
+cyan = "#569a9f"
+[dark.terminal]
+source = "Hemisu"   # Ptyxis built-in id
+cursor = "#baffaa"   # Ptyxis Cursor
+black = "#444444"   # Ptyxis Color0
+white = "#ededed"   # Ptyxis Color7
+bright_black = "#777777"   # Ptyxis Color8
+bright_red = "#d65e75"   # Ptyxis Color9
+bright_green = "#baffaa"   # Ptyxis Color10
+bright_yellow = "#ece1c8"   # Ptyxis Color11
+bright_blue = "#9fd3e5"   # Ptyxis Color12
+bright_magenta = "#deb3df"   # Ptyxis Color13
+bright_cyan = "#b6e0e5"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15
+
+[light]
+bg_deep = "#efefef"
+fg = "#444444"
+selection = "#cdcdcd"   # DERIVED
+red = "#ff0055"
+orange = "#a81e35"   # DERIVED
+yellow = "#503d15"
+green = "#739100"
+cyan = "#538091"
+blue = "#538091"
+magenta = "#5b345e"
+purple = "#5b345e"   # = magenta
+# palette Color8 (bright black) = #999999: a candidate for `comment`
+[light.ansi]
+red = "#ff0055"
+green = "#739100"
+yellow = "#503d15"
+blue = "#538091"
+magenta = "#5b345e"
+cyan = "#538091"
+[light.terminal]
+source = "Hemisu"   # Ptyxis built-in id
+cursor = "#ff0054"   # Ptyxis Cursor
+black = "#777777"   # Ptyxis Color0
+white = "#999999"   # Ptyxis Color7
+bright_black = "#999999"   # Ptyxis Color8
+bright_red = "#d65e76"   # Ptyxis Color9
+bright_green = "#9cc700"   # Ptyxis Color10
+bright_yellow = "#947555"   # Ptyxis Color11
+bright_blue = "#9db3cd"   # Ptyxis Color12
+bright_magenta = "#a184a4"   # Ptyxis Color13
+bright_cyan = "#85b2aa"   # Ptyxis Color14
+bright_white = "#bababa"   # Ptyxis Color15

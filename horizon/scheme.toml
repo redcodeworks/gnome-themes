@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Horizon'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Horizon%20Bright.yml.
+title = "Horizon"
+gtk_name = "Horizon"
+shell_name = "Horizon-Shell"
+credit = "Horizon (colours of the Ptyxis built-in 'Horizon'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Horizon%20Bright.yml)"
+ptyxis = "Horizon"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Horizon' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#1c1e26"
+fg = "#fdf0ed"
+selection = "#49484e"   # DERIVED
+red = "#e95678"
+orange = "#f28686"   # DERIVED
+yellow = "#fab795"
+green = "#29d398"
+cyan = "#59e3e3"
+blue = "#26bbd9"
+magenta = "#ee64ae"
+purple = "#ee64ae"   # = magenta
+# palette Color8 (bright black) = #232530: a candidate for `comment`
+[dark.ansi]
+red = "#e95678"
+green = "#29d398"
+yellow = "#fab795"
+blue = "#26bbd9"
+magenta = "#ee64ae"
+cyan = "#59e3e3"
+[dark.terminal]
+source = "Horizon"   # Ptyxis built-in id
+black = "#16161c"   # Ptyxis Color0
+white = "#fadad1"   # Ptyxis Color7
+bright_black = "#232530"   # Ptyxis Color8
+bright_red = "#ec6a88"   # Ptyxis Color9
+bright_green = "#3fdaa4"   # Ptyxis Color10
+bright_yellow = "#fbc3a7"   # Ptyxis Color11
+bright_blue = "#3fc6de"   # Ptyxis Color12
+bright_magenta = "#f075b7"   # Ptyxis Color13
+bright_cyan = "#6be6e6"   # Ptyxis Color14
+bright_white = "#fdf0ed"   # Ptyxis Color15
+
+[light]
+bg_deep = "#fdf0ed"
+fg = "#1c1e26"
+selection = "#d0c6c5"   # DERIVED
+red = "#da103f"
+orange = "#e83b2e"   # DERIVED
+yellow = "#f6661e"
+green = "#1eb980"
+cyan = "#1d8991"
+blue = "#26bbd9"
+magenta = "#ee64ae"
+purple = "#ee64ae"   # = magenta
+# palette Color8 (bright black) = #1a1c23: a candidate for `comment`
+[light.ansi]
+red = "#da103f"
+green = "#1eb980"
+yellow = "#f6661e"
+blue = "#26bbd9"
+magenta = "#ee64ae"
+cyan = "#1d8991"
+[light.terminal]
+source = "Horizon"   # Ptyxis built-in id
+black = "#16161c"   # Ptyxis Color0
+white = "#fadad1"   # Ptyxis Color7
+bright_black = "#1a1c23"   # Ptyxis Color8
+bright_red = "#f43e5c"   # Ptyxis Color9
+bright_green = "#07da8c"   # Ptyxis Color10
+bright_yellow = "#f77d26"   # Ptyxis Color11
+bright_blue = "#3fc6de"   # Ptyxis Color12
+bright_magenta = "#f075b7"   # Ptyxis Color13
+bright_cyan = "#1eaeae"   # Ptyxis Color14
+bright_white = "#fdf0ed"   # Ptyxis Color15

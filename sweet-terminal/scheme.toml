@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Sweet Terminal'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Terminal.yml.
+title = "Sweet Terminal"
+gtk_name = "Sweet-Terminal"
+shell_name = "Sweet-Terminal-Shell"
+credit = "Sweet Terminal (colours of the Ptyxis built-in 'Sweet Terminal'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Terminal.yml)"
+ptyxis = "Sweet Terminal"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Sweet Terminal' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#222235"
+fg = "#ffffff"
+selection = "#4e4e5d"   # DERIVED
+red = "#f60055"
+orange = "#c6008a"   # DERIVED
+yellow = "#9700be"
+green = "#06c993"
+cyan = "#60adec"
+blue = "#f69154"
+magenta = "#ec89cb"
+purple = "#ec89cb"   # = magenta
+# palette Color8 (bright black) = #959dcb: a candidate for `comment`
+[dark.ansi]
+red = "#f60055"
+green = "#06c993"
+yellow = "#9700be"
+blue = "#f69154"
+magenta = "#ec89cb"
+cyan = "#60adec"
+[dark.terminal]
+source = "Sweet Terminal"   # Ptyxis built-in id
+black = "#3f3f54"   # Ptyxis Color0
+white = "#abb2bf"   # Ptyxis Color7
+bright_black = "#959dcb"   # Ptyxis Color8
+bright_cyan = "#00dded"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

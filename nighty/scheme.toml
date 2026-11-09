@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Nighty'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Nighty.yml.
+title = "Nighty"
+gtk_name = "Nighty"
+shell_name = "Nighty-Shell"
+credit = "Nighty (colours of the Ptyxis built-in 'Nighty'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Nighty.yml)"
+ptyxis = "Nighty"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Nighty' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2f2f2f"
+fg = "#dfdfdf"
+selection = "#525252"   # DERIVED
+red = "#9b3e46"
+orange = "#8e5f33"   # DERIVED
+yellow = "#808020"
+green = "#095b32"
+cyan = "#3a7458"
+blue = "#1d3e6f"
+magenta = "#823065"
+purple = "#823065"   # = magenta
+# palette Color8 (bright black) = #5c6370: a candidate for `comment`
+[dark.ansi]
+red = "#9b3e46"
+green = "#095b32"
+yellow = "#808020"
+blue = "#1d3e6f"
+magenta = "#823065"
+cyan = "#3a7458"
+[dark.terminal]
+source = "Nighty"   # Ptyxis built-in id
+black = "#373d48"   # Ptyxis Color0
+white = "#828282"   # Ptyxis Color7
+bright_black = "#5c6370"   # Ptyxis Color8
+bright_red = "#d0555f"   # Ptyxis Color9
+bright_green = "#119955"   # Ptyxis Color10
+bright_yellow = "#dfe048"   # Ptyxis Color11
+bright_blue = "#4674b8"   # Ptyxis Color12
+bright_magenta = "#ed86c9"   # Ptyxis Color13
+bright_cyan = "#70d2a4"   # Ptyxis Color14
+bright_white = "#dfdfdf"   # Ptyxis Color15

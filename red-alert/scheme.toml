@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Red Alert'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Alert.yml.
+title = "Red Alert"
+gtk_name = "Red-Alert"
+shell_name = "Red-Alert-Shell"
+credit = "Red Alert (colours of the Ptyxis built-in 'Red Alert'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Alert.yml)"
+ptyxis = "Red Alert"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Red Alert' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#762423"
+fg = "#ffffff"
+selection = "#91504f"   # DERIVED
+red = "#d62e4e"
+orange = "#ca735c"   # DERIVED
+yellow = "#beb86b"
+green = "#71be6b"
+cyan = "#6bbeb8"
+blue = "#489bee"
+magenta = "#e979d7"
+purple = "#e979d7"   # = magenta
+# palette Color8 (bright black) = #262626: a candidate for `comment`
+[dark.ansi]
+red = "#d62e4e"
+green = "#71be6b"
+yellow = "#beb86b"
+blue = "#489bee"
+magenta = "#e979d7"
+cyan = "#6bbeb8"
+[dark.terminal]
+source = "Red Alert"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#d6d6d6"   # Ptyxis Color7
+bright_black = "#262626"   # Ptyxis Color8
+bright_red = "#e02553"   # Ptyxis Color9
+bright_green = "#aff08c"   # Ptyxis Color10
+bright_yellow = "#dfddb7"   # Ptyxis Color11
+bright_blue = "#65aaf1"   # Ptyxis Color12
+bright_magenta = "#ddb7df"   # Ptyxis Color13
+bright_cyan = "#b7dfdd"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

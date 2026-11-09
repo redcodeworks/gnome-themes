@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Dark Pastel'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dark%20Pastel.yml.
+title = "Dark Pastel"
+gtk_name = "Dark-Pastel"
+shell_name = "Dark-Pastel-Shell"
+credit = "Dark Pastel (colours of the Ptyxis built-in 'Dark Pastel'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dark%20Pastel.yml)"
+ptyxis = "Dark Pastel"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Dark Pastel' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#000000"
+fg = "#ffffff"
+selection = "#333333"   # DERIVED
+red = "#ff5555"
+orange = "#ffaa55"   # DERIVED
+yellow = "#ffff55"
+green = "#55ff55"
+cyan = "#55ffff"
+blue = "#5555ff"
+magenta = "#ff55ff"
+purple = "#ff55ff"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#ff5555"
+green = "#55ff55"
+yellow = "#ffff55"
+blue = "#5555ff"
+magenta = "#ff55ff"
+cyan = "#55ffff"
+[dark.terminal]
+source = "Dark Pastel"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bbbbbb"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_white = "#ffffff"   # Ptyxis Color15

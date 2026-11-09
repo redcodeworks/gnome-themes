@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Gruvbox'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox.yml.
+title = "Gruvbox"
+gtk_name = "Gruvbox"
+shell_name = "Gruvbox-Shell"
+credit = "Gruvbox (colours of the Ptyxis built-in 'Gruvbox'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox.yml)"
+ptyxis = "Gruvbox"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Gruvbox' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#282828"
+fg = "#ebdbb2"
+selection = "#4f4c44"   # DERIVED
+red = "#cc241d"
+orange = "#d25e1f"   # DERIVED
+yellow = "#d79921"
+green = "#98971a"
+cyan = "#689d6a"
+blue = "#458588"
+magenta = "#b16286"
+purple = "#b16286"   # = magenta
+# palette Color8 (bright black) = #928374: a candidate for `comment`
+[dark.ansi]
+red = "#cc241d"
+green = "#98971a"
+yellow = "#d79921"
+blue = "#458588"
+magenta = "#b16286"
+cyan = "#689d6a"
+[dark.terminal]
+source = "Gruvbox"   # Ptyxis built-in id
+black = "#282828"   # Ptyxis Color0
+white = "#a89984"   # Ptyxis Color7
+bright_black = "#928374"   # Ptyxis Color8
+bright_red = "#fb4934"   # Ptyxis Color9
+bright_green = "#b8bb26"   # Ptyxis Color10
+bright_yellow = "#fabd2f"   # Ptyxis Color11
+bright_blue = "#83a598"   # Ptyxis Color12
+bright_magenta = "#d3869b"   # Ptyxis Color13
+bright_cyan = "#8ec07c"   # Ptyxis Color14
+bright_white = "#ebdbb2"   # Ptyxis Color15
+
+[light]
+bg_deep = "#fbf1c7"
+fg = "#3c3836"
+selection = "#d5ccaa"   # DERIVED
+red = "#cc241d"
+orange = "#d25e1f"   # DERIVED
+yellow = "#d79921"
+green = "#98971a"
+cyan = "#689d6a"
+blue = "#458588"
+magenta = "#b16286"
+purple = "#b16286"   # = magenta
+# palette Color8 (bright black) = #928374: a candidate for `comment`
+[light.ansi]
+red = "#cc241d"
+green = "#98971a"
+yellow = "#d79921"
+blue = "#458588"
+magenta = "#b16286"
+cyan = "#689d6a"
+[light.terminal]
+source = "Gruvbox"   # Ptyxis built-in id
+black = "#fbf1c7"   # Ptyxis Color0
+white = "#7c6f64"   # Ptyxis Color7
+bright_black = "#928374"   # Ptyxis Color8
+bright_red = "#9d0006"   # Ptyxis Color9
+bright_green = "#79740e"   # Ptyxis Color10
+bright_yellow = "#b57614"   # Ptyxis Color11
+bright_blue = "#076678"   # Ptyxis Color12
+bright_magenta = "#8f3f71"   # Ptyxis Color13
+bright_cyan = "#427b58"   # Ptyxis Color14
+bright_white = "#3c3836"   # Ptyxis Color15

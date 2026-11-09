@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Frontend Galaxy'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Galaxy.yml.
+title = "Frontend Galaxy"
+gtk_name = "Frontend-Galaxy"
+shell_name = "Frontend-Galaxy-Shell"
+credit = "Frontend Galaxy (colours of the Ptyxis built-in 'Frontend Galaxy'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Galaxy.yml)"
+ptyxis = "Frontend Galaxy"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Frontend Galaxy' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1d2837"
+fg = "#ffffff"
+selection = "#4a535f"   # DERIVED
+red = "#f9555f"
+orange = "#fca244"   # DERIVED
+yellow = "#fef02a"
+green = "#21b089"
+cyan = "#1f9ee7"
+blue = "#589df6"
+magenta = "#944d95"
+purple = "#944d95"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#f9555f"
+green = "#21b089"
+yellow = "#fef02a"
+blue = "#589df6"
+magenta = "#944d95"
+cyan = "#1f9ee7"
+[dark.terminal]
+source = "Frontend Galaxy"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bbbbbb"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#fa8c8f"   # Ptyxis Color9
+bright_green = "#35bb9a"   # Ptyxis Color10
+bright_yellow = "#ffff55"   # Ptyxis Color11
+bright_magenta = "#e75699"   # Ptyxis Color13
+bright_cyan = "#3979bc"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

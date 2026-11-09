@@ -111,7 +111,8 @@ def build(scheme_dir, ref, ref_light=None):
         diff('cursor', 'Cursor', p.get('Cursor')); diff('black', 'Color0', p.get('Color0')); diff('white', 'Color7', p.get('Color7'))
         diff('bright_black', 'Color8', p.get('Color8'))
         for i, n in enumerate(NAMES): diff('bright_' + n, 'Color%d' % (i + 9), p.get('Color%d' % (i + 9)))
-        diff('bright_white', 'Color15', p.get('Color15'))
+        eff7 = p.get('Color7') or base['Color7']      # slot_colors defaults bright_white to the (possibly overridden) white, not to fg
+        if p.get('Color15') and p['Color15'].lower() != eff7.lower(): term.append('bright_white = "%s"   # Ptyxis Color15' % p['Color15'])
         # `source` is always written: the built-in is the source of truth (tools/ptyxis-compare.py --check compares against it); what differs from
         # the generator defaults is listed beside it. A palette that is a file, not a built-in, needs `no_builtin` instead (TODO)
         roles += ['[%s.terminal]' % v, ('source = "%s"   # Ptyxis built-in id' % src[v]) if is_id else 'no_builtin = "TODO the palette is a file, not a built-in: say why"'] + term

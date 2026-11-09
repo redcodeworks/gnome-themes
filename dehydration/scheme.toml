@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Dehydration'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dehydration.yml.
+title = "Dehydration"
+gtk_name = "Dehydration"
+shell_name = "Dehydration-Shell"
+credit = "Dehydration (colours of the Ptyxis built-in 'Dehydration'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Dehydration.yml)"
+ptyxis = "Dehydration"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Dehydration' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#333333"
+fg = "#cccccc"
+selection = "#525252"   # DERIVED
+red = "#ff5555"
+orange = "#ff7755"   # DERIVED
+yellow = "#ff9955"
+green = "#5fd38d"
+cyan = "#5fd3bc"
+blue = "#3771c8"
+magenta = "#bc5fd3"
+purple = "#bc5fd3"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[dark.ansi]
+red = "#ff5555"
+green = "#5fd38d"
+yellow = "#ff9955"
+blue = "#3771c8"
+magenta = "#bc5fd3"
+cyan = "#5fd3bc"
+[dark.terminal]
+source = "Dehydration"   # Ptyxis built-in id
+black = "#333333"   # Ptyxis Color0
+white = "#999999"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#ff8080"   # Ptyxis Color9
+bright_green = "#87deaa"   # Ptyxis Color10
+bright_yellow = "#ffb380"   # Ptyxis Color11
+bright_blue = "#5f8dd3"   # Ptyxis Color12
+bright_magenta = "#cd87de"   # Ptyxis Color13
+bright_cyan = "#87decd"   # Ptyxis Color14
+bright_white = "#cccccc"   # Ptyxis Color15
