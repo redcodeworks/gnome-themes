@@ -59,6 +59,7 @@ case "$1" in
 esac
 SH
 chmod +x "$T/bin/dconf"
+export THEMES_PICKER=builtin   # tests choose the handler explicitly (a developer machine may have fzf)
 export PTYXIS_PALETTES="$T/ptyxis-palettes" GTKSOURCEVIEW_STYLES="$T/gsv-styles" FLATPAK_APPS="$T/var-app"
 export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" GNOME_THEMES_CACHE="$T/cache"
 export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
@@ -196,6 +197,45 @@ if [ -d bluloco-light ]; then
     grep -q "Bluloco-Light-Shell-Light" "$LOG" "$DCONF_DB" 2>/dev/null && grep -q "gtk-theme Bluloco-Light" "$LOG" && chk ok "switch-theme sets the light-only Shell theme even when the desktop is dark" || chk fail "light-only switch ($(cat "$LOG" | tr '\n' ';'))"
     THEMES_DEST=$LO just remove-theme bluloco-light >/dev/null 2>&1
 fi
+
+# ---- pickers: fzf (stub), gum (stub, forced), none; scroll test of the built-in ---------------------------------------------------
+echo "=== pickers"
+SB="$T/stubs"; mkdir -p "$SB"
+cat > "$SB/fzf" <<'SH'
+#!/bin/sh
+# stub fzf: records its arguments, reads the list on stdin, prints the lines matching $FZF_STUB_PICK (ERE on the label), or only the label when FZF_STUB_PLAIN=1
+[ "$1" = --version ] && { echo "0.74.0 (stub)"; exit 0; }
+echo "$*" > "$STUB_LOG"; cat > "$STUB_LIST"
+[ -n "${FZF_STUB_EXIT:-}" ] && exit "$FZF_STUB_EXIT"
+grep -E "$FZF_STUB_PICK" "$STUB_LIST" | if [ -n "${FZF_STUB_PLAIN:-}" ]; then cut -f2; else cat; fi
+exit 0
+SH
+sed 's/FZF_STUB/GUM_STUB/g; s/stub fzf/stub gum/' "$SB/fzf" | grep -v -- '--version' > "$SB/gum"; chmod +x "$SB/fzf" "$SB/gum"
+export STUB_LOG="$T/stub.log" STUB_LIST="$T/stub.list"
+nofzf="$T/path-nofzf"; mkdir -p "$nofzf"; for c in sh bash env cat grep sed awk sort head tr cut mktemp rm mkdir cp mv ls find dirname basename git stty tput date cmp printf wc just python3 xvfb-run tee sha1sum; do p2=$(command -v "$c" 2>/dev/null) && ln -sf "$p2" "$nofzf/$c"; done
+FP="$T/fz-themes"; mkdir -p "$FP"
+rm -f "$STUB_LOG"; out=$(THEMES_PICKER=fzf FZF_STUB_PICK='^[0-9]+	(.* )?(nordic|dracula)  ' PATH="$SB:$PATH" THEMES_DEST=$FP tools/themectl.sh themes install </dev/null 2>&1)
+[ -d "$FP/Nordic-Nord" ] && [ -d "$FP/Dracula" ] && [ "$(find "$FP" -mindepth 1 -maxdepth 1 -not -name 'Nordic*' -not -name 'Dracula*' | wc -l)" -eq 0 ] && chk ok "fzf handler (stub): the marked entries are installed, nothing else" || chk fail "fzf install: $(ls "$FP" | tr '\n' ' ')"
+grep -q -- '--multi' "$STUB_LOG" && grep -q -- '--layout=reverse' "$STUB_LOG" && grep -q 'TAB marks' "$STUB_LOG" && chk ok "fzf is started with --multi, --layout=reverse and a TAB/ENTER header" || chk fail "fzf arguments: $(cat "$STUB_LOG")"
+first=$(head -1 "$STUB_LIST"); [ "${first%%	*}" = 0 ] && printf '%s' "$first" | grep -q '★ nordic' && grep -c '★' "$STUB_LIST" | grep -qx 6 && chk ok "fzf gets the featured six first, starred, nothing preselected" || chk fail "fzf list head: $first"
+rm -rf "$FP"; mkdir -p "$FP"; out=$(THEMES_PICKER=fzf FZF_STUB_PLAIN=1 FZF_STUB_PICK='tokyo-night|everforest' PATH="$SB:$PATH" THEMES_DEST=$FP tools/themectl.sh themes install </dev/null 2>&1)
+[ -d "$FP/Everforest" ] && [ -d "$FP/Tokyo-Night" ] && chk ok "fzf handler: a plain label (with the star and the description) maps back to the scheme id" || chk fail "fzf plain mapping: $(ls "$FP" | tr '\n' ' ')"
+rm -rf "$FP"; mkdir -p "$FP"; out=$(THEMES_PICKER=fzf FZF_STUB_EXIT=130 PATH="$SB:$PATH" THEMES_DEST=$FP tools/themectl.sh themes install </dev/null 2>&1); rc=$?
+[ $rc -eq 0 ] && echo "$out" | grep -q Cancelled && [ -z "$(ls -A "$FP")" ] && chk ok "fzf cancelled (Esc/Ctrl-C): says Cancelled, exit 0, nothing installed" || chk fail "fzf cancel rc=$rc: $out"
+out=$(THEMES_PICKER=fzf FZF_STUB_EXIT=1 PATH="$SB:$PATH" THEMES_DEST=$FP tools/themectl.sh themes install </dev/null 2>&1); rc=$?
+[ $rc -eq 0 ] && echo "$out" | grep -q "Nothing selected" && chk ok "fzf with an empty selection: Nothing selected, exit 0" || chk fail "fzf empty rc=$rc: $out"
+rm -f "$STUB_LOG"; THEMES_PICKER=fzf PATH="$SB:$PATH" THEMES_DEST=$FP tools/themectl.sh themes install dracula </dev/null >/dev/null 2>&1
+[ ! -e "$STUB_LOG" ] && [ -d "$FP/Dracula" ] && chk ok "a named scheme skips the picker" || chk fail "named scheme called the picker"
+THEMES_DEST=$FP tools/themectl.sh themes install nordic </dev/null >/dev/null 2>&1; : > "$LOG"
+THEMES_PICKER=fzf FZF_STUB_PICK='dracula' PATH="$SB:$PATH" THEMES_DEST=$FP tools/themectl.sh themes switch </dev/null >/dev/null 2>&1
+grep -q "gtk-theme Dracula" "$LOG" && ! grep -q -- '--multi' "$STUB_LOG" && chk ok "switch uses a single-choice fzf and applies the chosen theme" || chk fail "fzf switch: $(cat "$LOG" | tr '\n' ';') / $(cat "$STUB_LOG")"
+rm -rf "$FP"; mkdir -p "$FP"; THEMES_PICKER=gum GUM_STUB_PICK='^[0-9]+	(.* )?monokai  ' PATH="$SB:$PATH" THEMES_DEST=$FP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
+[ -d "$FP/Monokai" ] && grep -q 'filter' "$STUB_LOG" && grep -q -- '--no-limit' "$STUB_LOG" && chk ok "gum handler (forced, stub): gum filter --no-limit, the chosen entry is installed" || chk fail "gum: $(ls "$FP" | tr '\n' ' ') / $(cat "$STUB_LOG")"
+out=$(printf 'q\n' | THEMES_PICKER=fzf PATH="$nofzf" THEMES_DEST=$FP tools/themectl.sh themes install 2>&1); rc=$?
+echo "$out" | grep -q "not on PATH" && echo "$out" | grep -q "Cancelled" && [ $rc -eq 0 ] && chk ok "forced fzf but none installed: warns and falls back (no terminal: the numbered list)" || chk fail "no fzf rc=$rc: $out"
+rm -rf "$FP"
+SCROLL_THEMES="$T/scroll-themes"; mkdir -p "$SCROLL_THEMES"
+THEMES_DEST=$SCROLL_THEMES THEMES_PICKER=builtin python3 -I tools/pty-scroll-test.py 10 24 > "$T/scroll.out" 2>&1 && chk ok "built-in picker: the cursor row stays on screen and the window scrolls by at most one row per key (10 and 24 rows, filter, resize, Home/End/PgUp/PgDn)" || { chk fail "pty scroll test"; grep -B1 -A12 FAIL "$T/scroll.out" | head -30; }
 
 # ---- collision guard (themes): unrelated folders with our names are never replaced or removed without asking ---------
 echo "=== collision guard"

@@ -419,11 +419,68 @@ _tui_run() {
 tui_many() { chosen=(); _tui_run many "$@"; }
 tui_one()  { pick=""; _tui_run one "$@"; }
 
+# ---- external pickers ------------------------------------------------------------------------------
+# Handler for the checklists: THEMES_PICKER=fzf|gum|builtin forces one (fzf or gum must then be on PATH, else the built-in is used); unset: fzf when it
+# is on PATH and there is a terminal, else the built-in picker above (with `/` filter and viewport), and without a terminal the numbered list.
+# fzf: --multi for install/remove (TAB marks, ENTER confirms; fzf returns the highlighted entry when nothing is marked), single choice for switch;
+# its own fuzzy filter replaces `/`. gum (only when forced): `gum filter` (--no-limit / --limit 1). Entries are "<index>TAB<label>" so the
+# chosen ones map back to indexes exactly (a handler that returns only the visible label, decorations like the featured star and the description
+# are stripped and matched by name).
+pick_handler() {
+    local want="${THEMES_PICKER:-}"
+    case "$want" in
+        fzf|gum) if command -v "$want" >/dev/null 2>&1; then echo "$want"; return; fi
+                 echo "THEMES_PICKER=$want requested but $want is not on PATH; using the built-in picker." >&2; echo builtin; return ;;
+        builtin) echo builtin; return ;;
+    esac
+    if [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] && command -v fzf >/dev/null 2>&1; then echo fzf; else echo builtin; fi
+}
+# ext_run MODE HANDLER HEADER IDX... : sets chosen=(indexes) (many) or pick=index (one); returns 1 when cancelled
+ext_run() {
+    local mode="$1" handler="$2" header="$3"; shift 3; local cand=("$@") i fv nm lab out line key rc=0 binds="" args=() lines=()
+    for i in "${!cand[@]}"; do lines+=("${cand[i]}"$'\t'"${labels[${cand[i]}]}"); done
+    if [ "$handler" = fzf ]; then
+        args=(--layout=reverse --height='~70%' --min-height=12 --delimiter=$'\t' --with-nth=2.. --prompt="$header: " --no-sort --tiebreak=index)
+        if [ "$mode" = many ]; then
+            args+=(--multi --header="TAB marks, ENTER confirms the marked entries, Esc cancels. ★ = featured. Type to filter.")
+            # plain fzf returns the highlighted entry when nothing is marked; from 0.45 ENTER with nothing marked can abort instead (safer for install/remove)
+            fv=$(fzf --version 2>/dev/null | awk '{print $1}')
+            if [ -n "$fv" ] && [ "$(printf '%s\n0.45.0\n' "$fv" | sort -V | head -n1)" = 0.45.0 ]; then
+                args+=(--bind='enter:transform:[ "${FZF_SELECT_COUNT:-0}" -eq 0 ] && echo abort || echo accept')
+            fi
+            for i in "${!cand[@]}"; do [ "${on[${cand[i]}]:-0}" -eq 1 ] && binds+="pos($((i+1)))+toggle+"; done
+            [ -n "$binds" ] && args+=(--bind="load:${binds}pos(1)")
+        else
+            args+=(--header="ENTER selects, Esc cancels. ★ = featured. Type to filter.")
+            [ "${tui_cur:-0}" -gt 0 ] && args+=(--bind="load:pos($((tui_cur+1)))")
+        fi
+        out=$(printf '%s\n' "${lines[@]}" | fzf "${args[@]}") || rc=$?
+    else
+        args=(filter --header="$header" --placeholder="Type to filter" --height=20)
+        if [ "$mode" = many ]; then args+=(--no-limit); else args+=(--limit 1); fi
+        out=$(printf '%s\n' "${lines[@]}" | gum "${args[@]}") || rc=$?
+    fi
+    [ "$rc" -eq 0 ] || [ -n "$out" ] || { [ "$rc" -eq 1 ] && [ "$mode" = many ] && { chosen=(); return 0; }; return 1; }
+    local res=()
+    while IFS= read -r line; do
+        [ -n "$line" ] || continue
+        key="${line%%$'\t'*}"
+        if [[ "$key" =~ ^[0-9]+$ ]] && [ "$key" != "$line" ]; then res+=("$key"); continue; fi
+        nm="${line#"$key"$'\t'}"; [ "$key" = "$line" ] && nm="$line"
+        nm="${nm#★ }"; nm="${nm%%  (*}"
+        for i in "${cand[@]}"; do lab="${labels[i]#★ }"; lab="${lab%%  (*}"; if [ "$lab" = "$nm" ]; then res+=("$i"); break; fi; done
+    done <<< "$out"
+    if [ "$mode" = many ]; then chosen=("${res[@]}"); else pick="${res[0]:-}"; [ -n "$pick" ] || return 1; fi
+    return 0
+}
+
 # choose_many HEADER IDX... : tick entries from the candidate indexes; sets chosen=(indexes). Preselected = on[]
 chosen=(); on=()
 choose_many() {
-    local header="$1"; shift; local cand=("$@") i a mark rc=0
+    local header="$1"; shift; local cand=("$@") i a mark rc=0 handler
     chosen=()
+    handler=$(pick_handler)
+    if [ "$handler" != builtin ]; then ext_run many "$handler" "$header" "${cand[@]}" || { echo "Cancelled."; exit 0; }; return 0; fi
     tui_many "$header" "${cand[@]}" || rc=$?
     if [ "$rc" -eq 1 ]; then echo "Cancelled."; exit 0
     elif [ "$rc" -eq 2 ]; then
@@ -449,8 +506,10 @@ choose_many() {
 # choose_one HEADER IDX... : pick exactly one; sets pick=index (empty when cancelled)
 pick=""
 choose_one() {
-    local header="$1"; shift; local cand=("$@") i a rc=0
+    local header="$1"; shift; local cand=("$@") i a rc=0 handler
     pick=""
+    handler=$(pick_handler)
+    if [ "$handler" != builtin ]; then ext_run one "$handler" "$header" "${cand[@]}" || true; return 0; fi
     tui_one "$header" "$@" || rc=$?
     if [ "$rc" -eq 2 ]; then
         echo; echo "$header:"
