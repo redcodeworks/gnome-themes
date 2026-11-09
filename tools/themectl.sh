@@ -459,8 +459,8 @@ gum_run() {
     for i in "${cand[@]}"; do idx_of[${labels[i]}]=$i; [ "$mode" = many ] && [ "${on[i]:-0}" -eq 1 ] && sel+="${sel:+,}${labels[i]}"; done
     sz=$(stty size </dev/tty 2>/dev/null) && rows=${sz% *}
     h=$((rows - 4)); [ "$h" -gt "${#items[@]}" ] && h=${#items[@]}; [ "$h" -lt 5 ] && h=5
-    local args=(choose --height "$h" --cursor "▸  " --selected-prefix "◉  " --unselected-prefix "○  ")
-    if [ "$mode" = many ]; then args+=(--no-limit --header "$header (x or SPACE marks, ENTER confirms, Esc cancels)"); [ -n "$sel" ] && args+=(--selected "$sel")
+    local args=(choose --height "$h" --cursor "▸  " --cursor-prefix "○  " --selected-prefix "◉  " --unselected-prefix "○  ")
+    if [ "$mode" = many ]; then args+=(--no-limit --header "$header (x marks, ENTER confirms, Esc cancels)"); [ -n "$sel" ] && args+=(--selected "$sel")
     else args+=(--limit 1 --header "$header (ENTER selects, Esc cancels)"); fi
     out=$(gum "${args[@]}" "${items[@]}" || true)
     chosen=(); pick=""
