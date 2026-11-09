@@ -1,0 +1,240 @@
+scheme	dark_id	light_id	status	reason	origin
+3024	3024	-	todo		-
+aci	Aci	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aci.yml
+aco	Aco	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aco.yml
+adventure-time	Adventure Time	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Adventure%20Time.yml
+afterglow	Afterglow	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Afterglow.yml
+alien-blood	Alien Blood	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Alien%20Blood.yml
+apprentice	Apprentice	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Apprentice.yml
+argonaut	Argonaut	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Argonaut.yml
+arthur	Arthur	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Arthur.yml
+atom	Atom	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Atom.yml
+aubergine	Ubuntu	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Clone%20Of%20Ubuntu.yml
+aura	Aura	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aura.yml
+ayu	Ayu	-	built		-
+ayu-mirage	Ayu Mirage	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ayu%20Mirage.yml
+azu	Azu	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Azu.yml
+belafonte	Belafonte	-	todo		-
+bim	Bim	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bim.yml
+birds-of-paradise	Birds Of Paradise	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Birds%20Of%20Paradise.yml
+blazer	Blazer	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Blazer.yml
+bluloco-light	Bluloco Light	-	excluded	generate failed:     inks_dark = [roles['dark']['bg_deep'], roles['dark']['bg']] + ([roles['light']['fg']] if not dark_only else []) |                  ~~~~~^^^^^^^^ | KeyError: 'dark' | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Light.yml
+bluloco-zsh-light	Bluloco Zsh Light	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Zsh%20Light.yml
+borland	Borland	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Borland.yml
+breath	Breath	-	todo		-
+breath-silverfox	Breath Silverfox	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breath%20Silverfox.yml
+breeze	Breeze	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breeze.yml
+broadcast	Broadcast	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Broadcast.yml
+brogrammer	Brogrammer	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Brogrammer.yml
+c64	C64	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/C64.yml
+cai	Cai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cai.yml
+campbell	campbell	-	excluded	generic terminal preset (Windows Terminal default)	-
+catppuccin	Catppuccin Latte + Catppuccin Mocha	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Latte.yml
+catppuccin-frappe	Catppuccin Frappé	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Frappé.yml
+catppuccin-macchiato	Catppuccin Macchiato	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Macchiato.yml
+chalk	Chalk	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalk.yml
+chalkboard	Chalkboard	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalkboard.yml
+chameleon	Chameleon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml
+ciapre	Ciapre	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ciapre.yml
+clrs	Clrs	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml
+cobalt-2	Cobalt 2	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml
+cobalt-neon	Cobalt Neon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%20Neon.yml
+colorcli	Colorcli	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Colorcli.yml
+crayon-pony-fish	Crayon Pony Fish	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Crayon%20Pony%20Fish.yml
+dark-pastel	Dark Pastel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dark%20Pastel.yml
+darkside	Darkside	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Darkside.yml
+dehydration	Dehydration	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dehydration.yml
+desert	Desert	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Desert.yml
+dimmed-monokai	Dimmed Monokai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dimmed%20Monokai.yml
+dissonance	Dissonance	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dissonance.yml
+dracula	dracula	-	existing	covered by the existing scheme	-
+earthsong	Earthsong	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Earthsong.yml
+elemental	Elemental	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elemental.yml
+elementary	Elementary	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elementary.yml
+elic	Elic	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elic.yml
+elio	Elio	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elio.yml
+espresso	Espresso	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso.yml
+espresso-libre	Espresso Libre	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso%20Libre.yml
+everblush	Everblush	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Everblush.yml
+everforest	Everforest	-	existing	covered by the existing scheme	-
+fairy-floss	Fairy Floss	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss.yml
+fairy-floss	Fairy Floss Dark	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss%20Dark.yml
+fishtank	Fishtank	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Fishtank.yml
+flat	Flat	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat.yml
+flat-remix	Flat Remix	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat%20Remix.yml
+flatland	Flatland	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flatland.yml
+foxnightly	Foxnightly	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Foxnightly.yml
+freya	Freya	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Freya.yml
+frontend-delight	Frontend Delight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Delight.yml
+frontend-fun-forrest	Frontend Fun Forrest	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Fun%20Forrest.yml
+frontend-galaxy	Frontend Galaxy	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Galaxy.yml
+geohot	Geohot	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Geohot.yml
+github	Github	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199295 bytes | libadwaita 4342 bytes | VERIFY FAILED: github accent red libadwaita/gtk.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+gnome	gnome	-	excluded	generic terminal preset	-
+gnome-high-contrast	gnome-high-contrast	-	excluded	generic terminal preset	-
+gnome-legacy	GNOME Legacy	-	excluded	generic terminal preset	-
+gogh	Gogh	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gogh.yml
+gooey	Gooey	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gooey.yml
+google	Google	-	todo		-
+gotham	Gotham	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gotham.yml
+grape	Grape	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Grape.yml
+grass	Grass	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Grass.yml
+gruvbox	Gruvbox	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox.yml
+gruvbox-material	Gruvbox Material	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox%20Material.yml
+hardcore	Hardcore	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hardcore.yml
+harper	Harper	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Harper.yml
+hemisu	Hemisu	-	todo		-
+highway	Highway	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Highway.yml
+hipster-green	Hipster Green	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hipster%20Green.yml
+homebrew	Homebrew	Homebrew Light	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew.yml
+homebrew-ocean	Homebrew Ocean	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew%20Ocean.yml
+horizon	Horizon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Horizon%20Bright.yml
+hurtado	Hurtado	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hurtado.yml
+hybrid	Hybrid	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hybrid.yml
+ibm-3270-high-contrast	Ibm 3270 (High Contrast)	-	excluded	IBM 3270 mainframe preset, not a colour scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ibm%203270%20(High%20Contrast).yml
+ibm3270	Ibm3270	-	excluded	IBM 3270 mainframe preset, not a colour scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ibm3270.yml
+ic-green-ppl	Ic Green Ppl	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Green%20Ppl.yml
+ic-orange-ppl	Ic Orange Ppl	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Orange%20Ppl.yml
+idle-toes	Idle Toes	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Idle%20Toes.yml
+ir-black	Ir Black	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ir%20Black.yml
+jackie-brown	Jackie Brown	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jackie%20Brown.yml
+japanesque	Japanesque	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Japanesque.yml
+jellybeans	Jellybeans	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jellybeans.yml
+jup	Jup	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jup.yml
+kanagawa	Kanagawa	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kanagawa.yml
+kibble	Kibble	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kibble.yml
+kokuban	Kokuban	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kokuban.yml
+laserwave	Laserwave	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Laserwave.yml
+later-this-evening	Later This Evening	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Later%20This%20Evening.yml
+lavandula	Lavandula	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Lavandula.yml
+linux	linux	-	excluded	generic terminal preset (Linux console)	-
+liquid-carbon	Liquid Carbon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon.yml
+liquid-carbon-transparent	Liquid Carbon Transparent	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon%20Transparent.yml
+lunaria	Lunaria	-	todo		-
+lunaria-eclipse	Lunaria Eclipse	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Lunaria%20Eclipse.yml
+maia	Maia	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Maia.yml
+man-page	Man Page	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Man%20Page.yml
+mar	Mar	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mar.yml
+material	Material	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Material.yml
+mathias	Mathias	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mathias.yml
+medallion	Medallion	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Medallion.yml
+misterioso	Misterioso	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Misterioso.yml
+molokai	Molokai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Molokai.yml
+mona-lisa	Mona Lisa	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mona%20Lisa.yml
+mono-amber	Mono Amber	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Amber.yml
+mono-cyan	Mono Cyan	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Cyan.yml
+mono-green	Mono Green	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Green.yml
+mono-red	Mono Red	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Red.yml
+mono-white	Mono White	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20White.yml
+mono-yellow	Mono Yellow	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Yellow.yml
+monokai	Monokai Dark	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Dark.yml
+monokai-pro	Monokai Pro	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro.yml
+monokai-pro-ristretto	Monokai Pro Ristretto	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro%20Ristretto.yml
+monokai-soda	Monokai Soda	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Soda.yml
+moonfly	Moonfly	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Moonfly.yml
+morada	Morada	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Morada.yml
+n0tch2k	N0Tch2K	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/N0Tch2K.yml
+neon-night	Neon Night	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neon%20Night.yml
+neopolitan	Neopolitan	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neopolitan.yml
+nep	Nep	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nep.yml
+neutron	Neutron	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neutron.yml
+night-owl	Night Owl	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Night%20Owl.yml
+nightfly	Nightfly	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightfly.yml
+nightlion-v1	Nightlion V1	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V1.yml
+nightlion-v2	Nightlion V2	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V2.yml
+nighty	Nighty	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nighty.yml
+nordic	nord	-	existing	covered by the existing scheme	-
+novel	Novel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml
+obsidian	Obsidian	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml
+ocean-dark	Ocean Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml
+oceanic-next	Oceanic Next	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oceanic%20Next.yml
+ollie	Ollie	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml
+omni	Omni	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml
+one	One	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.55)	-
+one-half-black	One Half Black	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/One%20Half%20Black.yml
+oxocarbon-dark	Oxocarbon Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oxocarbon%20Dark.yml
+palenight	Palenight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Palenight.yml
+pali	Pali	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pali.yml
+panda	Panda	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Panda.yml
+papercolor	Papercolor	-	excluded	generate failed: libadwaita 4354 bytes | red        59 dark tokens,   53 light tokens, verified on 7 files (0 token occurrences approximated) | VERIFY FAILED: papercolor accent green libadwaita/gtk.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+paraiso-dark	Paraiso Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paraiso%20Dark.yml
+paul-millr	Paul Millr	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paul%20Millr.yml
+pencil	Pencil	-	todo		-
+peppermint	Peppermint	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Peppermint.yml
+pixiefloss	Pixiefloss	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pixiefloss.yml
+pnevma	Pnevma	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pnevma.yml
+powershell	Powershell	-	excluded	generic terminal preset	https://github.com/Gogh-Co/Gogh/tree/master/themes/Powershell.yml
+predawn	Predawn	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Predawn.yml
+pro	Pro	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pro.yml
+purple-people-eater	Purple People Eater	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Purple%20People%20Eater.yml
+red-alert	Red Alert	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Alert.yml
+red-sands	Red Sands	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Sands.yml
+relaxed	Relaxed	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Relaxed.yml
+rippedcasts	Rippedcasts	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rippedcasts.yml
+rose-pine	Rosé Pine + Rosé Pine Dawn	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine.yml
+rose-pine-moon	Rosé Pine Moon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine%20Moon.yml
+royal	Royal	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Royal.yml
+rxvt	rxvt	-	excluded	generic terminal preset	-
+sat	Sat	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sat.yml
+sea-shells	Sea Shells	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sea%20Shells.yml
+seafoam-pastel	Seafoam Pastel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seafoam%20Pastel.yml
+selenized	Selenized	-	todo		-
+seti	Seti	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seti.yml
+shaman	Shaman	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Shaman.yml
+shel	Shel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Shel.yml
+slate	Slate	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Slate.yml
+smyck	Smyck	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Smyck.yml
+snazzy	Snazzy	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Snazzy.yml
+soft-server	Soft Server	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Soft%20Server.yml
+solarized	solarized	-	existing	covered by the existing scheme	-
+solarized-classic	Solarized	-	todo		-
+solarized-darcula	Solarized Darcula	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Darcula.yml
+solarized-dark-higher-contrast	Solarized Dark Higher Contrast	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Dark%20Higher%20Contrast.yml
+sonokai	Sonokai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sonokai.yml
+spacedust	Spacedust	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacedust.yml
+spacegray	Spacegray	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray.yml
+spacegray-eighties	Spacegray Eighties	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties.yml
+spacegray-eighties-dull	Spacegray Eighties Dull	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties%20Dull.yml
+spring	Spring	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spring.yml
+square	Square	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Square.yml
+srcery	Srcery	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Srcery.yml
+summer-pop	Summer Pop	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Summer%20Pop.yml
+sundried	Sundried	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sundried.yml
+sweet	Sweet Eliverlara	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Eliverlara.yml
+sweet-terminal	Sweet Terminal	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Terminal.yml
+symphonic	Symphonic	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Symphonic.yml
+synthwave	Synthwave	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave.yml
+synthwave-alpha	Synthwave Alpha	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave%20Alpha.yml
+tango	tango	-	excluded	generic terminal preset	-
+teerb	Teerb	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Teerb.yml
+tender	Tender	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tender.yml
+terminal-basic	Terminal Basic	-	excluded	generic terminal preset (macOS Basic)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Terminal%20Basic.yml
+terminix-dark	Terminix Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Terminix%20Dark.yml
+thayer-bright	Thayer Bright	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Thayer%20Bright.yml
+tin	Tin	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tin.yml
+tokyo-night	Tokyo Night + Tokyo Night Day	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night.yml
+tokyo-night-light	Tokyo Night Light	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Light.yml
+tokyo-night-moon	Tokyo Night Moon	-	todo		https://github.com/folke/tokyonight.nvim/tree/main/extras
+tokyo-night-storm	Tokyo Night Storm	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Storm.yml
+tomorrow	Tomorrow Night	Tomorrow	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night.yml
+tomorrow-night-blue	Tomorrow Night Blue	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Blue.yml
+tomorrow-night-bright	Tomorrow Night Bright	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Bright.yml
+tomorrow-night-eighties	Tomorrow Night Eighties	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Eighties.yml
+toy-chest	Toy Chest	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Toy%20Chest.yml
+treehouse	Treehouse	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Treehouse.yml
+twilight	Twilight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Twilight.yml
+ura	Ura	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ura.yml
+urple	Urple	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Urple.yml
+vag	Vag	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vag.yml
+vaughn	Vaughn	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vaughn.yml
+vibrant-ink	Vibrant Ink	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vibrant%20Ink.yml
+vs-code	Vs Code	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vs%20Code%20Light+.yml
+warm-neon	Warm Neon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Warm%20Neon.yml
+website	Website	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Website.yml
+wez	Wez	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wez.yml
+wild-cherry	Wild Cherry	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wild%20Cherry.yml
+wombat	Wombat	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wombat.yml
+wryan	Wryan	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wryan.yml
+wzoreck	Wzoreck	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wzoreck.yml
+xterm	xterm	-	excluded	generic terminal preset	-
+zenburn	Zenburn	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Zenburn.yml

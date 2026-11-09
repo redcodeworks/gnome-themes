@@ -98,3 +98,8 @@ new-scheme dir palette light="":
     echo "Next: resolve the TODOs in {{dir}}/scheme.toml, then run:"
     echo "  just generate {{dir}} && just test {{dir}} (optionally tools/test.sh {{dir}}; CI on the pull request is the test)"
     echo "and add the credit to NOTICE and the scheme to the list in README.md (see .claude/skills/build-scheme/SKILL.md)."
+
+# Development: build schemes from the Ptyxis built-in palettes listed (status todo) in tools/ptyxis-schemes.tsv, or the named ones: draft, finalize, generate, check; a failing one is removed and recorded as excluded (python3 -I tools/bulk-scheme.py status|inventory for the rest)
+[private]
+bulk-scheme *args:
+    python3 -I tools/bulk-scheme.py build {{args}}

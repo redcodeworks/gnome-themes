@@ -3,7 +3,12 @@
 # Full test of the COMMITTED state of this repo (a fresh clone of HEAD, temp directories only, a stand-in gsettings,
 # a local fake icon repo): lint, hygiene, regeneration, per-scheme selftest, install/switch/update/remove for every
 # scheme and accent, and the icon recipes. Exits non-zero on any failure.
-#   tools/test.sh [--rebuild] [scheme ...]      # default: every scheme; --rebuild rebuilds the test image
+#   tools/test.sh [--rebuild] [--all] [--sample N] [scheme ...]
+#     Cheap checks (hygiene, regeneration, selftest, ptyxis-compare, inventory) run for EVERY scheme. The expensive install/switch/update/remove
+#     loop over every accent runs for a SAMPLE: the featured schemes (FEATURED_THEMES in tools/themectl.sh), the schemes whose files differ from
+#     origin/main (TEST_BASE overrides the ref), and N more (default 10) chosen deterministically from the commit hash, so every scheme is covered
+#     over time. --all runs the loop for every scheme (CI: workflow_dispatch input and the weekly schedule). Named schemes: cheap checks and the loop for those only.
+#     --rebuild rebuilds the test image.
 # Inside the container it needs git, just, python3 + python3-gobject, GTK 3, GTK 4, gnome-shell (St typelib) and a display
 # (tools/test-packages.txt lists them; it re-executes itself under xvfb-run when there is no display).
 # Isolation: the suite only runs inside a throwaway container. Run on a host, this script builds a cached test image from
@@ -85,11 +90,26 @@ just --dump >/dev/null 2>&1 && chk ok "justfile parses" || chk fail "justfile pa
 want="install-icon install-theme list-icons list-themes remove-icon remove-theme switch-icon switch-theme update-icon update-theme"
 got=$(just --summary 2>/dev/null | tr ' ' '\n' | grep -v '^default$' | sort | tr '\n' ' ' | sed 's/ $//')
 [ "$got" = "$want" ] && chk ok "public recipes are exactly the ten" || chk fail "public recipes differ: $got"
-schemes=${*:-$(ls -d */palette.toml | cut -d/ -f1)}
+full=0; nsample=10; named=()
+while [ $# -gt 0 ]; do case "$1" in --all) full=1 ;; --sample) shift; nsample=${1:?--sample needs a number} ;; *) named+=("$1") ;; esac; shift; done
+if [ "${TEST_ALL:-}" = 1 ]; then full=1; fi
+if [ ${#named[@]} -gt 0 ]; then schemes="${named[*]}"; loop_schemes="$schemes"
+else
+    schemes=$(ls -d */palette.toml | cut -d/ -f1)
+    if [ "$full" -eq 1 ]; then loop_schemes="$schemes"
+    else
+        feat=$(sed -n 's/^FEATURED_THEMES="${FEATURED_THEMES-\(.*\)}"$/\1/p' tools/themectl.sh)
+        changed=$(git -C "$root" diff --name-only "${TEST_BASE:-origin/main}" HEAD 2>/dev/null | cut -d/ -f1 | sort -u)
+        sha=$(git rev-parse HEAD)
+        rot=$(for x in $schemes; do case " $feat " in *" $x "*) continue ;; esac; printf '%s %s\n' "$(printf '%s%s' "$sha" "$x" | sha1sum | cut -c1-12)" "$x"; done | sort | head -n "$nsample" | awk '{print $2}')
+        loop_schemes=$(for x in $feat $changed $rot; do [ -f "$x/palette.toml" ] && echo "$x"; done | awk '!seen[$0]++')
+    fi
+fi
+echo "install/switch/update/remove loop runs for $(echo $loop_schemes | wc -w) of $(echo $schemes | wc -w) schemes: $(echo $loop_schemes)"
 for s in $schemes; do
     for d in $s/themes/*/; do [ -f "$d/LICENSE" ] && chk ok "$d has a LICENSE" || chk fail "$d has no LICENSE"; done
     while IFS= read -r f; do head -12 "$f" | grep -q "Licen[cs]e" && chk ok "licence line in $f" || chk fail "no licence line in header of $f"; done < <(find "$s/themes" -name '*.css' -not -path '*/assets/*' -not -name 'pad-osd.css')
-    grep -q -i "$s" NOTICE && chk ok "NOTICE mentions $s" || chk fail "NOTICE does not mention $s"
+    if grep -q -i "$s" NOTICE || { grep -q "^$s	" tools/ptyxis-schemes.tsv && grep -q "tools/ptyxis-schemes.tsv" NOTICE; }; then chk ok "NOTICE covers $s"; else chk fail "NOTICE does not cover $s"; fi
 done
 [ -f LICENSE ] && grep -q "MIT License" LICENSE && chk ok "root LICENSE is MIT" || chk fail "root LICENSE"
 
@@ -101,6 +121,9 @@ for s in $schemes; do
     just generate "$s" >/dev/null 2>&1; d=$(git status --porcelain -- "$s" | grep -vc pycache)
     if [ "$d" -eq 0 ]; then chk ok "regeneration is byte-identical to the committed files"
     else chk fail "regeneration changed $d files (stock stylesheets drifted or a generated file was edited)"; git status --porcelain -- "$s" | head -3; git checkout -q -- "$s"; fi
+done
+for s in $loop_schemes; do
+    echo "=== loop $s"
     D="$T/themes-$s"; THEMES_DEST=$D just install-theme "$s" >/dev/null 2>&1
     n=$(ls "$D" 2>/dev/null | wc -l); [ "$n" -ge 1 ] && chk ok "install-theme: $n folders" || chk fail "install-theme produced nothing"
     for a in $(grep -v '^#' "$s/accents/list" | awk 'NF {print $1}'); do
@@ -113,6 +136,27 @@ for s in $schemes; do
     [ "$h1" = "$h2" ] && chk ok "update-theme keeps the remembered accent" || chk fail "update-theme changed the installed tree"
     THEMES_DEST=$D just remove-theme "$s" >/dev/null 2>&1; [ -z "$(ls -A "$D" 2>/dev/null)" ] && chk ok "remove-theme emptied the set" || chk fail "remove-theme left $(ls "$D" | tr '\n' ' ')"
 done
+
+# ---- every scheme: Ptyxis declarations and the inventory (tools/ptyxis-schemes.tsv) ----------------------------------------
+echo "=== ptyxis-compare and inventory"
+python3 -I tools/ptyxis-compare.py --check $schemes >/dev/null 2>&1 && chk ok "ptyxis-compare --check passes for every scheme" || chk fail "ptyxis-compare --check failed ($(python3 -I tools/ptyxis-compare.py --check $schemes 2>&1 | grep -iv '^info' | head -3 | tr '\n' ' '))"
+inv=$(python3 -I - <<'PY'
+import os, csv
+rows = list(csv.reader(open('tools/ptyxis-schemes.tsv', encoding='utf-8'), delimiter='\t'))[1:]
+have = {d for d in os.listdir('.') if os.path.exists(d + '/scheme.toml')}
+ok = {r[0] for r in rows if r[3] in ('built', 'existing')}
+bad = [d + ' not in the inventory as built/existing' for d in sorted(have - ok)] + [r[0] + ' listed built/existing but has no folder' for r in rows if r[3] in ('built', 'existing') and r[0] not in have] + [r[0] + ' excluded but has a folder' for r in rows if r[3] == 'excluded' and r[0] in have]
+print('; '.join(bad))
+PY
+)
+[ -z "$inv" ] && chk ok "tools/ptyxis-schemes.tsv matches the scheme folders" || chk fail "inventory: $inv"
+
+# ---- featured themes come first in list-theme and the checklists ------------------------------------------------------------
+echo "=== featured themes"
+fl=$(THEMES_DEST="$T/feat" FEATURED_THEMES="dracula nordic nosuch" tools/themectl.sh themes list | head -2 | awk '{print $2}' | tr '\n' ' ')
+[ "$fl" = "dracula nordic " ] && chk ok "FEATURED_THEMES order is the list order (a missing scheme is skipped)" || chk fail "featured order: $fl"
+rest=$(THEMES_DEST="$T/feat" FEATURED_THEMES="dracula nordic" tools/themectl.sh themes list | sed 1,2d | awk '{print $1}' | grep -vc '★')
+[ "$rest" -ge 1 ] && [ "$(THEMES_DEST="$T/feat" FEATURED_THEMES="dracula nordic" tools/themectl.sh themes list | sed 1,2d | awk '{print $1}' | LC_ALL=C sort -c 2>&1 | wc -l)" -eq 0 ] && chk ok "the other schemes follow alphabetically" || chk fail "rest not alphabetical"
 
 # ---- collision guard (themes): unrelated folders with our names are never replaced or removed without asking ---------
 echo "=== collision guard"
@@ -527,7 +571,7 @@ echo "$out" | grep -q '\[ \]' && ! echo "$out" | grep -q '\[x\]' && chk ok "them
 echo "$out" | grep -q 'SPACE toggles' && chk ok "checklist hint says SPACE toggles" || chk fail "checklist hint"
 [ "$(n_inst "$PD")" -eq 0 ] && echo "$out" | grep -q Cancelled && chk ok "q cancels, nothing installed" || chk fail "q did not cancel"
 THEMES_DEST=$PD pty n,down,space,enter tools/themectl.sh themes install >/dev/null
-first_sc=$(ls -d */palette.toml | sed -n 2p | cut -d/ -f1); gname=$(awk -F'"' '/^gtk_name/ {print $2}' "$first_sc/palette.toml")
+first_sc=$(sed -n 's/^FEATURED_THEMES="${FEATURED_THEMES-\(.*\)}"$/\1/p' tools/themectl.sh | awk '{print $2}'); gname=$(awk -F'"' '/^gtk_name/ {print $2}' "$first_sc/palette.toml")
 [ -d "$PD/$gname" ] && chk ok "none, down, SPACE ticks one entry, ENTER installs it ($first_sc)" || chk fail "space did not tick the second entry"
 PD2="$T/pty-themes2"; mkdir -p "$PD2"; out=$(THEMES_DEST=$PD2 pty enter tools/themectl.sh themes install)
 [ "$(n_inst "$PD2")" -eq 0 ] && echo "$out" | grep -q 'Nothing selected' && chk ok "ENTER alone (empty selection) installs nothing and says so" || chk fail "enter alone installed $(n_inst "$PD2")"

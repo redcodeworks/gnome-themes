@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Catppuccin Frappé'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Frappé.yml.
+title = "Catppuccin Frappe"
+gtk_name = "Catppuccin-Frappe"
+shell_name = "Catppuccin-Frappe-Shell"
+credit = "Catppuccin Frappe (colours of the Ptyxis built-in 'Catppuccin Frappé'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Frappé.yml)"
+ptyxis = "Catppuccin Frappé"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Catppuccin Frappé' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#303446"
+fg = "#c6d0f5"
+selection = "#4e5369"   # DERIVED
+red = "#e78284"
+orange = "#e6a58a"   # DERIVED
+yellow = "#e5c890"
+green = "#a6d189"
+cyan = "#81c8be"
+blue = "#8caaee"
+magenta = "#f4b8e4"
+purple = "#f4b8e4"   # = magenta
+# palette Color8 (bright black) = #626880: a candidate for `comment`
+[dark.ansi]
+red = "#e78284"
+green = "#a6d189"
+yellow = "#e5c890"
+blue = "#8caaee"
+magenta = "#f4b8e4"
+cyan = "#81c8be"
+[dark.terminal]
+source = "Catppuccin Frappé"   # Ptyxis built-in id
+black = "#51576d"   # Ptyxis Color0
+white = "#b5bfe2"   # Ptyxis Color7
+bright_black = "#626880"   # Ptyxis Color8
+bright_white = "#a5adce"   # Ptyxis Color15

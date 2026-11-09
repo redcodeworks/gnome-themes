@@ -189,6 +189,11 @@ sync_themes() {    # git fetch + pull --ff-only in this checkout; quiet on a det
 }
 if [ "$kind" = icons ]; then load_sources; migrate_cache; fi
 
+# Featured themes: listed first (marked with a star) in list-themes and the install/switch/remove checklists, in this order, then every
+# other scheme alphabetically. The ONE place to change the favorites; tools/test.sh and CI read the same line (FEATURED_THEMES may be
+# set in the environment to override it).
+FEATURED_THEMES="${FEATURED_THEMES-nordic gruvbox-material everforest tokyo-night dracula fairy-floss}"
+
 items=(); labels=(); declare -A i_src i_dir i_var
 set_name() {       # set name of an icon dir $1: its index.theme Name= when that is a plain id, else $2
     local nm; nm=$(sed -n 's/^Name=//p' "$1/index.theme" 2>/dev/null | head -n1 | tr -d '\r')
@@ -198,8 +203,17 @@ add_item() { items+=("$1"); labels+=("$1  ($2)"); i_src[$1]="$2"; i_dir[$1]="$3"
 load_items() {
     items=(); labels=(); i_src=(); i_dir=(); i_var=()
     if [ "$kind" = themes ]; then
+        local all=() ordered=() f seen
         for p in "$root"/*/palette.toml; do
-            sc=$(basename "$(dirname "$p")"); [ -d "$root/$sc/themes" ] || continue
+            sc=$(basename "$(dirname "$p")"); [ -d "$root/$sc/themes" ] && all+=("$sc")
+        done
+        mapfile -t all < <(printf '%s\n' "${all[@]}" | LC_ALL=C sort)
+        for f in $FEATURED_THEMES; do for sc in "${all[@]}"; do [ "$sc" = "$f" ] && ordered+=("$sc"); done; done
+        for sc in "${all[@]}"; do
+            seen=0; for f in $FEATURED_THEMES; do [ "$sc" = "$f" ] && seen=1; done
+            [ "$seen" -eq 1 ] || ordered+=("$sc")
+        done
+        for sc in "${ordered[@]}"; do
             gtk=""; shell=""
             for d in "$root/$sc"/themes/*/; do
                 n=$(basename "$d")
@@ -209,7 +223,8 @@ load_items() {
                 esac
             done
             what="${gtk}${gtk:+${shell:+ + }}${shell:+GNOME Shell $shell}"
-            items+=("$sc"); labels+=("$sc  ($what)")
+            star=""; for f in $FEATURED_THEMES; do [ "$sc" = "$f" ] && star="★ "; done
+            items+=("$sc"); labels+=("$star$sc  ($what)")
         done
     else
         local n t v base

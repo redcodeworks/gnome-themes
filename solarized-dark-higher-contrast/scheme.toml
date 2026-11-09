@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Solarized Dark Higher Contrast'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Dark%20Higher%20Contrast.yml.
+title = "Solarized Dark Higher Contrast"
+gtk_name = "Solarized-Dark-Higher-Contrast"
+shell_name = "Solarized-Dark-Higher-Contrast-Shell"
+credit = "Solarized Dark Higher Contrast (colours of the Ptyxis built-in 'Solarized Dark Higher Contrast'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Dark%20Higher%20Contrast.yml)"
+ptyxis = "Solarized Dark Higher Contrast"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Solarized Dark Higher Contrast' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#001e27"
+fg = "#9cc2c3"
+selection = "#1f3f46"   # DERIVED
+red = "#d11c24"
+orange = "#bb4a15"   # DERIVED
+yellow = "#a57706"
+green = "#6cbe6c"
+cyan = "#259286"
+blue = "#2176c7"
+magenta = "#c61c6f"
+purple = "#c61c6f"   # = magenta
+# palette Color8 (bright black) = #006488: a candidate for `comment`
+[dark.ansi]
+red = "#d11c24"
+green = "#6cbe6c"
+yellow = "#a57706"
+blue = "#2176c7"
+magenta = "#c61c6f"
+cyan = "#259286"
+[dark.terminal]
+source = "Solarized Dark Higher Contrast"   # Ptyxis built-in id
+black = "#002831"   # Ptyxis Color0
+white = "#eae3cb"   # Ptyxis Color7
+bright_black = "#006488"   # Ptyxis Color8
+bright_red = "#f5163b"   # Ptyxis Color9
+bright_green = "#51ef84"   # Ptyxis Color10
+bright_yellow = "#b27e28"   # Ptyxis Color11
+bright_blue = "#178ec8"   # Ptyxis Color12
+bright_magenta = "#e24d8e"   # Ptyxis Color13
+bright_cyan = "#00b39e"   # Ptyxis Color14
+bright_white = "#fcf4dc"   # Ptyxis Color15
