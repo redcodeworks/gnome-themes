@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Paul-Millr
+Comment=Paul Millr recolour of GTK's own stock stylesheets (gtk-3.0 from GTK3 Adwaita, gtk-4.0 from GTK4 Default); libadwaita apps use the user-level libadwaita/gtk.css

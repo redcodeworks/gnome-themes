@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Relaxed'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Relaxed.yml.
+title = "Relaxed"
+gtk_name = "Relaxed"
+shell_name = "Relaxed-Shell"
+credit = "Relaxed (colours of the Ptyxis built-in 'Relaxed'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Relaxed.yml)"
+ptyxis = "Relaxed"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Relaxed' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#353a44"
+fg = "#d9d9d9"
+selection = "#565a62"   # DERIVED
+red = "#bc5653"
+orange = "#d48c66"   # DERIVED
+yellow = "#ebc17a"
+green = "#909d63"
+cyan = "#c9dfff"
+blue = "#6a8799"
+magenta = "#b06698"
+purple = "#b06698"   # = magenta
+# palette Color8 (bright black) = #636363: a candidate for `comment`
+[dark.ansi]
+red = "#bc5653"
+green = "#909d63"
+yellow = "#ebc17a"
+blue = "#6a8799"
+magenta = "#b06698"
+cyan = "#c9dfff"
+[dark.terminal]
+source = "Relaxed"   # Ptyxis built-in id
+black = "#151515"   # Ptyxis Color0
+bright_black = "#636363"   # Ptyxis Color8
+bright_green = "#a0ac77"   # Ptyxis Color10
+bright_blue = "#7eaac7"   # Ptyxis Color12
+bright_cyan = "#acbbd0"   # Ptyxis Color14
+bright_white = "#f7f7f7"   # Ptyxis Color15

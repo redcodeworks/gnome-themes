@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Omni'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml.
+title = "Omni"
+gtk_name = "Omni"
+shell_name = "Omni-Shell"
+credit = "Omni (colours of the Ptyxis built-in 'Omni'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml)"
+ptyxis = "Omni"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Omni' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#191622"
+fg = "#abb2bf"
+selection = "#363541"   # DERIVED
+red = "#e96379"
+orange = "#e8806e"   # DERIVED
+yellow = "#e89e64"
+green = "#67e480"
+cyan = "#ff79c6"
+blue = "#78d1e1"
+magenta = "#988bc7"
+purple = "#988bc7"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#e96379"
+green = "#67e480"
+yellow = "#e89e64"
+blue = "#78d1e1"
+magenta = "#988bc7"
+cyan = "#ff79c6"
+[dark.terminal]
+source = "Omni"   # Ptyxis built-in id
+black = "#191622"   # Ptyxis Color0
+bright_black = "#000000"   # Ptyxis Color8
+bright_white = "#ffffff"   # Ptyxis Color15

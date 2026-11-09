@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Red Sands'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Sands.yml.
+title = "Red Sands"
+gtk_name = "Red-Sands"
+shell_name = "Red-Sands-Shell"
+credit = "Red Sands (colours of the Ptyxis built-in 'Red Sands'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Sands.yml)"
+ptyxis = "Red Sands"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Red Sands' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#7a251e"
+fg = "#d7c9a7"
+selection = "#8d4639"   # DERIVED
+red = "#ff3f00"
+orange = "#f37800"   # DERIVED
+yellow = "#e7b000"
+green = "#00bb00"
+cyan = "#00bbbb"
+blue = "#0072ff"
+magenta = "#bb00bb"
+purple = "#bb00bb"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#ff3f00"
+green = "#00bb00"
+yellow = "#e7b000"
+blue = "#0072ff"
+magenta = "#bb00bb"
+cyan = "#00bbbb"
+[dark.terminal]
+source = "Red Sands"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bbbbbb"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#bb0000"   # Ptyxis Color9
+bright_blue = "#0072ae"   # Ptyxis Color12
+bright_magenta = "#ff55ff"   # Ptyxis Color13
+bright_cyan = "#55ffff"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

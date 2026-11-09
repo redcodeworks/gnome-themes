@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Rippedcasts'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Rippedcasts.yml.
+title = "Rippedcasts"
+gtk_name = "Rippedcasts"
+shell_name = "Rippedcasts-Shell"
+credit = "Rippedcasts (colours of the Ptyxis built-in 'Rippedcasts'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Rippedcasts.yml)"
+ptyxis = "Rippedcasts"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Rippedcasts' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#2b2b2b"
+fg = "#ffffff"
+selection = "#555555"   # DERIVED
+red = "#cdaf95"
+orange = "#c6b55a"   # DERIVED
+yellow = "#bfbb1f"
+green = "#a8ff60"
+cyan = "#5a647e"
+blue = "#75a5b0"
+magenta = "#ff73fd"
+purple = "#ff73fd"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[dark.ansi]
+red = "#cdaf95"
+green = "#a8ff60"
+yellow = "#bfbb1f"
+blue = "#75a5b0"
+magenta = "#ff73fd"
+cyan = "#5a647e"
+[dark.terminal]
+source = "Rippedcasts"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bfbfbf"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#eecbad"   # Ptyxis Color9
+bright_green = "#bcee68"   # Ptyxis Color10
+bright_yellow = "#e5e500"   # Ptyxis Color11
+bright_blue = "#86bdc9"   # Ptyxis Color12
+bright_magenta = "#e500e5"   # Ptyxis Color13
+bright_cyan = "#8c9bc4"   # Ptyxis Color14
+bright_white = "#e5e5e5"   # Ptyxis Color15

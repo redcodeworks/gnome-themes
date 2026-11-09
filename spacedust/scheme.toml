@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Spacedust'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacedust.yml.
+title = "Spacedust"
+gtk_name = "Spacedust"
+shell_name = "Spacedust-Shell"
+credit = "Spacedust (colours of the Ptyxis built-in 'Spacedust'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacedust.yml)"
+ptyxis = "Spacedust"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Spacedust' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#0a1e24"
+fg = "#ecf0c1"
+selection = "#374843"   # DERIVED
+red = "#e35b00"
+orange = "#e3943e"   # DERIVED
+yellow = "#e3cd7b"
+green = "#5cab96"
+cyan = "#06afc7"
+blue = "#0f548b"
+magenta = "#e35b00"
+purple = "#e35b00"   # = magenta
+# palette Color8 (bright black) = #684c31: a candidate for `comment`
+[dark.ansi]
+red = "#e35b00"
+green = "#5cab96"
+yellow = "#e3cd7b"
+blue = "#0f548b"
+magenta = "#e35b00"
+cyan = "#06afc7"
+[dark.terminal]
+source = "Spacedust"   # Ptyxis built-in id
+black = "#6e5346"   # Ptyxis Color0
+white = "#f0f1ce"   # Ptyxis Color7
+bright_black = "#684c31"   # Ptyxis Color8
+bright_red = "#ff8a3a"   # Ptyxis Color9
+bright_green = "#aecab8"   # Ptyxis Color10
+bright_yellow = "#ffc878"   # Ptyxis Color11
+bright_blue = "#67a0ce"   # Ptyxis Color12
+bright_magenta = "#ff8a3a"   # Ptyxis Color13
+bright_cyan = "#83a7b4"   # Ptyxis Color14
+bright_white = "#fefff1"   # Ptyxis Color15

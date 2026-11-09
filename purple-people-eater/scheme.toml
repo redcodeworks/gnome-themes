@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Purple People Eater'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Purple%20People%20Eater.yml.
+title = "Purple People Eater"
+gtk_name = "Purple-People-Eater"
+shell_name = "Purple-People-Eater-Shell"
+credit = "Purple People Eater (colours of the Ptyxis built-in 'Purple People Eater'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Purple%20People%20Eater.yml)"
+ptyxis = "Purple People Eater"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Purple People Eater' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "blue"
+
+[dark]
+bg_deep = "#161b22"
+fg = "#c9d1d9"
+selection = "#3a3f47"   # DERIVED
+red = "#e34c26"
+orange = "#e8733c"   # DERIVED
+yellow = "#ed9a51"
+green = "#238636"
+cyan = "#c09aeb"
+blue = "#a5d6ff"
+magenta = "#6eb0e8"
+purple = "#6eb0e8"   # = magenta
+# palette Color8 (bright black) = #0d1117: a candidate for `comment`
+[dark.ansi]
+red = "#e34c26"
+green = "#238636"
+yellow = "#ed9a51"
+blue = "#a5d6ff"
+magenta = "#6eb0e8"
+cyan = "#c09aeb"
+[dark.terminal]
+source = "Purple People Eater"   # Ptyxis built-in id
+black = "#0d1117"   # Ptyxis Color0
+bright_black = "#0d1117"   # Ptyxis Color8
+bright_red = "#ff7b72"   # Ptyxis Color9
+bright_green = "#3bab4a"   # Ptyxis Color10
+bright_yellow = "#ffa657"   # Ptyxis Color11
+bright_magenta = "#79c0ff"   # Ptyxis Color13
+bright_cyan = "#b694df"   # Ptyxis Color14

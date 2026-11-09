@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Paraiso Dark'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Paraiso%20Dark.yml.
+title = "Paraiso Dark"
+gtk_name = "Paraiso-Dark"
+shell_name = "Paraiso-Dark-Shell"
+credit = "Paraiso Dark (colours of the Ptyxis built-in 'Paraiso Dark'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Paraiso%20Dark.yml)"
+ptyxis = "Paraiso Dark"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Paraiso Dark' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2f1e2e"
+fg = "#a39e9b"
+selection = "#463844"   # DERIVED
+red = "#ef6155"
+orange = "#f69236"   # DERIVED
+yellow = "#fec418"
+green = "#48b685"
+cyan = "#5bc4bf"
+blue = "#06b6ef"
+magenta = "#815ba4"
+purple = "#815ba4"   # = magenta
+# palette Color8 (bright black) = #776e71: a candidate for `comment`
+[dark.ansi]
+red = "#ef6155"
+green = "#48b685"
+yellow = "#fec418"
+blue = "#06b6ef"
+magenta = "#815ba4"
+cyan = "#5bc4bf"
+[dark.terminal]
+source = "Paraiso Dark"   # Ptyxis built-in id
+black = "#2f1e2e"   # Ptyxis Color0
+bright_black = "#776e71"   # Ptyxis Color8
+bright_white = "#e7e9db"   # Ptyxis Color15

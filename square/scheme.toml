@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Square'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Square.yml.
+title = "Square"
+gtk_name = "Square"
+shell_name = "Square-Shell"
+credit = "Square (colours of the Ptyxis built-in 'Square'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Square.yml)"
+ptyxis = "Square"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Square' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#0a1e24"
+fg = "#a1a1a1"
+selection = "#28383d"   # DERIVED
+red = "#e9897c"
+orange = "#eaba9d"   # DERIVED
+yellow = "#ecebbe"
+green = "#b6377d"
+cyan = "#c9caec"
+blue = "#a9cdeb"
+magenta = "#75507b"
+purple = "#75507b"   # = magenta
+# palette Color8 (bright black) = #141414: a candidate for `comment`
+[dark.ansi]
+red = "#e9897c"
+green = "#b6377d"
+yellow = "#ecebbe"
+blue = "#a9cdeb"
+magenta = "#75507b"
+cyan = "#c9caec"
+[dark.terminal]
+source = "Square"   # Ptyxis built-in id
+black = "#050505"   # Ptyxis Color0
+white = "#f2f2f2"   # Ptyxis Color7
+bright_black = "#141414"   # Ptyxis Color8
+bright_red = "#f99286"   # Ptyxis Color9
+bright_green = "#c3f786"   # Ptyxis Color10
+bright_yellow = "#fcfbcc"   # Ptyxis Color11
+bright_blue = "#b6defb"   # Ptyxis Color12
+bright_magenta = "#ad7fa8"   # Ptyxis Color13
+bright_cyan = "#d7d9fc"   # Ptyxis Color14
+bright_white = "#e2e2e2"   # Ptyxis Color15

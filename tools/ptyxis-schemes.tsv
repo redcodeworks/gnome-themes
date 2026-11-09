@@ -147,59 +147,59 @@ nordic	nord	-	existing	covered by the existing scheme	-
 novel	Novel	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml
 obsidian	Obsidian	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml
 ocean-dark	Ocean Dark	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml
-oceanic-next	Oceanic Next	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oceanic%20Next.yml
-ollie	Ollie	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml
-omni	Omni	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml
+oceanic-next	Oceanic Next	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oceanic%20Next.yml
+ollie	Ollie	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml
+omni	Omni	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml
 one	One	-	excluded	contrast: the built-in's dark Foreground #5C6370 is One Dark's comment grey, 2.55:1 on its #1E2127 background; reaching 4.5:1 needs a nudge far beyond NUDGE_MAX (6 dE)	-
-one-half-black	One Half Black	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/One%20Half%20Black.yml
-oxocarbon-dark	Oxocarbon Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oxocarbon%20Dark.yml
-palenight	Palenight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Palenight.yml
-pali	Pali	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pali.yml
-panda	Panda	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Panda.yml
+one-half-black	One Half Black	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/One%20Half%20Black.yml
+oxocarbon-dark	Oxocarbon Dark	-	excluded	ptyxis-compare: info: oxocarbon-dark dark -> built-in id "Oxocarbon Dark" (flat): roles max dE 0.00 (Background), all18 11.03	https://github.com/Gogh-Co/Gogh/tree/master/themes/Oxocarbon%20Dark.yml
+palenight	Palenight	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202113 bytes | libadwaita 2908 bytes | VERIFY FAILED: palenight accent red gtk-3.0/gtk-dark.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Palenight.yml
+pali	Pali	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pali.yml
+panda	Panda	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Panda.yml
 papercolor	Papercolor	-	built		-
-paraiso-dark	Paraiso Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paraiso%20Dark.yml
-paul-millr	Paul Millr	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paul%20Millr.yml
-pencil	Pencil	-	todo		-
-peppermint	Peppermint	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Peppermint.yml
-pixiefloss	Pixiefloss	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pixiefloss.yml
-pnevma	Pnevma	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pnevma.yml
+paraiso-dark	Paraiso Dark	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paraiso%20Dark.yml
+paul-millr	Paul Millr	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paul%20Millr.yml
+pencil	Pencil	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199295 bytes | libadwaita 4342 bytes | VERIFY FAILED: pencil accent red Pencil-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+peppermint	Peppermint	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Peppermint.yml
+pixiefloss	Pixiefloss	-	excluded	generate failed: red        55 dark tokens verified on 6 files (10 token occurrences approximated) | green      55 dark tokens verified on 6 files (12 token occurrences approximated) | accent yellow: token #c5f3e1 maps to far-apart tokens {'#e1c236': 14, '#e1c235': 6, '#e1c232': 4} | error: recipe `generate` failed 	https://github.com/Gogh-Co/Gogh/tree/master/themes/Pixiefloss.yml
+pnevma	Pnevma	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pnevma.yml
 powershell	Powershell	-	excluded	generic terminal preset	https://github.com/Gogh-Co/Gogh/tree/master/themes/Powershell.yml
-predawn	Predawn	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Predawn.yml
-pro	Pro	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pro.yml
-purple-people-eater	Purple People Eater	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Purple%20People%20Eater.yml
-red-alert	Red Alert	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Alert.yml
-red-sands	Red Sands	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Sands.yml
-relaxed	Relaxed	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Relaxed.yml
-rippedcasts	Rippedcasts	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rippedcasts.yml
+predawn	Predawn	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Predawn.yml
+pro	Pro	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pro.yml
+purple-people-eater	Purple People Eater	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Purple%20People%20Eater.yml
+red-alert	Red Alert	-	excluded	ptyxis-compare: info: red-alert dark -> built-in id "Red Alert" (flat): roles max dE 0.00 (Background), all18 14.37	https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Alert.yml
+red-sands	Red Sands	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Sands.yml
+relaxed	Relaxed	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Relaxed.yml
+rippedcasts	Rippedcasts	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rippedcasts.yml
 rose-pine	Rosé Pine + Rosé Pine Dawn	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine.yml
-rose-pine-moon	Rosé Pine Moon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine%20Moon.yml
-royal	Royal	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Royal.yml
+rose-pine-moon	Rosé Pine Moon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine%20Moon.yml
+royal	Royal	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.28)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Royal.yml
 rxvt	rxvt	-	excluded	generic terminal preset	-
-sat	Sat	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sat.yml
-sea-shells	Sea Shells	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sea%20Shells.yml
-seafoam-pastel	Seafoam Pastel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seafoam%20Pastel.yml
-selenized	Selenized	-	todo		-
-seti	Seti	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seti.yml
-shaman	Shaman	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Shaman.yml
-shel	Shel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Shel.yml
-slate	Slate	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Slate.yml
-smyck	Smyck	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Smyck.yml
-snazzy	Snazzy	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Snazzy.yml
-soft-server	Soft Server	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Soft%20Server.yml
+sat	Sat	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.35)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sat.yml
+sea-shells	Sea Shells	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sea%20Shells.yml
+seafoam-pastel	Seafoam Pastel	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seafoam%20Pastel.yml
+selenized	Selenized	-	built		-
+seti	Seti	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seti.yml
+shaman	Shaman	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.37)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Shaman.yml
+shel	Shel	-	excluded	selftest: FAIL dark fg on window >= 4.5 (3.81)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Shel.yml
+slate	Slate	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Slate.yml
+smyck	Smyck	-	excluded	ptyxis-compare: info: smyck dark -> built-in id "Smyck" (flat): roles max dE 0.00 (Background), all18 25.40	https://github.com/Gogh-Co/Gogh/tree/master/themes/Smyck.yml
+snazzy	Snazzy	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202103 bytes | libadwaita 2896 bytes | VERIFY FAILED: snazzy accent red Snazzy-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Snazzy.yml
+soft-server	Soft Server	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202121 bytes | libadwaita 2918 bytes | VERIFY FAILED: soft-server accent red gtk-3.0/gtk-dark.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Soft%20Server.yml
 solarized	solarized	-	existing	covered by the existing scheme	-
-solarized-classic	Solarized	-	todo		-
+solarized-classic	Solarized	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.39)	-
 solarized-darcula	Solarized Darcula	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Darcula.yml
 solarized-dark-higher-contrast	Solarized Dark Higher Contrast	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Dark%20Higher%20Contrast.yml
-sonokai	Sonokai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sonokai.yml
-spacedust	Spacedust	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacedust.yml
-spacegray	Spacegray	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray.yml
-spacegray-eighties	Spacegray Eighties	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties.yml
-spacegray-eighties-dull	Spacegray Eighties Dull	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties%20Dull.yml
-spring	Spring	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spring.yml
-square	Square	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Square.yml
-srcery	Srcery	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Srcery.yml
-summer-pop	Summer Pop	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Summer%20Pop.yml
-sundried	Sundried	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sundried.yml
+sonokai	Sonokai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sonokai.yml
+spacedust	Spacedust	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacedust.yml
+spacegray	Spacegray	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray.yml
+spacegray-eighties	Spacegray Eighties	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties.yml
+spacegray-eighties-dull	Spacegray Eighties Dull	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties%20Dull.yml
+spring	Spring	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spring.yml
+square	Square	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Square.yml
+srcery	Srcery	-	excluded	ptyxis-compare: info: srcery dark -> built-in id "Srcery" (flat): roles max dE 0.00 (Background), all18 23.92	https://github.com/Gogh-Co/Gogh/tree/master/themes/Srcery.yml
+summer-pop	Summer Pop	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Summer%20Pop.yml
+sundried	Sundried	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sundried.yml
 sweet	Sweet Eliverlara	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Eliverlara.yml
 sweet-terminal	Sweet Terminal	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Terminal.yml
 symphonic	Symphonic	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Symphonic.yml
