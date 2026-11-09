@@ -66,7 +66,7 @@ generate theme="all":
     set -euo pipefail
     export PYTHONDONTWRITEBYTECODE=1
     if [ "{{theme}}" = all ]; then schemes=$(for f in */scheme.toml; do dirname "$f"; done); else schemes="{{theme}}"; fi
-    python3 -I tools/assets-gen.py
+    [ -n "${GNOME_THEMES_SKIP_ASSETS:-}" ] || python3 -I tools/assets-gen.py
     for s in $schemes; do
         echo "== $s"
         python3 -I tools/palette-from-scheme.py "$s"

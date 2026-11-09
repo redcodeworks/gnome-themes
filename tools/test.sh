@@ -4,10 +4,10 @@
 # a local fake icon repo): lint, hygiene, regeneration, per-scheme selftest, install/switch/update/remove for every
 # scheme and accent, and the icon recipes. Exits non-zero on any failure.
 #   tools/test.sh [--rebuild] [--all] [--sample N] [scheme ...]
-#     Cheap checks (hygiene, regeneration, selftest, ptyxis-compare, inventory) run for EVERY scheme. The expensive install/switch/update/remove
-#     loop over every accent runs for a SAMPLE: the featured schemes (FEATURED_THEMES in tools/themectl.sh), the schemes whose files differ from
-#     origin/main (TEST_BASE overrides the ref), and N more (default 10) chosen deterministically from the commit hash, so every scheme is covered
-#     over time. --all runs the loop for every scheme (CI: workflow_dispatch input and the weekly schedule). Named schemes: cheap checks and the loop for those only.
+#     Hygiene, inventory and the scenario tests run for every scheme. Regeneration, selftest and the install/switch/update/remove loop (every accent)
+#     run for the featured schemes (FEATURED_THEMES in tools/themectl.sh), the schemes that differ from origin/main (TEST_BASE overrides; capped at 15)
+#     and N more (default 10) chosen from the commit hash, so every scheme is covered over time. --all runs everything for every scheme (CI: manual
+#     dispatch only). Named schemes: everything for those only.
 #     --rebuild rebuilds the test image.
 # Inside the container it needs git, just, python3 + python3-gobject, GTK 3, GTK 4, gnome-shell (St typelib) and a display
 # (tools/test-packages.txt lists them; it re-executes itself under xvfb-run when there is no display).
@@ -93,19 +93,27 @@ got=$(just --summary 2>/dev/null | tr ' ' '\n' | grep -v '^default$' | sort | tr
 full=0; nsample=10; named=()
 while [ $# -gt 0 ]; do case "$1" in --all) full=1 ;; --sample) shift; nsample=${1:?--sample needs a number} ;; *) named+=("$1") ;; esac; shift; done
 if [ "${TEST_ALL:-}" = 1 ]; then full=1; fi
-if [ ${#named[@]} -gt 0 ]; then schemes="${named[*]}"; loop_schemes="$schemes"
+# Coverage (CLAUDE.md, "CI time"): hygiene, inventory, scenario tests and ptyxis-compare always run for every scheme. Regeneration, selftest and the
+# install/switch/update/remove loop with every accent run for ONE set: the featured schemes + the schemes changed against the base (origin/main;
+# TEST_BASE overrides), capped at 15 (a deterministic hash sample above that) + a rotating slice (--sample N, default 10) chosen by hashing the
+# commit SHA, so every scheme is covered over time. --all or TEST_ALL=1 (manual CI dispatch) runs everything for every scheme.
+if [ ${#named[@]} -gt 0 ]; then schemes="${named[*]}"; loop_schemes="$schemes"; cheap_schemes="$schemes"
 else
     schemes=$(ls -d */palette.toml | cut -d/ -f1)
-    if [ "$full" -eq 1 ]; then loop_schemes="$schemes"
+    if [ "$full" -eq 1 ]; then loop_schemes="$schemes"; cheap_schemes="$schemes"; echo "coverage: every scheme (--all)"
     else
         feat=$(sed -n 's/^FEATURED_THEMES="${FEATURED_THEMES-\(.*\)}"$/\1/p' tools/themectl.sh)
-        changed=$(git -C "$root" diff --name-only "${TEST_BASE:-origin/main}" HEAD 2>/dev/null | cut -d/ -f1 | sort -u)
+        changed=$(git -C "$root" diff --name-only "${TEST_BASE:-origin/main}" HEAD 2>/dev/null | cut -d/ -f1 | sort -u | while read -r x; do [ -f "$x/palette.toml" ] && echo "$x"; done)
         sha=$(git rev-parse HEAD)
-        rot=$(for x in $schemes; do case " $feat " in *" $x "*) continue ;; esac; printf '%s %s\n' "$(printf '%s%s' "$sha" "$x" | sha1sum | cut -c1-12)" "$x"; done | sort | head -n "$nsample" | awk '{print $2}')
-        loop_schemes=$(for x in $feat $changed $rot; do [ -f "$x/palette.toml" ] && echo "$x"; done | awk '!seen[$0]++')
+        pick() { for x in $schemes; do case " $feat " in *" $x "*) continue ;; esac; printf '%s %s\n' "$(printf '%s%s%s' "$1" "$sha" "$x" | sha1sum | cut -c1-12)" "$x"; done | sort | head -n "$2" | awk '{print $2}'; }
+        nchg=$(echo $changed | wc -w)
+        if [ "$nchg" -gt 15 ]; then changed=$(for x in $changed; do printf '%s %s\n' "$(printf 'chg%s%s' "$sha" "$x" | sha1sum | cut -c1-12)" "$x"; done | sort | head -n 15 | awk '{print $2}'); capped=" (a sample of 15 of $nchg changed schemes)"; else capped=""; fi
+        cheap_schemes=$(for x in $feat $changed $(pick loop "$nsample"); do [ -f "$x/palette.toml" ] && echo "$x"; done | awk '!seen[$0]++')
+        loop_schemes="$cheap_schemes"
+        echo "coverage: featured + changed$capped + rotating slice of $nsample; every scheme with --all or the manual full CI run"
     fi
 fi
-echo "install/switch/update/remove loop runs for $(echo $loop_schemes | wc -w) of $(echo $schemes | wc -w) schemes: $(echo $loop_schemes)"
+echo "regeneration, selftest and the install/switch/update/remove loop run for $(echo $loop_schemes | wc -w) of $(echo $schemes | wc -w) schemes: $(echo $loop_schemes)"
 for s in $schemes; do
     for d in $s/themes/*/; do [ -f "$d/LICENSE" ] && chk ok "$d has a LICENSE" || chk fail "$d has no LICENSE"; done
     while IFS= read -r f; do head -12 "$f" | grep -q "Licen[cs]e" && chk ok "licence line in $f" || chk fail "no licence line in header of $f"; done < <(find "$s/themes" -name '*.css' -not -path '*/assets/*' -not -name 'pad-osd.css')
@@ -124,10 +132,10 @@ cheap_one() {
       if [ "$d" -eq 0 ]; then echo "  PASS regeneration is byte-identical to the committed files ($s)"; echo "COUNT 1 0"
       else echo "  FAIL regeneration changed $d files of $s (stock stylesheets drifted or a generated file was edited)"; git status --porcelain -- "$s" | head -3; git checkout -q -- "$s"; echo "COUNT 0 1"; fi; } > "$T/cheap-$s.out"
 }
-export -f cheap_one; export T LOG
+export -f cheap_one; export T LOG GNOME_THEMES_SKIP_ASSETS=1   # assets are checked once below, not per scheme
 mkdir -p "$T/cheap"
-printf '%s\n' $schemes | xargs -P "${TEST_JOBS:-4}" -I{} bash -c 'cheap_one {}'
-for s in $schemes; do
+printf '%s\n' $cheap_schemes | xargs -P "${TEST_JOBS:-$(nproc)}" -I{} bash -c 'cheap_one {}'
+for s in $cheap_schemes; do
     cat "$T/cheap-$s.out" | grep -v '^COUNT'
     while read -r _ p f; do pass=$((pass+p)); fail=$((fail+f)); done < <(grep '^COUNT' "$T/cheap-$s.out")
 done

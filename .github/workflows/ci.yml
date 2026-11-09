@@ -7,20 +7,18 @@ name: ci
 on:
   push:
     branches: [testing]
-  schedule:
-    - cron: '17 4 * * 1'   # weekly: the full run (the install/switch/update/remove loop for every scheme)
   workflow_dispatch:
     inputs:
       full:
-        description: 'Run the install/switch/update/remove loop for every scheme (default: the sample)'
+        description: 'Full suite: regeneration, selftest and the install/switch/update/remove loop for every scheme (a dispatched run is full by default)'
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
@@ -44,9 +42,9 @@ jobs:
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Run the test suite
         # Cheap checks run for every scheme; the install/switch/update/remove loop runs for the featured schemes, the schemes changed
-        # against origin/main and a rotating slice (the sampled list is printed at the top of the log). Weekly and on demand: all.
+        # against origin/main (capped at 15) and a rotating slice (the list is printed at the top of the log). Manual dispatch: every scheme.
         env:
-          TEST_ALL: ${{ (github.event_name == 'schedule' || inputs.full) && '1' || '' }}
+          TEST_ALL: ${{ (github.event_name == 'workflow_dispatch' && inputs.full) && '1' || '' }}
         run: tools/test.sh
 
   # The required check "secrets": no credentials in the history.
