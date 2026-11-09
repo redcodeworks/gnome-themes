@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Chameleon'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml.
+title = "Chameleon"
+gtk_name = "Chameleon"
+shell_name = "Chameleon-Shell"
+credit = "Chameleon (colours of the Ptyxis built-in 'Chameleon'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml)"
+ptyxis = "Chameleon"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Chameleon' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2c2c2c"
+fg = "#dedede"
+selection = "#505050"   # DERIVED
+red = "#cc231c"
+orange = "#d25e1f"   # DERIVED
+yellow = "#d79922"
+green = "#689d69"
+cyan = "#458587"
+blue = "#366b71"
+magenta = "#4e5165"
+purple = "#4e5165"   # = magenta
+# palette Color8 (bright black) = #777777: a candidate for `comment`
+[dark.ansi]
+red = "#cc231c"
+green = "#689d69"
+yellow = "#d79922"
+blue = "#366b71"
+magenta = "#4e5165"
+cyan = "#458587"
+[dark.terminal]
+source = "Chameleon"   # Ptyxis built-in id
+black = "#2c2c2c"   # Ptyxis Color0
+white = "#c8bb97"   # Ptyxis Color7
+bright_black = "#777777"   # Ptyxis Color8
+bright_white = "#c8bb97"   # Ptyxis Color15

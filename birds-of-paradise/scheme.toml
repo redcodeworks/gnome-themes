@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Birds Of Paradise'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Birds%20Of%20Paradise.yml.
+title = "Birds Of Paradise"
+gtk_name = "Birds-Of-Paradise"
+shell_name = "Birds-Of-Paradise-Shell"
+credit = "Birds Of Paradise (colours of the Ptyxis built-in 'Birds Of Paradise'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Birds%20Of%20Paradise.yml)"
+ptyxis = "Birds Of Paradise"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Birds Of Paradise' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2a1f1d"
+fg = "#e0dbb7"
+selection = "#4e453c"   # DERIVED
+red = "#be2d26"
+orange = "#d46528"   # DERIVED
+yellow = "#e99d2a"
+green = "#6ba18a"
+cyan = "#74a6ad"
+blue = "#5a86ad"
+magenta = "#ac80a6"
+purple = "#ac80a6"   # = magenta
+# palette Color8 (bright black) = #9b6c4a: a candidate for `comment`
+[dark.ansi]
+red = "#be2d26"
+green = "#6ba18a"
+yellow = "#e99d2a"
+blue = "#5a86ad"
+magenta = "#ac80a6"
+cyan = "#74a6ad"
+[dark.terminal]
+source = "Birds Of Paradise"   # Ptyxis built-in id
+black = "#573d26"   # Ptyxis Color0
+bright_black = "#9b6c4a"   # Ptyxis Color8
+bright_red = "#e84627"   # Ptyxis Color9
+bright_green = "#95d8ba"   # Ptyxis Color10
+bright_yellow = "#d0d150"   # Ptyxis Color11
+bright_blue = "#b8d3ed"   # Ptyxis Color12
+bright_magenta = "#d19ecb"   # Ptyxis Color13
+bright_cyan = "#93cfd7"   # Ptyxis Color14
+bright_white = "#fff9d5"   # Ptyxis Color15

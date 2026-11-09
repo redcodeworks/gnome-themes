@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Bim'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Bim.yml.
+title = "Bim"
+gtk_name = "Bim"
+shell_name = "Bim-Shell"
+credit = "Bim (colours of the Ptyxis built-in 'Bim'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Bim.yml)"
+ptyxis = "Bim"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Bim' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#012849"
+fg = "#a9bed8"
+selection = "#234666"   # DERIVED
+red = "#f557a0"
+orange = "#f57c7a"   # DERIVED
+yellow = "#f5a255"
+green = "#a9ee55"
+cyan = "#5eeea0"
+blue = "#5ea2ec"
+magenta = "#a957ec"
+purple = "#a957ec"   # = magenta
+# palette Color8 (bright black) = #918988: a candidate for `comment`
+[dark.ansi]
+red = "#f557a0"
+green = "#a9ee55"
+yellow = "#f5a255"
+blue = "#5ea2ec"
+magenta = "#a957ec"
+cyan = "#5eeea0"
+[dark.terminal]
+source = "Bim"   # Ptyxis built-in id
+black = "#2c2423"   # Ptyxis Color0
+white = "#918988"   # Ptyxis Color7
+bright_black = "#918988"   # Ptyxis Color8
+bright_red = "#f579b2"   # Ptyxis Color9
+bright_green = "#bbee78"   # Ptyxis Color10
+bright_yellow = "#f5b378"   # Ptyxis Color11
+bright_blue = "#81b3ec"   # Ptyxis Color12
+bright_magenta = "#bb79ec"   # Ptyxis Color13
+bright_cyan = "#81eeb2"   # Ptyxis Color14
+bright_white = "#f5eeec"   # Ptyxis Color15

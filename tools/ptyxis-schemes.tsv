@@ -1,41 +1,41 @@
 scheme	dark_id	light_id	status	reason	origin
-3024	3024	-	todo		-
-aci	Aci	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aci.yml
-aco	Aco	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aco.yml
-adventure-time	Adventure Time	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Adventure%20Time.yml
-afterglow	Afterglow	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Afterglow.yml
-alien-blood	Alien Blood	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Alien%20Blood.yml
-apprentice	Apprentice	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Apprentice.yml
-argonaut	Argonaut	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Argonaut.yml
-arthur	Arthur	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Arthur.yml
-atom	Atom	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Atom.yml
+3024	3024	-	built		-
+aci	Aci	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aci.yml
+aco	Aco	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aco.yml
+adventure-time	Adventure Time	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Adventure%20Time.yml
+afterglow	Afterglow	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Afterglow.yml
+alien-blood	Alien Blood	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202058 bytes | libadwaita 2918 bytes | VERIFY FAILED: alien-blood accent red Alien-Blood-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Alien%20Blood.yml
+apprentice	Apprentice	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Apprentice.yml
+argonaut	Argonaut	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Argonaut.yml
+arthur	Arthur	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Arthur.yml
+atom	Atom	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Atom.yml
 aubergine	Ubuntu	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Clone%20Of%20Ubuntu.yml
-aura	Aura	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aura.yml
+aura	Aura	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aura.yml
 ayu	Ayu	-	built		-
-ayu-mirage	Ayu Mirage	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ayu%20Mirage.yml
-azu	Azu	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Azu.yml
-belafonte	Belafonte	-	todo		-
-bim	Bim	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bim.yml
-birds-of-paradise	Birds Of Paradise	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Birds%20Of%20Paradise.yml
-blazer	Blazer	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Blazer.yml
+ayu-mirage	Ayu Mirage	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202115 bytes | libadwaita 2914 bytes | VERIFY FAILED: ayu-mirage accent red gtk-3.0/gtk-dark.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ayu%20Mirage.yml
+azu	Azu	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Azu.yml
+belafonte	Belafonte	-	built		-
+bim	Bim	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bim.yml
+birds-of-paradise	Birds Of Paradise	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Birds%20Of%20Paradise.yml
+blazer	Blazer	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Blazer.yml
 bluloco-light	Bluloco Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Light.yml
 bluloco-zsh-light	Bluloco Zsh Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Zsh%20Light.yml
-borland	Borland	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Borland.yml
-breath	Breath	-	todo		-
-breath-silverfox	Breath Silverfox	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breath%20Silverfox.yml
-breeze	Breeze	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breeze.yml
-broadcast	Broadcast	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Broadcast.yml
-brogrammer	Brogrammer	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Brogrammer.yml
-c64	C64	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/C64.yml
-cai	Cai	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cai.yml
+borland	Borland	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Borland.yml
+breath	Breath	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199287 bytes | libadwaita 4342 bytes | accent red: token #19b798 maps to far-apart tokens {'#bb3730': 7, '#e61414': 6, '#bd3630': 3} | error: recipe `generate` failed with exit code 1	-
+breath-silverfox	Breath Silverfox	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breath%20Silverfox.yml
+breeze	Breeze	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breeze.yml
+broadcast	Broadcast	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Broadcast.yml
+brogrammer	Brogrammer	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Brogrammer.yml
+c64	C64	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.16)	https://github.com/Gogh-Co/Gogh/tree/master/themes/C64.yml
+cai	Cai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cai.yml
 campbell	campbell	-	excluded	generic terminal preset (Windows Terminal default)	-
 catppuccin	Catppuccin Latte + Catppuccin Mocha	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Latte.yml
 catppuccin-frappe	Catppuccin Frappé	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Frappé.yml
-catppuccin-macchiato	Catppuccin Macchiato	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Macchiato.yml
-chalk	Chalk	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalk.yml
-chalkboard	Chalkboard	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalkboard.yml
-chameleon	Chameleon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml
-ciapre	Ciapre	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ciapre.yml
+catppuccin-macchiato	Catppuccin Macchiato	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Macchiato.yml
+chalk	Chalk	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalk.yml
+chalkboard	Chalkboard	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalkboard.yml
+chameleon	Chameleon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml
+ciapre	Ciapre	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202095 bytes | libadwaita 2896 bytes | VERIFY FAILED: ciapre accent red Ciapre-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ciapre.yml
 clrs	Clrs	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml
 cobalt-2	Cobalt 2	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml
 cobalt-neon	Cobalt Neon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%20Neon.yml

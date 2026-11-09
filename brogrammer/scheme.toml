@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Brogrammer'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Brogrammer.yml.
+title = "Brogrammer"
+gtk_name = "Brogrammer"
+shell_name = "Brogrammer-Shell"
+credit = "Brogrammer (colours of the Ptyxis built-in 'Brogrammer'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Brogrammer.yml)"
+ptyxis = "Brogrammer"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Brogrammer' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#131313"
+fg = "#d6dbe5"
+selection = "#3a3b3d"   # DERIVED
+red = "#f81118"
+orange = "#f26614"   # DERIVED
+yellow = "#ecba0f"
+green = "#2dc55e"
+cyan = "#1081d6"
+blue = "#2a84d2"
+magenta = "#4e5ab7"
+purple = "#4e5ab7"   # = magenta
+# palette Color8 (bright black) = #d6dbe5: a candidate for `comment`
+[dark.ansi]
+red = "#f81118"
+green = "#2dc55e"
+yellow = "#ecba0f"
+blue = "#2a84d2"
+magenta = "#4e5ab7"
+cyan = "#1081d6"
+[dark.terminal]
+source = "Brogrammer"   # Ptyxis built-in id
+black = "#1f1f1f"   # Ptyxis Color0
+bright_black = "#d6dbe5"   # Ptyxis Color8
+bright_red = "#de352e"   # Ptyxis Color9
+bright_green = "#1dd361"   # Ptyxis Color10
+bright_yellow = "#f3bd09"   # Ptyxis Color11
+bright_blue = "#1081d6"   # Ptyxis Color12
+bright_magenta = "#5350b9"   # Ptyxis Color13
+bright_cyan = "#0f7ddb"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

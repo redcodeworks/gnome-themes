@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Breeze'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Breeze.yml.
+title = "Breeze"
+gtk_name = "Breeze"
+shell_name = "Breeze-Shell"
+credit = "Breeze (colours of the Ptyxis built-in 'Breeze'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Breeze.yml)"
+ptyxis = "Breeze"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Breeze' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#232627"
+fg = "#fcfcfc"
+selection = "#4e5152"   # DERIVED
+red = "#ed1515"
+orange = "#f2440a"   # DERIVED
+yellow = "#f67400"
+green = "#11d116"
+cyan = "#1abc9c"
+blue = "#1d99f3"
+magenta = "#9b59b6"
+purple = "#9b59b6"   # = magenta
+# palette Color8 (bright black) = #7f8c8d: a candidate for `comment`
+[dark.ansi]
+red = "#ed1515"
+green = "#11d116"
+yellow = "#f67400"
+blue = "#1d99f3"
+magenta = "#9b59b6"
+cyan = "#1abc9c"
+[dark.terminal]
+source = "Breeze"   # Ptyxis built-in id
+black = "#232627"   # Ptyxis Color0
+bright_black = "#7f8c8d"   # Ptyxis Color8
+bright_red = "#c0392b"   # Ptyxis Color9
+bright_green = "#1cdc9a"   # Ptyxis Color10
+bright_yellow = "#fdbc4b"   # Ptyxis Color11
+bright_blue = "#3daee9"   # Ptyxis Color12
+bright_magenta = "#8e44ad"   # Ptyxis Color13
+bright_cyan = "#16a085"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

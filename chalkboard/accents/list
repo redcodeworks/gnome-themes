@@ -1,0 +1,7 @@
+# name dark-hex light-hex (- = none) [default]: written by tools/accent-maps-gen.py
+red #c37372 -
+green #72c373 -
+yellow #c2c372 - default
+blue #7372c3 -
+magenta #c372c2 -
+cyan #72c2c3 -

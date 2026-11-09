@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in '3024'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. The built-in's header names no origin.
+title = "3024"
+gtk_name = "3024"
+shell_name = "3024-Shell"
+credit = "3024 (colours of the Ptyxis built-in '3024'; the built-in's header names no origin)"
+ptyxis = "3024"
+ptyxis_reason = "the colours ARE the Ptyxis built-in '3024' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#090300"
+fg = "#a5a2a2"
+selection = "#282320"   # DERIVED
+red = "#db2d20"
+orange = "#ec8d11"   # DERIVED
+yellow = "#fded02"
+green = "#01a252"
+cyan = "#b5e4f4"
+blue = "#01a0e4"
+magenta = "#a16a94"
+purple = "#a16a94"   # = magenta
+# palette Color8 (bright black) = #5c5855: a candidate for `comment`
+[dark.ansi]
+red = "#db2d20"
+green = "#01a252"
+yellow = "#fded02"
+blue = "#01a0e4"
+magenta = "#a16a94"
+cyan = "#b5e4f4"
+[dark.terminal]
+source = "3024"   # Ptyxis built-in id
+black = "#090300"   # Ptyxis Color0
+bright_black = "#5c5855"   # Ptyxis Color8
+bright_red = "#e8bbd0"   # Ptyxis Color9
+bright_green = "#3a3432"   # Ptyxis Color10
+bright_yellow = "#4a4543"   # Ptyxis Color11
+bright_blue = "#807d7c"   # Ptyxis Color12
+bright_magenta = "#d6d5d4"   # Ptyxis Color13
+bright_cyan = "#cdab53"   # Ptyxis Color14
+bright_white = "#f7f7f7"   # Ptyxis Color15
+
+[light]
+bg_deep = "#f7f7f7"
+fg = "#4a4543"
+selection = "#d4d3d3"   # DERIVED
+red = "#db2d20"
+orange = "#ec8d11"   # DERIVED
+yellow = "#fded02"
+green = "#01a252"
+cyan = "#b5e4f4"
+blue = "#01a0e4"
+magenta = "#a16a94"
+purple = "#a16a94"   # = magenta
+# palette Color8 (bright black) = #5c5855: a candidate for `comment`
+[light.ansi]
+red = "#db2d20"
+green = "#01a252"
+yellow = "#fded02"
+blue = "#01a0e4"
+magenta = "#a16a94"
+cyan = "#b5e4f4"
+[light.terminal]
+source = "3024"   # Ptyxis built-in id
+black = "#090300"   # Ptyxis Color0
+white = "#a5a2a2"   # Ptyxis Color7
+bright_black = "#5c5855"   # Ptyxis Color8
+bright_red = "#e8bbd0"   # Ptyxis Color9
+bright_green = "#3a3432"   # Ptyxis Color10
+bright_yellow = "#4a4543"   # Ptyxis Color11
+bright_blue = "#807d7c"   # Ptyxis Color12
+bright_magenta = "#d6d5d4"   # Ptyxis Color13
+bright_cyan = "#cdab53"   # Ptyxis Color14
+bright_white = "#f7f7f7"   # Ptyxis Color15

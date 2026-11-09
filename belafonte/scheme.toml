@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Belafonte'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. The built-in's header names no origin.
+title = "Belafonte"
+gtk_name = "Belafonte"
+shell_name = "Belafonte-Shell"
+credit = "Belafonte (colours of the Ptyxis built-in 'Belafonte'; the built-in's header names no origin)"
+ptyxis = "Belafonte"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Belafonte' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#20111b"
+fg = "#968c83"
+selection = "#382a30"   # DERIVED
+red = "#be100e"
+orange = "#d45a2c"   # DERIVED
+yellow = "#eaa549"
+green = "#858162"
+cyan = "#989a9c"
+blue = "#426a79"
+magenta = "#97522c"
+purple = "#97522c"   # = magenta
+# palette Color8 (bright black) = #5e5252: a candidate for `comment`
+[dark.ansi]
+red = "#be100e"
+green = "#858162"
+yellow = "#eaa549"
+blue = "#426a79"
+magenta = "#97522c"
+cyan = "#989a9c"
+[dark.terminal]
+source = "Belafonte"   # Ptyxis built-in id
+black = "#20111b"   # Ptyxis Color0
+bright_black = "#5e5252"   # Ptyxis Color8
+bright_white = "#d5ccba"   # Ptyxis Color15
+
+[light]
+bg_deep = "#d5ccba"
+fg = "#45373c"
+selection = "#b8aea1"   # DERIVED
+red = "#be100e"
+orange = "#d45a2c"   # DERIVED
+yellow = "#eaa549"
+green = "#858162"
+cyan = "#989a9c"
+blue = "#426a79"
+magenta = "#97522c"
+purple = "#97522c"   # = magenta
+# palette Color8 (bright black) = #5e5252: a candidate for `comment`
+[light.ansi]
+red = "#be100e"
+green = "#858162"
+yellow = "#eaa549"
+blue = "#426a79"
+magenta = "#97522c"
+cyan = "#989a9c"
+[light.terminal]
+source = "Belafonte"   # Ptyxis built-in id
+black = "#20111b"   # Ptyxis Color0
+white = "#968c83"   # Ptyxis Color7
+bright_black = "#5e5252"   # Ptyxis Color8
+bright_white = "#d5ccba"   # Ptyxis Color15
