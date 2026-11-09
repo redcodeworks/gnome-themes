@@ -32,6 +32,8 @@ For every scheme variant that has a Ptyxis built-in palette, the built-in decide
 
 ## Workflow
 
+CI (`.github/workflows/ci.yml`) triggers on push to `testing`, weekly (full loop) and `workflow_dispatch` (input `full`); there is NO `pull_request` trigger (a PR shows the push run's checks, `test` and `secrets` are required by name, verified through the branch-protection API 2026-11-09). Both jobs use the pinned runner `ubuntu-24.04` (a fixed image so a moving `-latest` cannot change results under us; the test job runs in `fedora:45` anyway) and checkout is pinned by commit SHA. The dnf install of the test packages takes about 90 s per run; a cached test image was not worth a registry push step.
+
 `main` is protected: work goes to `testing`, CI (`.github/workflows/ci.yml`: job `test` runs `tools/test.sh` in a Fedora 45 container, job `secrets` runs gitleaks) must pass, and a pull request `testing` -> `main` is then merged (see README, Contributing). CI shellcheck runs at warning level.
 
 ## README policy
