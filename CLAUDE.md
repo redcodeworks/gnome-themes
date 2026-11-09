@@ -34,6 +34,10 @@ For every scheme variant that has a Ptyxis built-in palette, the built-in decide
 
 `main` is protected: work goes to `testing`, CI (`.github/workflows/ci.yml`: job `test` runs `tools/test.sh` in a Fedora 45 container, job `secrets` runs gitleaks) must pass, and a pull request `testing` -> `main` is then merged (see README, Contributing). CI shellcheck runs at warning level.
 
+## README policy
+
+The README is user-facing, for people who just need the concise what, why and basic how-to-use. No notes to yourself and no technical implementation details in it (generator mechanics, internals, flags): those go in this file. Essential sections: Requirements, Install and usage, Contributing, License and credits. A personal-project disclaimer (assisted by Claude, only tested on the owner's setup, not maintained beyond own needs, forks encouraged) is the last section. American English.
+
 ## Reference moved from the README
 
 The README is user-facing and short; these details live here.
