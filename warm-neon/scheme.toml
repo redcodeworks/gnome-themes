@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Warm Neon'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Warm%20Neon.yml.
+title = "Warm Neon"
+gtk_name = "Warm-Neon"
+shell_name = "Warm-Neon-Shell"
+credit = "Warm Neon (colours of the Ptyxis built-in 'Warm Neon'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Warm%20Neon.yml)"
+ptyxis = "Warm Neon"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Warm Neon' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#404040"
+fg = "#afdab6"
+selection = "#565f58"   # DERIVED
+red = "#e24346"
+orange = "#de9246"   # DERIVED
+yellow = "#dae145"
+green = "#39b13a"
+cyan = "#2abbd4"
+blue = "#4261c5"
+magenta = "#f920fb"
+purple = "#f920fb"   # = magenta
+# palette Color8 (bright black) = #fefcfc: a candidate for `comment`
+[dark.ansi]
+red = "#e24346"
+green = "#39b13a"
+yellow = "#dae145"
+blue = "#4261c5"
+magenta = "#f920fb"
+cyan = "#2abbd4"
+[dark.terminal]
+source = "Warm Neon"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#d0b8a3"   # Ptyxis Color7
+bright_black = "#fefcfc"   # Ptyxis Color8
+bright_red = "#e97071"   # Ptyxis Color9
+bright_green = "#9cc090"   # Ptyxis Color10
+bright_yellow = "#ddda7a"   # Ptyxis Color11
+bright_blue = "#7b91d6"   # Ptyxis Color12
+bright_magenta = "#f674ba"   # Ptyxis Color13
+bright_cyan = "#5ed1e5"   # Ptyxis Color14
+bright_white = "#d8c8bb"   # Ptyxis Color15

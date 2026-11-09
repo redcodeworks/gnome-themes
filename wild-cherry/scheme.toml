@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Wild Cherry'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wild%20Cherry.yml.
+title = "Wild Cherry"
+gtk_name = "Wild-Cherry"
+shell_name = "Wild-Cherry-Shell"
+credit = "Wild Cherry (colours of the Ptyxis built-in 'Wild Cherry'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wild%20Cherry.yml)"
+ptyxis = "Wild Cherry"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Wild Cherry' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#1f1726"
+fg = "#dafaff"
+selection = "#444451"   # DERIVED
+red = "#d94085"
+orange = "#ec887a"   # DERIVED
+yellow = "#ffd16f"
+green = "#2ab250"
+cyan = "#c1b8b7"
+blue = "#883cdc"
+magenta = "#ececec"
+purple = "#ececec"   # = magenta
+# palette Color8 (bright black) = #009cc9: a candidate for `comment`
+[dark.ansi]
+red = "#d94085"
+green = "#2ab250"
+yellow = "#ffd16f"
+blue = "#883cdc"
+magenta = "#ececec"
+cyan = "#c1b8b7"
+[dark.terminal]
+source = "Wild Cherry"   # Ptyxis built-in id
+black = "#000507"   # Ptyxis Color0
+white = "#fff8de"   # Ptyxis Color7
+bright_black = "#009cc9"   # Ptyxis Color8
+bright_red = "#da6bac"   # Ptyxis Color9
+bright_green = "#f4dca5"   # Ptyxis Color10
+bright_yellow = "#eac066"   # Ptyxis Color11
+bright_blue = "#308cba"   # Ptyxis Color12
+bright_magenta = "#ae636b"   # Ptyxis Color13
+bright_cyan = "#ff919d"   # Ptyxis Color14
+bright_white = "#e4838d"   # Ptyxis Color15

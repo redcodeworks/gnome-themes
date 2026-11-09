@@ -201,40 +201,40 @@ srcery	Srcery	-	excluded	ptyxis-compare: info: srcery dark -> built-in id "Srcer
 summer-pop	Summer Pop	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Summer%20Pop.yml
 sundried	Sundried	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sundried.yml
 sweet	Sweet Eliverlara	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Eliverlara.yml
-sweet-terminal	Sweet Terminal	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Terminal.yml
-symphonic	Symphonic	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Symphonic.yml
-synthwave	Synthwave	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave.yml
-synthwave-alpha	Synthwave Alpha	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave%20Alpha.yml
+sweet-terminal	Sweet Terminal	-	excluded	ptyxis-compare: info: sweet-terminal dark -> built-in id "Sweet Terminal" (flat): roles max dE 0.00 (Background), all18 28.58	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Terminal.yml
+symphonic	Symphonic	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Symphonic.yml
+synthwave	Synthwave	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave.yml
+synthwave-alpha	Synthwave Alpha	-	excluded	ptyxis-compare: info: synthwave-alpha dark -> built-in id "Synthwave Alpha" (flat): roles max dE 0.00 (Background), all18 26.04	https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave%20Alpha.yml
 tango	tango	-	excluded	generic terminal preset	-
-teerb	Teerb	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Teerb.yml
-tender	Tender	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tender.yml
+teerb	Teerb	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Teerb.yml
+tender	Tender	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tender.yml
 terminal-basic	Terminal Basic	-	excluded	generic terminal preset (macOS Basic)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Terminal%20Basic.yml
-terminix-dark	Terminix Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Terminix%20Dark.yml
-thayer-bright	Thayer Bright	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Thayer%20Bright.yml
-tin	Tin	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tin.yml
+terminix-dark	Terminix Dark	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Terminix%20Dark.yml
+thayer-bright	Thayer Bright	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Thayer%20Bright.yml
+tin	Tin	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tin.yml
 tokyo-night	Tokyo Night + Tokyo Night Day	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night.yml
 tokyo-night-light	Tokyo Night Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Light.yml
-tokyo-night-moon	Tokyo Night Moon	-	todo		https://github.com/folke/tokyonight.nvim/tree/main/extras
-tokyo-night-storm	Tokyo Night Storm	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Storm.yml
+tokyo-night-moon	Tokyo Night Moon	-	excluded	ptyxis-compare: info: tokyo-night-moon dark -> built-in id "Tokyo Night Moon" (flat): roles max dE 0.00 (Background), all18 27.20	https://github.com/folke/tokyonight.nvim/tree/main/extras
+tokyo-night-storm	Tokyo Night Storm	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Storm.yml
 tomorrow	Tomorrow Night	Tomorrow	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night.yml
-tomorrow-night-blue	Tomorrow Night Blue	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Blue.yml
-tomorrow-night-bright	Tomorrow Night Bright	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Bright.yml
-tomorrow-night-eighties	Tomorrow Night Eighties	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Eighties.yml
-toy-chest	Toy Chest	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Toy%20Chest.yml
-treehouse	Treehouse	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Treehouse.yml
-twilight	Twilight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Twilight.yml
+tomorrow-night-blue	Tomorrow Night Blue	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Blue.yml
+tomorrow-night-bright	Tomorrow Night Bright	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Bright.yml
+tomorrow-night-eighties	Tomorrow Night Eighties	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Eighties.yml
+toy-chest	Toy Chest	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Toy%20Chest.yml
+treehouse	Treehouse	-	excluded	selftest: FAIL dark fg on window >= 4.5 (3.20)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Treehouse.yml
+twilight	Twilight	-	excluded	selftest: FAIL themes/Twilight/gtk-3.0/gtk.css accent green: parses, 1 default-accent tokens left	https://github.com/Gogh-Co/Gogh/tree/master/themes/Twilight.yml
 ura	Ura	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ura.yml
-urple	Urple	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Urple.yml
-vag	Vag	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vag.yml
-vaughn	Vaughn	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vaughn.yml
-vibrant-ink	Vibrant Ink	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vibrant%20Ink.yml
-vs-code	Vs Code	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vs%20Code%20Light+.yml
-warm-neon	Warm Neon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Warm%20Neon.yml
-website	Website	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Website.yml
-wez	Wez	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wez.yml
-wild-cherry	Wild Cherry	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wild%20Cherry.yml
-wombat	Wombat	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wombat.yml
-wryan	Wryan	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wryan.yml
-wzoreck	Wzoreck	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wzoreck.yml
+urple	Urple	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.05)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Urple.yml
+vag	Vag	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vag.yml
+vaughn	Vaughn	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vaughn.yml
+vibrant-ink	Vibrant Ink	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vibrant%20Ink.yml
+vs-code	Vs Code	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vs%20Code%20Light+.yml
+warm-neon	Warm Neon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Warm%20Neon.yml
+website	Website	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Website.yml
+wez	Wez	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202066 bytes | libadwaita 2884 bytes | VERIFY FAILED: wez accent red Wez-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Wez.yml
+wild-cherry	Wild Cherry	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wild%20Cherry.yml
+wombat	Wombat	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wombat.yml
+wryan	Wryan	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wryan.yml
+wzoreck	Wzoreck	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wzoreck.yml
 xterm	xterm	-	excluded	generic terminal preset	-
 zenburn	Zenburn	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Zenburn.yml

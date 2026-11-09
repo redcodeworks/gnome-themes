@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Tender'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tender.yml.
+title = "Tender"
+gtk_name = "Tender"
+shell_name = "Tender-Shell"
+credit = "Tender (colours of the Ptyxis built-in 'Tender'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tender.yml)"
+ptyxis = "Tender"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Tender' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "blue"
+
+[dark]
+bg_deep = "#282828"
+fg = "#eeeeee"
+selection = "#505050"   # DERIVED
+red = "#c5152f"
+orange = "#e26c3d"   # DERIVED
+yellow = "#ffc24b"
+green = "#c9d05c"
+cyan = "#73cef4"
+blue = "#b3deef"
+magenta = "#d3b987"
+purple = "#d3b987"   # = magenta
+# palette Color8 (bright black) = #323232: a candidate for `comment`
+[dark.ansi]
+red = "#c5152f"
+green = "#c9d05c"
+yellow = "#ffc24b"
+blue = "#b3deef"
+magenta = "#d3b987"
+cyan = "#73cef4"
+[dark.terminal]
+source = "Tender"   # Ptyxis built-in id
+black = "#1d1d1d"   # Ptyxis Color0
+bright_black = "#323232"   # Ptyxis Color8
+bright_red = "#f43753"   # Ptyxis Color9
+bright_green = "#d9e066"   # Ptyxis Color10
+bright_yellow = "#facc72"   # Ptyxis Color11
+bright_blue = "#c0eafb"   # Ptyxis Color12
+bright_magenta = "#efd093"   # Ptyxis Color13
+bright_cyan = "#a1d6ec"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

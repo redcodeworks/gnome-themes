@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Tin'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tin.yml.
+title = "Tin"
+gtk_name = "Tin"
+shell_name = "Tin-Shell"
+credit = "Tin (colours of the Ptyxis built-in 'Tin'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tin.yml)"
+ptyxis = "Tin"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Tin' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2e2e35"
+fg = "#ffffff"
+selection = "#58585d"   # DERIVED
+red = "#8d534e"
+orange = "#8a704e"   # DERIVED
+yellow = "#888d4e"
+green = "#4e8d53"
+cyan = "#4e888d"
+blue = "#534e8d"
+magenta = "#8d4e88"
+purple = "#8d4e88"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#8d534e"
+green = "#4e8d53"
+yellow = "#888d4e"
+blue = "#534e8d"
+magenta = "#8d4e88"
+cyan = "#4e888d"
+[dark.terminal]
+source = "Tin"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+bright_black = "#000000"   # Ptyxis Color8
+bright_red = "#b57d78"   # Ptyxis Color9
+bright_green = "#78b57d"   # Ptyxis Color10
+bright_yellow = "#b0b578"   # Ptyxis Color11
+bright_blue = "#7d78b5"   # Ptyxis Color12
+bright_magenta = "#b578b0"   # Ptyxis Color13
+bright_cyan = "#78b0b5"   # Ptyxis Color14
