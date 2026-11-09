@@ -2,59 +2,60 @@
 # gnome-themes: terminal-inspired GNOME themes (one top-level directory per scheme) and icon sets from several icon repos
 # (tools/icon-sources.conf). Run `just` for the list; every recipe is a thin call into tools/themectl.sh. Needs just, bash, git.
 
+[private]
 default:
     @just --list --unsorted
 
 # Themes: top-level directories of this repo, installed into ~/.themes (THEMES_DEST)
 
-# List the available themes with their variants (✓ = installed, with the active accent)
+# List the available themes (a check mark = installed)
 [group('themes')]
 list-themes:
     @tools/themectl.sh themes list
 
-# Install a theme (e.g. gruvbox-material) with its remembered accent; without a name, pick from a checklist
+# Install a theme (name optional: pick from a list)
 [group('themes')]
 install-theme name="":
     @tools/themectl.sh themes install "{{name}}"
 
-# Refresh every installed theme from this repo (pulls the checkout first when it has a remote) and re-apply the remembered accents
+# Refresh the installed themes from this repo
 [group('themes')]
 update-theme:
     @tools/themectl.sh themes update
 
-# Remove an installed theme; without a name, pick from a checklist
+# Remove an installed theme (name optional: pick from a list)
 [group('themes')]
 remove-theme name="":
     @tools/themectl.sh themes remove "{{name}}"
 
-# Make a theme the active GTK, Shell and libadwaita theme; without a name, pick one. The optional accent (one of the scheme's accents: its six terminal colours, plus orange where it has one) skips the accent question
+# Use a theme for GTK, Shell and libadwaita (name, accent optional)
 [group('themes')]
 switch-theme name="" accent="":
     @tools/themectl.sh themes switch "{{name}}" "{{accent}}"
 
 # Icons: sets of the repos in tools/icon-sources.conf (Papirus, Gruvbox Plus, Zafiro, candy, Tela, Fluent; ICONS_URL replaces the papirus URL), listed from the registry without cloning; the sources of the chosen sets are cloned into ~/.cache/gnome-themes/icons and the sets installed into ~/.local/share/icons (ICONS_DEST)
 
-# List the available icon sets with their source (✓ = installed)
+# List the available icon sets (a check mark = installed)
 [group('icons')]
 list-icons:
     @tools/themectl.sh icons list
 
-# Install an icon set (e.g. Papirus-Dark, Tela-nord) after refreshing its source clone; without a name, pick from a checklist
+# Install an icon set (name optional: pick from a list)
 [group('icons')]
 install-icon name="":
     @tools/themectl.sh icons install "{{name}}"
 
-# Refresh the source clones, then replace every installed icon set
+# Refresh the installed icon sets from their sources
 [group('icons')]
 update-icon:
     @tools/themectl.sh icons update
 
-# Remove an installed icon set; without a name, pick from a checklist
+# Remove an installed icon set (name optional: pick from a list)
 [group('icons')]
 remove-icon name="":
     @tools/themectl.sh icons remove "{{name}}"
 
-# Make an icon set the active icon theme; without a name, pick one
+# Use an icon set (name optional: pick from a list)
 [group('icons')]
 switch-icon name="":
     @tools/themectl.sh icons switch "{{name}}"

@@ -197,6 +197,49 @@ if [ -d bluloco-light ]; then
     THEMES_DEST=$LO just remove-theme bluloco-light >/dev/null 2>&1
 fi
 
+# ---- gum picker (stub, forced), no gum, recipe comments ---------------------------------------------------------------------------
+echo "=== gum picker"
+SB="$T/stubs"; mkdir -p "$SB"
+cat > "$SB/gum" <<'SH'
+#!/bin/sh
+# stub gum: records its arguments (one per line), prints the item arguments that match $GUM_STUB_PICK (ERE), with the featured star removed when GUM_STUB_STRIP=1
+# and followed by the heading item when GUM_STUB_HEADING=1; exits $GUM_STUB_EXIT without output when that is set
+printf '%s\n' "$@" > "$STUB_LOG"
+[ -n "${GUM_STUB_EXIT:-}" ] && exit "$GUM_STUB_EXIT"
+[ -n "${GUM_STUB_HEADING:-}" ] && echo "── Featured ───"
+for a in "$@"; do
+    case "$a" in -*|▸*|◉*|○*) continue ;; esac
+    if printf '%s' "$a" | grep -Eq "$GUM_STUB_PICK"; then if [ -n "${GUM_STUB_STRIP:-}" ]; then printf '%s\n' "${a#★ }"; else printf '%s\n' "$a"; fi; fi
+done
+exit 0
+SH
+chmod +x "$SB/gum"; export STUB_LOG="$T/stub.log"
+nogum="$T/path-nogum"; mkdir -p "$nogum"; for c in sh bash env cat grep sed awk sort head tr cut mktemp rm mkdir cp mv ls find dirname basename git stty tput date cmp printf wc just python3 tee sha1sum; do p2=$(command -v "$c" 2>/dev/null) && ln -sf "$p2" "$nogum/$c"; done
+GP="$T/gum-themes"; mkdir -p "$GP"
+THEMES_PICKER=gum GUM_STUB_HEADING=1 GUM_STUB_PICK='^(★ )?(nordic|dracula)  ' PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
+[ -d "$GP/Nordic-Nord" ] && [ -d "$GP/Dracula" ] && [ "$(find "$GP" -mindepth 1 -maxdepth 1 -not -name 'Nordic*' -not -name 'Dracula*' | wc -l)" -eq 0 ] && chk ok "gum handler (stub): the ticked entries are installed, a returned section heading is ignored" || chk fail "gum install: $(ls "$GP" | tr '\n' ' ')"
+grep -qx -- '--no-limit' "$STUB_LOG" && grep -qx -- '◉  ' "$STUB_LOG" && grep -qx -- '○  ' "$STUB_LOG" && grep -qx -- '▸  ' "$STUB_LOG" && ! grep -qx -- '--selected' "$STUB_LOG" && chk ok "gum choose --no-limit with the ◉ ○ ▸ prefixes and nothing preselected for install" || chk fail "gum arguments: $(tr '\n' '|' < "$STUB_LOG")"
+grep -n '' "$STUB_LOG" | grep -E 'Featured|All themes|★ nordic|aubergine' | head -4 | tr '\n' ' ' | grep -q 'Featured.*★ nordic.*All themes.*3024\|Featured.*★ nordic.*All themes' && chk ok "gum list: a Featured heading, the starred featured entries, an All themes heading, then the rest" || chk fail "gum list order: $(tr '\n' '|' < "$STUB_LOG" | cut -c1-300)"
+rm -rf "$GP"; mkdir -p "$GP"; THEMES_PICKER=gum GUM_STUB_STRIP=1 GUM_STUB_PICK='^(★ )?(tokyo-night|everforest)  ' PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
+[ -d "$GP/Everforest" ] && [ -d "$GP/Tokyo-Night" ] && chk ok "gum handler: an entry returned without its star maps back to the scheme id" || chk fail "gum star stripping: $(ls "$GP" | tr '\n' ' ')"
+rm -rf "$GP"; mkdir -p "$GP"; out=$(THEMES_PICKER=gum GUM_STUB_EXIT=130 PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null 2>&1); rc=$?
+[ $rc -eq 0 ] && echo "$out" | grep -q "Nothing selected" && [ -z "$(ls -A "$GP")" ] && chk ok "gum cancelled (Esc): Nothing selected, exit 0, nothing installed" || chk fail "gum cancel rc=$rc: $out"
+rm -f "$STUB_LOG"; THEMES_PICKER=gum GUM_STUB_PICK=x PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install dracula </dev/null >/dev/null 2>&1
+[ ! -e "$STUB_LOG" ] && [ -d "$GP/Dracula" ] && chk ok "a named scheme skips the picker" || chk fail "named scheme called gum"
+THEMES_DEST=$GP tools/themectl.sh themes install nordic </dev/null >/dev/null 2>&1; : > "$LOG"
+THEMES_PICKER=gum GUM_STUB_PICK='^(★ )?dracula  ' PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes switch </dev/null >/dev/null 2>&1
+grep -q "gtk-theme Dracula" "$LOG" && grep -qx -- '--limit' "$STUB_LOG" && ! grep -qx -- '--no-limit' "$STUB_LOG" && chk ok "switch uses a single-choice gum (--limit 1) and applies the chosen theme" || chk fail "gum switch: $(tr '\n' ';' < "$LOG") / $(tr '\n' '|' < "$STUB_LOG" | cut -c1-200)"
+out=$(printf 'q\n' | THEMES_PICKER=gum PATH="$nogum" THEMES_DEST=$GP tools/themectl.sh themes install 2>&1); rc=$?
+echo "$out" | grep -q "gum is not on PATH" && echo "$out" | grep -q "Cancelled" && [ $rc -eq 0 ] && chk ok "forced gum but none installed: warns and falls back (no terminal: the numbered list)" || chk fail "no gum rc=$rc: $out"
+rm -rf "$GP"
+n=$(just --list --unsorted | grep -c '^    [a-z].* # [A-Z]'); [ "$n" -eq 10 ] && just --list --unsorted | grep -q '\[themes\]' && just --list --unsorted | grep -q '\[icons\]' && chk ok "every public recipe has a group and a one-line comment (the ujust menu shows them)" || chk fail "recipe comments: $n of 10"
+tools/themectl.sh help | grep -q "install-theme \[name\]" && chk ok "themectl.sh help describes the recipes" || chk fail "themectl help"
+
+# ---- built-in picker: scrolling in a small terminal (pty with a terminal emulator) ----------------------------------------------------
+echo "=== picker scrolling"
+SCROLL_THEMES="$T/scroll-themes"; mkdir -p "$SCROLL_THEMES"
+THEMES_DEST=$SCROLL_THEMES python3 -I tools/pty-scroll-test.py 10 24 > "$T/scroll.out" 2>&1 && chk ok "built-in picker: the cursor row stays on screen and the window scrolls by at most one row per key (10 and 24 rows, filter, resize, Home/End/PgUp/PgDn)" || { chk fail "pty scroll test"; grep -B1 -A12 FAIL "$T/scroll.out" | head -30; }
+
 # ---- collision guard (themes): unrelated folders with our names are never replaced or removed without asking ---------
 echo "=== collision guard"
 G="$T/guard-themes"; mkdir -p "$G/Dracula"; echo mine > "$G/Dracula/mine.txt"; printf '[Desktop Entry]\nName=Dracula\n' > "$G/Dracula/index.theme"

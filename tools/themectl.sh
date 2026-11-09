@@ -48,6 +48,23 @@ set -euo pipefail
 # the guard asks on a copy of the original stdin (fd 3): the loops below read their own input from process substitutions
 tty_in=0; if [ -t 0 ]; then tty_in=1; exec 3<&0; fi
 kind="${1:-}"; action="${2:-}"; want="${3:-}"; accent_arg="${4:-}"
+case "$kind" in help|--help|-h) cat <<'HELP'
+gnome-themes: themes and icon sets (just <recipe>; behind the image: ujust gnome-candy <recipe>).
+
+  list-themes / list-icons       what is available, with the installed ones marked and the active accent of each theme
+  install-theme [name]           copy a theme (all its GTK, Shell and libadwaita parts) into ~/.themes with its remembered accent;
+                                 without a name pick from a checklist (nothing is ticked); a named theme skips the checklist
+  update-theme                   pull this checkout when it has a remote, then replace every installed theme and re-apply its accent
+  remove-theme [name]            remove an installed theme (checklist without a name); folders gnome-themes did not install are not touched
+  switch-theme [name] [accent]   make a theme the GTK, Shell and libadwaita theme and select the matching Ptyxis palette and Text Editor
+                                 style; the accent is one of the theme's own colors (asked when omitted)
+  install-icon [name]            install an icon set from its source repo (cloned into ~/.cache/gnome-themes) into ~/.local/share/icons
+  update-icon, remove-icon [name], switch-icon [name]   as for themes
+
+Checklists use gum when it is installed, otherwise a built-in picker (arrows or j/k, SPACE, / filter, ENTER, q). THEMES_PICKER=gum|builtin
+chooses. Other environment variables: see the header of tools/themectl.sh. FORCE=1 replaces folders gnome-themes did not install.
+HELP
+exit 0 ;; esac
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cache="${GNOME_THEMES_CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/gnome-themes}"
 cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -58,7 +75,7 @@ pty_dir="${PTYXIS_PALETTES:-${XDG_DATA_HOME:-$HOME/.local/share}/org.gnome.Ptyxi
 case "$kind" in
     themes) dest="${THEMES_DEST:-$HOME/.themes}"; noun="theme" ;;
     icons)  dest="${ICONS_DEST:-${XDG_DATA_HOME:-$HOME/.local/share}/icons}"; noun="icon set" ;;
-    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]"; exit 2 ;;
+    *) echo "usage: themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]   (themectl.sh help for details)"; exit 2 ;;
 esac
 
 # ---- accents (themes only) -----------------------------------------------------------------------------------
@@ -304,9 +321,11 @@ index_of() { local i; for i in "${!items[@]}"; do [ "${items[i]}" = "$1" ] && { 
 # on[] (1 = ticked) for tui_many. Returns 2 when there is no terminal, so the caller can fall back to a numbered list.
 #   tui_many HEADER IDX...   sets chosen=(ticked indexes among IDX); returns 1 when cancelled
 #   tui_one  HEADER IDX...   sets pick=<index> (empty when cancelled); tui_cur=N (position within IDX) puts the cursor there
-_tui_read_key() {   # sets key to: up down space enter quit all none filter or the raw character (tui_raw=1: raw characters, esc, enter, backspace only)
-    local k rest
-    IFS= read -rsn1 k </dev/tty || { key=quit; return; }
+_tui_read_key() {   # sets key to: up down pgup pgdn first last space enter quit all none filter resize or the raw character (tui_raw=1: raw characters, esc, enter, backspace only)
+    local k rest="" rc=0
+    IFS= read -rsn1 -t 0.3 k </dev/tty || rc=$?
+    if [ "$rc" -gt 128 ]; then key=tick; return; fi      # no key within 0.3 s: _tui_wait_key checks whether the terminal was resized
+    if [ "$rc" -ne 0 ]; then key=quit; return; fi
     if [ "${tui_raw:-0}" = 1 ]; then
         case "$k" in
             $'\e') IFS= read -rsn2 -t 0.05 rest </dev/tty || rest=""; key=esc ;;
@@ -316,58 +335,96 @@ _tui_read_key() {   # sets key to: up down space enter quit all none filter or t
     fi
     case "$k" in
         $'\e') IFS= read -rsn2 -t 0.05 rest </dev/tty || rest=""
-               case "$rest" in '[A'|'OA') key=up ;; '[B'|'OB') key=down ;; *) key=quit ;; esac ;;
-        ' ') key=space ;; '') key=enter ;; k) key=up ;; j) key=down ;; a) key=all ;; n) key=none ;; q) key=quit ;; /) key=filter ;;
+               case "$rest" in [\[O][1-6]) IFS= read -rsn1 -t 0.05 k </dev/tty || k=""; rest="$rest$k" ;; esac   # [5~ [6~ [1~ [4~ : the third character
+               case "$rest" in
+                   '[A'|'OA') key=up ;; '[B'|'OB') key=down ;; '[H'|'OH'|'[1~') key=first ;; '[F'|'OF'|'[4~') key=last ;;
+                   '[5~') key=pgup ;; '[6~') key=pgdn ;; *) key=quit ;;
+               esac ;;
+        ' ') key=space ;; '') key=enter ;; k) key=up ;; j) key=down ;; a) key=all ;; n) key=none ;; q) key=quit ;; /) key=filter ;; g) key=first ;; G) key=last ;;
         *) key="$k" ;;
     esac
 }
-_tui_end() { stty "$_tui_saved" </dev/tty 2>/dev/null; printf '\e[?25h' >&2; trap - INT; }
-# _tui_run MODE HEADER IDX... ; MODE many|one. "/" starts a filter: type to narrow the list by substring (case-insensitive), Enter keeps it,
-# Esc clears it. The order of the list is kept (featured first), ticks are per index so they survive filtering, a/n act on the shown entries.
+_tui_wait_key() {   # _tui_wait_key: like _tui_read_key, but returns key=resize when the terminal size changed while waiting (SIGWINCH cannot interrupt `read` portably)
+    local sz0 sz; sz0=$(stty size </dev/tty 2>/dev/null)
+    while true; do
+        _tui_read_key; [ "$key" = tick ] || return
+        sz=$(stty size </dev/tty 2>/dev/null); if [ "$sz" != "$sz0" ]; then key=resize; return; fi
+    done
+}
+_tui_end() { stty "$_tui_saved" </dev/tty 2>/dev/null; printf '\e[?25h\n' >&2; trap - INT; }
+# _tui_run MODE HEADER IDX... ; MODE many|one. A window of the list is drawn: one header line, H list lines, one footer line, where H = terminal
+# rows - 2 (at least 1, at most the number of entries). `top` is the first shown row of the (filtered) list and moves by the minimum needed to keep
+# the cursor row visible; the size is read again on every redraw and on SIGWINCH. The frame has a fixed height and is redrawn in place (cursor up,
+# clear to end of line), so the terminal never scrolls once the frame is drawn. Lines are cut to the terminal width. Keys: up/down j/k, PgUp/PgDn,
+# Home/End or g/G, SPACE toggles, a/n act on the shown entries, "/" filters (type to narrow by substring, case-insensitive; Enter keeps the filter,
+# Esc clears it; ticks are per entry and survive filtering), ENTER confirms, q cancels. The footer shows "first-last of total", the filter and the
+# tick count. Ctrl-C and every exit restore the terminal (stty, cursor).
 _tui_run() {
-    local mode="$1" header="$2"; shift 2; local cand=("$@") n=$# cur="${tui_cur:-0}" i r line first=1 filt="" fmode=0 vis=() nv lf
+    local mode="$1" header="$2"; shift 2; local cand=("$@") n=$# cur="${tui_cur:-0}" top=0 i r line first=1 filt="" fmode=0 vis=() nv lf
+    local rows=24 cols=80 H=1 prevH=0 prevC=0 sz mark ticked foot hint
     [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] || return 2
     _tui_saved=$(stty -g </dev/tty) || return 2
     trap '_tui_end; exit 130' INT
     stty -echo -icanon min 1 time 0 </dev/tty; printf '\e[?25l' >&2
-    local hint="up/down move, SPACE toggles, / filters, a all, n none, ENTER confirms, q cancels"
-    [ "$mode" = one ] && hint="up/down move, / filters, ENTER selects, q cancels"
+    hint="SPACE toggles, / filters, a all, n none, ENTER confirms, q cancels"
+    [ "$mode" = one ] && hint="/ filters, ENTER selects, q cancels"
     while true; do
         vis=(); lf="${filt,,}"
         for i in "${!cand[@]}"; do
             if [ -z "$lf" ]; then vis+=("$i"); else line="${labels[${cand[i]}],,}"; case "$line" in *"$lf"*) vis+=("$i") ;; esac; fi
         done
         nv=${#vis[@]}
-        if [ "$nv" -gt 0 ] && [ "$cur" -ge "$nv" ]; then cur=$((nv-1)); fi
-        [ "$first" -eq 0 ] && printf '\e[%dA' "$((n+1))" >&2
-        first=0
-        if [ "$fmode" -eq 1 ]; then printf '\r\e[K%s  filter: %s_ (Enter keeps it, Esc clears it)\n' "$header" "$filt" >&2
-        elif [ -n "$filt" ]; then printf '\r\e[K%s  [filter: %s, %d shown] (%s)\n' "$header" "$filt" "$nv" "$hint" >&2
-        else printf '\r\e[K%s (%s)\n' "$header" "$hint" >&2; fi
-        for ((r=0; r<n; r++)); do
-            if [ "$r" -ge "$nv" ]; then printf '\r\e[K\n' >&2; continue; fi
-            i=${vis[r]}; line="${labels[${cand[i]}]}"
-            if [ "$mode" = many ]; then
-                local mark=" "; [ "${on[${cand[i]}]:-0}" -eq 1 ] && mark="x"
-                line="[$mark] $line"
-            fi
-            if [ "$r" -eq "$cur" ]; then printf '\r\e[K\e[7m> %s\e[0m\n' "$line" >&2; else printf '\r\e[K  %s\n' "$line" >&2; fi
+        sz=$(stty size </dev/tty 2>/dev/null) && { rows=${sz% *}; cols=${sz#* }; }
+        [ "${rows:-0}" -ge 1 ] 2>/dev/null || rows=24; [ "${cols:-0}" -ge 10 ] 2>/dev/null || cols=80
+        H=$((rows - 2)); [ "$H" -lt 1 ] && H=1; [ "$H" -gt "$n" ] && H=$n; [ "$H" -lt 1 ] && H=1
+        if [ "$nv" -gt 0 ]; then
+            [ "$cur" -ge "$nv" ] && cur=$((nv-1)); [ "$cur" -lt 0 ] && cur=0
+            [ "$cur" -lt "$top" ] && top=$cur
+            [ "$cur" -ge $((top + H)) ] && top=$((cur - H + 1))
+        else cur=0; top=0; fi
+        [ "$top" -gt $((nv - H)) ] && top=$((nv - H)); [ "$top" -lt 0 ] && top=0
+        if [ "$first" -eq 1 ]; then :
+        elif [ "$prevH" -ne "$H" ] || [ "$prevC" -ne "$cols" ]; then printf '\e[2J\e[H' >&2    # the terminal was resized: clear it and draw the frame from the top
+        else printf '\e[%dA' "$((H+1))" >&2; fi     # the cursor rests on the footer row, the last row of the frame
+        first=0; prevH=$H; prevC=$cols
+        ticked=0; if [ "$mode" = many ]; then for i in "${cand[@]}"; do [ "${on[i]:-0}" -eq 1 ] && ticked=$((ticked+1)); done; fi
+        if [ "$fmode" -eq 1 ]; then line="$header  filter: ${filt}_ (Enter keeps it, Esc clears it)"
+        elif [ -n "$filt" ]; then line="$header  [filter: $filt]"
+        else line="$header"; fi
+        printf '\r\e[K%s\n' "${line:0:$((cols-1))}" >&2
+        for ((r=0; r<H; r++)); do
+            if [ $((top + r)) -ge "$nv" ]; then printf '\r\e[K\n' >&2; continue; fi
+            i=${vis[top+r]}; line="${labels[${cand[i]}]}"
+            if [ "$mode" = many ]; then mark=" "; [ "${on[${cand[i]}]:-0}" -eq 1 ] && mark="x"; line="[$mark] $line"; fi
+            line="${line:0:$((cols-3))}"
+            if [ $((top + r)) -eq "$cur" ]; then printf '\r\e[K\e[7m> %s\e[0m\n' "$line" >&2; else printf '\r\e[K  %s\n' "$line" >&2; fi
         done
+        if [ "$nv" -eq 0 ]; then foot="0 of 0 shown (of $n)"; else foot="$((top+1))-$((top+H<nv ? top+H : nv)) of $nv"; fi
+        [ -n "$filt" ] && foot="$foot  filter: $filt"
+        [ "$mode" = many ] && foot="$foot  $ticked ticked"
+        foot="$foot  $hint"
+        printf '\r\e[K%s\r' "${foot:0:$((cols-1))}" >&2     # no newline: the cursor stays on the footer row, so a full-height frame never scrolls the terminal
         if [ "$fmode" -eq 1 ]; then
-            tui_raw=1 _tui_read_key
+            tui_raw=1 _tui_wait_key
             case "$key" in
+                resize) continue ;;
                 enter) fmode=0 ;;
                 esc) filt=""; fmode=0 ;;
-                backspace) filt="${filt%?}" ;;
-                [[:print:]]) filt+="$key"; cur=0 ;;
+                backspace) filt="${filt%?}"; cur=0; top=0 ;;
+                [[:print:]]) filt+="$key"; cur=0; top=0 ;;
             esac
             continue
         fi
-        _tui_read_key
+        _tui_wait_key
         case "$key" in
+            resize) ;;
             filter) fmode=1 ;;
             up) [ "$nv" -gt 0 ] && cur=$(( (cur + nv - 1) % nv )) ;;
             down) [ "$nv" -gt 0 ] && cur=$(( (cur + 1) % nv )) ;;
+            pgup) [ "$nv" -gt 0 ] && { cur=$((cur - H)); [ "$cur" -lt 0 ] && cur=0; } ;;
+            pgdn) [ "$nv" -gt 0 ] && { cur=$((cur + H)); [ "$cur" -ge "$nv" ] && cur=$((nv-1)); } ;;
+            first) cur=0 ;;
+            last) [ "$nv" -gt 0 ] && cur=$((nv-1)) ;;
             space) [ "$mode" = many ] && [ "$nv" -gt 0 ] && on[${cand[${vis[cur]}]}]=$((1 - ${on[${cand[${vis[cur]}]}]:-0})) ;;
             all) [ "$mode" = many ] && for i in "${vis[@]}"; do on[${cand[i]}]=1; done ;;
             none) [ "$mode" = many ] && for i in "${vis[@]}"; do on[${cand[i]}]=0; done ;;
@@ -379,11 +436,55 @@ _tui_run() {
 tui_many() { chosen=(); _tui_run many "$@"; }
 tui_one()  { pick=""; _tui_run one "$@"; }
 
+# ---- gum picker -------------------------------------------------------------------------------------
+# The checklists use `gum choose` (Bluefin style: ◉ / ○ / ▸ prefixes, section headings as plain items that are never returned) when gum is on PATH
+# and there is a terminal; otherwise the built-in picker above (with its `/` filter and viewport), and without a terminal the numbered list.
+# THEMES_PICKER=gum|builtin forces one (gum missing: a warning and the built-in; a forced gum does not need a terminal, which the tests use).
+pick_handler() {
+    case "${THEMES_PICKER:-}" in
+        builtin) echo builtin; return ;;
+        gum) if command -v gum >/dev/null 2>&1; then echo gum; else echo "THEMES_PICKER=gum requested but gum is not on PATH; using the built-in picker." >&2; echo builtin; fi; return ;;
+    esac
+    if [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] && command -v gum >/dev/null 2>&1; then echo gum; else echo builtin; fi
+}
+# gum_run MODE HEADER IDX... : sets chosen=(indexes) (many) or pick=index (one); an empty result (Esc, nothing ticked) leaves them empty
+gum_run() {
+    local mode="$1" header="$2"; shift 2; local cand=("$@") i lab l out line hn rows=24 sz h sel="" nfeat=0 items=()
+    local -A idx_of=()
+    for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] && nfeat=$((nfeat+1)); done
+    if [ "$nfeat" -gt 0 ]; then   # section headings are ordinary items; they are skipped when mapping back
+        items+=("── Featured ───"); for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] && items+=("${labels[i]}"); done
+        items+=("── All themes ───"); for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] || items+=("${labels[i]}"); done
+    else for i in "${cand[@]}"; do items+=("${labels[i]}"); done; fi
+    for i in "${cand[@]}"; do idx_of[${labels[i]}]=$i; [ "$mode" = many ] && [ "${on[i]:-0}" -eq 1 ] && sel+="${sel:+,}${labels[i]}"; done
+    sz=$(stty size </dev/tty 2>/dev/null) && rows=${sz% *}
+    h=$((rows - 4)); [ "$h" -gt "${#items[@]}" ] && h=${#items[@]}; [ "$h" -lt 5 ] && h=5
+    local args=(choose --height "$h" --cursor "▸  " --cursor-prefix "○  " --selected-prefix "◉  " --unselected-prefix "○  ")
+    if [ "$mode" = many ]; then args+=(--no-limit --header "$header (x marks, ENTER confirms, Esc cancels)"); [ -n "$sel" ] && args+=(--selected "$sel")
+    else args+=(--limit 1 --header "$header (ENTER selects, Esc cancels)"); fi
+    out=$(gum "${args[@]}" "${items[@]}" || true)
+    chosen=(); pick=""
+    while IFS= read -r line; do
+        [ -n "$line" ] || continue
+        case "$line" in "──"*) continue ;; esac
+        if [ -n "${idx_of[$line]+x}" ]; then i=${idx_of[$line]}; else   # a label that came back changed: match by name (star and description stripped)
+            lab="${line#★ }"; lab="${lab%%  (*}"; i=""
+            for hn in "${cand[@]}"; do l="${labels[hn]#★ }"; l="${l%%  (*}"; if [ "$l" = "$lab" ]; then i=$hn; break; fi; done
+            [ -n "$i" ] || continue
+        fi
+        if [ "$mode" = many ]; then chosen+=("$i"); else pick="$i"; break; fi
+    done <<< "$out"
+}
+
 # choose_many HEADER IDX... : tick entries from the candidate indexes; sets chosen=(indexes). Preselected = on[]
 chosen=(); on=()
 choose_many() {
-    local header="$1"; shift; local cand=("$@") i a mark rc=0
+    local header="$1"; shift; local cand=("$@") i a mark rc=0 handler
     chosen=()
+    handler=$(pick_handler)
+    if [ "$handler" = gum ]; then
+        gum_run many "$header" "${cand[@]}"; return 0
+    fi
     tui_many "$header" "${cand[@]}" || rc=$?
     if [ "$rc" -eq 1 ]; then echo "Cancelled."; exit 0
     elif [ "$rc" -eq 2 ]; then
@@ -409,8 +510,10 @@ choose_many() {
 # choose_one HEADER IDX... : pick exactly one; sets pick=index (empty when cancelled)
 pick=""
 choose_one() {
-    local header="$1"; shift; local cand=("$@") i a rc=0
+    local header="$1"; shift; local cand=("$@") i a rc=0 handler
     pick=""
+    handler=$(pick_handler)
+    if [ "$handler" = gum ]; then gum_run one "$header" "${cand[@]}"; return 0; fi
     tui_one "$header" "$@" || rc=$?
     if [ "$rc" -eq 2 ]; then
         echo; echo "$header:"
