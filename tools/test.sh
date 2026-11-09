@@ -59,6 +59,7 @@ case "$1" in
 esac
 SH
 chmod +x "$T/bin/dconf"
+export THEMES_PICKER=builtin THEMES_SWITCH_AFTER_INSTALL=0   # tests choose the picker explicitly (a developer machine may have gum) and enable the switch menu after an install only in their own pty tests
 export PTYXIS_PALETTES="$T/ptyxis-palettes" GTKSOURCEVIEW_STYLES="$T/gsv-styles" FLATPAK_APPS="$T/var-app"
 export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" GNOME_THEMES_CACHE="$T/cache"
 export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
@@ -219,11 +220,14 @@ GP="$T/gum-themes"; mkdir -p "$GP"
 THEMES_PICKER=gum GUM_STUB_HEADING=1 GUM_STUB_PICK='^(★ )?(nordic|dracula)  ' PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
 [ -d "$GP/Nordic-Nord" ] && [ -d "$GP/Dracula" ] && [ "$(find "$GP" -mindepth 1 -maxdepth 1 -not -name 'Nordic*' -not -name 'Dracula*' | wc -l)" -eq 0 ] && chk ok "gum handler (stub): the ticked entries are installed, a returned section heading is ignored" || chk fail "gum install: $(ls "$GP" | tr '\n' ' ')"
 grep -qx -- '--no-limit' "$STUB_LOG" && grep -qx -- '◉  ' "$STUB_LOG" && grep -qx -- '○  ' "$STUB_LOG" && grep -qx -- '▸  ' "$STUB_LOG" && ! grep -qx -- '--selected' "$STUB_LOG" && chk ok "gum choose --no-limit with the ◉ ○ ▸ prefixes and nothing preselected for install" || chk fail "gum arguments: $(tr '\n' '|' < "$STUB_LOG")"
-grep -n '' "$STUB_LOG" | grep -E 'Featured|All themes|★ nordic|aubergine' | head -4 | tr '\n' ' ' | grep -q 'Featured.*★ nordic.*All themes.*3024\|Featured.*★ nordic.*All themes' && chk ok "gum list: a Featured heading, the starred featured entries, an All themes heading, then the rest" || chk fail "gum list order: $(tr '\n' '|' < "$STUB_LOG" | cut -c1-300)"
+grep -qx -- '--cursor.foreground=2' "$STUB_LOG" && grep -qx -- '--selected.foreground=2' "$STUB_LOG" && grep -qx -- '--header.foreground=' "$STUB_LOG" && grep -qx -- '--item.foreground=' "$STUB_LOG" && ! grep -Eq -- '#[0-9a-fA-F]{3,6}|foreground=[0-9]{2,3}$' "$STUB_LOG" && chk ok "gum colors: ANSI palette colors only (cursor and selected 2, header and item the default), no 256-color or hex values" || chk fail "gum colors: $(grep foreground "$STUB_LOG" | tr '\n' ' ')"
+grep -q '^──' "$STUB_LOG" && chk fail "gum list has divider rows" || { items=$(grep -E '^(★ )?[a-z0-9-]+  \(GTK' "$STUB_LOG" | head -7 | tr '\n' '|'); case "$items" in "★ nordic  "*"|★ gruvbox-material  "*"|★ everforest  "*"|★ tokyo-night  "*"|★ dracula  "*"|★ fairy-floss  "*"|3024  "*) chk ok "gum list: no divider rows; the featured six come first with their star, then the rest" ;; *) chk fail "gum list order: $items" ;; esac; }
+rm -f "$STUB_LOG"; GUM_CHOOSE_CURSOR_FOREGROUND=5 GUM_CHOOSE_HEADER_FOREGROUND=212 THEMES_PICKER=gum GUM_STUB_PICK=zzz PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
+! grep -q -- '--cursor.foreground' "$STUB_LOG" && ! grep -q -- '--header.foreground' "$STUB_LOG" && grep -qx -- '--selected.foreground=2' "$STUB_LOG" && chk ok "gum colors the user set in GUM_CHOOSE_* are left alone (no flag overrides them)" || chk fail "user gum colors overridden: $(grep foreground "$STUB_LOG" | tr '\n' ' ')"
 rm -rf "$GP"; mkdir -p "$GP"; THEMES_PICKER=gum GUM_STUB_STRIP=1 GUM_STUB_PICK='^(★ )?(tokyo-night|everforest)  ' PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
 [ -d "$GP/Everforest" ] && [ -d "$GP/Tokyo-Night" ] && chk ok "gum handler: an entry returned without its star maps back to the scheme id" || chk fail "gum star stripping: $(ls "$GP" | tr '\n' ' ')"
 rm -rf "$GP"; mkdir -p "$GP"; out=$(THEMES_PICKER=gum GUM_STUB_EXIT=130 PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null 2>&1); rc=$?
-[ $rc -eq 0 ] && echo "$out" | grep -q "Nothing selected" && [ -z "$(ls -A "$GP")" ] && chk ok "gum cancelled (Esc): Nothing selected, exit 0, nothing installed" || chk fail "gum cancel rc=$rc: $out"
+[ $rc -eq 0 ] && echo "$out" | grep -q "Nothing selected: nothing was ticked. Press x on an entry, then Enter." && [ -z "$(ls -A "$GP")" ] && chk ok "gum with nothing ticked (Esc or ENTER on none): the hint to press x on an entry then Enter, exit 0, nothing installed" || chk fail "gum cancel rc=$rc: $out"
 rm -f "$STUB_LOG"; THEMES_PICKER=gum GUM_STUB_PICK=x PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install dracula </dev/null >/dev/null 2>&1
 [ ! -e "$STUB_LOG" ] && [ -d "$GP/Dracula" ] && chk ok "a named scheme skips the picker" || chk fail "named scheme called gum"
 THEMES_DEST=$GP tools/themectl.sh themes install nordic </dev/null >/dev/null 2>&1; : > "$LOG"
@@ -669,6 +673,31 @@ THEMES_DEST=$PD2 tools/themectl.sh themes install "$first_sc" >/dev/null 2>&1
 out=$(THEMES_DEST=$PD pty down,enter tools/themectl.sh themes switch "$first_sc")
 echo "$out" | grep -q 'current' && chk ok "accent submenu marks the current accent" || chk fail "accent submenu: no (current) mark"
 grep -q "^$first_sc=" "$XDG_STATE_HOME/gnome-themes/accents" && chk ok "accent chosen in the submenu is remembered" || chk fail "accent not remembered"
+
+# ---- switch menu after install-theme / install-icon (terminal only; stub gum) --------------------------------------------------------------
+echo "=== switch after install"
+AP="$T/after-themes"; mkdir -p "$AP"; THEMES_DEST=$AP just install-theme dracula >/dev/null 2>&1
+gumpty() { THEMES_SWITCH_AFTER_INSTALL=1 THEMES_PICKER=gum PATH="$SB:$PATH" pty enter "$@"; }
+rm -f "$STUB_LOG"; : > "$LOG"; out=$(GUM_STUB_PICK='^(★ )?nordic  ' THEMES_DEST=$AP gumpty tools/themectl.sh themes install nordic)
+firsts=$(grep -E '^(★ )?[a-z-]+  \(GTK' "$STUB_LOG" | head -2 | tr '\n' '|')
+case "$firsts" in "★ nordic  "*"|★ dracula  "*) chk ok "install-theme NAME on a terminal opens the switch menu: installed themes only, the just-installed one first" ;; *) chk fail "after-install list: $firsts" ;; esac
+grep -q "gtk-theme Nordic-Nord" "$LOG" && chk ok "choosing in that menu runs the switch path (GTK theme set)" || chk fail "after-install switch: $(tr '\n' ';' < "$LOG")"
+! grep -q '^──' "$STUB_LOG" && grep -q 'Switch to which theme now' "$STUB_LOG" && chk ok "the menu has no divider rows and a clear title" || chk fail "after-install menu content"
+rm -f "$STUB_LOG"; out=$(GUM_STUB_EXIT=130 THEMES_DEST=$AP gumpty tools/themectl.sh themes install nordic)
+printf '%s' "$out" | tr -d '\r' | grep -q "To switch later: just switch-theme nordic" && chk ok "Esc in the menu skips switching and prints how to switch later" || chk fail "after-install cancel: $(printf '%s' "$out" | tail -3)"
+rm -f "$STUB_LOG"; GUM_STUB_PICK='nordic' THEMES_DEST=$AP THEMES_PICKER=gum PATH="$SB:$PATH" THEMES_SWITCH_AFTER_INSTALL=1 tools/themectl.sh themes install nordic </dev/null >/dev/null 2>&1
+[ ! -e "$STUB_LOG" ] && chk ok "no terminal: no switch menu" || chk fail "menu opened without a terminal"
+rm -f "$STUB_LOG"; GUM_STUB_PICK='nordic' THEMES_DEST=$AP THEMES_PICKER=gum PATH="$SB:$PATH" THEMES_SWITCH_AFTER_INSTALL=0 pty enter tools/themectl.sh themes install nordic >/dev/null
+[ ! -e "$STUB_LOG" ] && chk ok "THEMES_SWITCH_AFTER_INSTALL=0 turns the menu off" || chk fail "env switch ignored"
+out=$(GUM_STUB_EXIT=130 THEMES_DEST=$AP gumpty tools/themectl.sh themes install | tr -d '\r')
+printf '%s' "$out" | grep -q "Nothing selected" && ! printf '%s' "$out" | grep -q "Switch to which" && chk ok "nothing selected or installed: no switch menu" || chk fail "menu after an empty install"
+IP="$T/after-icons"; mkdir -p "$IP"; rm -rf "$T/cache/icons"; ICONS_DEST=$IP just install-icon Fake-Dark >/dev/null 2>&1
+rm -f "$STUB_LOG"; : > "$LOG"; GUM_STUB_PICK='^Fake-Light  ' ICONS_DEST=$IP gumpty tools/themectl.sh icons install Fake-Light >/dev/null
+firsts=$(grep -E '^[A-Za-z-]+  \(' "$STUB_LOG" | head -2 | sed 's/  (.*//' | tr '\n' '|')
+[ "$firsts" = "Fake-Light|Fake-Dark|" ] && grep -q "icon-theme Fake-Light" "$LOG" && chk ok "install-icon NAME on a terminal opens the switch-icon menu (just-installed first) and the choice runs the switch path" || chk fail "icon after-install: $firsts / $(tr '\n' ';' < "$LOG")"
+rm -f "$STUB_LOG"; out=$(GUM_STUB_EXIT=130 ICONS_DEST=$IP gumpty tools/themectl.sh icons install Fake-Light | tr -d '\r')
+printf '%s' "$out" | grep -q "To switch later: just switch-icon Fake-Light" && chk ok "icons: Esc skips and prints just switch-icon NAME" || chk fail "icon cancel: $(printf '%s' "$out" | tail -3)"
+rm -rf "$AP" "$IP"
 
 echo; echo "TOTAL: $pass PASS, $fail FAIL"
 [ "$fail" -eq 0 ]

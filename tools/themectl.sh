@@ -440,6 +440,26 @@ tui_one()  { pick=""; _tui_run one "$@"; }
 # The checklists use `gum choose` (Bluefin style: ◉ / ○ / ▸ prefixes, section headings as plain items that are never returned) when gum is on PATH
 # and there is a terminal; otherwise the built-in picker above (with its `/` filter and viewport), and without a terminal the numbered list.
 # THEMES_PICKER=gum|builtin forces one (gum missing: a warning and the built-in; a forced gum does not need a terminal, which the tests use).
+picker_used=builtin
+# after_install_switch NAME... : on a terminal, offer the single-choice switch menu of the installed ${noun}s (just-installed first, highlighted) and, when
+# one is chosen, run exactly the switch path (a new process: `themectl.sh <kind> switch <name>`). THEMES_SWITCH_AFTER_INSTALL=0 turns it off (both kinds).
+after_install_switch() {
+    [ "${THEMES_SWITCH_AFTER_INSTALL:-1}" != 0 ] || return 0
+    [ "$tty_in" -eq 1 ] && [ -t 2 ] || return 0
+    local first=() rest=() i nm cmd="switch-theme"; [ "$kind" = icons ] && cmd="switch-icon"
+    for nm in "$@"; do i=$(index_of "$nm") && first+=("$i"); done
+    [ "${#first[@]}" -gt 0 ] || return 0
+    for i in "${!items[@]}"; do
+        is_installed "${items[i]}" || continue
+        case " ${first[*]} " in *" $i "*) ;; *) rest+=("$i") ;; esac
+    done
+    tui_cur=0; pick_keep_order=1; choose_one "Switch to which $noun now?" "${first[@]}" "${rest[@]}"; pick_keep_order=0
+    if [ -z "${pick:-}" ]; then echo "Not switching. To switch later: just $cmd ${items[${first[0]}]}"; return 0; fi
+    exec "${BASH_SOURCE[0]}" "$kind" switch "${items[pick]}"
+}
+nothing_selected() {   # the one-line hint when a checklist ends with nothing ticked (it depends on the picker that was shown)
+    case "$picker_used" in gum) echo "Nothing selected: nothing was ticked. Press x on an entry, then Enter." ;; *) echo "Nothing selected: nothing was ticked. Press SPACE on an entry, then Enter." ;; esac
+}
 pick_handler() {
     case "${THEMES_PICKER:-}" in
         builtin) echo builtin; return ;;
@@ -449,24 +469,30 @@ pick_handler() {
 }
 # gum_run MODE HEADER IDX... : sets chosen=(indexes) (many) or pick=index (one); an empty result (Esc, nothing ticked) leaves them empty
 gum_run() {
-    local mode="$1" header="$2"; shift 2; local cand=("$@") i lab l out line hn rows=24 sz h sel="" nfeat=0 items=()
+    local mode="$1" header="$2"; shift 2; local cand=("$@") i lab l out line hn rows=24 sz h sel="" items=()
     local -A idx_of=()
-    for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] && nfeat=$((nfeat+1)); done
-    if [ "$nfeat" -gt 0 ]; then   # section headings are ordinary items; they are skipped when mapping back
-        items+=("── Featured ───"); for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] && items+=("${labels[i]}"); done
-        items+=("── All themes ───"); for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] || items+=("${labels[i]}"); done
-    else for i in "${cand[@]}"; do items+=("${labels[i]}"); done; fi
+    # featured entries (starred) first, then the rest; NO heading or divider rows: gum cannot make a row unselectable, and every row must be a real choice
+    if [ "${pick_keep_order:-0}" = 1 ]; then for i in "${cand[@]}"; do items+=("${labels[i]}"); done   # the caller ordered the list (just-installed first)
+    else
+        for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] && items+=("${labels[i]}"); done
+        for i in "${cand[@]}"; do [[ "${labels[i]}" == "★ "* ]] || items+=("${labels[i]}"); done
+    fi
     for i in "${cand[@]}"; do idx_of[${labels[i]}]=$i; [ "$mode" = many ] && [ "${on[i]:-0}" -eq 1 ] && sel+="${sel:+,}${labels[i]}"; done
     sz=$(stty size </dev/tty 2>/dev/null) && rows=${sz% *}
     h=$((rows - 4)); [ "$h" -gt "${#items[@]}" ] && h=${#items[@]}; [ "$h" -lt 5 ] && h=5
-    local args=(choose --height "$h" --cursor "▸  " --cursor-prefix "○  " --selected-prefix "◉  " --unselected-prefix "○  ")
-    if [ "$mode" = many ]; then args+=(--no-limit --header "$header (x marks, ENTER confirms, Esc cancels)"); [ -n "$sel" ] && args+=(--selected "$sel")
+    # colors: terminal palette colors only (ANSI 0-15 or the default foreground), never gum's fixed 256-color pink/purple; a variable the user set is left alone
+    local colors=()
+    [ -n "${GUM_CHOOSE_CURSOR_FOREGROUND+x}" ] || colors+=(--cursor.foreground=2)
+    [ -n "${GUM_CHOOSE_SELECTED_FOREGROUND+x}" ] || colors+=(--selected.foreground=2)
+    [ -n "${GUM_CHOOSE_HEADER_FOREGROUND+x}" ] || colors+=(--header.foreground=)
+    [ -n "${GUM_CHOOSE_ITEM_FOREGROUND+x}" ] || colors+=(--item.foreground=)
+    local args=(choose "${colors[@]}" --height "$h" --cursor "▸  " --cursor-prefix "○  " --selected-prefix "◉  " --unselected-prefix "○  ")
+    if [ "$mode" = many ]; then args+=(--no-limit --header "$header (x marks an entry, ENTER confirms the marked ones; ENTER with none marked does nothing; Esc cancels)"); [ -n "$sel" ] && args+=(--selected "$sel")
     else args+=(--limit 1 --header "$header (ENTER selects, Esc cancels)"); fi
     out=$(gum "${args[@]}" "${items[@]}" || true)
     chosen=(); pick=""
     while IFS= read -r line; do
         [ -n "$line" ] || continue
-        case "$line" in "──"*) continue ;; esac
         if [ -n "${idx_of[$line]+x}" ]; then i=${idx_of[$line]}; else   # a label that came back changed: match by name (star and description stripped)
             lab="${line#★ }"; lab="${lab%%  (*}"; i=""
             for hn in "${cand[@]}"; do l="${labels[hn]#★ }"; l="${l%%  (*}"; if [ "$l" = "$lab" ]; then i=$hn; break; fi; done
@@ -481,7 +507,7 @@ chosen=(); on=()
 choose_many() {
     local header="$1"; shift; local cand=("$@") i a mark rc=0 handler
     chosen=()
-    handler=$(pick_handler)
+    handler=$(pick_handler); picker_used=$handler
     if [ "$handler" = gum ]; then
         gum_run many "$header" "${cand[@]}"; return 0
     fi
@@ -762,6 +788,7 @@ case "$action" in
         done ;;
 
     install)
+        just_installed=()
         load_items
         [ "${#items[@]}" -gt 0 ] || { echo "No ${noun}s found"; exit 1; }
         if [ -n "$want" ]; then
@@ -776,14 +803,18 @@ case "$action" in
             if [ "$kind" = icons ]; then for i in "${!items[@]}"; do if [ "${on[i]}" -eq 1 ] && is_installed "${items[i]}"; then labels[i]="✓ ${labels[i]}"; fi; done; fi
             choose_many "${noun^}s to install into $dest" "${!items[@]}"
         fi
-        [ "${#chosen[@]}" -gt 0 ] || { echo "Nothing selected (in the checklist, x ticks an entry and enter installs the ticked ones)."; exit 0; }
+        [ "${#chosen[@]}" -gt 0 ] || { nothing_selected; exit 0; }
         names=(); for i in "${chosen[@]}"; do names+=("${items[i]}"); done
         if [ "$kind" = icons ]; then refresh_for "${names[@]}"; fi   # icons: clone or refresh only the sources of the chosen sets
         for nm in "${names[@]}"; do
             if [ "$kind" = icons ] && [ ! -d "$(clone_of "${i_src[$nm]}")/.git" ]; then echo "Skipping $nm: its source ${i_src[$nm]} is not available." >&2; continue; fi
-            copy_item "$nm"; if [ "$kind" = themes ]; then pty_cleanup; gsv_install "$nm"; fi; done
+            before=$installed_n; copy_item "$nm"; if [ "$installed_n" -gt "$before" ]; then just_installed+=("$nm"); fi
+            if [ "$kind" = themes ]; then pty_cleanup; gsv_install "$nm"; fi; done
         if [ "$installed_n" -eq 0 ]; then echo "Nothing was installed (see the messages above)."
-        elif [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icon to use it."; fi ;;
+        else
+            if [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icon to use it."; fi
+            after_install_switch "${just_installed[@]}"
+        fi ;;
 
     update)
         # themes: git fetch + pull --ff-only in this checkout; icons: refresh the clones of the installed sets' sources.
@@ -809,7 +840,7 @@ case "$action" in
             for i in "${!items[@]}"; do on[i]=0; done
             choose_many "${noun^}s to remove from $dest" "${inst[@]}"
         fi
-        [ "${#chosen[@]}" -gt 0 ] || { echo "Nothing selected."; exit 0; }
+        [ "${#chosen[@]}" -gt 0 ] || { nothing_selected; exit 0; }
         cur=$(current_value); bases=""
         if [ "$kind" = icons ]; then for i in "${chosen[@]}"; do bases+=$'\n'"$(shared_bases "${items[i]}")"; done; fi
         for i in "${chosen[@]}"; do
