@@ -480,7 +480,13 @@ gum_run() {
     for i in "${cand[@]}"; do idx_of[${labels[i]}]=$i; [ "$mode" = many ] && [ "${on[i]:-0}" -eq 1 ] && sel+="${sel:+,}${labels[i]}"; done
     sz=$(stty size </dev/tty 2>/dev/null) && rows=${sz% *}
     h=$((rows - 4)); [ "$h" -gt "${#items[@]}" ] && h=${#items[@]}; [ "$h" -lt 5 ] && h=5
-    local args=(choose --height "$h" --cursor "▸  " --cursor-prefix "○  " --selected-prefix "◉  " --unselected-prefix "○  ")
+    # colors: terminal palette colors only (ANSI 0-15 or the default foreground), never gum's fixed 256-color pink/purple; a variable the user set is left alone
+    local colors=()
+    [ -n "${GUM_CHOOSE_CURSOR_FOREGROUND+x}" ] || colors+=(--cursor.foreground=2)
+    [ -n "${GUM_CHOOSE_SELECTED_FOREGROUND+x}" ] || colors+=(--selected.foreground=2)
+    [ -n "${GUM_CHOOSE_HEADER_FOREGROUND+x}" ] || colors+=(--header.foreground=)
+    [ -n "${GUM_CHOOSE_ITEM_FOREGROUND+x}" ] || colors+=(--item.foreground=)
+    local args=(choose "${colors[@]}" --height "$h" --cursor "▸  " --cursor-prefix "○  " --selected-prefix "◉  " --unselected-prefix "○  ")
     if [ "$mode" = many ]; then args+=(--no-limit --header "$header (x marks an entry, ENTER confirms the marked ones; ENTER with none marked does nothing; Esc cancels)"); [ -n "$sel" ] && args+=(--selected "$sel")
     else args+=(--limit 1 --header "$header (ENTER selects, Esc cancels)"); fi
     out=$(gum "${args[@]}" "${items[@]}" || true)

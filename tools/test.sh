@@ -59,6 +59,7 @@ case "$1" in
 esac
 SH
 chmod +x "$T/bin/dconf"
+export THEMES_PICKER=builtin THEMES_SWITCH_AFTER_INSTALL=0   # tests choose the picker explicitly (a developer machine may have gum) and enable the switch menu after an install only in their own pty tests
 export PTYXIS_PALETTES="$T/ptyxis-palettes" GTKSOURCEVIEW_STYLES="$T/gsv-styles" FLATPAK_APPS="$T/var-app"
 export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" GNOME_THEMES_CACHE="$T/cache"
 export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
@@ -219,7 +220,10 @@ GP="$T/gum-themes"; mkdir -p "$GP"
 THEMES_PICKER=gum GUM_STUB_HEADING=1 GUM_STUB_PICK='^(★ )?(nordic|dracula)  ' PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
 [ -d "$GP/Nordic-Nord" ] && [ -d "$GP/Dracula" ] && [ "$(find "$GP" -mindepth 1 -maxdepth 1 -not -name 'Nordic*' -not -name 'Dracula*' | wc -l)" -eq 0 ] && chk ok "gum handler (stub): the ticked entries are installed, a returned section heading is ignored" || chk fail "gum install: $(ls "$GP" | tr '\n' ' ')"
 grep -qx -- '--no-limit' "$STUB_LOG" && grep -qx -- '◉  ' "$STUB_LOG" && grep -qx -- '○  ' "$STUB_LOG" && grep -qx -- '▸  ' "$STUB_LOG" && ! grep -qx -- '--selected' "$STUB_LOG" && chk ok "gum choose --no-limit with the ◉ ○ ▸ prefixes and nothing preselected for install" || chk fail "gum arguments: $(tr '\n' '|' < "$STUB_LOG")"
+grep -qx -- '--cursor.foreground=2' "$STUB_LOG" && grep -qx -- '--selected.foreground=2' "$STUB_LOG" && grep -qx -- '--header.foreground=' "$STUB_LOG" && grep -qx -- '--item.foreground=' "$STUB_LOG" && ! grep -Eq -- '#[0-9a-fA-F]{3,6}|foreground=[0-9]{2,3}$' "$STUB_LOG" && chk ok "gum colors: ANSI palette colors only (cursor and selected 2, header and item the default), no 256-color or hex values" || chk fail "gum colors: $(grep foreground "$STUB_LOG" | tr '\n' ' ')"
 grep -q '^──' "$STUB_LOG" && chk fail "gum list has divider rows" || { items=$(grep -E '^(★ )?[a-z0-9-]+  \(GTK' "$STUB_LOG" | head -7 | tr '\n' '|'); case "$items" in "★ nordic  "*"|★ gruvbox-material  "*"|★ everforest  "*"|★ tokyo-night  "*"|★ dracula  "*"|★ fairy-floss  "*"|3024  "*) chk ok "gum list: no divider rows; the featured six come first with their star, then the rest" ;; *) chk fail "gum list order: $items" ;; esac; }
+rm -f "$STUB_LOG"; GUM_CHOOSE_CURSOR_FOREGROUND=5 GUM_CHOOSE_HEADER_FOREGROUND=212 THEMES_PICKER=gum GUM_STUB_PICK=zzz PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
+! grep -q -- '--cursor.foreground' "$STUB_LOG" && ! grep -q -- '--header.foreground' "$STUB_LOG" && grep -qx -- '--selected.foreground=2' "$STUB_LOG" && chk ok "gum colors the user set in GUM_CHOOSE_* are left alone (no flag overrides them)" || chk fail "user gum colors overridden: $(grep foreground "$STUB_LOG" | tr '\n' ' ')"
 rm -rf "$GP"; mkdir -p "$GP"; THEMES_PICKER=gum GUM_STUB_STRIP=1 GUM_STUB_PICK='^(★ )?(tokyo-night|everforest)  ' PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null >/dev/null 2>&1
 [ -d "$GP/Everforest" ] && [ -d "$GP/Tokyo-Night" ] && chk ok "gum handler: an entry returned without its star maps back to the scheme id" || chk fail "gum star stripping: $(ls "$GP" | tr '\n' ' ')"
 rm -rf "$GP"; mkdir -p "$GP"; out=$(THEMES_PICKER=gum GUM_STUB_EXIT=130 PATH="$SB:$PATH" THEMES_DEST=$GP tools/themectl.sh themes install </dev/null 2>&1); rc=$?
