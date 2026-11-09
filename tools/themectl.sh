@@ -80,6 +80,7 @@ current_accent() { local a; a=$(state_get "$state/accents" "$1"); load_accents "
 accent_maps() {    # sets map_dark, map_light for scheme $1 accent $2 (light falls back to dark for dark-only schemes)
     map_dark="$root/$1/accents/$2.dark.sed"; map_light="$root/$1/accents/$2.light.sed"
     [ -f "$map_light" ] || map_light="$map_dark"
+    [ -f "$map_dark" ] || map_dark="$map_light"     # light-only scheme: the one map serves both
 }
 apply_accent() {   # apply_accent SCHEME ACCENT [FOLDER]: run the token maps over the installed copies of SCHEME
     local sc="$1" a="$2" f d
@@ -305,45 +306,74 @@ index_of() { local i; for i in "${!items[@]}"; do [ "${items[i]}" = "$1" ] && { 
 # on[] (1 = ticked) for tui_many. Returns 2 when there is no terminal, so the caller can fall back to a numbered list.
 #   tui_many HEADER IDX...   sets chosen=(ticked indexes among IDX); returns 1 when cancelled
 #   tui_one  HEADER IDX...   sets pick=<index> (empty when cancelled); tui_cur=N (position within IDX) puts the cursor there
-_tui_read_key() {   # sets key to: up down space enter quit all none or the raw character
+_tui_read_key() {   # sets key to: up down space enter quit all none filter or the raw character (tui_raw=1: raw characters, esc, enter, backspace only)
     local k rest
     IFS= read -rsn1 k </dev/tty || { key=quit; return; }
+    if [ "${tui_raw:-0}" = 1 ]; then
+        case "$k" in
+            $'\e') IFS= read -rsn2 -t 0.05 rest </dev/tty || rest=""; key=esc ;;
+            '') key=enter ;; $'\x7f'|$'\b') key=backspace ;; *) key="$k" ;;
+        esac
+        return
+    fi
     case "$k" in
         $'\e') IFS= read -rsn2 -t 0.05 rest </dev/tty || rest=""
                case "$rest" in '[A'|'OA') key=up ;; '[B'|'OB') key=down ;; *) key=quit ;; esac ;;
-        ' ') key=space ;; '') key=enter ;; k) key=up ;; j) key=down ;; a) key=all ;; n) key=none ;; q) key=quit ;;
+        ' ') key=space ;; '') key=enter ;; k) key=up ;; j) key=down ;; a) key=all ;; n) key=none ;; q) key=quit ;; /) key=filter ;;
         *) key="$k" ;;
     esac
 }
 _tui_end() { stty "$_tui_saved" </dev/tty 2>/dev/null; printf '\e[?25h' >&2; trap - INT; }
-_tui_run() {   # _tui_run MODE HEADER IDX... ; MODE many|one
-    local mode="$1" header="$2"; shift 2; local cand=("$@") n=$# cur="${tui_cur:-0}" i line first=1
+# _tui_run MODE HEADER IDX... ; MODE many|one. "/" starts a filter: type to narrow the list by substring (case-insensitive), Enter keeps it,
+# Esc clears it. The order of the list is kept (featured first), ticks are per index so they survive filtering, a/n act on the shown entries.
+_tui_run() {
+    local mode="$1" header="$2"; shift 2; local cand=("$@") n=$# cur="${tui_cur:-0}" i r line first=1 filt="" fmode=0 vis=() nv lf
     [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] || return 2
     _tui_saved=$(stty -g </dev/tty) || return 2
     trap '_tui_end; exit 130' INT
     stty -echo -icanon min 1 time 0 </dev/tty; printf '\e[?25l' >&2
-    local hint="up/down move, SPACE toggles, a all, n none, ENTER confirms, q cancels"
-    [ "$mode" = one ] && hint="up/down move, ENTER selects, q cancels"
+    local hint="up/down move, SPACE toggles, / filters, a all, n none, ENTER confirms, q cancels"
+    [ "$mode" = one ] && hint="up/down move, / filters, ENTER selects, q cancels"
     while true; do
+        vis=(); lf="${filt,,}"
+        for i in "${!cand[@]}"; do
+            if [ -z "$lf" ]; then vis+=("$i"); else line="${labels[${cand[i]}],,}"; case "$line" in *"$lf"*) vis+=("$i") ;; esac; fi
+        done
+        nv=${#vis[@]}
+        if [ "$nv" -gt 0 ] && [ "$cur" -ge "$nv" ]; then cur=$((nv-1)); fi
         [ "$first" -eq 0 ] && printf '\e[%dA' "$((n+1))" >&2
         first=0
-        printf '\r\e[K%s (%s)\n' "$header" "$hint" >&2
-        for i in "${!cand[@]}"; do
-            line="${labels[${cand[i]}]}"
+        if [ "$fmode" -eq 1 ]; then printf '\r\e[K%s  filter: %s_ (Enter keeps it, Esc clears it)\n' "$header" "$filt" >&2
+        elif [ -n "$filt" ]; then printf '\r\e[K%s  [filter: %s, %d shown] (%s)\n' "$header" "$filt" "$nv" "$hint" >&2
+        else printf '\r\e[K%s (%s)\n' "$header" "$hint" >&2; fi
+        for ((r=0; r<n; r++)); do
+            if [ "$r" -ge "$nv" ]; then printf '\r\e[K\n' >&2; continue; fi
+            i=${vis[r]}; line="${labels[${cand[i]}]}"
             if [ "$mode" = many ]; then
                 local mark=" "; [ "${on[${cand[i]}]:-0}" -eq 1 ] && mark="x"
                 line="[$mark] $line"
             fi
-            if [ "$i" -eq "$cur" ]; then printf '\r\e[K\e[7m> %s\e[0m\n' "$line" >&2; else printf '\r\e[K  %s\n' "$line" >&2; fi
+            if [ "$r" -eq "$cur" ]; then printf '\r\e[K\e[7m> %s\e[0m\n' "$line" >&2; else printf '\r\e[K  %s\n' "$line" >&2; fi
         done
+        if [ "$fmode" -eq 1 ]; then
+            tui_raw=1 _tui_read_key
+            case "$key" in
+                enter) fmode=0 ;;
+                esc) filt=""; fmode=0 ;;
+                backspace) filt="${filt%?}" ;;
+                [[:print:]]) filt+="$key"; cur=0 ;;
+            esac
+            continue
+        fi
         _tui_read_key
         case "$key" in
-            up) cur=$(( (cur + n - 1) % n )) ;;
-            down) cur=$(( (cur + 1) % n )) ;;
-            space) [ "$mode" = many ] && on[${cand[cur]}]=$((1 - ${on[${cand[cur]}]:-0})) ;;
-            all) [ "$mode" = many ] && for i in "${cand[@]}"; do on[i]=1; done ;;
-            none) [ "$mode" = many ] && for i in "${cand[@]}"; do on[i]=0; done ;;
-            enter) if [ "$mode" = one ]; then pick="${cand[cur]}"; else chosen=(); for i in "${cand[@]}"; do [ "${on[i]:-0}" -eq 1 ] && chosen+=("$i"); done; fi; _tui_end; return 0 ;;
+            filter) fmode=1 ;;
+            up) [ "$nv" -gt 0 ] && cur=$(( (cur + nv - 1) % nv )) ;;
+            down) [ "$nv" -gt 0 ] && cur=$(( (cur + 1) % nv )) ;;
+            space) [ "$mode" = many ] && [ "$nv" -gt 0 ] && on[${cand[${vis[cur]}]}]=$((1 - ${on[${cand[${vis[cur]}]}]:-0})) ;;
+            all) [ "$mode" = many ] && for i in "${vis[@]}"; do on[${cand[i]}]=1; done ;;
+            none) [ "$mode" = many ] && for i in "${vis[@]}"; do on[${cand[i]}]=0; done ;;
+            enter) if [ "$mode" = one ]; then [ "$nv" -gt 0 ] || continue; pick="${cand[${vis[cur]}]}"; else chosen=(); for i in "${cand[@]}"; do [ "${on[i]:-0}" -eq 1 ] && chosen+=("$i"); done; fi; _tui_end; return 0 ;;
             quit) if [ "$mode" = one ]; then pick=""; else chosen=(); fi; _tui_end; return 1 ;;
         esac
     done
@@ -500,11 +530,12 @@ gsv_remove() {
     return 0
 }
 gsv_switch() {   # point Text Editor (and Builder when present) at the scheme's style scheme for the current light/dark mode
-    local s="$1" id="" dark=1 f
+    local s="$1" id="" dark=1 f base
     [ -n "$(gsv_files "$s")" ] || return 0
-    [ -f "$gsv_dir/gnome-themes-$s-dark.xml" ] && pty_ours "$s" "$gsv_dir/gnome-themes-$s-dark.xml" || { echo "GtkSource style scheme not applied: the installed copy is missing or not ours."; return 0; }
+    base="dark"; [ -f "$root/$s/gtksourceview/gnome-themes-$s-dark.xml" ] || base="light"     # light-only scheme: only the -light id exists
+    [ -f "$gsv_dir/gnome-themes-$s-$base.xml" ] && pty_ours "$s" "$gsv_dir/gnome-themes-$s-$base.xml" || { echo "GtkSource style scheme not applied: the installed copy is missing or not ours."; return 0; }
     gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | grep -qi dark || dark=0
-    id="gnome-themes-$s-dark"
+    id="gnome-themes-$s-$base"
     if [ "$dark" = 0 ] && [ -f "$root/$s/gtksourceview/gnome-themes-$s-light.xml" ]; then id="gnome-themes-$s-light"; fi
     command -v dconf >/dev/null 2>&1 || { echo "GtkSource style scheme installed but not applied: dconf not found. Pick \"$id\" in the editor's preferences."; return 0; }
     dconf write /org/gnome/TextEditor/style-scheme "'$id'" && echo "Text Editor style scheme is now $id (Text Editor also recolours its window from it)."
@@ -575,7 +606,12 @@ copy_folder() {  # replace folder $1 of item $2 in dest: remove the set's folder
     mkdir -p "$dest"
     if ! may_touch "$dest/$f" "$(src_index "$it" "$f")" Replace; then skipped+=("$f"); return 1; fi
     rm -rf "${dest:?}/$f"
-    if [ "$kind" = themes ]; then cp -a "$root/$it/themes/$f" "$dest/$f"
+    if [ "$kind" = themes ]; then
+        cp -a "$root/$it/themes/$f" "$dest/$f"
+        # the stock assets are stored once in the repo (assets/gtk-3.0, assets/gtk-4.0): installed themes get real copies
+        for v in gtk-3.0 gtk-4.0; do
+            if [ -d "$dest/$f/$v" ] && [ -d "$root/assets/$v" ]; then mkdir -p "$dest/$f/$v/assets"; cp -a "$root/assets/$v/." "$dest/$f/$v/assets/"; fi
+        done
     else
         c=$(clone_of "${i_src[$it]}")
         case "${src_layout[${i_src[$it]}]}" in
@@ -740,7 +776,7 @@ case "$action" in
                 gsettings set org.gnome.desktop.interface gtk-theme "$gtk"; set_ini gtk-theme-name "$gtk"
                 echo "GTK theme is now $gtk."
             fi
-            shell="$shell_d"
+            shell="${shell_d:-$shell_l}"     # a light-only scheme has no Dark Shell theme
             if ! gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | grep -qi dark; then shell="${shell_l:-$shell_d}"; fi
             if [ -n "$shell" ] && was_skipped "$shell"; then echo "Not switching the Shell theme: $shell was left alone (not installed by gnome-themes)."; shell=""; fi
             if [ -n "$shell" ]; then
@@ -764,7 +800,11 @@ case "$action" in
                 ac=$(current_accent "$sc")
                 if [ -n "$ac" ] && [ "$ac" != "$acc_default" ]; then
                     accent_maps "$sc" "$ac"; tmpla=$(mktemp); trap 'rm -f "$tmpla"' EXIT
-                    if [ "$map_light" = "$map_dark" ]; then sed -f "$map_dark" "$la" > "$tmpla"; else sed -f "$map_light" -f "$map_dark" "$la" > "$tmpla"; fi
+                    if [ "$map_light" = "$map_dark" ]; then sed -f "$map_dark" "$la" > "$tmpla"
+                    else   # the light map applies before the @media (prefers-color-scheme: dark) block, the dark map from there on (tokens both variants share map differently)
+                        awk -v h="$tmpla.h" -v t="$tmpla.t" '/^@media \(prefers-color-scheme: dark\)/ {d=1} {print > (d ? t : h)}' "$la"
+                        { sed -f "$map_light" "$tmpla.h"; sed -f "$map_dark" "$tmpla.t"; } > "$tmpla"; rm -f "$tmpla.h" "$tmpla.t"
+                    fi
                     chmod 644 "$tmpla"; la="$tmpla"
                 fi
                 mkdir -p "$(dirname "$target")"

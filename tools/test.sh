@@ -135,6 +135,8 @@ for s in $loop_schemes; do
     echo "=== loop $s"
     D="$T/themes-$s"; THEMES_DEST=$D just install-theme "$s" >/dev/null 2>&1
     n=$(ls "$D" 2>/dev/null | wc -l); [ "$n" -ge 1 ] && chk ok "install-theme: $n folders" || chk fail "install-theme produced nothing"
+    gt=$(awk -F'"' '/^gtk_name/ {print $2}' "$s/palette.toml")
+    [ -f "$D/$gt/gtk-3.0/assets/check-symbolic.svg" ] && [ -f "$D/$gt/gtk-4.0/assets/check-symbolic.svg" ] && [ ! -L "$D/$gt/gtk-3.0/assets" ] && chk ok "installed theme is complete: real assets directories in gtk-3.0 and gtk-4.0" || chk fail "installed $gt lacks its assets"
     for a in $(grep -v '^#' "$s/accents/list" | awk 'NF {print $1}'); do
         : > "$LOG"; THEMES_DEST=$D just switch-theme "$s" "$a" >/dev/null 2>&1; rc=$?
         [ $rc -eq 0 ] && [ "$(grep -c gtk-theme "$LOG")" -ge 1 ] && chk ok "switch-theme $s $a" || chk fail "switch-theme $s $a (rc=$rc)"
@@ -145,6 +147,11 @@ for s in $loop_schemes; do
     [ "$h1" = "$h2" ] && chk ok "update-theme keeps the remembered accent" || chk fail "update-theme changed the installed tree"
     THEMES_DEST=$D just remove-theme "$s" >/dev/null 2>&1; [ -z "$(ls -A "$D" 2>/dev/null)" ] && chk ok "remove-theme emptied the set" || chk fail "remove-theme left $(ls "$D" | tr '\n' ' ')"
 done
+
+# ---- shared assets: the repo stores GTK's stock assets once (assets/gtk-3.0, assets/gtk-4.0); installs copy them into each theme ---------
+echo "=== shared assets"
+python3 -I tools/assets-gen.py --check >/dev/null 2>&1 && chk ok "assets/ match the installed GTK's stock assets" || chk fail "assets/ differ from GTK's stock assets (run just generate)"
+[ -z "$(ls -d */themes/*/gtk-*/assets 2>/dev/null)" ] && chk ok "no scheme carries its own copy of the assets" || chk fail "per-scheme assets directories exist"
 
 # ---- every scheme: Ptyxis declarations and the inventory (tools/ptyxis-schemes.tsv) ----------------------------------------
 echo "=== ptyxis-compare and inventory"
@@ -169,6 +176,16 @@ fl=$(THEMES_DEST="$T/feat" FEATURED_THEMES="dracula nordic nosuch" tools/themect
 [ "$fl" = "dracula nordic " ] && chk ok "FEATURED_THEMES order is the list order (a missing scheme is skipped)" || chk fail "featured order: $fl"
 rest=$(THEMES_DEST="$T/feat" FEATURED_THEMES="dracula nordic" tools/themectl.sh themes list | sed 1,2d | awk '{print $1}' | grep -vc '★')
 [ "$rest" -ge 1 ] && [ "$(THEMES_DEST="$T/feat" FEATURED_THEMES="dracula nordic" tools/themectl.sh themes list | sed 1,2d | awk '{print $1}' | LC_ALL=C sort -c 2>&1 | wc -l)" -eq 0 ] && chk ok "the other schemes follow alphabetically" || chk fail "rest not alphabetical"
+
+# ---- light-only scheme (bluloco-light): gtk.css only, Shell-Light only, switch works under a dark desktop ----------------------------
+echo "=== light-only scheme"
+if [ -d bluloco-light ]; then
+    LO="$T/themes-lo"; THEMES_DEST=$LO just install-theme bluloco-light >/dev/null 2>&1
+    [ -f "$LO/Bluloco-Light/gtk-3.0/gtk.css" ] && [ ! -e "$LO/Bluloco-Light/gtk-3.0/gtk-dark.css" ] && [ -d "$LO/Bluloco-Light-Shell-Light" ] && [ ! -e "$LO/Bluloco-Light-Shell-Dark" ] && chk ok "a light-only scheme ships gtk.css and the Light Shell theme only" || chk fail "light-only layout ($(ls "$LO" | tr '\n' ' '))"
+    : > "$LOG"; THEMES_DEST=$LO just switch-theme bluloco-light red >/dev/null 2>&1
+    grep -q "Bluloco-Light-Shell-Light" "$LOG" "$DCONF_DB" 2>/dev/null && grep -q "gtk-theme Bluloco-Light" "$LOG" && chk ok "switch-theme sets the light-only Shell theme even when the desktop is dark" || chk fail "light-only switch ($(cat "$LOG" | tr '\n' ';'))"
+    THEMES_DEST=$LO just remove-theme bluloco-light >/dev/null 2>&1
+fi
 
 # ---- collision guard (themes): unrelated folders with our names are never replaced or removed without asking ---------
 echo "=== collision guard"
@@ -548,7 +565,7 @@ rm -rf "$FS" "$FI" "$fpst"; : > "$FLATPAK_DB"
 echo "=== checklist (pty)"
 cat > "$T/ptyrun.py" <<'PY'
 import os, pty, select, sys, time, fcntl, termios, struct, re
-keys = {'down': b'\x1b[B', 'up': b'\x1b[A', 'space': b' ', 'enter': b'\r', 'q': b'q', 'n': b'n', 'a': b'a', 'j': b'j'}
+keys = {'down': b'\x1b[B', 'up': b'\x1b[A', 'space': b' ', 'enter': b'\r', 'esc': b'\x1b', 'slash': b'/', 'bs': b'\x7f'}
 seq = sys.argv[1].split(','); cmd = sys.argv[2:]
 pid, fd = pty.fork()
 if pid == 0: os.execvp(cmd[0], cmd)
@@ -562,7 +579,7 @@ while time.time() - t0 < 30:
         if not d: break
         out += d; last = time.time()
     elif i < len(seq) and time.time() - last > 0.3:
-        os.write(fd, keys[seq[i]]); i += 1; last = time.time()
+        os.write(fd, keys.get(seq[i], seq[i].encode())); i += 1; last = time.time()
     elif i >= len(seq) and time.time() - last > 5: break
 # never wait forever for a child that is still reading the terminal: give it a moment, then kill it
 import signal
@@ -585,6 +602,13 @@ echo "$out" | grep -q 'SPACE toggles' && chk ok "checklist hint says SPACE toggl
 THEMES_DEST=$PD pty n,down,space,enter tools/themectl.sh themes install >/dev/null
 first_sc=$(sed -n 's/^FEATURED_THEMES="${FEATURED_THEMES-\(.*\)}"$/\1/p' tools/themectl.sh | awk '{print $2}'); gname=$(awk -F'"' '/^gtk_name/ {print $2}' "$first_sc/palette.toml")
 [ -d "$PD/$gname" ] && chk ok "none, down, SPACE ticks one entry, ENTER installs it ($first_sc)" || chk fail "space did not tick the second entry"
+PF="$T/pty-filter"; mkdir -p "$PF"
+THEMES_DEST=$PF pty slash,D,R,A,C,enter,space,enter tools/themectl.sh themes install >/dev/null
+[ -d "$PF/Dracula" ] && [ "$(ls "$PF" | grep -vc '^Dracula')" -eq 0 ] && chk ok "checklist filter: / then DRAC (any case) narrows the list, SPACE ticks the shown entry, only dracula installed" || chk fail "filter install: $(ls "$PF" | tr '\n' ' ')"
+rm -rf "$PF"; mkdir -p "$PF"
+THEMES_DEST=$PF pty space,slash,d,r,a,c,enter,space,slash,esc,enter tools/themectl.sh themes install >/dev/null
+[ -d "$PF/Dracula" ] && [ -d "$PF/Nordic-Nord" ] && chk ok "filter: a tick made before filtering survives it, and Esc shows the full list again" || chk fail "filter keeps ticks: $(ls "$PF" | tr '\n' ' ')"
+out=$(THEMES_DEST=$PF pty slash,z,z,z,q tools/themectl.sh themes install); echo "$out" | grep -q 'filter: zzz' && chk ok "a filter without a match shows an empty list" || chk fail "no-match filter"
 PD2="$T/pty-themes2"; mkdir -p "$PD2"; out=$(THEMES_DEST=$PD2 pty enter tools/themectl.sh themes install)
 [ "$(n_inst "$PD2")" -eq 0 ] && echo "$out" | grep -q 'Nothing selected' && chk ok "ENTER alone (empty selection) installs nothing and says so" || chk fail "enter alone installed $(n_inst "$PD2")"
 THEMES_DEST=$PD2 tools/themectl.sh themes install "$first_sc" >/dev/null 2>&1

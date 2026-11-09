@@ -78,10 +78,10 @@ def ident(scheme, slot): return 'gnome-themes-%s-%s' % (scheme, slot)
 def build(scheme_dir):
     S, roles, slots = sr.load(scheme_dir)
     scheme = os.path.basename(os.path.abspath(scheme_dir))
-    dual = 'light' in roles
+    dual = 'light' in roles and 'dark' in roles
     out = {}
     for slot, variant in slots:
-        if slot == 'light' and not dual: continue
+        if slot == 'light' and 'light' not in roles: continue
         notes = []; c = palette(roles[variant], notes, slot)
         other = 'light' if slot == 'dark' else 'dark'
         meta = '<property name="variant">%s</property>' % slot

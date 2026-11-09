@@ -55,11 +55,12 @@ HDR = '''/* %(title)s GTK3 theme, %(variant)s variant%(note)s.
 def main():
     check = '--check' in sys.argv
     micro = Gtk.get_micro_version()
-    os.makedirs(OUT + '/assets', exist_ok=True)
+    os.makedirs(OUT, exist_ok=True)     # the shared assets/ are written by tools/assets-gen.py, not per scheme
     # (palette variant, stock source, output file): a dark-only scheme fills the light slot (gtk.css) with its dark
     # palette on the stock DARK stylesheet, so the theme stays dark whatever GTK asks for.
     plan = [('light', 'gtk-contained.css', 'gtk.css'), ('dark', 'gtk-contained-dark.css', 'gtk-dark.css')]
     if META['dark_only']: plan[0] = ('dark', 'gtk-contained-dark.css', 'gtk.css')
+    if META.get('light_only'): plan = plan[:1]     # light-only scheme: gtk.css only (GTK falls back to it when the desktop asks for dark)
     adir = arg('accent-dir')
     for variant, src, dst in plan:
         stock = bytes(Gio.resources_lookup_data(RES + src, 0).get_data()).decode()
@@ -71,9 +72,5 @@ def main():
         if not check: open(OUT + '/' + dst, 'w').write(new)
         if adir:
             for a in P['accents']: accent_dir_write(adir, a, 'gtk-3.0/' + dst, hdr + recolour(stock, with_accent(P, a)))
-    if not check:
-        for n in Gio.resources_enumerate_children(RES + 'assets', 0):
-            data = Gio.resources_lookup_data(RES + 'assets/' + n, 0).get_data()
-            open(OUT + '/assets/' + n, 'wb').write(bytes(data))
 
 main()

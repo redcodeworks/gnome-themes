@@ -18,8 +18,8 @@ belafonte	Belafonte	-	todo		-
 bim	Bim	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bim.yml
 birds-of-paradise	Birds Of Paradise	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Birds%20Of%20Paradise.yml
 blazer	Blazer	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Blazer.yml
-bluloco-light	Bluloco Light	-	excluded	generate failed:     inks_dark = [roles['dark']['bg_deep'], roles['dark']['bg']] + ([roles['light']['fg']] if not dark_only else []) |                  ~~~~~^^^^^^^^ | KeyError: 'dark' | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Light.yml
-bluloco-zsh-light	Bluloco Zsh Light	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Zsh%20Light.yml
+bluloco-light	Bluloco Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Light.yml
+bluloco-zsh-light	Bluloco Zsh Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Zsh%20Light.yml
 borland	Borland	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Borland.yml
 breath	Breath	-	todo		-
 breath-silverfox	Breath Silverfox	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breath%20Silverfox.yml
@@ -36,10 +36,10 @@ chalk	Chalk	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalk.yml
 chalkboard	Chalkboard	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalkboard.yml
 chameleon	Chameleon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml
 ciapre	Ciapre	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ciapre.yml
-clrs	Clrs	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml
+clrs	Clrs	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml
 cobalt-2	Cobalt 2	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml
 cobalt-neon	Cobalt Neon	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%20Neon.yml
-colorcli	Colorcli	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Colorcli.yml
+colorcli	Colorcli	-	excluded	palette repeats colours (red = magenta, green = yellow, blue = foreground): the accent maps cannot tell accents and roles apart (accent-maps-gen VERIFY FAILED)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Colorcli.yml
 crayon-pony-fish	Crayon Pony Fish	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Crayon%20Pony%20Fish.yml
 dark-pastel	Dark Pastel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dark%20Pastel.yml
 darkside	Darkside	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Darkside.yml
@@ -69,7 +69,7 @@ frontend-delight	Frontend Delight	-	todo		https://github.com/Gogh-Co/Gogh/tree/m
 frontend-fun-forrest	Frontend Fun Forrest	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Fun%20Forrest.yml
 frontend-galaxy	Frontend Galaxy	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Galaxy.yml
 geohot	Geohot	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Geohot.yml
-github	Github	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199295 bytes | libadwaita 4342 bytes | VERIFY FAILED: github accent red libadwaita/gtk.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+github	Github	-	built		-
 gnome	gnome	-	excluded	generic terminal preset	-
 gnome-high-contrast	gnome-high-contrast	-	excluded	generic terminal preset	-
 gnome-legacy	GNOME Legacy	-	excluded	generic terminal preset	-
@@ -113,8 +113,8 @@ liquid-carbon-transparent	Liquid Carbon Transparent	-	todo		https://github.com/G
 lunaria	Lunaria	-	todo		-
 lunaria-eclipse	Lunaria Eclipse	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Lunaria%20Eclipse.yml
 maia	Maia	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Maia.yml
-man-page	Man Page	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Man%20Page.yml
-mar	Mar	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mar.yml
+man-page	Man Page	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Man%20Page.yml
+mar	Mar	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mar.yml
 material	Material	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Material.yml
 mathias	Mathias	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mathias.yml
 medallion	Medallion	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Medallion.yml
@@ -144,19 +144,19 @@ nightlion-v1	Nightlion V1	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/th
 nightlion-v2	Nightlion V2	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V2.yml
 nighty	Nighty	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nighty.yml
 nordic	nord	-	existing	covered by the existing scheme	-
-novel	Novel	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml
+novel	Novel	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml
 obsidian	Obsidian	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml
 ocean-dark	Ocean Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml
 oceanic-next	Oceanic Next	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oceanic%20Next.yml
 ollie	Ollie	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml
 omni	Omni	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml
-one	One	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.55)	-
+one	One	-	excluded	contrast: the built-in's dark Foreground #5C6370 is One Dark's comment grey, 2.55:1 on its #1E2127 background; reaching 4.5:1 needs a nudge far beyond NUDGE_MAX (6 dE)	-
 one-half-black	One Half Black	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/One%20Half%20Black.yml
 oxocarbon-dark	Oxocarbon Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oxocarbon%20Dark.yml
 palenight	Palenight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Palenight.yml
 pali	Pali	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pali.yml
 panda	Panda	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Panda.yml
-papercolor	Papercolor	-	excluded	generate failed: libadwaita 4354 bytes | red        59 dark tokens,   53 light tokens, verified on 7 files (0 token occurrences approximated) | VERIFY FAILED: papercolor accent green libadwaita/gtk.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+papercolor	Papercolor	-	built		-
 paraiso-dark	Paraiso Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paraiso%20Dark.yml
 paul-millr	Paul Millr	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paul%20Millr.yml
 pencil	Pencil	-	todo		-
@@ -213,7 +213,7 @@ terminix-dark	Terminix Dark	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/
 thayer-bright	Thayer Bright	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Thayer%20Bright.yml
 tin	Tin	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tin.yml
 tokyo-night	Tokyo Night + Tokyo Night Day	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night.yml
-tokyo-night-light	Tokyo Night Light	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Light.yml
+tokyo-night-light	Tokyo Night Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Light.yml
 tokyo-night-moon	Tokyo Night Moon	-	todo		https://github.com/folke/tokyonight.nvim/tree/main/extras
 tokyo-night-storm	Tokyo Night Storm	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Storm.yml
 tomorrow	Tomorrow Night	Tomorrow	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night.yml
@@ -223,7 +223,7 @@ tomorrow-night-eighties	Tomorrow Night Eighties	-	todo		https://github.com/Gogh-
 toy-chest	Toy Chest	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Toy%20Chest.yml
 treehouse	Treehouse	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Treehouse.yml
 twilight	Twilight	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Twilight.yml
-ura	Ura	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ura.yml
+ura	Ura	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ura.yml
 urple	Urple	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Urple.yml
 vag	Vag	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vag.yml
 vaughn	Vaughn	-	todo		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vaughn.yml

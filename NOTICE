@@ -86,8 +86,13 @@ Palettes taken from the Ptyxis built-ins (the schemes listed in tools/ptyxis-sch
   palette is not stated and no further credit can be given); each scheme.toml header repeats it. A palette named
   after a proprietary product (for example Monokai Pro) is used for its colour values only, as in Ptyxis itself.
 
+Shared assets
+  assets/gtk-3.0 and assets/gtk-4.0 are GTK's own stock PNG and SVG files (the ones the stock stylesheets refer to as url("assets/...")),
+  copied unmodified by tools/assets-gen.py from the installed GTK (LGPL-2.0-or-later; assets/LICENSE is the LGPL text). They are stored once;
+  the installer copies them into every installed theme folder, so installed themes carry them together with their LICENSE.
+
 Licences by path
-  themes/<Name>/   the generated and recoloured theme files derive from the LGPL works above, so they
+  themes/<Name>/ and assets/   the generated and recoloured theme files derive from the LGPL works above, so they
                    stay under the LGPL: the GTK files LGPL-2.0-or-later (use them under LGPL-2.1-or-later),
                    the GNOME Shell files LGPL-2.1 (version 2.1 only, as in their source header). The LGPL
                    text is the LICENSE file inside each theme folder, so installed copies carry it. Keep
