@@ -344,7 +344,7 @@ _tui_end() { stty "$_tui_saved" </dev/tty 2>/dev/null; printf '\e[?25h\n' >&2; t
 # tick count. Ctrl-C and every exit restore the terminal (stty, cursor).
 _tui_run() {
     local mode="$1" header="$2"; shift 2; local cand=("$@") n=$# cur="${tui_cur:-0}" top=0 i r line first=1 filt="" fmode=0 vis=() nv lf
-    local rows=24 cols=80 H=1 prevH=0 prevC=0 sz mark ticked foot hint body
+    local rows=24 cols=80 H=1 prevH=0 prevC=0 sz mark ticked foot hint
     [ -t 0 ] && [ -t 2 ] && [ -r /dev/tty ] || return 2
     _tui_saved=$(stty -g </dev/tty) || return 2
     trap '_tui_end; exit 130' INT
