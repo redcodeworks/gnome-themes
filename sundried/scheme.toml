@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Sundried'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Sundried.yml.
+title = "Sundried"
+gtk_name = "Sundried"
+shell_name = "Sundried-Shell"
+credit = "Sundried (colours of the Ptyxis built-in 'Sundried'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Sundried.yml)"
+ptyxis = "Sundried"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Sundried' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#1a1818"
+fg = "#c9c9c9"
+selection = "#3d3b3b"   # DERIVED
+red = "#a7463d"
+orange = "#a25334"   # DERIVED
+yellow = "#9d602a"
+green = "#587744"
+cyan = "#9c814f"
+blue = "#485b98"
+magenta = "#864651"
+purple = "#864651"   # = magenta
+# palette Color8 (bright black) = #4d4e48: a candidate for `comment`
+[dark.ansi]
+red = "#a7463d"
+green = "#587744"
+yellow = "#9d602a"
+blue = "#485b98"
+magenta = "#864651"
+cyan = "#9c814f"
+[dark.terminal]
+source = "Sundried"   # Ptyxis built-in id
+black = "#302b2a"   # Ptyxis Color0
+bright_black = "#4d4e48"   # Ptyxis Color8
+bright_red = "#aa000c"   # Ptyxis Color9
+bright_green = "#128c21"   # Ptyxis Color10
+bright_yellow = "#fc6a21"   # Ptyxis Color11
+bright_blue = "#7999f7"   # Ptyxis Color12
+bright_magenta = "#fd8aa1"   # Ptyxis Color13
+bright_cyan = "#fad484"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

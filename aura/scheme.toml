@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Aura'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Aura.yml.
+title = "Aura"
+gtk_name = "Aura"
+shell_name = "Aura-Shell"
+credit = "Aura (colours of the Ptyxis built-in 'Aura'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Aura.yml)"
+ptyxis = "Aura"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Aura' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#15141b"
+fg = "#edecee"
+selection = "#403f45"   # DERIVED
+red = "#ff6767"
+orange = "#ff9876"   # DERIVED
+yellow = "#ffca85"
+green = "#61ffca"
+cyan = "#61ffca"
+blue = "#a277ff"
+magenta = "#a277ff"
+purple = "#a277ff"   # = magenta
+# palette Color8 (bright black) = #6d6d6d: a candidate for `comment`
+[dark.ansi]
+red = "#ff6767"
+green = "#61ffca"
+yellow = "#ffca85"
+blue = "#a277ff"
+magenta = "#a277ff"
+cyan = "#61ffca"
+[dark.terminal]
+source = "Aura"   # Ptyxis built-in id
+black = "#110f18"   # Ptyxis Color0
+bright_black = "#6d6d6d"   # Ptyxis Color8
+bright_red = "#ffca85"   # Ptyxis Color9
+bright_green = "#a277ff"   # Ptyxis Color10

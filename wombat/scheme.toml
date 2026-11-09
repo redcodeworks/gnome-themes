@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Wombat'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wombat.yml.
+title = "Wombat"
+gtk_name = "Wombat"
+shell_name = "Wombat-Shell"
+credit = "Wombat (colours of the Ptyxis built-in 'Wombat'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wombat.yml)"
+ptyxis = "Wombat"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Wombat' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#171717"
+fg = "#dedacf"
+selection = "#3f3e3c"   # DERIVED
+red = "#ff615a"
+orange = "#f59d7b"   # DERIVED
+yellow = "#ebd99c"
+green = "#b1e969"
+cyan = "#82fff7"
+blue = "#5da9f6"
+magenta = "#e86aff"
+purple = "#e86aff"   # = magenta
+# palette Color8 (bright black) = #313131: a candidate for `comment`
+[dark.ansi]
+red = "#ff615a"
+green = "#b1e969"
+yellow = "#ebd99c"
+blue = "#5da9f6"
+magenta = "#e86aff"
+cyan = "#82fff7"
+[dark.terminal]
+source = "Wombat"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+bright_black = "#313131"   # Ptyxis Color8
+bright_red = "#f58c80"   # Ptyxis Color9
+bright_green = "#ddf88f"   # Ptyxis Color10
+bright_yellow = "#eee5b2"   # Ptyxis Color11
+bright_blue = "#a5c7ff"   # Ptyxis Color12
+bright_magenta = "#ddaaff"   # Ptyxis Color13
+bright_cyan = "#b7fff9"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

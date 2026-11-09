@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Azu'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Azu.yml.
+title = "Azu"
+gtk_name = "Azu"
+shell_name = "Azu-Shell"
+credit = "Azu (colours of the Ptyxis built-in 'Azu'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Azu.yml)"
+ptyxis = "Azu"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Azu' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#09111a"
+fg = "#d9e6f2"
+selection = "#333c45"   # DERIVED
+red = "#ac6d74"
+orange = "#ac8870"   # DERIVED
+yellow = "#aca46d"
+green = "#74ac6d"
+cyan = "#6daca4"
+blue = "#6d74ac"
+magenta = "#a46dac"
+purple = "#a46dac"   # = magenta
+# palette Color8 (bright black) = #262626: a candidate for `comment`
+[dark.ansi]
+red = "#ac6d74"
+green = "#74ac6d"
+yellow = "#aca46d"
+blue = "#6d74ac"
+magenta = "#a46dac"
+cyan = "#6daca4"
+[dark.terminal]
+source = "Azu"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#e6e6e6"   # Ptyxis Color7
+bright_black = "#262626"   # Ptyxis Color8
+bright_red = "#d6b8bc"   # Ptyxis Color9
+bright_green = "#bcd6b8"   # Ptyxis Color10
+bright_yellow = "#d6d3b8"   # Ptyxis Color11
+bright_blue = "#b8bcd6"   # Ptyxis Color12
+bright_magenta = "#d3b8d6"   # Ptyxis Color13
+bright_cyan = "#b8d6d3"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

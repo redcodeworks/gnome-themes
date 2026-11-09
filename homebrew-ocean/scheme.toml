@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Homebrew Ocean'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew%20Ocean.yml.
+title = "Homebrew Ocean"
+gtk_name = "Homebrew-Ocean"
+shell_name = "Homebrew-Ocean-Shell"
+credit = "Homebrew Ocean (colours of the Ptyxis built-in 'Homebrew Ocean'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew%20Ocean.yml)"
+ptyxis = "Homebrew Ocean"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Homebrew Ocean' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#224fbc"
+fg = "#ffffff"
+selection = "#4e72c9"   # DERIVED
+red = "#990000"
+orange = "#994c00"   # DERIVED
+yellow = "#999900"
+green = "#00a600"
+cyan = "#00a6b2"
+blue = "#0000b2"
+magenta = "#b200b2"
+purple = "#b200b2"   # = magenta
+# palette Color8 (bright black) = #666666: a candidate for `comment`
+[dark.ansi]
+red = "#990000"
+green = "#00a600"
+yellow = "#999900"
+blue = "#0000b2"
+magenta = "#b200b2"
+cyan = "#00a6b2"
+[dark.terminal]
+source = "Homebrew Ocean"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bfbfbf"   # Ptyxis Color7
+bright_black = "#666666"   # Ptyxis Color8
+bright_red = "#e50000"   # Ptyxis Color9
+bright_green = "#00d900"   # Ptyxis Color10
+bright_yellow = "#e5e500"   # Ptyxis Color11
+bright_blue = "#0000ff"   # Ptyxis Color12
+bright_magenta = "#e500e5"   # Ptyxis Color13
+bright_cyan = "#00e5e5"   # Ptyxis Color14
+bright_white = "#e5e5e5"   # Ptyxis Color15

@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Synthwave'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave.yml.
+title = "Synthwave"
+gtk_name = "Synthwave"
+shell_name = "Synthwave-Shell"
+credit = "Synthwave (colours of the Ptyxis built-in 'Synthwave'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave.yml)"
+ptyxis = "Synthwave"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Synthwave' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#262335"
+fg = "#ffffff"
+selection = "#514f5d"   # DERIVED
+red = "#fe4450"
+orange = "#fe9156"   # DERIVED
+yellow = "#fede5d"
+green = "#72f1b8"
+cyan = "#03edf9"
+blue = "#03edf9"
+magenta = "#ff7edb"
+purple = "#ff7edb"   # = magenta
+# palette Color8 (bright black) = #575656: a candidate for `comment`
+[dark.ansi]
+red = "#fe4450"
+green = "#72f1b8"
+yellow = "#fede5d"
+blue = "#03edf9"
+magenta = "#ff7edb"
+cyan = "#03edf9"
+[dark.terminal]
+source = "Synthwave"   # Ptyxis built-in id
+cursor = "#03edf9"   # Ptyxis Cursor
+black = "#011627"   # Ptyxis Color0
+bright_black = "#575656"   # Ptyxis Color8

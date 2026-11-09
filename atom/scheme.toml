@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Atom'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Atom.yml.
+title = "Atom"
+gtk_name = "Atom"
+shell_name = "Atom-Shell"
+credit = "Atom (colours of the Ptyxis built-in 'Atom'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Atom.yml)"
+ptyxis = "Atom"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Atom' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#161719"
+fg = "#c5c8c6"
+selection = "#393a3c"   # DERIVED
+red = "#fd5ff1"
+orange = "#fe9bd1"   # DERIVED
+yellow = "#ffd7b1"
+green = "#87c38a"
+cyan = "#85befd"
+blue = "#85befd"
+magenta = "#b9b6fc"
+purple = "#b9b6fc"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#fd5ff1"
+green = "#87c38a"
+yellow = "#ffd7b1"
+blue = "#85befd"
+magenta = "#b9b6fc"
+cyan = "#85befd"
+[dark.terminal]
+source = "Atom"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#e0e0e0"   # Ptyxis Color7
+bright_black = "#000000"   # Ptyxis Color8
+bright_green = "#94fa36"   # Ptyxis Color10
+bright_yellow = "#f5ffa8"   # Ptyxis Color11
+bright_blue = "#96cbfe"   # Ptyxis Color12
+bright_white = "#e0e0e0"   # Ptyxis Color15

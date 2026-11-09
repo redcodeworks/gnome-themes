@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Selenized'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. The built-in's header names no origin.
+title = "Selenized"
+gtk_name = "Selenized"
+shell_name = "Selenized-Shell"
+credit = "Selenized (colours of the Ptyxis built-in 'Selenized'; the built-in's header names no origin)"
+ptyxis = "Selenized"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Selenized' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#103c48"
+fg = "#adbcbc"
+selection = "#2f565f"   # DERIVED
+red = "#fa5750"
+orange = "#ea853e"   # DERIVED
+yellow = "#dbb32d"
+green = "#75b938"
+cyan = "#41c7b9"
+blue = "#4695f7"
+magenta = "#f275be"
+purple = "#f275be"   # = magenta
+# palette Color8 (bright black) = #184956: a candidate for `comment`
+[dark.ansi]
+red = "#fa5750"
+green = "#75b938"
+yellow = "#dbb32d"
+blue = "#4695f7"
+magenta = "#f275be"
+cyan = "#41c7b9"
+[dark.terminal]
+source = "Selenized"   # Ptyxis built-in id
+black = "#103c48"   # Ptyxis Color0
+bright_black = "#184956"   # Ptyxis Color8
+bright_red = "#ff665c"   # Ptyxis Color9
+bright_green = "#84c747"   # Ptyxis Color10
+bright_yellow = "#ebc13d"   # Ptyxis Color11
+bright_blue = "#58a3ff"   # Ptyxis Color12
+bright_magenta = "#ff84cd"   # Ptyxis Color13
+bright_cyan = "#53d6c7"   # Ptyxis Color14
+bright_white = "#cad8d9"   # Ptyxis Color15
+
+[light]
+bg_deep = "#fbf3db"
+fg = "#53676d"
+selection = "#d9d7c5"   # DERIVED
+red = "#d2212d"
+orange = "#c05516"   # DERIVED
+yellow = "#ad8900"
+green = "#489100"
+cyan = "#009c8f"
+blue = "#0072d4"
+magenta = "#ca4898"
+purple = "#ca4898"   # = magenta
+# palette Color8 (bright black) = #ece3cc: a candidate for `comment`
+[light.ansi]
+red = "#d2212d"
+green = "#489100"
+yellow = "#ad8900"
+blue = "#0072d4"
+magenta = "#ca4898"
+cyan = "#009c8f"
+[light.terminal]
+source = "Selenized"   # Ptyxis built-in id
+black = "#fbf3db"   # Ptyxis Color0
+bright_black = "#ece3cc"   # Ptyxis Color8
+bright_red = "#cc1729"   # Ptyxis Color9
+bright_green = "#428b00"   # Ptyxis Color10
+bright_yellow = "#a78300"   # Ptyxis Color11
+bright_blue = "#006dce"   # Ptyxis Color12
+bright_magenta = "#c44392"   # Ptyxis Color13
+bright_cyan = "#00978a"   # Ptyxis Color14
+bright_white = "#3a4d53"   # Ptyxis Color15

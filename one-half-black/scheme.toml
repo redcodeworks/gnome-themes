@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'One Half Black'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/One%20Half%20Black.yml.
+title = "One Half Black"
+gtk_name = "One-Half-Black"
+shell_name = "One-Half-Black-Shell"
+credit = "One Half Black (colours of the Ptyxis built-in 'One Half Black'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/One%20Half%20Black.yml)"
+ptyxis = "One Half Black"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'One Half Black' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#000000"
+fg = "#dcdfe4"
+selection = "#2c2d2e"   # DERIVED
+red = "#e06c75"
+orange = "#e29678"   # DERIVED
+yellow = "#e5c07b"
+green = "#98c379"
+cyan = "#56b6c2"
+blue = "#61afef"
+magenta = "#c678dd"
+purple = "#c678dd"   # = magenta
+# palette Color8 (bright black) = #282c34: a candidate for `comment`
+[dark.ansi]
+red = "#e06c75"
+green = "#98c379"
+yellow = "#e5c07b"
+blue = "#61afef"
+magenta = "#c678dd"
+cyan = "#56b6c2"
+[dark.terminal]
+source = "One Half Black"   # Ptyxis built-in id
+black = "#282c34"   # Ptyxis Color0
+bright_black = "#282c34"   # Ptyxis Color8

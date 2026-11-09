@@ -12,6 +12,7 @@ shell_name = "Rose-Pine-Shell"
 credit = "Rose Pine (MIT), Main and Dawn"
 default_accent = "magenta"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#191724"],[53,"#1f1d2e"],[66,"#26233a"],

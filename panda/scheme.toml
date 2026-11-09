@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Panda'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Panda.yml.
+title = "Panda"
+gtk_name = "Panda"
+shell_name = "Panda-Shell"
+credit = "Panda (colours of the Ptyxis built-in 'Panda'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Panda.yml)"
+ptyxis = "Panda"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Panda' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#1d1e20"
+fg = "#f0f0f0"
+selection = "#47484a"   # DERIVED
+red = "#fb055a"
+orange = "#fc585a"   # DERIVED
+yellow = "#fdaa5a"
+green = "#26ffd4"
+cyan = "#26ffd4"
+blue = "#5c9fff"
+magenta = "#fc59a6"
+purple = "#fc59a6"   # = magenta
+# palette Color8 (bright black) = #5c6370: a candidate for `comment`
+[dark.ansi]
+red = "#fb055a"
+green = "#26ffd4"
+yellow = "#fdaa5a"
+blue = "#5c9fff"
+magenta = "#fc59a6"
+cyan = "#26ffd4"
+[dark.terminal]
+source = "Panda"   # Ptyxis built-in id
+black = "#1f1f20"   # Ptyxis Color0
+bright_black = "#5c6370"   # Ptyxis Color8
+bright_yellow = "#febe7e"   # Ptyxis Color11
+bright_blue = "#55adff"   # Ptyxis Color12
+bright_magenta = "#fd95d0"   # Ptyxis Color13

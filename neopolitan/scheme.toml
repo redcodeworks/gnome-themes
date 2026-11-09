@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Neopolitan'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Neopolitan.yml.
+title = "Neopolitan"
+gtk_name = "Neopolitan"
+shell_name = "Neopolitan-Shell"
+credit = "Neopolitan (colours of the Ptyxis built-in 'Neopolitan'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Neopolitan.yml)"
+ptyxis = "Neopolitan"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Neopolitan' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#271f19"
+fg = "#ffffff"
+selection = "#524c47"   # DERIVED
+red = "#800000"
+orange = "#be6f16"   # DERIVED
+yellow = "#fbde2d"
+green = "#61ce3c"
+cyan = "#8da6ce"
+blue = "#253b76"
+magenta = "#ff0080"
+purple = "#ff0080"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#800000"
+green = "#61ce3c"
+yellow = "#fbde2d"
+blue = "#253b76"
+magenta = "#ff0080"
+cyan = "#8da6ce"
+[dark.terminal]
+source = "Neopolitan"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#f8f8f8"   # Ptyxis Color7
+bright_black = "#000000"   # Ptyxis Color8
+bright_white = "#f8f8f8"   # Ptyxis Color15

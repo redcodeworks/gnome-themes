@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Blazer'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Blazer.yml.
+title = "Blazer"
+gtk_name = "Blazer"
+shell_name = "Blazer-Shell"
+credit = "Blazer (colours of the Ptyxis built-in 'Blazer'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Blazer.yml)"
+ptyxis = "Blazer"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Blazer' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#0d1926"
+fg = "#d9e6f2"
+selection = "#36424f"   # DERIVED
+red = "#b87a7a"
+orange = "#b8997a"   # DERIVED
+yellow = "#b8b87a"
+green = "#7ab87a"
+cyan = "#7ab8b8"
+blue = "#7a7ab8"
+magenta = "#b87ab8"
+purple = "#b87ab8"   # = magenta
+# palette Color8 (bright black) = #262626: a candidate for `comment`
+[dark.ansi]
+red = "#b87a7a"
+green = "#7ab87a"
+yellow = "#b8b87a"
+blue = "#7a7ab8"
+magenta = "#b87ab8"
+cyan = "#7ab8b8"
+[dark.terminal]
+source = "Blazer"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#d9d9d9"   # Ptyxis Color7
+bright_black = "#262626"   # Ptyxis Color8
+bright_red = "#dbbdbd"   # Ptyxis Color9
+bright_green = "#bddbbd"   # Ptyxis Color10
+bright_yellow = "#dbdbbd"   # Ptyxis Color11
+bright_blue = "#bdbddb"   # Ptyxis Color12
+bright_magenta = "#dbbddb"   # Ptyxis Color13
+bright_cyan = "#bddbdb"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

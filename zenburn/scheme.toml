@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Zenburn'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Zenburn.yml.
+title = "Zenburn"
+gtk_name = "Zenburn"
+shell_name = "Zenburn-Shell"
+credit = "Zenburn (colours of the Ptyxis built-in 'Zenburn'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Zenburn.yml)"
+ptyxis = "Zenburn"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Zenburn' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#3f3f3f"
+fg = "#dcdccc"
+selection = "#5e5e5b"   # DERIVED
+red = "#705050"
+orange = "#b09880"   # DERIVED
+yellow = "#f0dfaf"
+green = "#60b48a"
+cyan = "#8cd0d3"
+blue = "#506070"
+magenta = "#dc8cc3"
+purple = "#dc8cc3"   # = magenta
+# palette Color8 (bright black) = #709080: a candidate for `comment`
+[dark.ansi]
+red = "#705050"
+green = "#60b48a"
+yellow = "#f0dfaf"
+blue = "#506070"
+magenta = "#dc8cc3"
+cyan = "#8cd0d3"
+[dark.terminal]
+source = "Zenburn"   # Ptyxis built-in id
+black = "#4d4d4d"   # Ptyxis Color0
+bright_black = "#709080"   # Ptyxis Color8
+bright_red = "#dca3a3"   # Ptyxis Color9
+bright_green = "#c3bf9f"   # Ptyxis Color10
+bright_yellow = "#e0cf9f"   # Ptyxis Color11
+bright_blue = "#94bff3"   # Ptyxis Color12
+bright_magenta = "#ec93d3"   # Ptyxis Color13
+bright_cyan = "#93e0e3"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

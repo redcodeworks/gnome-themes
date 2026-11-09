@@ -15,7 +15,7 @@ comparing with the directly generated accent files. Different stock shades can c
 rounding) and then need slightly different accent tokens; the map takes the most frequent one, so such tokens may be
 off by 1-3 units per channel (invisible; counted in the output, never more than TOL). Anything else aborts.
 """
-import sys, os, re, subprocess, tomllib
+import tempfile, sys, os, re, subprocess, tomllib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from collections import Counter
 from themegen import TOK
@@ -24,7 +24,8 @@ TOL = 3     # 3 of 255 (about 1 %) per channel: Rose Pine's dark pine-green acce
 d, adir = sys.argv[1].rstrip('/'), sys.argv[2]
 with open(d + '/palette.toml', 'rb') as f: M = tomllib.load(f)
 dflt, dark_only = M['default_accent'], M['dark_only']
-names = list(M['accents']['dark'])
+light_only = M.get('light_only', False)
+names = list(next(iter(M['accents'].values())))
 
 def default_path(rel):
     if rel.startswith('libadwaita/'): return d + '/libadwaita/gtk.css'
@@ -47,7 +48,7 @@ def tokmap(dtext, atext, rel):
     for (pos, x), (_, y) in zip(dt, at):
         if x == y: continue
         v = variant(rel)
-        if v == 'both': v = 'light' if pos < cut else 'dark'      # the toast rule after the media block is dark too
+        if v == 'both': v = 'light' if (pos < cut or light_only) else 'dark'      # the toast rule after the media block is dark too
         out[v].setdefault(x, Counter())[y] += 1
     return out
 
@@ -86,19 +87,26 @@ for a in names:
             if len(c) > 1:
                 approx += sum(n for t, n in c.items() if t != best)
                 if not all(close(best, t) for t in c): sys.exit('accent %s: token %s maps to far-apart tokens %s' % (a, k, dict(c)))
-    variants = ['dark'] if dark_only else ['dark', 'light']
+    variants = ['light'] if light_only else (['dark'] if dark_only else ['dark', 'light'])
     for v in variants:
         body = '# default accent: nothing to rewrite\n' if a == dflt else sed_text(maps[v], '%s %s %s' % (os.path.basename(d), a, v), v[0].upper())
         open('%s/accents/%s.%s.sed' % (d, a, v), 'w').write(body)
     # verify: sed(default file) == generated accent file
     for rel in rels:
         v = variant(rel)
-        files = ['%s/accents/%s.%s.sed' % (d, a, x) for x in ((['light', 'dark'] if not dark_only else ['dark']) if v == 'both' else [v])]
-        got = apply(default_path(rel), *files); want = open('%s/%s/%s' % (adir, a, rel)).read()
+        files = ['%s/accents/%s.%s.sed' % (d, a, x) for x in ((['light'] if light_only else (['light', 'dark'] if not dark_only else ['dark'])) if v == 'both' else [v])]
+        if v == 'both' and len(files) == 2:
+            # libadwaita: the light map applies to the part before the @media block, the dark map to the rest (a token both variants share maps differently)
+            txt = open(default_path(rel)).read(); cut = txt.find('\n@media')
+            hp, tp = tempfile.mktemp(), tempfile.mktemp()
+            open(hp, 'w').write(txt[:cut]); open(tp, 'w').write(txt[cut:])
+            got = apply(hp, files[0]) + apply(tp, files[1]); os.remove(hp); os.remove(tp)
+        else: got = apply(default_path(rel), *files)
+        want = open('%s/%s/%s' % (adir, a, rel)).read()
         gt, wt = toks(got), toks(want)
         if TOK.sub('', got) != TOK.sub('', want) or len(gt) != len(wt) or not all(close(x[1], y[1]) for x, y in zip(gt, wt)): sys.exit('VERIFY FAILED: %s accent %s %s (sed result differs from the generated file)' % (os.path.basename(d), a, rel))
-    print('%-8s %4d dark tokens%s verified on %d files (%d token occurrences approximated)' % (a, len(maps['dark']), '' if dark_only else ', %4d light tokens,' % len(maps['light']), len(rels), approx))
+    print('%-8s %4d dark tokens%s verified on %d files (%d token occurrences approximated)' % (a, len(maps['light' if light_only else 'dark']), '' if dark_only or light_only else ', %4d light tokens,' % len(maps['light']), len(rels), approx))
 with open(d + '/accents/list', 'w') as f:
     f.write('# name dark-hex light-hex (- = none) [default]: written by tools/accent-maps-gen.py\n')
     for a in names:
-        f.write('%s %s %s%s\n' % (a, M['accents']['dark'][a]['color'], '-' if dark_only else M['accents']['light'][a]['color'], ' default' if a == dflt else ''))
+        f.write('%s %s %s%s\n' % (a, M['accents']['light' if light_only else 'dark'][a]['color'], '-' if (dark_only or light_only) else M['accents']['light'][a]['color'], ' default' if a == dflt else ''))

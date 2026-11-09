@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Novel'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml.
+title = "Novel"
+gtk_name = "Novel"
+shell_name = "Novel-Shell"
+credit = "Novel (colours of the Ptyxis built-in 'Novel'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml)"
+ptyxis = "Novel"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Novel' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "blue"
+
+[light]
+bg_deep = "#dfdbc3"
+fg = "#3b2322"
+selection = "#beb6a3"   # DERIVED
+red = "#cc0000"
+orange = "#ce3600"   # DERIVED
+yellow = "#d06b00"
+green = "#009600"
+cyan = "#0087cc"
+blue = "#0000cc"
+magenta = "#cc00cc"
+purple = "#cc00cc"   # = magenta
+# palette Color8 (bright black) = #808080: a candidate for `comment`
+[light.ansi]
+red = "#cc0000"
+green = "#009600"
+yellow = "#d06b00"
+blue = "#0000cc"
+magenta = "#cc00cc"
+cyan = "#0087cc"
+[light.terminal]
+source = "Novel"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#cccccc"   # Ptyxis Color7
+bright_black = "#808080"   # Ptyxis Color8
+bright_white = "#ffffff"   # Ptyxis Color15

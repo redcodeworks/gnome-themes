@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Lunaria Eclipse'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Lunaria%20Eclipse.yml.
+title = "Lunaria Eclipse"
+gtk_name = "Lunaria-Eclipse"
+shell_name = "Lunaria-Eclipse-Shell"
+credit = "Lunaria Eclipse (colours of the Ptyxis built-in 'Lunaria Eclipse'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Lunaria%20Eclipse.yml)"
+ptyxis = "Lunaria Eclipse"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Lunaria Eclipse' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#323f46"
+fg = "#c9cdd7"
+selection = "#505b63"   # DERIVED
+red = "#83615b"
+orange = "#947c68"   # DERIVED
+yellow = "#a69875"
+green = "#7f9781"
+cyan = "#7d96b2"
+blue = "#53516f"
+magenta = "#856880"
+purple = "#856880"   # = magenta
+# palette Color8 (bright black) = #3d4950: a candidate for `comment`
+[dark.ansi]
+red = "#83615b"
+green = "#7f9781"
+yellow = "#a69875"
+blue = "#53516f"
+magenta = "#856880"
+cyan = "#7d96b2"
+[dark.terminal]
+source = "Lunaria Eclipse"   # Ptyxis built-in id
+black = "#323f46"   # Ptyxis Color0
+bright_black = "#3d4950"   # Ptyxis Color8
+bright_red = "#ba9088"   # Ptyxis Color9
+bright_green = "#bedbc1"   # Ptyxis Color10
+bright_yellow = "#f1dfb4"   # Ptyxis Color11
+bright_blue = "#767495"   # Ptyxis Color12
+bright_magenta = "#be9cb8"   # Ptyxis Color13
+bright_cyan = "#bcdbff"   # Ptyxis Color14
+bright_white = "#dfe2ed"   # Ptyxis Color15

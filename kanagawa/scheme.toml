@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Kanagawa'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Kanagawa.yml.
+title = "Kanagawa"
+gtk_name = "Kanagawa"
+shell_name = "Kanagawa-Shell"
+credit = "Kanagawa (colours of the Ptyxis built-in 'Kanagawa'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Kanagawa.yml)"
+ptyxis = "Kanagawa"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Kanagawa' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1f1f28"
+fg = "#dcd7ba"
+selection = "#454445"   # DERIVED
+red = "#c34043"
+orange = "#c27258"   # DERIVED
+yellow = "#c0a36e"
+green = "#76946a"
+cyan = "#6a9589"
+blue = "#7e9cd8"
+magenta = "#957fb8"
+purple = "#957fb8"   # = magenta
+# palette Color8 (bright black) = #727169: a candidate for `comment`
+[dark.ansi]
+red = "#c34043"
+green = "#76946a"
+yellow = "#c0a36e"
+blue = "#7e9cd8"
+magenta = "#957fb8"
+cyan = "#6a9589"
+[dark.terminal]
+source = "Kanagawa"   # Ptyxis built-in id
+black = "#090618"   # Ptyxis Color0
+bright_black = "#727169"   # Ptyxis Color8
+bright_red = "#e82424"   # Ptyxis Color9
+bright_green = "#98bb6c"   # Ptyxis Color10
+bright_yellow = "#e6c384"   # Ptyxis Color11
+bright_blue = "#7fb4ca"   # Ptyxis Color12
+bright_magenta = "#938aa9"   # Ptyxis Color13
+bright_cyan = "#7aa89f"   # Ptyxis Color14
+bright_white = "#c8c093"   # Ptyxis Color15

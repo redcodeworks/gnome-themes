@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Vs Code'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vs%20Code%20Light+.yml.
+title = "Vs Code"
+gtk_name = "Vs-Code"
+shell_name = "Vs-Code-Shell"
+credit = "Vs Code (colours of the Ptyxis built-in 'Vs Code'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Vs%20Code%20Light+.yml)"
+ptyxis = "Vs Code"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Vs Code' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#1e1e1e"
+fg = "#cccccc"
+selection = "#414141"   # DERIVED
+red = "#e9653b"
+orange = "#e78e60"   # DERIVED
+yellow = "#e5b684"
+green = "#39e9a8"
+cyan = "#3dd5e7"
+blue = "#44aae6"
+magenta = "#e17599"
+purple = "#e17599"   # = magenta
+# palette Color8 (bright black) = #598489: a candidate for `comment`
+[dark.ansi]
+red = "#e9653b"
+green = "#39e9a8"
+yellow = "#e5b684"
+blue = "#44aae6"
+magenta = "#e17599"
+cyan = "#3dd5e7"
+[dark.terminal]
+source = "Vs Code"   # Ptyxis built-in id
+black = "#6a787a"   # Ptyxis Color0
+white = "#c3dde1"   # Ptyxis Color7
+bright_black = "#598489"   # Ptyxis Color8
+bright_red = "#e65029"   # Ptyxis Color9
+bright_green = "#00ff9a"   # Ptyxis Color10
+bright_yellow = "#e89440"   # Ptyxis Color11
+bright_blue = "#009afb"   # Ptyxis Color12
+bright_magenta = "#ff578f"   # Ptyxis Color13
+bright_cyan = "#5fffff"   # Ptyxis Color14
+bright_white = "#d9fbff"   # Ptyxis Color15
+
+[light]
+bg_deep = "#f9f9f9"
+fg = "#020202"
+selection = "#c8c8c8"   # DERIVED
+red = "#cd3232"
+orange = "#b96e19"   # DERIVED
+yellow = "#a5a900"
+green = "#00bc00"
+cyan = "#0598bc"
+blue = "#0752a8"
+magenta = "#bc05bc"
+purple = "#bc05bc"   # = magenta
+# palette Color8 (bright black) = #5e5e5e: a candidate for `comment`
+[light.ansi]
+red = "#cd3232"
+green = "#00bc00"
+yellow = "#a5a900"
+blue = "#0752a8"
+magenta = "#bc05bc"
+cyan = "#0598bc"
+[light.terminal]
+source = "Vs Code"   # Ptyxis built-in id
+black = "#020202"   # Ptyxis Color0
+white = "#343434"   # Ptyxis Color7
+bright_black = "#5e5e5e"   # Ptyxis Color8
+bright_red = "#cd3333"   # Ptyxis Color9
+bright_green = "#1bce1a"   # Ptyxis Color10
+bright_yellow = "#adbb5b"   # Ptyxis Color11
+bright_magenta = "#c451ce"   # Ptyxis Color13
+bright_cyan = "#52a8c7"   # Ptyxis Color14
+bright_white = "#a6a3a6"   # Ptyxis Color15

@@ -14,6 +14,7 @@ def load(scheme_dir):
     with open(os.path.join(scheme_dir, 'scheme.toml'), 'rb') as f: S = tomllib.load(f)
     roles, _ = pfs.resolve(S)
     slots = [('light', 'light' if 'light' in roles else 'dark'), ('dark', 'dark')]
+    if 'dark' not in roles: slots = [('light', 'light')]     # light-only scheme: no dark slot
     return S, roles, slots
 
 NAMES = ('red', 'green', 'yellow', 'blue', 'magenta', 'cyan')

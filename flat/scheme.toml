@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Flat'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat.yml.
+title = "Flat"
+gtk_name = "Flat"
+shell_name = "Flat-Shell"
+credit = "Flat (colours of the Ptyxis built-in 'Flat'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat.yml)"
+ptyxis = "Flat"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Flat' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1f2d3a"
+fg = "#1abc9c"
+selection = "#1e4a4e"   # DERIVED
+red = "#c0392b"
+orange = "#da6a1e"   # DERIVED
+yellow = "#f39c12"
+green = "#27ae60"
+cyan = "#16a085"
+blue = "#2980b9"
+magenta = "#8e44ad"
+purple = "#8e44ad"   # = magenta
+# palette Color8 (bright black) = #34495e: a candidate for `comment`
+[dark.ansi]
+red = "#c0392b"
+green = "#27ae60"
+yellow = "#f39c12"
+blue = "#2980b9"
+magenta = "#8e44ad"
+cyan = "#16a085"
+[dark.terminal]
+source = "Flat"   # Ptyxis built-in id
+black = "#2c3e50"   # Ptyxis Color0
+white = "#bdc3c7"   # Ptyxis Color7
+bright_black = "#34495e"   # Ptyxis Color8
+bright_red = "#e74c3c"   # Ptyxis Color9
+bright_green = "#2ecc71"   # Ptyxis Color10
+bright_yellow = "#f1c40f"   # Ptyxis Color11
+bright_blue = "#3498db"   # Ptyxis Color12
+bright_magenta = "#9b59b6"   # Ptyxis Color13
+bright_cyan = "#2aa198"   # Ptyxis Color14
+bright_white = "#ecf0f1"   # Ptyxis Color15

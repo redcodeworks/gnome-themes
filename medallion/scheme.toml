@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Medallion'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Medallion.yml.
+title = "Medallion"
+gtk_name = "Medallion"
+shell_name = "Medallion-Shell"
+credit = "Medallion (colours of the Ptyxis built-in 'Medallion'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Medallion.yml)"
+ptyxis = "Medallion"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Medallion' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1d1908"
+fg = "#cac296"
+selection = "#403b24"   # DERIVED
+red = "#b64c00"
+orange = "#c48413"   # DERIVED
+yellow = "#d3bd26"
+green = "#7c8b16"
+cyan = "#916c25"
+blue = "#616bb0"
+magenta = "#8c5a90"
+purple = "#8c5a90"   # = magenta
+# palette Color8 (bright black) = #5e5219: a candidate for `comment`
+[dark.ansi]
+red = "#b64c00"
+green = "#7c8b16"
+yellow = "#d3bd26"
+blue = "#616bb0"
+magenta = "#8c5a90"
+cyan = "#916c25"
+[dark.terminal]
+source = "Medallion"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#cac29a"   # Ptyxis Color7
+bright_black = "#5e5219"   # Ptyxis Color8
+bright_red = "#ff9149"   # Ptyxis Color9
+bright_green = "#b2ca3b"   # Ptyxis Color10
+bright_yellow = "#ffe54a"   # Ptyxis Color11
+bright_blue = "#acb8ff"   # Ptyxis Color12
+bright_magenta = "#ffa0ff"   # Ptyxis Color13
+bright_cyan = "#ffbc51"   # Ptyxis Color14
+bright_white = "#fed698"   # Ptyxis Color15

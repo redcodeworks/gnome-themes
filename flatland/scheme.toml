@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Flatland'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Flatland.yml.
+title = "Flatland"
+gtk_name = "Flatland"
+shell_name = "Flatland-Shell"
+credit = "Flatland (colours of the Ptyxis built-in 'Flatland'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Flatland.yml)"
+ptyxis = "Flatland"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Flatland' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1d1f21"
+fg = "#b8dbef"
+selection = "#3c454a"   # DERIVED
+red = "#f18339"
+orange = "#f2b953"   # DERIVED
+yellow = "#f4ef6d"
+green = "#9fd364"
+cyan = "#d63865"
+blue = "#5096be"
+magenta = "#695abc"
+purple = "#695abc"   # = magenta
+# palette Color8 (bright black) = #1d1d19: a candidate for `comment`
+[dark.ansi]
+red = "#f18339"
+green = "#9fd364"
+yellow = "#f4ef6d"
+blue = "#5096be"
+magenta = "#695abc"
+cyan = "#d63865"
+[dark.terminal]
+source = "Flatland"   # Ptyxis built-in id
+black = "#1d1d19"   # Ptyxis Color0
+white = "#ffffff"   # Ptyxis Color7
+bright_black = "#1d1d19"   # Ptyxis Color8
+bright_red = "#d22a24"   # Ptyxis Color9
+bright_green = "#a7d42c"   # Ptyxis Color10
+bright_yellow = "#ff8949"   # Ptyxis Color11
+bright_blue = "#61b9d0"   # Ptyxis Color12
+bright_white = "#ffffff"   # Ptyxis Color15

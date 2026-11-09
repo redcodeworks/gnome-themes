@@ -83,11 +83,12 @@ def toolkit(kind):
     if kind in ('gtk3', 'gtk4'):
         base = '%s/themes/%s/%s' % (D, M['gtk_name'], sub)
         for dst, s in src.items():
+            if M.get('light_only') and dst == 'gtk-dark.css': continue
             if M['dark_only'] and dst == 'gtk.css': s = src['gtk-dark.css']
             files[base + '/' + dst] = (bytes(Gio.resources_lookup_data(R + s, 0).get_data()).decode(), variant_of(dst))
     else:
         res = Gio.Resource.load('/usr/share/gnome-shell/gnome-shell-theme.gresource')
-        for v in (['dark'] if M['dark_only'] else ['dark', 'light']):
+        for v in (['light'] if M.get('light_only') else ['dark'] if M['dark_only'] else ['dark', 'light']):
             p = '%s/themes/%s-%s/gnome-shell/gnome-shell.css' % (D, M['shell_name'], v.capitalize())
             files[p] = (bytes(res.lookup_data('/org/gnome/shell/theme/gnome-shell-%s.css' % v, 0).get_data()).decode(), v)
     tmp = tempfile.mkdtemp()

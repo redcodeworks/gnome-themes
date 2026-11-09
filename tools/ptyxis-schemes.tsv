@@ -1,0 +1,240 @@
+scheme	dark_id	light_id	status	reason	origin
+3024	3024	-	built		-
+aci	Aci	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aci.yml
+aco	Aco	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aco.yml
+adventure-time	Adventure Time	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Adventure%20Time.yml
+afterglow	Afterglow	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Afterglow.yml
+alien-blood	Alien Blood	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202058 bytes | libadwaita 2918 bytes | VERIFY FAILED: alien-blood accent red Alien-Blood-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Alien%20Blood.yml
+apprentice	Apprentice	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Apprentice.yml
+argonaut	Argonaut	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Argonaut.yml
+arthur	Arthur	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Arthur.yml
+atom	Atom	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Atom.yml
+aubergine	Ubuntu	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Clone%20Of%20Ubuntu.yml
+aura	Aura	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Aura.yml
+ayu	Ayu	-	built		-
+ayu-mirage	Ayu Mirage	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202115 bytes | libadwaita 2914 bytes | VERIFY FAILED: ayu-mirage accent red gtk-3.0/gtk-dark.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ayu%20Mirage.yml
+azu	Azu	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Azu.yml
+belafonte	Belafonte	-	built		-
+bim	Bim	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bim.yml
+birds-of-paradise	Birds Of Paradise	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Birds%20Of%20Paradise.yml
+blazer	Blazer	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Blazer.yml
+bluloco-light	Bluloco Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Light.yml
+bluloco-zsh-light	Bluloco Zsh Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Bluloco%20Zsh%20Light.yml
+borland	Borland	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Borland.yml
+breath	Breath	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199287 bytes | libadwaita 4342 bytes | accent red: token #19b798 maps to far-apart tokens {'#bb3730': 7, '#e61414': 6, '#bd3630': 3} | error: recipe `generate` failed with exit code 1	-
+breath-silverfox	Breath Silverfox	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breath%20Silverfox.yml
+breeze	Breeze	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Breeze.yml
+broadcast	Broadcast	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Broadcast.yml
+brogrammer	Brogrammer	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Brogrammer.yml
+c64	C64	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.16)	https://github.com/Gogh-Co/Gogh/tree/master/themes/C64.yml
+cai	Cai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Cai.yml
+campbell	campbell	-	excluded	generic terminal preset (Windows Terminal default)	-
+catppuccin	Catppuccin Latte + Catppuccin Mocha	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Latte.yml
+catppuccin-frappe	Catppuccin Frappé	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Frappé.yml
+catppuccin-macchiato	Catppuccin Macchiato	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Macchiato.yml
+chalk	Chalk	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalk.yml
+chalkboard	Chalkboard	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chalkboard.yml
+chameleon	Chameleon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Chameleon.yml
+ciapre	Ciapre	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202095 bytes | libadwaita 2896 bytes | VERIFY FAILED: ciapre accent red Ciapre-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ciapre.yml
+clrs	Clrs	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Clrs.yml
+cobalt-2	Cobalt 2	-	excluded	ptyxis-compare: info: cobalt-2 dark -> built-in id "Cobalt 2" (flat): roles max dE 0.00 (Background), all18 24.12	https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%202.yml
+cobalt-neon	Cobalt Neon	-	excluded	ptyxis-compare: info: cobalt-neon dark -> built-in id "Cobalt Neon" (flat): roles max dE 0.00 (Background), all18 141.47	https://github.com/Gogh-Co/Gogh/tree/master/themes/Cobalt%20Neon.yml
+colorcli	Colorcli	-	excluded	palette repeats colours (red = magenta, green = yellow, blue = foreground): the accent maps cannot tell accents and roles apart (accent-maps-gen VERIFY FAILED)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Colorcli.yml
+crayon-pony-fish	Crayon Pony Fish	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.68)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Crayon%20Pony%20Fish.yml
+dark-pastel	Dark Pastel	-	excluded	ptyxis-compare: info: dark-pastel dark -> built-in id "Dark Pastel" (flat): roles max dE 0.00 (Background), all18 24.12	https://github.com/Gogh-Co/Gogh/tree/master/themes/Dark%20Pastel.yml
+darkside	Darkside	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Darkside.yml
+dehydration	Dehydration	-	excluded	ptyxis-compare: info: dehydration dark -> built-in id "Dehydration" (flat): roles max dE 0.00 (Background), all18 18.82	https://github.com/Gogh-Co/Gogh/tree/master/themes/Dehydration.yml
+desert	Desert	-	excluded	ptyxis-compare: info: desert dark -> built-in id "Desert" (flat): roles max dE 0.00 (Background), all18 26.31	https://github.com/Gogh-Co/Gogh/tree/master/themes/Desert.yml
+dimmed-monokai	Dimmed Monokai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dimmed%20Monokai.yml
+dissonance	Dissonance	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Dissonance.yml
+dracula	dracula	-	existing	covered by the existing scheme	-
+earthsong	Earthsong	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Earthsong.yml
+elemental	Elemental	-	excluded	selftest: FAIL dark fg on window >= 4.5 (3.57)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Elemental.yml
+elementary	Elementary	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elementary.yml
+elic	Elic	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202091 bytes | libadwaita 2888 bytes | accent red: token #f2f2f2 maps to far-apart tokens {'#e1321a': 582, '#e55f4c': 14, '#e1351d': 4, '#e4503b': 38, '#e98b7e': 4, '#e23e28': 6, '#e3442e': 2, '#e99286': 2, '#e55e4b': 6, '#e66a59': 4, '#e55c49': 4, '#e3432e': 4, '#e241	https://github.com/Gogh-Co/Gogh/tree/master/themes/Elic.yml
+elio	Elio	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Elio.yml
+espresso	Espresso	-	excluded	ptyxis-compare: info: espresso dark -> built-in id "Espresso" (flat): roles max dE 0.00 (Background), all18 6.04	https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso.yml
+espresso-libre	Espresso Libre	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso%20Libre.yml
+everblush	Everblush	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Everblush.yml
+everforest	Everforest	-	existing	covered by the existing scheme	-
+fairy-floss	Fairy Floss Dark	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss%20Dark.yml
+fairy-floss-classic	Fairy Floss	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202153 bytes | libadwaita 2934 bytes | accent red: token #c2ffdf maps to far-apart tokens {'#a8757b': 582, '#ae9592': 14, '#a8777d': 4, '#ac8a8a': 38, '#b4b5a9': 4, '#aa7e81': 6, '#aa8284': 6, '#b5baad': 2, '#ae9492': 6, '#b09d98': 4, '#ae9391': 4, '#aa7f83': 4, '#ac88	https://github.com/Gogh-Co/Gogh/tree/master/themes/Fairy%20Floss.yml
+fishtank	Fishtank	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Fishtank.yml
+flat	Flat	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat.yml
+flat-remix	Flat Remix	-	excluded	ptyxis-compare: info: flat-remix dark -> built-in id "Flat Remix" (flat): roles max dE 0.00 (Background), all18 8.71	https://github.com/Gogh-Co/Gogh/tree/master/themes/Flat%20Remix.yml
+flatland	Flatland	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Flatland.yml
+foxnightly	Foxnightly	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Foxnightly.yml
+freya	Freya	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Freya.yml
+frontend-delight	Frontend Delight	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Delight.yml
+frontend-fun-forrest	Frontend Fun Forrest	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Fun%20Forrest.yml
+frontend-galaxy	Frontend Galaxy	-	excluded	ptyxis-compare: info: frontend-galaxy dark -> built-in id "Frontend Galaxy" (flat): roles max dE 0.00 (Background), all18 24.12	https://github.com/Gogh-Co/Gogh/tree/master/themes/Frontend%20Galaxy.yml
+geohot	Geohot	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Geohot.yml
+github	Github	-	built		-
+gnome	gnome	-	excluded	generic terminal preset	-
+gnome-high-contrast	gnome-high-contrast	-	excluded	generic terminal preset	-
+gnome-legacy	GNOME Legacy	-	excluded	generic terminal preset	-
+gogh	Gogh	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gogh.yml
+gooey	Gooey	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gooey.yml
+google	Google	-	built		-
+gotham	Gotham	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Gotham.yml
+grape	Grape	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Grape.yml
+grass	Grass	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.42)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Grass.yml
+gruvbox	Gruvbox	-	excluded	ptyxis-compare: info: gruvbox light -> built-in id "Gruvbox" (Light,Dark): roles max dE 0.00 (Background), all18 24.70	https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox.yml
+gruvbox-material	Gruvbox Material	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Gruvbox%20Material.yml
+hardcore	Hardcore	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hardcore.yml
+harper	Harper	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Harper.yml
+hemisu	Hemisu	-	excluded	ptyxis-compare: info: hemisu light -> built-in id "Hemisu" (Light,Dark): roles max dE 0.00 (Background), all18 0.00	-
+highway	Highway	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Highway.yml
+hipster-green	Hipster Green	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hipster%20Green.yml
+homebrew	Homebrew	Homebrew Light	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew.yml
+homebrew-ocean	Homebrew Ocean	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Homebrew%20Ocean.yml
+horizon	Horizon	-	excluded	ptyxis-compare: info: horizon light -> built-in id "Horizon" (Light,Dark): roles max dE 0.00 (Background), all18 0.00	https://github.com/Gogh-Co/Gogh/tree/master/themes/Horizon%20Bright.yml
+hurtado	Hurtado	-	excluded	ptyxis-compare: info: hurtado dark -> built-in id "Hurtado" (flat): roles max dE 0.00 (Background), all18 5.50	https://github.com/Gogh-Co/Gogh/tree/master/themes/Hurtado.yml
+hybrid	Hybrid	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Hybrid.yml
+ibm-3270-high-contrast	Ibm 3270 (High Contrast)	-	excluded	IBM 3270 mainframe preset, not a colour scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ibm%203270%20(High%20Contrast).yml
+ibm3270	Ibm3270	-	excluded	IBM 3270 mainframe preset, not a colour scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ibm3270.yml
+ic-green-ppl	Ic Green Ppl	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Green%20Ppl.yml
+ic-orange-ppl	Ic Orange Ppl	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ic%20Orange%20Ppl.yml
+idle-toes	Idle Toes	-	excluded	ptyxis-compare: info: idle-toes dark -> built-in id "Idle Toes" (flat): roles max dE 0.00 (Background), all18 6.04	https://github.com/Gogh-Co/Gogh/tree/master/themes/Idle%20Toes.yml
+ir-black	Ir Black	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202091 bytes | libadwaita 2906 bytes | VERIFY FAILED: ir-black accent red Ir-Black-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Ir%20Black.yml
+jackie-brown	Jackie Brown	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jackie%20Brown.yml
+japanesque	Japanesque	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Japanesque.yml
+jellybeans	Jellybeans	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Jellybeans.yml
+jup	Jup	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.35)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Jup.yml
+kanagawa	Kanagawa	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kanagawa.yml
+kibble	Kibble	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kibble.yml
+kokuban	Kokuban	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Kokuban.yml
+laserwave	Laserwave	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Laserwave.yml
+later-this-evening	Later This Evening	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Later%20This%20Evening.yml
+lavandula	Lavandula	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.03)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Lavandula.yml
+linux	linux	-	excluded	generic terminal preset (Linux console)	-
+liquid-carbon	Liquid Carbon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon.yml
+liquid-carbon-transparent	Liquid Carbon Transparent	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Liquid%20Carbon%20Transparent.yml
+lunaria	Lunaria	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199298 bytes | libadwaita 4345 bytes | VERIFY FAILED: lunaria accent red gtk-3.0/gtk.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+lunaria-eclipse	Lunaria Eclipse	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Lunaria%20Eclipse.yml
+maia	Maia	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Maia.yml
+man-page	Man Page	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Man%20Page.yml
+mar	Mar	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mar.yml
+material	Material	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Material.yml
+mathias	Mathias	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mathias.yml
+medallion	Medallion	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Medallion.yml
+misterioso	Misterioso	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Misterioso.yml
+molokai	Molokai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Molokai.yml
+mona-lisa	Mona Lisa	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Mona%20Lisa.yml
+mono-amber	Mono Amber	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Amber.yml
+mono-cyan	Mono Cyan	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Cyan.yml
+mono-green	Mono Green	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Green.yml
+mono-red	Mono Red	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Red.yml
+mono-white	Mono White	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20White.yml
+mono-yellow	Mono Yellow	-	excluded	single-hue palette: the six accents cannot be told apart	https://github.com/Gogh-Co/Gogh/tree/master/themes/Mono%20Yellow.yml
+monokai	Monokai Dark	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Dark.yml
+monokai-pro	Monokai Pro	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro.yml
+monokai-pro-ristretto	Monokai Pro Ristretto	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro%20Ristretto.yml
+monokai-soda	Monokai Soda	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Soda.yml
+moonfly	Moonfly	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Moonfly.yml
+morada	Morada	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Morada.yml
+n0tch2k	N0Tch2K	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202100 bytes | libadwaita 2900 bytes | accent red: token #909090 maps to far-apart tokens {'#793d3a': 40, '#7b4341': 2} | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/N0Tch2K.yml
+neon-night	Neon Night	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neon%20Night.yml
+neopolitan	Neopolitan	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neopolitan.yml
+nep	Nep	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.35)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nep.yml
+neutron	Neutron	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Neutron.yml
+night-owl	Night Owl	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Night%20Owl.yml
+nightfly	Nightfly	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightfly.yml
+nightlion-v1	Nightlion V1	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202107 bytes | libadwaita 2922 bytes | VERIFY FAILED: nightlion-v1 accent red Nightlion-V1-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V1.yml
+nightlion-v2	Nightlion V2	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202125 bytes | libadwaita 2922 bytes | VERIFY FAILED: nightlion-v2 accent red Nightlion-V2-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nightlion%20V2.yml
+nighty	Nighty	-	excluded	ptyxis-compare: info: nighty dark -> built-in id "Nighty" (flat): roles max dE 0.00 (Background), all18 34.46	https://github.com/Gogh-Co/Gogh/tree/master/themes/Nighty.yml
+nordic	nord	-	existing	covered by the existing scheme	-
+novel	Novel	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Novel.yml
+obsidian	Obsidian	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml
+ocean-dark	Ocean Dark	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml
+oceanic-next	Oceanic Next	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Oceanic%20Next.yml
+ollie	Ollie	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml
+omni	Omni	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Omni.yml
+one	One	-	excluded	contrast: the built-in's dark Foreground #5C6370 is One Dark's comment grey, 2.55:1 on its #1E2127 background; reaching 4.5:1 needs a nudge far beyond NUDGE_MAX (6 dE)	-
+one-half-black	One Half Black	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/One%20Half%20Black.yml
+oxocarbon-dark	Oxocarbon Dark	-	excluded	ptyxis-compare: info: oxocarbon-dark dark -> built-in id "Oxocarbon Dark" (flat): roles max dE 0.00 (Background), all18 11.03	https://github.com/Gogh-Co/Gogh/tree/master/themes/Oxocarbon%20Dark.yml
+palenight	Palenight	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202113 bytes | libadwaita 2908 bytes | VERIFY FAILED: palenight accent red gtk-3.0/gtk-dark.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Palenight.yml
+pali	Pali	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pali.yml
+panda	Panda	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Panda.yml
+papercolor	Papercolor	-	built		-
+paraiso-dark	Paraiso Dark	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paraiso%20Dark.yml
+paul-millr	Paul Millr	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Paul%20Millr.yml
+pencil	Pencil	-	excluded	generate failed: gnome-shell-light.css 198634 -> 199295 bytes | libadwaita 4342 bytes | VERIFY FAILED: pencil accent red Pencil-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	-
+peppermint	Peppermint	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Peppermint.yml
+pixiefloss	Pixiefloss	-	excluded	generate failed: red        55 dark tokens verified on 6 files (10 token occurrences approximated) | green      55 dark tokens verified on 6 files (12 token occurrences approximated) | accent yellow: token #c5f3e1 maps to far-apart tokens {'#e1c236': 14, '#e1c235': 6, '#e1c232': 4} | error: recipe `generate` failed 	https://github.com/Gogh-Co/Gogh/tree/master/themes/Pixiefloss.yml
+pnevma	Pnevma	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pnevma.yml
+powershell	Powershell	-	excluded	generic terminal preset	https://github.com/Gogh-Co/Gogh/tree/master/themes/Powershell.yml
+predawn	Predawn	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Predawn.yml
+pro	Pro	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Pro.yml
+purple-people-eater	Purple People Eater	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Purple%20People%20Eater.yml
+red-alert	Red Alert	-	excluded	ptyxis-compare: info: red-alert dark -> built-in id "Red Alert" (flat): roles max dE 0.00 (Background), all18 14.37	https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Alert.yml
+red-sands	Red Sands	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Red%20Sands.yml
+relaxed	Relaxed	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Relaxed.yml
+rippedcasts	Rippedcasts	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rippedcasts.yml
+rose-pine	Rosé Pine + Rosé Pine Dawn	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine.yml
+rose-pine-moon	Rosé Pine Moon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine%20Moon.yml
+royal	Royal	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.28)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Royal.yml
+rxvt	rxvt	-	excluded	generic terminal preset	-
+sat	Sat	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.35)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sat.yml
+sea-shells	Sea Shells	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sea%20Shells.yml
+seafoam-pastel	Seafoam Pastel	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seafoam%20Pastel.yml
+selenized	Selenized	-	built		-
+seti	Seti	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Seti.yml
+shaman	Shaman	-	excluded	selftest: FAIL dark fg on window >= 4.5 (2.37)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Shaman.yml
+shel	Shel	-	excluded	selftest: FAIL dark fg on window >= 4.5 (3.81)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Shel.yml
+slate	Slate	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Slate.yml
+smyck	Smyck	-	excluded	ptyxis-compare: info: smyck dark -> built-in id "Smyck" (flat): roles max dE 0.00 (Background), all18 25.40	https://github.com/Gogh-Co/Gogh/tree/master/themes/Smyck.yml
+snazzy	Snazzy	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202103 bytes | libadwaita 2896 bytes | VERIFY FAILED: snazzy accent red Snazzy-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Snazzy.yml
+soft-server	Soft Server	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202121 bytes | libadwaita 2918 bytes | VERIFY FAILED: soft-server accent red gtk-3.0/gtk-dark.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Soft%20Server.yml
+solarized	solarized	-	existing	covered by the existing scheme	-
+solarized-classic	Solarized	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.39)	-
+solarized-darcula	Solarized Darcula	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Darcula.yml
+solarized-dark-higher-contrast	Solarized Dark Higher Contrast	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Dark%20Higher%20Contrast.yml
+sonokai	Sonokai	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sonokai.yml
+spacedust	Spacedust	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacedust.yml
+spacegray	Spacegray	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray.yml
+spacegray-eighties	Spacegray Eighties	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties.yml
+spacegray-eighties-dull	Spacegray Eighties Dull	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties%20Dull.yml
+spring	Spring	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Spring.yml
+square	Square	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Square.yml
+srcery	Srcery	-	excluded	ptyxis-compare: info: srcery dark -> built-in id "Srcery" (flat): roles max dE 0.00 (Background), all18 23.92	https://github.com/Gogh-Co/Gogh/tree/master/themes/Srcery.yml
+summer-pop	Summer Pop	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Summer%20Pop.yml
+sundried	Sundried	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Sundried.yml
+sweet	Sweet Eliverlara	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Eliverlara.yml
+sweet-terminal	Sweet Terminal	-	excluded	ptyxis-compare: info: sweet-terminal dark -> built-in id "Sweet Terminal" (flat): roles max dE 0.00 (Background), all18 28.58	https://github.com/Gogh-Co/Gogh/tree/master/themes/Sweet%20Terminal.yml
+symphonic	Symphonic	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Symphonic.yml
+synthwave	Synthwave	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave.yml
+synthwave-alpha	Synthwave Alpha	-	excluded	ptyxis-compare: info: synthwave-alpha dark -> built-in id "Synthwave Alpha" (flat): roles max dE 0.00 (Background), all18 26.04	https://github.com/Gogh-Co/Gogh/tree/master/themes/Synthwave%20Alpha.yml
+tango	tango	-	excluded	generic terminal preset	-
+teerb	Teerb	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Teerb.yml
+tender	Tender	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tender.yml
+terminal-basic	Terminal Basic	-	excluded	generic terminal preset (macOS Basic)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Terminal%20Basic.yml
+terminix-dark	Terminix Dark	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Terminix%20Dark.yml
+thayer-bright	Thayer Bright	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Thayer%20Bright.yml
+tin	Tin	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tin.yml
+tokyo-night	Tokyo Night + Tokyo Night Day	-	existing	covered by the existing scheme	https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night.yml
+tokyo-night-light	Tokyo Night Light	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Light.yml
+tokyo-night-moon	Tokyo Night Moon	-	excluded	ptyxis-compare: info: tokyo-night-moon dark -> built-in id "Tokyo Night Moon" (flat): roles max dE 0.00 (Background), all18 27.20	https://github.com/folke/tokyonight.nvim/tree/main/extras
+tokyo-night-storm	Tokyo Night Storm	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tokyo%20Night%20Storm.yml
+tomorrow	Tomorrow Night	Tomorrow	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night.yml
+tomorrow-night-blue	Tomorrow Night Blue	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Blue.yml
+tomorrow-night-bright	Tomorrow Night Bright	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Bright.yml
+tomorrow-night-eighties	Tomorrow Night Eighties	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Eighties.yml
+toy-chest	Toy Chest	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Toy%20Chest.yml
+treehouse	Treehouse	-	excluded	selftest: FAIL dark fg on window >= 4.5 (3.20)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Treehouse.yml
+twilight	Twilight	-	excluded	selftest: FAIL themes/Twilight/gtk-3.0/gtk.css accent green: parses, 1 default-accent tokens left	https://github.com/Gogh-Co/Gogh/tree/master/themes/Twilight.yml
+ura	Ura	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Ura.yml
+urple	Urple	-	excluded	selftest: FAIL dark fg on window >= 4.5 (4.05)	https://github.com/Gogh-Co/Gogh/tree/master/themes/Urple.yml
+vag	Vag	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vag.yml
+vaughn	Vaughn	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vaughn.yml
+vibrant-ink	Vibrant Ink	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vibrant%20Ink.yml
+vs-code	Vs Code	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Vs%20Code%20Light+.yml
+warm-neon	Warm Neon	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Warm%20Neon.yml
+website	Website	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Website.yml
+wez	Wez	-	excluded	generate failed: gnome-shell-dark.css 201379 -> 202066 bytes | libadwaita 2884 bytes | VERIFY FAILED: wez accent red Wez-Shell-Dark/gnome-shell/gnome-shell.css (sed result differs from the generated file) | error: recipe `generate` failed with exit code 1	https://github.com/Gogh-Co/Gogh/tree/master/themes/Wez.yml
+wild-cherry	Wild Cherry	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wild%20Cherry.yml
+wombat	Wombat	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wombat.yml
+wryan	Wryan	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wryan.yml
+wzoreck	Wzoreck	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Wzoreck.yml
+xterm	xterm	-	excluded	generic terminal preset	-
+zenburn	Zenburn	-	built		https://github.com/Gogh-Co/Gogh/tree/master/themes/Zenburn.yml

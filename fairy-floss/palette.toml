@@ -10,6 +10,7 @@ shell_name = "Fairy-Floss-Shell"
 credit = "Fairy Floss by sailorhg (hex values only, no upstream licence; accents partly invented)"
 default_accent = "magenta"
 dark_only = true
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#42395d"],[53,"#5a5475"],[66,"#67617f"],

@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Ayu'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. The built-in's header names no origin.
+title = "Ayu"
+gtk_name = "Ayu"
+shell_name = "Ayu-Shell"
+credit = "Ayu (colours of the Ptyxis built-in 'Ayu'; the built-in's header names no origin)"
+ptyxis = "Ayu"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Ayu' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#0a0e14"
+fg = "#b3b1ad"
+selection = "#2c2f33"   # DERIVED
+red = "#ff3333"
+orange = "#ff613a"   # DERIVED
+yellow = "#ff8f40"
+green = "#c2d94c"
+cyan = "#95e6cb"
+blue = "#59c2ff"
+magenta = "#ffee99"
+purple = "#ffee99"   # = magenta
+# palette Color8 (bright black) = #4d5566: a candidate for `comment`
+[dark.ansi]
+red = "#ff3333"
+green = "#c2d94c"
+yellow = "#ff8f40"
+blue = "#59c2ff"
+magenta = "#ffee99"
+cyan = "#95e6cb"
+[dark.terminal]
+source = "Ayu"   # Ptyxis built-in id
+cursor = "#e6b450"   # Ptyxis Cursor
+black = "#0a0e14"   # Ptyxis Color0
+bright_black = "#4d5566"   # Ptyxis Color8
+
+[light]
+bg_deep = "#fafafa"
+fg = "#575f66"
+selection = "#d9dbdc"   # DERIVED
+red = "#f51818"
+orange = "#f46330"   # DERIVED
+yellow = "#f2ae49"
+green = "#86b300"
+cyan = "#4cbf99"
+blue = "#399ee6"
+magenta = "#a37acc"
+purple = "#a37acc"   # = magenta
+# palette Color8 (bright black) = #8a9199: a candidate for `comment`
+[light.ansi]
+red = "#f51818"
+green = "#86b300"
+yellow = "#f2ae49"
+blue = "#399ee6"
+magenta = "#a37acc"
+cyan = "#4cbf99"
+[light.terminal]
+source = "Ayu"   # Ptyxis built-in id
+cursor = "#ff9940"   # Ptyxis Cursor
+black = "#575f66"   # Ptyxis Color0
+white = "#fafafa"   # Ptyxis Color7
+bright_black = "#8a9199"   # Ptyxis Color8
+bright_white = "#fafafa"   # Ptyxis Color15

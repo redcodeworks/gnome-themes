@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Jellybeans'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Jellybeans.yml.
+title = "Jellybeans"
+gtk_name = "Jellybeans"
+shell_name = "Jellybeans-Shell"
+credit = "Jellybeans (colours of the Ptyxis built-in 'Jellybeans'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Jellybeans.yml)"
+ptyxis = "Jellybeans"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Jellybeans' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[dark]
+bg_deep = "#121212"
+fg = "#dedede"
+selection = "#3b3b3b"   # DERIVED
+red = "#e27373"
+orange = "#f09677"   # DERIVED
+yellow = "#ffba7b"
+green = "#94b979"
+cyan = "#00988e"
+blue = "#97bedc"
+magenta = "#e1c0fa"
+purple = "#e1c0fa"   # = magenta
+# palette Color8 (bright black) = #bdbdbd: a candidate for `comment`
+[dark.ansi]
+red = "#e27373"
+green = "#94b979"
+yellow = "#ffba7b"
+blue = "#97bedc"
+magenta = "#e1c0fa"
+cyan = "#00988e"
+[dark.terminal]
+source = "Jellybeans"   # Ptyxis built-in id
+black = "#929292"   # Ptyxis Color0
+bright_black = "#bdbdbd"   # Ptyxis Color8
+bright_red = "#ffa1a1"   # Ptyxis Color9
+bright_green = "#bddeab"   # Ptyxis Color10
+bright_yellow = "#ffdca0"   # Ptyxis Color11
+bright_blue = "#b1d8f6"   # Ptyxis Color12
+bright_magenta = "#fbdaff"   # Ptyxis Color13
+bright_cyan = "#1ab2a8"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

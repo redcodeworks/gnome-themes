@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Tomorrow Night' and 'Tomorrow'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night.yml.
+title = "Tomorrow"
+gtk_name = "Tomorrow"
+shell_name = "Tomorrow-Shell"
+credit = "Tomorrow (colours of the Ptyxis built-in 'Tomorrow Night' and 'Tomorrow'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night.yml)"
+ptyxis = "Tomorrow Night"
+ptyxis_light = "Tomorrow"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Tomorrow Night' and 'Tomorrow' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#1d1f21"
+fg = "#c5c8c6"
+selection = "#3f4142"   # DERIVED
+red = "#cc6666"
+orange = "#de966d"   # DERIVED
+yellow = "#f0c674"
+green = "#b5bd68"
+cyan = "#8abeb7"
+blue = "#81a2be"
+magenta = "#b293bb"
+purple = "#b293bb"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#cc6666"
+green = "#b5bd68"
+yellow = "#f0c674"
+blue = "#81a2be"
+magenta = "#b293bb"
+cyan = "#8abeb7"
+[dark.terminal]
+source = "Tomorrow Night"   # Ptyxis built-in id
+cursor = "#c4c8c5"   # Ptyxis Cursor
+black = "#000000"   # Ptyxis Color0
+white = "#fffefe"   # Ptyxis Color7
+bright_black = "#000000"   # Ptyxis Color8
+bright_yellow = "#f0c574"   # Ptyxis Color11
+bright_blue = "#80a1bd"   # Ptyxis Color12
+bright_magenta = "#b294ba"   # Ptyxis Color13
+bright_cyan = "#8abdb6"   # Ptyxis Color14
+bright_white = "#fffefe"   # Ptyxis Color15
+
+[light]
+bg_deep = "#ffffff"
+fg = "#4d4d4c"
+selection = "#dbdbdb"   # DERIVED
+red = "#c82828"
+orange = "#d97014"   # DERIVED
+yellow = "#eab700"
+green = "#718c00"
+cyan = "#3e999f"
+blue = "#4171ae"
+magenta = "#8959a8"
+purple = "#8959a8"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[light.ansi]
+red = "#c82828"
+green = "#718c00"
+yellow = "#eab700"
+blue = "#4171ae"
+magenta = "#8959a8"
+cyan = "#3e999f"
+[light.terminal]
+source = "Tomorrow"   # Ptyxis built-in id
+cursor = "#4c4c4c"   # Ptyxis Cursor
+black = "#000000"   # Ptyxis Color0
+white = "#fffefe"   # Ptyxis Color7
+bright_black = "#000000"   # Ptyxis Color8
+bright_green = "#708b00"   # Ptyxis Color10
+bright_yellow = "#e9b600"   # Ptyxis Color11
+bright_blue = "#4170ae"   # Ptyxis Color12
+bright_magenta = "#8958a7"   # Ptyxis Color13
+bright_cyan = "#3d999f"   # Ptyxis Color14
+bright_white = "#fffefe"   # Ptyxis Color15

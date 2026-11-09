@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Spacegray Eighties Dull'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties%20Dull.yml.
+title = "Spacegray Eighties Dull"
+gtk_name = "Spacegray-Eighties-Dull"
+shell_name = "Spacegray-Eighties-Dull-Shell"
+credit = "Spacegray Eighties Dull (colours of the Ptyxis built-in 'Spacegray Eighties Dull'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Spacegray%20Eighties%20Dull.yml)"
+ptyxis = "Spacegray Eighties Dull"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Spacegray Eighties Dull' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#222222"
+fg = "#c9c6bc"
+selection = "#434341"   # DERIVED
+red = "#b24a56"
+orange = "#bc5e58"   # DERIVED
+yellow = "#c6735a"
+green = "#92b477"
+cyan = "#80cdcb"
+blue = "#7c8fa5"
+magenta = "#a5789e"
+purple = "#a5789e"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#b24a56"
+green = "#92b477"
+yellow = "#c6735a"
+blue = "#7c8fa5"
+magenta = "#a5789e"
+cyan = "#80cdcb"
+[dark.terminal]
+source = "Spacegray Eighties Dull"   # Ptyxis built-in id
+black = "#15171c"   # Ptyxis Color0
+white = "#b3b8c3"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#ec5f67"   # Ptyxis Color9
+bright_green = "#89e986"   # Ptyxis Color10
+bright_yellow = "#fec254"   # Ptyxis Color11
+bright_blue = "#5486c0"   # Ptyxis Color12
+bright_magenta = "#bf83c1"   # Ptyxis Color13
+bright_cyan = "#58c2c1"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

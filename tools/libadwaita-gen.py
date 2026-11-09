@@ -84,8 +84,15 @@ toast {
 }
 ''' % (R['surface_high'], R['fg'])
 
+MODE_LIGHT = ''' * Light-only scheme: the light values apply unconditionally, whatever colour scheme the desktop asks for.
+'''
+
 def render(roles):
-    dark_only = META['dark_only']; D = roles['dark']
+    dark_only = META['dark_only']
+    if META.get('light_only'):
+        L = roles['light']; inv = dict(L, surface_high=L['fg'], fg=L['bg_deep'])   # the toast stays dark (inverted) in a light scheme
+        return HDR % dict(title=META['title'], credit=META['credit'], mode=MODE_LIGHT) + block(L, False) + toast(inv)
+    D = roles['dark']
     if dark_only:
         body = block(D, True) + toast(D)
         return HDR % dict(title=META['title'], credit=META['credit'], mode=MODE_DARK) + body
@@ -105,7 +112,7 @@ if '--check' not in sys.argv:
     os.makedirs(os.path.dirname(os.path.abspath(arg('out'))), exist_ok=True)
     open(arg('out'), 'w').write(text)
 if arg('accent-dir'):
-    for n in META['accents']['dark']:
+    for n in next(iter(META['accents'].values())):
         p = os.path.join(arg('accent-dir'), n, 'libadwaita/gtk.css'); os.makedirs(os.path.dirname(p), exist_ok=True)
         open(p, 'w').write(render(with_accent_roles(ROLES, n)))
 print('libadwaita', len(text), 'bytes')

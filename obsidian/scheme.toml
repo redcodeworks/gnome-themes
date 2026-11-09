@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Obsidian'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml.
+title = "Obsidian"
+gtk_name = "Obsidian"
+shell_name = "Obsidian-Shell"
+credit = "Obsidian (colours of the Ptyxis built-in 'Obsidian'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Obsidian.yml)"
+ptyxis = "Obsidian"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Obsidian' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#283033"
+fg = "#cdcdcd"
+selection = "#494f52"   # DERIVED
+red = "#a60001"
+orange = "#d26612"   # DERIVED
+yellow = "#fecd22"
+green = "#00bb00"
+cyan = "#00bbbb"
+blue = "#3a9bdb"
+magenta = "#bb00bb"
+purple = "#bb00bb"   # = magenta
+# palette Color8 (bright black) = #555555: a candidate for `comment`
+[dark.ansi]
+red = "#a60001"
+green = "#00bb00"
+yellow = "#fecd22"
+blue = "#3a9bdb"
+magenta = "#bb00bb"
+cyan = "#00bbbb"
+[dark.terminal]
+source = "Obsidian"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#bbbbbb"   # Ptyxis Color7
+bright_black = "#555555"   # Ptyxis Color8
+bright_red = "#ff0003"   # Ptyxis Color9
+bright_green = "#93c863"   # Ptyxis Color10
+bright_yellow = "#fef874"   # Ptyxis Color11
+bright_blue = "#a1d7ff"   # Ptyxis Color12
+bright_magenta = "#ff55ff"   # Ptyxis Color13
+bright_cyan = "#55ffff"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

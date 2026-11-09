@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Wzoreck'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wzoreck.yml.
+title = "Wzoreck"
+gtk_name = "Wzoreck"
+shell_name = "Wzoreck-Shell"
+credit = "Wzoreck (colours of the Ptyxis built-in 'Wzoreck'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Wzoreck.yml)"
+ptyxis = "Wzoreck"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Wzoreck' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#424043"
+fg = "#fcfcfa"
+selection = "#676668"   # DERIVED
+red = "#fc6386"
+orange = "#fca66a"   # DERIVED
+yellow = "#fce94f"
+green = "#424043"
+cyan = "#34e2e2"
+blue = "#fb976b"
+magenta = "#75507b"
+purple = "#75507b"   # = magenta
+# palette Color8 (bright black) = #989595: a candidate for `comment`
+[dark.ansi]
+red = "#fc6386"
+green = "#424043"
+yellow = "#fce94f"
+blue = "#fb976b"
+magenta = "#75507b"
+cyan = "#34e2e2"
+[dark.terminal]
+source = "Wzoreck"   # Ptyxis built-in id
+black = "#2e3436"   # Ptyxis Color0
+white = "#ffffff"   # Ptyxis Color7
+bright_black = "#989595"   # Ptyxis Color8
+bright_green = "#a9dc76"   # Ptyxis Color10
+bright_magenta = "#ab9df2"   # Ptyxis Color13
+bright_white = "#d1d1c0"   # Ptyxis Color15

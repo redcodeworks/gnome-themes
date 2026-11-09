@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Ocean Dark'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml.
+title = "Ocean Dark"
+gtk_name = "Ocean-Dark"
+shell_name = "Ocean-Dark-Shell"
+credit = "Ocean Dark (colours of the Ptyxis built-in 'Ocean Dark'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ocean%20Dark.yml)"
+ptyxis = "Ocean Dark"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Ocean Dark' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#1c1f27"
+fg = "#979cac"
+selection = "#353842"   # DERIVED
+red = "#af4b57"
+orange = "#ca8668"   # DERIVED
+yellow = "#e5c079"
+green = "#afd383"
+cyan = "#85a6a5"
+blue = "#7d90a4"
+magenta = "#a4799d"
+purple = "#a4799d"   # = magenta
+# palette Color8 (bright black) = #7b7b7b: a candidate for `comment`
+[dark.ansi]
+red = "#af4b57"
+green = "#afd383"
+yellow = "#e5c079"
+blue = "#7d90a4"
+magenta = "#a4799d"
+cyan = "#85a6a5"
+[dark.terminal]
+source = "Ocean Dark"   # Ptyxis built-in id
+black = "#4f4f4f"   # Ptyxis Color0
+white = "#eeedee"   # Ptyxis Color7
+bright_black = "#7b7b7b"   # Ptyxis Color8
+bright_green = "#ceffab"   # Ptyxis Color10
+bright_yellow = "#fffecc"   # Ptyxis Color11
+bright_blue = "#b5dcfe"   # Ptyxis Color12
+bright_magenta = "#fb9bfe"   # Ptyxis Color13
+bright_cyan = "#dfdffd"   # Ptyxis Color14
+bright_white = "#fefffe"   # Ptyxis Color15

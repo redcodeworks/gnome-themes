@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Borland'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Borland.yml.
+title = "Borland"
+gtk_name = "Borland"
+shell_name = "Borland-Shell"
+credit = "Borland (colours of the Ptyxis built-in 'Borland'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Borland.yml)"
+ptyxis = "Borland"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Borland' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#0000a4"
+fg = "#ffff4e"
+selection = "#333393"   # DERIVED
+red = "#ff6c60"
+orange = "#ffb68b"   # DERIVED
+yellow = "#ffffb6"
+green = "#a8ff60"
+cyan = "#c6c5fe"
+blue = "#96cbfe"
+magenta = "#ff73fd"
+purple = "#ff73fd"   # = magenta
+# palette Color8 (bright black) = #7c7c7c: a candidate for `comment`
+[dark.ansi]
+red = "#ff6c60"
+green = "#a8ff60"
+yellow = "#ffffb6"
+blue = "#96cbfe"
+magenta = "#ff73fd"
+cyan = "#c6c5fe"
+[dark.terminal]
+source = "Borland"   # Ptyxis built-in id
+black = "#4f4f4f"   # Ptyxis Color0
+white = "#eeeeee"   # Ptyxis Color7
+bright_black = "#7c7c7c"   # Ptyxis Color8
+bright_red = "#ffb6b0"   # Ptyxis Color9
+bright_green = "#ceffac"   # Ptyxis Color10
+bright_yellow = "#ffffcc"   # Ptyxis Color11
+bright_blue = "#b5dcff"   # Ptyxis Color12
+bright_magenta = "#ff9cfe"   # Ptyxis Color13
+bright_cyan = "#dfdffe"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

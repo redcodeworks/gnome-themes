@@ -20,6 +20,7 @@ shell_name = "Material-Shell"
 credit = "Material Theme by Mattia Astorino (Sublime port, MIT), Darker and Lighter"
 default_accent = "orange"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#1e282c"],[53,"#273135"],[66,"#384146"],

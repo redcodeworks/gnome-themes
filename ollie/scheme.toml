@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Ollie'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml.
+title = "Ollie"
+gtk_name = "Ollie"
+shell_name = "Ollie-Shell"
+credit = "Ollie (colours of the Ptyxis built-in 'Ollie'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ollie.yml)"
+ptyxis = "Ollie"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Ollie' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#222125"
+fg = "#8a8dae"
+selection = "#373740"   # DERIVED
+red = "#ac2e31"
+orange = "#ac3818"   # DERIVED
+yellow = "#ac4300"
+green = "#31ac61"
+cyan = "#1fa6ac"
+blue = "#2d57ac"
+magenta = "#b08528"
+purple = "#b08528"   # = magenta
+# palette Color8 (bright black) = #5b3725: a candidate for `comment`
+[dark.ansi]
+red = "#ac2e31"
+green = "#31ac61"
+yellow = "#ac4300"
+blue = "#2d57ac"
+magenta = "#b08528"
+cyan = "#1fa6ac"
+[dark.terminal]
+source = "Ollie"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#8a8eac"   # Ptyxis Color7
+bright_black = "#5b3725"   # Ptyxis Color8
+bright_red = "#ff3d48"   # Ptyxis Color9
+bright_green = "#3bff99"   # Ptyxis Color10
+bright_yellow = "#ff5e1e"   # Ptyxis Color11
+bright_blue = "#4488ff"   # Ptyxis Color12
+bright_magenta = "#ffc21d"   # Ptyxis Color13
+bright_cyan = "#1ffaff"   # Ptyxis Color14
+bright_white = "#5b6ea7"   # Ptyxis Color15

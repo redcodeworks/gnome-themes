@@ -16,6 +16,7 @@ shell_name = "Dracula-Shell"
 credit = "Dracula Theme (MIT), light variant Alucard"
 default_accent = "blue"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#282a36"],[53,"#333540"],[66,"#44475a"],

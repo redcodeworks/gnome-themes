@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Pnevma'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Pnevma.yml.
+title = "Pnevma"
+gtk_name = "Pnevma"
+shell_name = "Pnevma-Shell"
+credit = "Pnevma (colours of the Ptyxis built-in 'Pnevma'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Pnevma.yml)"
+ptyxis = "Pnevma"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Pnevma' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#1c1c1c"
+fg = "#d0d0d0"
+selection = "#404040"   # DERIVED
+red = "#a36666"
+orange = "#bd8a76"   # DERIVED
+yellow = "#d7af87"
+green = "#90a57d"
+cyan = "#8adbb4"
+blue = "#7fa5bd"
+magenta = "#c79ec4"
+purple = "#c79ec4"   # = magenta
+# palette Color8 (bright black) = #4a4845: a candidate for `comment`
+[dark.ansi]
+red = "#a36666"
+green = "#90a57d"
+yellow = "#d7af87"
+blue = "#7fa5bd"
+magenta = "#c79ec4"
+cyan = "#8adbb4"
+[dark.terminal]
+source = "Pnevma"   # Ptyxis built-in id
+black = "#2f2e2d"   # Ptyxis Color0
+bright_black = "#4a4845"   # Ptyxis Color8
+bright_red = "#d78787"   # Ptyxis Color9
+bright_green = "#afbea2"   # Ptyxis Color10
+bright_yellow = "#e4c9af"   # Ptyxis Color11
+bright_blue = "#a1bdce"   # Ptyxis Color12
+bright_magenta = "#d7beda"   # Ptyxis Color13
+bright_cyan = "#b1e7dd"   # Ptyxis Color14
+bright_white = "#efefef"   # Ptyxis Color15

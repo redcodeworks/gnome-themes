@@ -14,17 +14,17 @@ list-themes:
 
 # Install a theme (e.g. gruvbox-material) with its remembered accent; without a name, pick from a checklist
 [group('themes')]
-install-themes name="":
+install-theme name="":
     @tools/themectl.sh themes install "{{name}}"
 
 # Refresh every installed theme from this repo (pulls the checkout first when it has a remote) and re-apply the remembered accents
 [group('themes')]
-update-themes:
+update-theme:
     @tools/themectl.sh themes update
 
 # Remove an installed theme; without a name, pick from a checklist
 [group('themes')]
-remove-themes name="":
+remove-theme name="":
     @tools/themectl.sh themes remove "{{name}}"
 
 # Make a theme the active GTK, Shell and libadwaita theme; without a name, pick one. The optional accent (one of the scheme's accents: its six terminal colours, plus orange where it has one) skips the accent question
@@ -41,22 +41,22 @@ list-icons:
 
 # Install an icon set (e.g. Papirus-Dark, Tela-nord) after refreshing its source clone; without a name, pick from a checklist
 [group('icons')]
-install-icons name="":
+install-icon name="":
     @tools/themectl.sh icons install "{{name}}"
 
 # Refresh the source clones, then replace every installed icon set
 [group('icons')]
-update-icons:
+update-icon:
     @tools/themectl.sh icons update
 
 # Remove an installed icon set; without a name, pick from a checklist
 [group('icons')]
-remove-icons name="":
+remove-icon name="":
     @tools/themectl.sh icons remove "{{name}}"
 
 # Make an icon set the active icon theme; without a name, pick one
 [group('icons')]
-switch-icons name="":
+switch-icon name="":
     @tools/themectl.sh icons switch "{{name}}"
 
 # Development: regenerate one scheme (or all) from its scheme.toml: palette tables, GTK3, GTK4 and GNOME Shell CSS from the toolkits' own stock stylesheets, the libadwaita file, the accent maps and the GtkSourceView style schemes (needs python3-gobject, GTK 3, GTK 4 and gnome-shell)
@@ -66,6 +66,7 @@ generate theme="all":
     set -euo pipefail
     export PYTHONDONTWRITEBYTECODE=1
     if [ "{{theme}}" = all ]; then schemes=$(for f in */scheme.toml; do dirname "$f"; done); else schemes="{{theme}}"; fi
+    [ -n "${GNOME_THEMES_SKIP_ASSETS:-}" ] || python3 -I tools/assets-gen.py
     for s in $schemes; do
         echo "== $s"
         python3 -I tools/palette-from-scheme.py "$s"
@@ -98,3 +99,8 @@ new-scheme dir palette light="":
     echo "Next: resolve the TODOs in {{dir}}/scheme.toml, then run:"
     echo "  just generate {{dir}} && just test {{dir}} (optionally tools/test.sh {{dir}}; CI on the pull request is the test)"
     echo "and add the credit to NOTICE and the scheme to the list in README.md (see .claude/skills/build-scheme/SKILL.md)."
+
+# Development: build schemes from the Ptyxis built-in palettes listed (status todo) in tools/ptyxis-schemes.tsv, or the named ones: draft, finalize, generate, check; a failing one is removed and recorded as excluded (python3 -I tools/bulk-scheme.py status|inventory for the rest)
+[private]
+bulk-scheme *args:
+    python3 -I tools/bulk-scheme.py build {{args}}

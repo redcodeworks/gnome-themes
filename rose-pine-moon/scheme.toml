@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Rosé Pine Moon'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine%20Moon.yml.
+title = "Rose Pine Moon"
+gtk_name = "Rose-Pine-Moon"
+shell_name = "Rose-Pine-Moon-Shell"
+credit = "Rose Pine Moon (colours of the Ptyxis built-in 'Rosé Pine Moon'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Rosé%20Pine%20Moon.yml)"
+ptyxis = "Rosé Pine Moon"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Rosé Pine Moon' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#232136"
+fg = "#e0def4"
+selection = "#49475c"   # DERIVED
+red = "#eb6f92"
+orange = "#f09884"   # DERIVED
+yellow = "#f6c177"
+green = "#9ccfd8"
+cyan = "#ea9a97"
+blue = "#3e8fb0"
+magenta = "#c4a7e7"
+purple = "#c4a7e7"   # = magenta
+# palette Color8 (bright black) = #6e6a86: a candidate for `comment`
+[dark.ansi]
+red = "#eb6f92"
+green = "#9ccfd8"
+yellow = "#f6c177"
+blue = "#3e8fb0"
+magenta = "#c4a7e7"
+cyan = "#ea9a97"
+[dark.terminal]
+source = "Rosé Pine Moon"   # Ptyxis built-in id
+black = "#393552"   # Ptyxis Color0
+bright_black = "#6e6a86"   # Ptyxis Color8

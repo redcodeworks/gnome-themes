@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Mona Lisa'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Mona%20Lisa.yml.
+title = "Mona Lisa"
+gtk_name = "Mona-Lisa"
+shell_name = "Mona-Lisa-Shell"
+credit = "Mona Lisa (colours of the Ptyxis built-in 'Mona Lisa'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Mona%20Lisa.yml)"
+ptyxis = "Mona Lisa"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Mona Lisa' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#120b0d"
+fg = "#f7d66a"
+selection = "#403420"   # DERIVED
+red = "#9b291c"
+orange = "#af4c22"   # DERIVED
+yellow = "#c36e28"
+green = "#636232"
+cyan = "#588056"
+blue = "#515c5d"
+magenta = "#9b1d29"
+purple = "#9b1d29"   # = magenta
+# palette Color8 (bright black) = #874228: a candidate for `comment`
+[dark.ansi]
+red = "#9b291c"
+green = "#636232"
+yellow = "#c36e28"
+blue = "#515c5d"
+magenta = "#9b1d29"
+cyan = "#588056"
+[dark.terminal]
+source = "Mona Lisa"   # Ptyxis built-in id
+black = "#351b0e"   # Ptyxis Color0
+white = "#f7d75c"   # Ptyxis Color7
+bright_black = "#874228"   # Ptyxis Color8
+bright_red = "#ff4331"   # Ptyxis Color9
+bright_green = "#b4b264"   # Ptyxis Color10
+bright_yellow = "#ff9566"   # Ptyxis Color11
+bright_blue = "#9eb2b4"   # Ptyxis Color12
+bright_magenta = "#ff5b6a"   # Ptyxis Color13
+bright_cyan = "#8acd8f"   # Ptyxis Color14
+bright_white = "#ffe598"   # Ptyxis Color15

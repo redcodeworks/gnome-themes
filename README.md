@@ -12,10 +12,10 @@ stock. Matching terminal (Ptyxis) and editor (GtkSourceView) colors are included
 
 ```
 git clone https://github.com/redcodeworks/gnome-themes && cd gnome-themes
-just install-themes          # checklist; or: just install-themes gruvbox-material
+just install-theme          # checklist; or: just install-theme gruvbox-material
 just switch-theme            # apply it (GTK, Shell, libadwaita), asks for the accent; or: just switch-theme nordic cyan
-just install-icons           # checklist; or: just install-icons Papirus-Dark
-just switch-icons Papirus-Dark
+just install-icon           # checklist; or: just install-icon Papirus-Dark
+just switch-icon Papirus-Dark
 ```
 
 Themes go to `~/.themes`, icons to `~/.local/share/icons`, as real copies. Checklists: SPACE ticks,
@@ -24,32 +24,22 @@ ENTER confirms, q cancels.
 | Themes | Icons | |
 |---|---|---|
 | `list-themes` | `list-icons` | what is available (✓ = installed) |
-| `install-themes [name]` | `install-icons [name]` | checklist without a name |
-| `update-themes` | `update-icons` | refresh everything installed |
-| `remove-themes [name]` | `remove-icons [name]` | checklist without a name |
-| `switch-theme [name] [accent]` | `switch-icons [name]` | checklist without a name |
+| `install-theme [name]` | `install-icon [name]` | checklist without a name |
+| `update-theme` | `update-icon` | refresh everything installed |
+| `remove-theme [name]` | `remove-icon [name]` | checklist without a name |
+| `switch-theme [name] [accent]` | `switch-icon [name]` | checklist without a name |
 
-Update with `just update-themes` / `just update-icons` (themes pull your checkout first); remove with
-`just remove-themes` / `just remove-icons`. A same-named folder that gnome-themes did not install is only
+Update with `just update-theme` / `just update-icon` (themes pull your checkout first); remove with
+`just remove-theme` / `just remove-icon`. A same-named folder that gnome-themes did not install is only
 replaced or removed after you confirm.
 
 ## Themes
 
-| Theme | Variants | Accents |
-|---|---|---|
-| `gruvbox-material` | dark, light | red green yellow blue magenta cyan orange |
-| `nordic` | dark | red green yellow blue magenta cyan orange |
-| `dracula` | dark, light | red green yellow blue magenta cyan orange |
-| `catppuccin` | dark, light | red green yellow blue magenta cyan orange |
-| `tokyo-night` | dark, light | red green yellow blue magenta cyan orange |
-| `solarized` | dark, light | red green yellow blue magenta cyan orange |
-| `everforest` | dark, light | red green yellow blue magenta cyan orange |
-| `material` | dark, light | red green yellow blue magenta cyan orange |
-| `rose-pine` | dark, light | red green yellow blue magenta cyan (no orange) |
-| `fairy-floss` | dark | red green yellow blue magenta cyan |
-| `monokai` | dark | red green yellow blue magenta cyan orange |
-| `sweet` | dark | red green yellow blue magenta cyan orange |
-| `aubergine` | dark | red green yellow blue magenta cyan orange (the Ubuntu terminal look) |
+Every theme ships a dark variant and, where the palette has one, a light variant, each with seven or six
+accent colors (red, green, yellow, blue, magenta, cyan, plus orange where the palette has one). `just list-themes`
+shows what is available (a checkmark marks the installed ones); the install checklist shows the same list, all
+unticked. Featured themes are listed first (marked with a star), then the rest alphabetically. The
+palettes come from the built-in Ptyxis terminal palettes, so the terminal, the apps and the Shell match.
 
 Icon sets: Papirus, Gruvbox Plus, Zafiro, candy, Tela and Fluent (sources in `tools/icon-sources.conf`).
 `switch-theme` also selects the matching Ptyxis built-in palette (the light or dark one, by the system setting, for schemes that have two) and the Text Editor color scheme.

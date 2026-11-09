@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Espresso Libre'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso%20Libre.yml.
+title = "Espresso Libre"
+gtk_name = "Espresso-Libre"
+shell_name = "Espresso-Libre-Shell"
+credit = "Espresso Libre (colours of the Ptyxis built-in 'Espresso Libre'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Espresso%20Libre.yml)"
+ptyxis = "Espresso Libre"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Espresso Libre' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2a211c"
+fg = "#b8a898"
+selection = "#463c35"   # DERIVED
+red = "#cc0000"
+orange = "#de721d"   # DERIVED
+yellow = "#f0e53a"
+green = "#1a921c"
+cyan = "#06989a"
+blue = "#0066ff"
+magenta = "#c5656b"
+purple = "#c5656b"   # = magenta
+# palette Color8 (bright black) = #555753: a candidate for `comment`
+[dark.ansi]
+red = "#cc0000"
+green = "#1a921c"
+yellow = "#f0e53a"
+blue = "#0066ff"
+magenta = "#c5656b"
+cyan = "#06989a"
+[dark.terminal]
+source = "Espresso Libre"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#d3d7cf"   # Ptyxis Color7
+bright_black = "#555753"   # Ptyxis Color8
+bright_red = "#ef2929"   # Ptyxis Color9
+bright_green = "#9aff87"   # Ptyxis Color10
+bright_yellow = "#fffb5c"   # Ptyxis Color11
+bright_blue = "#43a8ed"   # Ptyxis Color12
+bright_magenta = "#ff818a"   # Ptyxis Color13
+bright_cyan = "#34e2e2"   # Ptyxis Color14
+bright_white = "#eeeeec"   # Ptyxis Color15

@@ -16,6 +16,7 @@ shell_name = "Solarized-Shell"
 credit = "Solarized by Ethan Schoonover (MIT)"
 default_accent = "blue"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#002b36"],[53,"#073642"],[66,"#163d46"],

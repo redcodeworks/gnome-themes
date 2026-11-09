@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Arthur'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Arthur.yml.
+title = "Arthur"
+gtk_name = "Arthur"
+shell_name = "Arthur-Shell"
+credit = "Arthur (colours of the Ptyxis built-in 'Arthur'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Arthur.yml)"
+ptyxis = "Arthur"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Arthur' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#1c1c1c"
+fg = "#ddeedd"
+selection = "#434643"   # DERIVED
+red = "#cd5c5c"
+orange = "#da855c"   # DERIVED
+yellow = "#e8ae5b"
+green = "#86af80"
+cyan = "#b0c4de"
+blue = "#6495ed"
+magenta = "#deb887"
+purple = "#deb887"   # = magenta
+# palette Color8 (bright black) = #554444: a candidate for `comment`
+[dark.ansi]
+red = "#cd5c5c"
+green = "#86af80"
+yellow = "#e8ae5b"
+blue = "#6495ed"
+magenta = "#deb887"
+cyan = "#b0c4de"
+[dark.terminal]
+source = "Arthur"   # Ptyxis built-in id
+black = "#3d352a"   # Ptyxis Color0
+white = "#bbaa99"   # Ptyxis Color7
+bright_black = "#554444"   # Ptyxis Color8
+bright_red = "#cc5533"   # Ptyxis Color9
+bright_green = "#88aa22"   # Ptyxis Color10
+bright_yellow = "#ffa75d"   # Ptyxis Color11
+bright_blue = "#87ceeb"   # Ptyxis Color12
+bright_magenta = "#996600"   # Ptyxis Color13
+bright_white = "#ddccbb"   # Ptyxis Color15

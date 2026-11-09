@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Website'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Website.yml.
+title = "Website"
+gtk_name = "Website"
+shell_name = "Website-Shell"
+credit = "Website (colours of the Ptyxis built-in 'Website'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Website.yml)"
+ptyxis = "Website"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Website' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "green"
+
+[dark]
+bg_deep = "#132f35"
+fg = "#d1b890"
+selection = "#394a47"   # DERIVED
+red = "#da4949"
+orange = "#ec7c3c"   # DERIVED
+yellow = "#ffb02e"
+green = "#bcca15"
+cyan = "#38c995"
+blue = "#35a6e6"
+magenta = "#d343a2"
+purple = "#d343a2"   # = magenta
+# palette Color8 (bright black) = #235662: a candidate for `comment`
+[dark.ansi]
+red = "#da4949"
+green = "#bcca15"
+yellow = "#ffb02e"
+blue = "#35a6e6"
+magenta = "#d343a2"
+cyan = "#38c995"
+[dark.terminal]
+source = "Website"   # Ptyxis built-in id
+black = "#183c44"   # Ptyxis Color0
+white = "#ffe8c1"   # Ptyxis Color7
+bright_black = "#235662"   # Ptyxis Color8
+bright_red = "#ff5757"   # Ptyxis Color9
+bright_green = "#ecff14"   # Ptyxis Color10
+bright_yellow = "#ffd694"   # Ptyxis Color11
+bright_blue = "#4cbfff"   # Ptyxis Color12
+bright_magenta = "#ff4cc2"   # Ptyxis Color13
+bright_cyan = "#35ffb6"   # Ptyxis Color14
+bright_white = "#ffd48f"   # Ptyxis Color15

@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Apprentice'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Apprentice.yml.
+title = "Apprentice"
+gtk_name = "Apprentice"
+shell_name = "Apprentice-Shell"
+credit = "Apprentice (colours of the Ptyxis built-in 'Apprentice'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Apprentice.yml)"
+ptyxis = "Apprentice"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Apprentice' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#262626"
+fg = "#bcbcbc"
+selection = "#444444"   # DERIVED
+red = "#af5f5f"
+orange = "#9b735f"   # DERIVED
+yellow = "#87875f"
+green = "#5f875f"
+cyan = "#5f8787"
+blue = "#5f87af"
+magenta = "#5f5f87"
+purple = "#5f5f87"   # = magenta
+# palette Color8 (bright black) = #444444: a candidate for `comment`
+[dark.ansi]
+red = "#af5f5f"
+green = "#5f875f"
+yellow = "#87875f"
+blue = "#5f87af"
+magenta = "#5f5f87"
+cyan = "#5f8787"
+[dark.terminal]
+source = "Apprentice"   # Ptyxis built-in id
+black = "#1c1c1c"   # Ptyxis Color0
+white = "#6c6c6c"   # Ptyxis Color7
+bright_black = "#444444"   # Ptyxis Color8
+bright_red = "#ff8700"   # Ptyxis Color9
+bright_green = "#87af87"   # Ptyxis Color10
+bright_yellow = "#ffffaf"   # Ptyxis Color11
+bright_blue = "#8fafd7"   # Ptyxis Color12
+bright_magenta = "#8787af"   # Ptyxis Color13
+bright_cyan = "#5fafaf"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

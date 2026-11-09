@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Tomorrow Night Blue'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Blue.yml.
+title = "Tomorrow Night Blue"
+gtk_name = "Tomorrow-Night-Blue"
+shell_name = "Tomorrow-Night-Blue-Shell"
+credit = "Tomorrow Night Blue (colours of the Ptyxis built-in 'Tomorrow Night Blue'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night%20Blue.yml)"
+ptyxis = "Tomorrow Night Blue"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Tomorrow Night Blue' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "cyan"
+
+[dark]
+bg_deep = "#002451"
+fg = "#fffefe"
+selection = "#335074"   # DERIVED
+red = "#ff9da3"
+orange = "#ffc6a8"   # DERIVED
+yellow = "#ffeead"
+green = "#d1f1a9"
+cyan = "#99ffff"
+blue = "#bbdaff"
+magenta = "#ebbbff"
+purple = "#ebbbff"   # = magenta
+# palette Color8 (bright black) = #000000: a candidate for `comment`
+[dark.ansi]
+red = "#ff9da3"
+green = "#d1f1a9"
+yellow = "#ffeead"
+blue = "#bbdaff"
+magenta = "#ebbbff"
+cyan = "#99ffff"
+[dark.terminal]
+source = "Tomorrow Night Blue"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+bright_black = "#000000"   # Ptyxis Color8
+bright_red = "#ff9ca3"   # Ptyxis Color9
+bright_green = "#d0f0a8"   # Ptyxis Color10
+bright_yellow = "#ffedac"   # Ptyxis Color11
+bright_blue = "#badaff"   # Ptyxis Color12
+bright_magenta = "#ebbaff"   # Ptyxis Color13

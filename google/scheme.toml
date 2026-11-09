@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Google'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. The built-in's header names no origin.
+title = "Google"
+gtk_name = "Google"
+shell_name = "Google-Shell"
+credit = "Google (colours of the Ptyxis built-in 'Google'; the built-in's header names no origin)"
+ptyxis = "Google"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Google' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#202124"
+fg = "#e8eaed"
+selection = "#48494c"   # DERIVED
+red = "#ea4335"
+orange = "#f2801c"   # DERIVED
+yellow = "#fbbc04"
+green = "#34a853"
+cyan = "#24c1e0"
+blue = "#4285f4"
+magenta = "#a142f4"
+purple = "#a142f4"   # = magenta
+# palette Color8 (bright black) = #5f6368: a candidate for `comment`
+[dark.ansi]
+red = "#ea4335"
+green = "#34a853"
+yellow = "#fbbc04"
+blue = "#4285f4"
+magenta = "#a142f4"
+cyan = "#24c1e0"
+[dark.terminal]
+source = "Google"   # Ptyxis built-in id
+black = "#202124"   # Ptyxis Color0
+bright_black = "#5f6368"   # Ptyxis Color8
+bright_yellow = "#fbbc05"   # Ptyxis Color11
+bright_white = "#ffffff"   # Ptyxis Color15
+
+[light]
+bg_deep = "#ffffff"
+fg = "#5f6368"
+selection = "#dfe0e1"   # DERIVED
+red = "#ea4335"
+orange = "#f2801c"   # DERIVED
+yellow = "#fbbc04"
+green = "#34a853"
+cyan = "#24c1e0"
+blue = "#4285f4"
+magenta = "#a142f4"
+purple = "#a142f4"   # = magenta
+# palette Color8 (bright black) = #5f6368: a candidate for `comment`
+[light.ansi]
+red = "#ea4335"
+green = "#34a853"
+yellow = "#fbbc04"
+blue = "#4285f4"
+magenta = "#a142f4"
+cyan = "#24c1e0"
+[light.terminal]
+source = "Google"   # Ptyxis built-in id
+black = "#202124"   # Ptyxis Color0
+white = "#e8eaed"   # Ptyxis Color7
+bright_black = "#5f6368"   # Ptyxis Color8
+bright_yellow = "#fbbc05"   # Ptyxis Color11
+bright_white = "#ffffff"   # Ptyxis Color15

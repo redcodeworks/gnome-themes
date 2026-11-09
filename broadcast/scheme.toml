@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Broadcast'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Broadcast.yml.
+title = "Broadcast"
+gtk_name = "Broadcast"
+shell_name = "Broadcast-Shell"
+credit = "Broadcast (colours of the Ptyxis built-in 'Broadcast'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Broadcast.yml)"
+ptyxis = "Broadcast"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Broadcast' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#2b2b2b"
+fg = "#e6e1dc"
+selection = "#504f4e"   # DERIVED
+red = "#da4939"
+orange = "#ec8e42"   # DERIVED
+yellow = "#ffd24a"
+green = "#519f50"
+cyan = "#6e9cbe"
+blue = "#6d9cbe"
+magenta = "#d0d0ff"
+purple = "#d0d0ff"   # = magenta
+# palette Color8 (bright black) = #323232: a candidate for `comment`
+[dark.ansi]
+red = "#da4939"
+green = "#519f50"
+yellow = "#ffd24a"
+blue = "#6d9cbe"
+magenta = "#d0d0ff"
+cyan = "#6e9cbe"
+[dark.terminal]
+source = "Broadcast"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#ffffff"   # Ptyxis Color7
+bright_black = "#323232"   # Ptyxis Color8
+bright_red = "#ff7b6b"   # Ptyxis Color9
+bright_green = "#83d182"   # Ptyxis Color10
+bright_yellow = "#ffff7c"   # Ptyxis Color11
+bright_blue = "#9fcef0"   # Ptyxis Color12
+bright_magenta = "#ffffff"   # Ptyxis Color13
+bright_cyan = "#a0cef0"   # Ptyxis Color14
+bright_white = "#ffffff"   # Ptyxis Color15

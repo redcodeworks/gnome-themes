@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Ura'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ura.yml.
+title = "Ura"
+gtk_name = "Ura"
+shell_name = "Ura-Shell"
+credit = "Ura (colours of the Ptyxis built-in 'Ura'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Ura.yml)"
+ptyxis = "Ura"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Ura' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "magenta"
+
+[light]
+bg_deep = "#feffee"
+fg = "#23476a"
+selection = "#d2dad4"   # DERIVED
+red = "#c21b6f"
+orange = "#c24545"   # DERIVED
+yellow = "#c26f1b"
+green = "#6fc21b"
+cyan = "#1bc26f"
+blue = "#1b6fc2"
+magenta = "#6f1bc2"
+purple = "#6f1bc2"   # = magenta
+# palette Color8 (bright black) = #808080: a candidate for `comment`
+[light.ansi]
+red = "#c21b6f"
+green = "#6fc21b"
+yellow = "#c26f1b"
+blue = "#1b6fc2"
+magenta = "#6f1bc2"
+cyan = "#1bc26f"
+[light.terminal]
+source = "Ura"   # Ptyxis built-in id
+black = "#000000"   # Ptyxis Color0
+white = "#808080"   # Ptyxis Color7
+bright_black = "#808080"   # Ptyxis Color8
+bright_red = "#ee84b9"   # Ptyxis Color9
+bright_green = "#b9ee84"   # Ptyxis Color10
+bright_yellow = "#eeb984"   # Ptyxis Color11
+bright_blue = "#84b9ee"   # Ptyxis Color12
+bright_magenta = "#b984ee"   # Ptyxis Color13
+bright_cyan = "#84eeb9"   # Ptyxis Color14
+bright_white = "#e5e5e5"   # Ptyxis Color15

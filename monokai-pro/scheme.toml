@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: MIT
+# Built by tools/bulk-scheme.py from the Ptyxis built-in 'Monokai Pro'. Orange, the surface ladder, selection, comment and purple are DERIVED (the generated
+# palette.toml says which); default_accent is the accent with the best contrast on bg_deep. Origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro.yml.
+title = "Monokai Pro"
+gtk_name = "Monokai-Pro"
+shell_name = "Monokai-Pro-Shell"
+credit = "Monokai Pro (colours of the Ptyxis built-in 'Monokai Pro'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Monokai%20Pro.yml)"
+ptyxis = "Monokai Pro"
+ptyxis_reason = "the colours ARE the Ptyxis built-in 'Monokai Pro' (bulk-built by tools/bulk-scheme.py)."
+default_accent = "yellow"
+
+[dark]
+bg_deep = "#363537"
+fg = "#fdf9f3"
+selection = "#5e5c5d"   # DERIVED
+red = "#ff6188"
+orange = "#ff9c77"   # DERIVED
+yellow = "#ffd866"
+green = "#a9dc76"
+cyan = "#78dce8"
+blue = "#fc9867"
+magenta = "#ab9df2"
+purple = "#ab9df2"   # = magenta
+# palette Color8 (bright black) = #908e8f: a candidate for `comment`
+[dark.ansi]
+red = "#ff6188"
+green = "#a9dc76"
+yellow = "#ffd866"
+blue = "#fc9867"
+magenta = "#ab9df2"
+cyan = "#78dce8"
+[dark.terminal]
+source = "Monokai Pro"   # Ptyxis built-in id
+black = "#363537"   # Ptyxis Color0
+bright_black = "#908e8f"   # Ptyxis Color8
