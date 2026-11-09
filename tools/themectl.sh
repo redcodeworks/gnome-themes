@@ -5,7 +5,7 @@
 #   themectl.sh <themes|icons> <install|list|update|remove|switch> [name] [accent]
 # A theme is a top-level directory of this repo (a scheme, e.g. gruvbox-material); an icon set belongs to a source of
 # tools/icon-sources.conf (e.g. Papirus-Dark from papirus, Tela-nord from tela). Without a name, install/remove/switch ask.
-# Workflow: install-themes copies from this checkout; update-themes does git fetch + pull --ff-only first. Icons: clone the
+# Workflow: install-theme copies from this checkout; update-theme does git fetch + pull --ff-only first. Icons: clone the
 # source into the cache when missing, else bring it to the latest upstream (install and update both), then replace each
 # set's folder in the destination (remove it, copy the fresh one; unrelated folders there are never touched).
 # Collision guard: every folder this script installs gets a marker file (.gnome-themes, containing the scheme/set name). A
@@ -35,7 +35,7 @@
 # read-only). After a switch, when `flatpak` exists and the global user override lacks any of them, the script asks (default no; without a
 # terminal it prints the exact command) and only on y runs `flatpak override --user --filesystem=...` for the MISSING entries and records
 # exactly those in $XDG_STATE_HOME/gnome-themes/flatpak-overrides; an entry that existed before is never recorded and never removed. When
-# remove-themes or remove-icons removes the last installed theme and icon set of this repo's (those with the marker) and the record lists
+# remove-theme or remove-icon removes the last installed theme and icon set of this repo's (those with the marker) and the record lists
 # entries, it asks (default no; without a terminal it prints the commands) and on y runs `--nofilesystem=` for the recorded entries only.
 # GtkSourceView schemes need no entry: Flatpak apps read their own ~/.var/app/<id>/data (see the styles section).
 # Environment: THEMES_DEST (~/.themes), ICONS_DEST (~/.local/share/icons), ICONS_URL (replaces the papirus source's URL),
@@ -548,7 +548,7 @@ fp_undo() {    # after remove: when nothing of ours is installed any more, offer
         esac
     else
         echo "gnome-themes added Flatpak read access that nothing uses any more. To remove exactly that, run:"; echo "  $(fp_cmd_del "${ents[@]}")"
-        echo "  (then delete $fp_state, or run remove-themes in a terminal and answer y)"
+        echo "  (then delete $fp_state, or run remove-theme in a terminal and answer y)"
     fi
 }
 
@@ -631,7 +631,7 @@ case "$action" in
             if [ "$kind" = icons ] && [ ! -d "$(clone_of "${i_src[$nm]}")/.git" ]; then echo "Skipping $nm: its source ${i_src[$nm]} is not available." >&2; continue; fi
             copy_item "$nm"; if [ "$kind" = themes ]; then pty_cleanup; gsv_install "$nm"; fi; done
         if [ "$installed_n" -eq 0 ]; then echo "Nothing was installed (see the messages above)."
-        elif [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icons to use it."; fi ;;
+        elif [ "$kind" = themes ]; then echo "Next: run switch-theme to use it."; else echo "Next: run switch-icon to use it."; fi ;;
 
     update)
         # themes: git fetch + pull --ff-only in this checkout; icons: refresh the clones of the installed sets' sources.

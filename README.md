@@ -12,10 +12,10 @@ stock. Matching terminal (Ptyxis) and editor (GtkSourceView) colors are included
 
 ```
 git clone https://github.com/redcodeworks/gnome-themes && cd gnome-themes
-just install-themes          # checklist; or: just install-themes gruvbox-material
+just install-theme          # checklist; or: just install-theme gruvbox-material
 just switch-theme            # apply it (GTK, Shell, libadwaita), asks for the accent; or: just switch-theme nordic cyan
-just install-icons           # checklist; or: just install-icons Papirus-Dark
-just switch-icons Papirus-Dark
+just install-icon           # checklist; or: just install-icon Papirus-Dark
+just switch-icon Papirus-Dark
 ```
 
 Themes go to `~/.themes`, icons to `~/.local/share/icons`, as real copies. Checklists: SPACE ticks,
@@ -24,13 +24,13 @@ ENTER confirms, q cancels.
 | Themes | Icons | |
 |---|---|---|
 | `list-themes` | `list-icons` | what is available (✓ = installed) |
-| `install-themes [name]` | `install-icons [name]` | checklist without a name |
-| `update-themes` | `update-icons` | refresh everything installed |
-| `remove-themes [name]` | `remove-icons [name]` | checklist without a name |
-| `switch-theme [name] [accent]` | `switch-icons [name]` | checklist without a name |
+| `install-theme [name]` | `install-icon [name]` | checklist without a name |
+| `update-theme` | `update-icon` | refresh everything installed |
+| `remove-theme [name]` | `remove-icon [name]` | checklist without a name |
+| `switch-theme [name] [accent]` | `switch-icon [name]` | checklist without a name |
 
-Update with `just update-themes` / `just update-icons` (themes pull your checkout first); remove with
-`just remove-themes` / `just remove-icons`. A same-named folder that gnome-themes did not install is only
+Update with `just update-theme` / `just update-icon` (themes pull your checkout first); remove with
+`just remove-theme` / `just remove-icon`. A same-named folder that gnome-themes did not install is only
 replaced or removed after you confirm.
 
 ## Themes

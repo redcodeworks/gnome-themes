@@ -56,5 +56,5 @@ If `accent-maps-gen` reports `VERIFY FAILED`, two role colours collide with an a
 - `NOTICE`: the palette credit and licence of the new scheme (the suite requires the scheme name to appear there).
 - `README.md`: the one-line list of schemes.
 - Commit by explicit paths on `testing` (never `git add -A`), message says why. Never push or open pull requests unless asked; `main` is protected.
-- The scheme needs nothing else: schemes are discovered by their `scheme.toml`, so it appears in `list-themes` and `install-themes` automatically and is installable on an image that ships the recipes with `ujust gnome-themes install-themes <scheme>`.
+- The scheme needs nothing else: schemes are discovered by their `scheme.toml`, so it appears in `list-themes` and `install-theme` automatically and is installable on an image that ships the recipes with `ujust gnome-themes install-theme <scheme>`.
 - Report: what you added, the test totals, contrast exceptions, which values are verified vs derived vs invented, anything for the hub under `Needs from hub:`.
