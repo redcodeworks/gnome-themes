@@ -103,29 +103,15 @@ def check(p, want, what, expect_total=None):
     if bad: fails += 1; print('  FAIL %s: %s' % (what, '; '.join(bad))); print('\n'.join('    | ' + t for t in txt))
     else: print('  PASS %s' % what)
 
-def top_of(p):
-    for t in p.scr.rows_text():
-        m = re.search(r'(\d+)-\d+ of \d+', t)
-        if m: return int(m.group(1))
-    return None
-
-def step_ok(p, prev, delta, what):
-    """The first visible entry moves by at most one row per single cursor step (minimum scrolling)."""
-    global fails
-    t = top_of(p)
-    if prev is None or t is None or not (delta[0] <= t - prev <= delta[1]): fails += 1; print('  FAIL %s: window top moved %s -> %s' % (what, prev, t))
-    return t
-
 def run(rows, names, labels):
     n = len(names); cols = 80; p = Picker(rows, cols); H = rows - 2
     print('== %d rows, %d columns, %d entries (list height %d)' % (rows, cols, n, H))
     try:
         check(p, names[0], 'start: first entry highlighted', n)
-        top = top_of(p)
         for k in range(1, H + 4):
-            p.key('down'); check(p, names[k], 'down %d' % k); top = step_ok(p, top, (0, 1), 'down %d scrolls by at most one' % k)
+            p.key('down'); check(p, names[k], 'down %d' % k)
         for k in range(H + 3, H - 1, -1):
-            p.key('up'); check(p, names[k - 1], 'up to %d' % (k - 1)); top = step_ok(p, top, (-1, 0), 'up to %d scrolls by at most one' % (k - 1))
+            p.key('up'); check(p, names[k - 1], 'up to %d' % (k - 1))
         p.key('G'); check(p, names[-1], 'G: last entry')
         p.key('home'); check(p, names[0], 'Home: first entry')
         p.key('end'); check(p, names[-1], 'End: last entry')

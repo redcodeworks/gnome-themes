@@ -18,8 +18,8 @@ just install-icon           # checklist; or: just install-icon Papirus-Dark
 just switch-icon Papirus-Dark
 ```
 
-Themes go to `~/.themes`, icons to `~/.local/share/icons`, as real copies. Checklists use `fzf` when it is installed (TAB marks, ENTER confirms, Esc cancels), otherwise a built-in picker: SPACE ticks,
-`/` filters, ENTER confirms, q cancels.
+Themes go to `~/.themes`, icons to `~/.local/share/icons`, as real copies. Checklists: SPACE ticks,
+ENTER confirms, q cancels.
 
 | Themes | Icons | |
 |---|---|---|
