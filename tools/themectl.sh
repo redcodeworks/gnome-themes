@@ -615,11 +615,11 @@ case "$action" in
         if [ -n "$want" ]; then
             i=$(resolve); chosen=("$i")
         else
-            any=0; for i in "${!items[@]}"; do on[i]=0; if is_installed "${items[i]}"; then on[i]=1; any=1; fi; done
-            if [ "$any" -eq 0 ]; then
-                for i in "${!items[@]}"; do
-                    if [ "$kind" = themes ]; then on[i]=1; else case "${items[i]}" in Papirus|Papirus-Dark) on[i]=1 ;; esac; fi
-                done
+            # themes: every box starts off; icons: installed sets ticked, else Papirus
+            for i in "${!items[@]}"; do on[i]=0; done
+            if [ "$kind" = icons ]; then
+                any=0; for i in "${!items[@]}"; do if is_installed "${items[i]}"; then on[i]=1; any=1; fi; done
+                if [ "$any" -eq 0 ]; then for i in "${!items[@]}"; do case "${items[i]}" in Papirus|Papirus-Dark) on[i]=1 ;; esac; done; fi
             fi
             if [ "$kind" = icons ]; then for i in "${!items[@]}"; do if [ "${on[i]}" -eq 1 ] && is_installed "${items[i]}"; then labels[i]="✓ ${labels[i]}"; fi; done; fi
             choose_many "${noun^}s to install into $dest" "${!items[@]}"

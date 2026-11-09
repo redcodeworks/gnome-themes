@@ -523,14 +523,16 @@ pty() { python3 -I "$T/ptyrun.py" "$@"; }
 n_inst() { ls -d "$1"/*/ 2>/dev/null | wc -l; }
 PD="$T/pty-themes"; mkdir -p "$PD"
 out=$(THEMES_DEST=$PD pty q tools/themectl.sh themes install)
-echo "$out" | grep -q '\[x\]' && chk ok "checklist shows the preselection" || chk fail "checklist preselection not shown"
+echo "$out" | grep -q '\[ \]' && ! echo "$out" | grep -q '\[x\]' && chk ok "themes checklist starts with every box off" || chk fail "themes checklist has a preselected box"
 echo "$out" | grep -q 'SPACE toggles' && chk ok "checklist hint says SPACE toggles" || chk fail "checklist hint"
 [ "$(n_inst "$PD")" -eq 0 ] && echo "$out" | grep -q Cancelled && chk ok "q cancels, nothing installed" || chk fail "q did not cancel"
 THEMES_DEST=$PD pty n,down,space,enter tools/themectl.sh themes install >/dev/null
 first_sc=$(ls -d */palette.toml | sed -n 2p | cut -d/ -f1); gname=$(awk -F'"' '/^gtk_name/ {print $2}' "$first_sc/palette.toml")
 [ -d "$PD/$gname" ] && chk ok "none, down, SPACE ticks one entry, ENTER installs it ($first_sc)" || chk fail "space did not tick the second entry"
-PD2="$T/pty-themes2"; mkdir -p "$PD2"; THEMES_DEST=$PD2 pty enter tools/themectl.sh themes install >/dev/null
-[ "$(n_inst "$PD2")" -gt 4 ] && chk ok "ENTER alone installs the preselected set (first run: every scheme)" || chk fail "enter alone installed $(n_inst "$PD2")"
+PD2="$T/pty-themes2"; mkdir -p "$PD2"; out=$(THEMES_DEST=$PD2 pty enter tools/themectl.sh themes install)
+[ "$(n_inst "$PD2")" -eq 0 ] && echo "$out" | grep -q 'Nothing selected' && chk ok "ENTER alone (empty selection) installs nothing and says so" || chk fail "enter alone installed $(n_inst "$PD2")"
+THEMES_DEST=$PD2 tools/themectl.sh themes install "$first_sc" >/dev/null 2>&1
+[ "$(n_inst "$PD2")" -ge 1 ] && chk ok "a named scheme installs without the checklist" || chk fail "named install failed"
 out=$(THEMES_DEST=$PD pty down,enter tools/themectl.sh themes switch "$first_sc")
 echo "$out" | grep -q 'current' && chk ok "accent submenu marks the current accent" || chk fail "accent submenu: no (current) mark"
 grep -q "^$first_sc=" "$XDG_STATE_HOME/gnome-themes/accents" && chk ok "accent chosen in the submenu is remembered" || chk fail "accent not remembered"
