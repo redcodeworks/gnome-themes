@@ -204,27 +204,25 @@ add_item() { items+=("$1"); labels+=("$1  ($2)"); i_src[$1]="$2"; i_dir[$1]="$3"
 load_items() {
     items=(); labels=(); i_src=(); i_dir=(); i_var=()
     if [ "$kind" = themes ]; then
-        local all=() ordered=() f seen
+        local all=() ordered=() f d dd star; local -A isfeat=()   # pure bash: this runs on every invocation, and there are hundreds of schemes
         for p in "$root"/*/palette.toml; do
-            sc=$(basename "$(dirname "$p")"); [ -d "$root/$sc/themes" ] && all+=("$sc")
+            d="${p%/palette.toml}"; sc="${d##*/}"; [ -d "$d/themes" ] && all+=("$sc")
         done
         mapfile -t all < <(printf '%s\n' "${all[@]}" | LC_ALL=C sort)
+        for f in $FEATURED_THEMES; do isfeat[$f]=1; done
         for f in $FEATURED_THEMES; do for sc in "${all[@]}"; do [ "$sc" = "$f" ] && ordered+=("$sc"); done; done
-        for sc in "${all[@]}"; do
-            seen=0; for f in $FEATURED_THEMES; do [ "$sc" = "$f" ] && seen=1; done
-            [ "$seen" -eq 1 ] || ordered+=("$sc")
-        done
+        for sc in "${all[@]}"; do [ -n "${isfeat[$sc]:-}" ] || ordered+=("$sc"); done
         for sc in "${ordered[@]}"; do
             gtk=""; shell=""
             for d in "$root/$sc"/themes/*/; do
-                n=$(basename "$d")
+                dd="${d%/}"; n="${dd##*/}"
                 case "$n" in
-                    *-Shell-*) v="${n##*-Shell-}"; shell="${shell:+$shell/}$(printf '%s' "$v" | tr 'A-Z' 'a-z')" ;;
+                    *-Shell-*) v="${n##*-Shell-}"; shell="${shell:+$shell/}${v,,}" ;;
                     *) gtk="GTK 3/4" ;;
                 esac
             done
             what="${gtk}${gtk:+${shell:+ + }}${shell:+GNOME Shell $shell}"
-            star=""; for f in $FEATURED_THEMES; do [ "$sc" = "$f" ] && star="★ "; done
+            star=""; [ -n "${isfeat[$sc]:-}" ] && star="★ "
             items+=("$sc"); labels+=("$star$sc  ($what)")
         done
     else
@@ -243,7 +241,7 @@ load_items() {
     fi
 }
 folders_of() {   # installable folder names of item $1 (exactly these: never a glob, so removing Tela keeps Tela-blue)
-    if [ "$kind" = themes ]; then for d in "$root/$1"/themes/*/; do basename "$d"; done
+    if [ "$kind" = themes ]; then for d in "$root/$1"/themes/*/; do d="${d%/}"; echo "${d##*/}"; done
     elif [ "${src_layout[${i_src[$1]}]}" = script ]; then echo "$1"; echo "$1-dark"; echo "$1-light"
     else echo "$1"; fi
 }
