@@ -10,6 +10,7 @@ shell_name = "Tokyo-Night-Shell"
 credit = "Tokyo Night by folke (tokyonight.nvim, Apache-2.0), Night and Day"
 default_accent = "blue"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#1a1b26"],[53,"#232531"],[66,"#292e42"],

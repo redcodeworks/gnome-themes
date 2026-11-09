@@ -20,6 +20,7 @@ shell_name = "Tomorrow-Shell"
 credit = "Tomorrow (colours of the Ptyxis built-in 'Tomorrow Night' and 'Tomorrow'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Tomorrow%20Night.yml)"
 default_accent = "yellow"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#1d1f21"],[53,"#26282a"],[66,"#383a3b"],

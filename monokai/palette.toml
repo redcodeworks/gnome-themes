@@ -9,6 +9,7 @@ shell_name = "Monokai-Shell"
 credit = "Monokai by Wimer Hazenberg (palette values via Base16, tinted-theming/schemes, MIT); not Monokai Pro"
 default_accent = "green"
 dark_only = true
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#272822"],[53,"#383830"],[66,"#49483e"],

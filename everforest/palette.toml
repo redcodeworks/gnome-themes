@@ -9,6 +9,7 @@ shell_name = "Everforest-Shell"
 credit = "Everforest by sainnhe (MIT)"
 default_accent = "green"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#2d353b"],[53,"#343f44"],[66,"#475258"],

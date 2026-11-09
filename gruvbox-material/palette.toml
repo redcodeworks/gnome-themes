@@ -8,6 +8,7 @@ shell_name = "Gruvbox-Material-Shell"
 credit = "sainnhe/gruvbox-material (MIT)"
 default_accent = "blue"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#282828"],[53,"#32302f"],[66,"#45403d"],

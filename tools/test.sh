@@ -139,9 +139,10 @@ for s in $cheap_schemes; do
     cat "$T/cheap-$s.out" | grep -v '^COUNT'
     while read -r _ p f; do pass=$((pass+p)); fail=$((fail+f)); done < <(grep '^COUNT' "$T/cheap-$s.out")
 done
+LT=$(mktemp -d -p /dev/shm 2>/dev/null) || LT="$T"   # installed copies of the loop live in memory when possible (hundreds of small files per install)
 for s in $loop_schemes; do
     echo "=== loop $s"
-    D="$T/themes-$s"; THEMES_DEST=$D just install-theme "$s" >/dev/null 2>&1
+    D="$LT/themes-$s"; THEMES_DEST=$D just install-theme "$s" >/dev/null 2>&1
     n=$(ls "$D" 2>/dev/null | wc -l); [ "$n" -ge 1 ] && chk ok "install-theme: $n folders" || chk fail "install-theme produced nothing"
     gt=$(awk -F'"' '/^gtk_name/ {print $2}' "$s/palette.toml")
     [ -f "$D/$gt/gtk-3.0/assets/check-symbolic.svg" ] && [ -f "$D/$gt/gtk-4.0/assets/check-symbolic.svg" ] && [ ! -L "$D/$gt/gtk-3.0/assets" ] && chk ok "installed theme is complete: real assets directories in gtk-3.0 and gtk-4.0" || chk fail "installed $gt lacks its assets"
@@ -155,6 +156,7 @@ for s in $loop_schemes; do
     [ "$h1" = "$h2" ] && chk ok "update-theme keeps the remembered accent" || chk fail "update-theme changed the installed tree"
     THEMES_DEST=$D just remove-theme "$s" >/dev/null 2>&1; [ -z "$(ls -A "$D" 2>/dev/null)" ] && chk ok "remove-theme emptied the set" || chk fail "remove-theme left $(ls "$D" | tr '\n' ' ')"
 done
+[ "$LT" != "$T" ] && rm -rf "${LT:?}"
 
 # ---- shared assets: the repo stores GTK's stock assets once (assets/gtk-3.0, assets/gtk-4.0); installs copy them into each theme ---------
 echo "=== shared assets"
@@ -612,7 +614,7 @@ first_sc=$(sed -n 's/^FEATURED_THEMES="${FEATURED_THEMES-\(.*\)}"$/\1/p' tools/t
 [ -d "$PD/$gname" ] && chk ok "none, down, SPACE ticks one entry, ENTER installs it ($first_sc)" || chk fail "space did not tick the second entry"
 PF="$T/pty-filter"; mkdir -p "$PF"
 THEMES_DEST=$PF pty slash,D,R,A,C,enter,space,enter tools/themectl.sh themes install >/dev/null
-[ -d "$PF/Dracula" ] && [ "$(ls "$PF" | grep -vc '^Dracula')" -eq 0 ] && chk ok "checklist filter: / then DRAC (any case) narrows the list, SPACE ticks the shown entry, only dracula installed" || chk fail "filter install: $(ls "$PF" | tr '\n' ' ')"
+[ -d "$PF/Dracula" ] && [ -z "$(find "$PF" -mindepth 1 -maxdepth 1 -not -name 'Dracula*')" ] && chk ok "checklist filter: / then DRAC (any case) narrows the list, SPACE ticks the shown entry, only dracula installed" || chk fail "filter install: $(ls "$PF" | tr '\n' ' ')"
 rm -rf "$PF"; mkdir -p "$PF"
 THEMES_DEST=$PF pty space,slash,d,r,a,c,enter,space,slash,esc,enter tools/themectl.sh themes install >/dev/null
 [ -d "$PF/Dracula" ] && [ -d "$PF/Nordic-Nord" ] && chk ok "filter: a tick made before filtering survives it, and Esc shows the full list again" || chk fail "filter keeps ticks: $(ls "$PF" | tr '\n' ' ')"

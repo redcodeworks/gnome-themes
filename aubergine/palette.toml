@@ -13,6 +13,7 @@ shell_name = "Aubergine-Shell"
 credit = "Aubergine: Ubuntu terminal palette (hex values only; Tango ANSI, licence unverified)"
 default_accent = "orange"
 dark_only = true
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#300a24"],[53,"#3b1730"],[66,"#5e2750"],

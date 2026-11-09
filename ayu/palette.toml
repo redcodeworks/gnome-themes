@@ -17,6 +17,7 @@ shell_name = "Ayu-Shell"
 credit = "Ayu (colours of the Ptyxis built-in 'Ayu'; the built-in's header names no origin)"
 default_accent = "magenta"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#0a0e14"],[53,"#13171c"],[66,"#25282c"],

@@ -14,6 +14,7 @@ shell_name = "Solarized-Darcula-Shell"
 credit = "Solarized Darcula (colours of the Ptyxis built-in 'Solarized Darcula'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Solarized%20Darcula.yml)"
 default_accent = "yellow"
 dark_only = true
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#3d3f41"],[53,"#454749"],[66,"#555759"],

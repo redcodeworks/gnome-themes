@@ -13,6 +13,7 @@ shell_name = "Catppuccin-Frappe-Shell"
 credit = "Catppuccin Frappe (colours of the Ptyxis built-in 'Catppuccin Frappé'; origin named in the built-in's header: https://github.com/Gogh-Co/Gogh/tree/master/themes/Catppuccin%20Frappé.yml)"
 default_accent = "yellow"
 dark_only = true
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#303446"],[53,"#383d50"],[66,"#484d62"],

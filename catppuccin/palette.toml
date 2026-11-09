@@ -9,6 +9,7 @@ shell_name = "Catppuccin-Shell"
 credit = "Catppuccin (MIT), Mocha and Latte"
 default_accent = "blue"
 dark_only = false
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#1e1e2e"],[53,"#282839"],[66,"#313244"],

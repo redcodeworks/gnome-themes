@@ -12,6 +12,7 @@ shell_name = "Sweet-Shell"
 credit = "Sweet by EliverLara (palette values only; SCSS GPL-3.0 not used)"
 default_accent = "magenta"
 dark_only = true
+light_only = false
 
 [dark]
 ramp = [[0,"#000000"],[45,"#282c34"],[53,"#31353d"],[66,"#41454d"],
