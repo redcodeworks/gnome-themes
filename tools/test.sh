@@ -692,11 +692,11 @@ rm -f "$STUB_LOG"; GUM_STUB_PICK='nordic' THEMES_DEST=$AP THEMES_PICKER=gum PATH
 out=$(GUM_STUB_EXIT=130 THEMES_DEST=$AP gumpty tools/themectl.sh themes install | tr -d '\r')
 printf '%s' "$out" | grep -q "Nothing selected" && ! printf '%s' "$out" | grep -q "Switch to which" && chk ok "nothing selected or installed: no switch menu" || chk fail "menu after an empty install"
 IP="$T/after-icons"; mkdir -p "$IP"; rm -rf "$T/cache/icons"; ICONS_DEST=$IP just install-icon Fake-Dark >/dev/null 2>&1
-rm -f "$STUB_LOG"; : > "$LOG"; GUM_STUB_PICK='^Other-One  ' ICONS_DEST=$IP gumpty tools/themectl.sh icons install Other-One >/dev/null
-firsts=$(grep -E '^[A-Za-z-]+  \(' "$STUB_LOG" | head -2 | tr '\n' '|')
-[ "$firsts" = "Other-One  (other)|Fake-Dark  (fake)|" ] && grep -q "icon-theme Other-One" "$LOG" && chk ok "install-icon NAME on a terminal opens the switch-icon menu (just-installed first) and the choice runs the switch path" || chk fail "icon after-install: $firsts / $(tr '\n' ';' < "$LOG")"
-rm -f "$STUB_LOG"; out=$(GUM_STUB_EXIT=130 ICONS_DEST=$IP gumpty tools/themectl.sh icons install Other-One | tr -d '\r')
-printf '%s' "$out" | grep -q "To switch later: just switch-icon Other-One" && chk ok "icons: Esc skips and prints just switch-icon NAME" || chk fail "icon cancel: $(printf '%s' "$out" | tail -3)"
+rm -f "$STUB_LOG"; : > "$LOG"; GUM_STUB_PICK='^Fake-Light  ' ICONS_DEST=$IP gumpty tools/themectl.sh icons install Fake-Light >/dev/null
+firsts=$(grep -E '^[A-Za-z-]+  \(' "$STUB_LOG" | head -2 | sed 's/  (.*//' | tr '\n' '|')
+[ "$firsts" = "Fake-Light|Fake-Dark|" ] && grep -q "icon-theme Fake-Light" "$LOG" && chk ok "install-icon NAME on a terminal opens the switch-icon menu (just-installed first) and the choice runs the switch path" || chk fail "icon after-install: $firsts / $(tr '\n' ';' < "$LOG")"
+rm -f "$STUB_LOG"; out=$(GUM_STUB_EXIT=130 ICONS_DEST=$IP gumpty tools/themectl.sh icons install Fake-Light | tr -d '\r')
+printf '%s' "$out" | grep -q "To switch later: just switch-icon Fake-Light" && chk ok "icons: Esc skips and prints just switch-icon NAME" || chk fail "icon cancel: $(printf '%s' "$out" | tail -3)"
 rm -rf "$AP" "$IP"
 
 echo; echo "TOTAL: $pass PASS, $fail FAIL"
