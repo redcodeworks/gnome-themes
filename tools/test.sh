@@ -114,13 +114,22 @@ done
 [ -f LICENSE ] && grep -q "MIT License" LICENSE && chk ok "root LICENSE is MIT" || chk fail "root LICENSE"
 
 # ---- per scheme -----------------------------------------------------------------------------------------------
-for s in $schemes; do
-    echo "=== $s"
+# selftest and regeneration of every scheme, in parallel (each scheme only touches its own folder); results are collected per scheme
+cheap_one() {
+    local s=$1 out p f d
     out=$(python3 -I tools/selftest.py "$s" all 2>&1); p=$(printf '%s\n' "$out" | grep -c '^PASS'); f=$(printf '%s\n' "$out" | grep -c '^FAIL')
-    pass=$((pass+p)); fail=$((fail+f)); echo "  selftest: $p PASS, $f FAIL"; printf '%s\n' "$out" | grep '^FAIL' | head -5
-    just generate "$s" >/dev/null 2>&1; d=$(git status --porcelain -- "$s" | grep -vc pycache)
-    if [ "$d" -eq 0 ]; then chk ok "regeneration is byte-identical to the committed files"
-    else chk fail "regeneration changed $d files (stock stylesheets drifted or a generated file was edited)"; git status --porcelain -- "$s" | head -3; git checkout -q -- "$s"; fi
+    { echo "=== $s"; echo "  selftest: $p PASS, $f FAIL"; printf '%s\n' "$out" | grep '^FAIL' | head -5
+      echo "COUNT $p $f"
+      just generate "$s" >/dev/null 2>&1; d=$(git status --porcelain -- "$s" | grep -vc pycache)
+      if [ "$d" -eq 0 ]; then echo "  PASS regeneration is byte-identical to the committed files ($s)"; echo "COUNT 1 0"
+      else echo "  FAIL regeneration changed $d files of $s (stock stylesheets drifted or a generated file was edited)"; git status --porcelain -- "$s" | head -3; git checkout -q -- "$s"; echo "COUNT 0 1"; fi; } > "$T/cheap-$s.out"
+}
+export -f cheap_one; export T LOG
+mkdir -p "$T/cheap"
+printf '%s\n' $schemes | xargs -P "${TEST_JOBS:-4}" -I{} bash -c 'cheap_one {}'
+for s in $schemes; do
+    cat "$T/cheap-$s.out" | grep -v '^COUNT'
+    while read -r _ p f; do pass=$((pass+p)); fail=$((fail+f)); done < <(grep '^COUNT' "$T/cheap-$s.out")
 done
 for s in $loop_schemes; do
     echo "=== loop $s"
@@ -139,7 +148,10 @@ done
 
 # ---- every scheme: Ptyxis declarations and the inventory (tools/ptyxis-schemes.tsv) ----------------------------------------
 echo "=== ptyxis-compare and inventory"
-python3 -I tools/ptyxis-compare.py --check $schemes >/dev/null 2>&1 && chk ok "ptyxis-compare --check passes for every scheme" || chk fail "ptyxis-compare --check failed ($(python3 -I tools/ptyxis-compare.py --check $schemes 2>&1 | grep -iv '^info' | head -3 | tr '\n' ' '))"
+if [ ! -r "${PTYXIS_BIN:-/usr/bin/ptyxis}" ]; then echo "  SKIP ptyxis-compare --check (no Ptyxis binary here; run it locally)"
+elif python3 -I tools/ptyxis-compare.py --check $schemes >/dev/null 2>&1; then chk ok "ptyxis-compare --check passes for every scheme"
+else chk fail "ptyxis-compare --check failed ($(python3 -I tools/ptyxis-compare.py --check $schemes 2>&1 | grep -iv '^info' | head -3 | tr '\n' ' '))"
+fi
 inv=$(python3 -I - <<'PY'
 import os, csv
 rows = list(csv.reader(open('tools/ptyxis-schemes.tsv', encoding='utf-8'), delimiter='\t'))[1:]
