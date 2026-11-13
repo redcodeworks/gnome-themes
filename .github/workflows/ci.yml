@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: MIT
-# Branching: main is protected. Push to `testing`; this workflow runs there ONCE per push (no pull_request trigger: the required checks
-# `test` and `secrets` are matched by name on the PR head commit, which is the pushed commit, so the push run satisfies them).
-# A pull request can only be merged into main when both jobs below pass.
+# Branching (GitLab Flow): feature branches -> testing -> main.
+# Dev lane: the quick run on every push to a feature branch (any branch but main and testing), and on pull requests into testing.
+# Testing lane: a push to testing (a merged PR) runs the FULL suite. Nothing is published; main is the reviewed result.
+# The jobs `test` and `secrets` are the required checks on testing and main: do not rename them.
 name: ci
 
 on:
   push:
+    branches-ignore: [main]
+  pull_request:
     branches: [testing]
   workflow_dispatch:
     inputs:
@@ -42,9 +45,10 @@ jobs:
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Run the test suite
         # Cheap checks run for every scheme; the install/switch/update/remove loop runs for the featured schemes, the schemes changed
-        # against origin/main (capped at 15) and a rotating slice (the list is printed at the top of the log). Manual dispatch: every scheme.
+        # against origin/main (capped at 15) and a rotating slice (the list is printed at the top of the log). A push to testing and a
+        # manual dispatch: every scheme.
         env:
-          TEST_ALL: ${{ (github.event_name == 'workflow_dispatch' && inputs.full) && '1' || '' }}
+          TEST_ALL: ${{ ((github.event_name == 'workflow_dispatch' && inputs.full) || (github.event_name == 'push' && github.ref == 'refs/heads/testing')) && '1' || '' }}
         run: tools/test.sh
 
   # The required check "secrets": no credentials in the history.
