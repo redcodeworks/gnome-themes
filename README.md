@@ -52,7 +52,8 @@ the grant is undone when you remove the last theme and icon set. Nothing is wide
 
 ## Contributing
 
-`main` is protected: work on `testing` and open a pull request; CI on the pull request is the test.
+`main` is protected. Changes go on a feature branch, into `testing` by pull request, and from `testing` into
+`main` by pull request; CI is the test.
 The contributor workflow and design notes are in `CLAUDE.md`.
 
 ## License and credits
