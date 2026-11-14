@@ -56,8 +56,8 @@ HDR = '''/* %(title)s GNOME Shell theme, %(variant)s variant.
  * switched with `just switch-theme <scheme> <accent>` (sed token maps in <scheme>/accents/).
  */
 '''
-CAL_BEGIN = '/* gnome-themes override: calendar flat (begin) */'
-CAL_END = '/* gnome-themes override: calendar flat (end) */'
+CAL_BEGIN = '/* candy-for-gnome override: calendar flat (begin) */'
+CAL_END = '/* candy-for-gnome override: calendar flat (end) */'
 CAL_SEL = ['.calendar .calendar-day', '.calendar .calendar-day-heading', '.calendar .calendar-month-header .calendar-month-label',
            '.calendar .calendar-month-header .pager-button']
 CAL = '\n%s\n%s\n%s\n' % (CAL_BEGIN, '\n'.join('%s%s { background-color: transparent; }' % (x, st) for x in CAL_SEL for st in ('', ':insensitive')), CAL_END)
@@ -69,8 +69,8 @@ CAL = '\n%s\n%s\n%s\n' % (CAL_BEGIN, '\n'.join('%s%s { background-color: transpa
 # sit on the stock opaque popup surface (a slightly lighter or whiter tile; not verified live). The block is declared
 # separately from the calendar block and is the only place with literal rgba() overlays; tools/selftest.py strips both
 # blocks before the colour-masked structure comparison and checks this one's selectors and values.
-TILE_BEGIN = '/* gnome-themes override: calendar tiles (begin) */'
-TILE_END = '/* gnome-themes override: calendar tiles (end) */'
+TILE_BEGIN = '/* candy-for-gnome override: calendar tiles (begin) */'
+TILE_END = '/* candy-for-gnome override: calendar tiles (end) */'
 TILE_SEL = ['.events-button', '.world-clocks-button', '.weather-button']
 TILE_RADIUS = '18px'
 TILE_LOOK = {   # variant -> (background, hover, focus, active, border)

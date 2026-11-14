@@ -1,8 +1,13 @@
-# gnome-themes
+# candy-for-gnome
 
 Terminal-inspired color schemes for GNOME: GTK 3, GTK 4 / libadwaita and the GNOME Shell, plus an
 installer for the themes and for a few icon sets. Only the colors change, so layout and behavior stay
 stock. Matching terminal (Ptyxis) and editor (GtkSourceView) colors are included.
+
+candy-for-gnome is an independent project and is not affiliated with, endorsed by, or sponsored by the
+GNOME Foundation or the GNOME Project. It provides themes designed for use with the GNOME desktop. The
+GNOME logo and GNOME name are registered trademarks or trademarks of GNOME Foundation in the United
+States or other countries.
 
 ## Requirements
 
@@ -11,7 +16,7 @@ stock. Matching terminal (Ptyxis) and editor (GtkSourceView) colors are included
 ## Install and usage
 
 ```
-git clone https://github.com/redcodeworks/gnome-themes && cd gnome-themes
+git clone https://github.com/redcodeworks/candy-for-gnome && cd candy-for-gnome
 just install-theme          # checklist; or: just install-theme gruvbox-material
 just switch-theme            # apply it (GTK, Shell, libadwaita), asks for the accent; or: just switch-theme nordic cyan
 just install-icon           # checklist; or: just install-icon Papirus-Dark
@@ -30,7 +35,7 @@ Themes go to `~/.themes`, icons to `~/.local/share/icons`, as real copies. Check
 | `switch-theme [name] [accent]` | `switch-icon [name]` | checklist without a name |
 
 Update with `just update-theme` / `just update-icon` (themes pull your checkout first); remove with
-`just remove-theme` / `just remove-icon`. A same-named folder that gnome-themes did not install is only
+`just remove-theme` / `just remove-icon`. A same-named folder that candy-for-gnome did not install is only
 replaced or removed after you confirm.
 
 ## Themes

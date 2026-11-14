@@ -3631,7 +3631,7 @@ StScrollBar {
     .unlock-dialog .user-widget.vertical .user-icon StIcon {
       padding: 30px; }
 
-/* gnome-themes override: calendar flat (begin) */
+/* candy-for-gnome override: calendar flat (begin) */
 .calendar .calendar-day { background-color: transparent; }
 .calendar .calendar-day:insensitive { background-color: transparent; }
 .calendar .calendar-day-heading { background-color: transparent; }
@@ -3640,9 +3640,9 @@ StScrollBar {
 .calendar .calendar-month-header .calendar-month-label:insensitive { background-color: transparent; }
 .calendar .calendar-month-header .pager-button { background-color: transparent; }
 .calendar .calendar-month-header .pager-button:insensitive { background-color: transparent; }
-/* gnome-themes override: calendar flat (end) */
+/* candy-for-gnome override: calendar flat (end) */
 
-/* gnome-themes override: calendar tiles (begin) */
+/* candy-for-gnome override: calendar tiles (begin) */
 .events-button,
 .world-clocks-button,
 .weather-button {
@@ -3656,4 +3656,4 @@ StScrollBar {
   background-color: rgba(255, 255, 255, 0.04) !important; }
 .events-button:active, .world-clocks-button:active, .weather-button:active {
   background-color: rgba(255, 255, 255, 0.04) !important; }
-/* gnome-themes override: calendar tiles (end) */
+/* candy-for-gnome override: calendar tiles (end) */
