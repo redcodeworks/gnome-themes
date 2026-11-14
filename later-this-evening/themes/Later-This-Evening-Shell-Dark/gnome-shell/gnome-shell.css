@@ -3646,14 +3646,14 @@ StScrollBar {
 .events-button,
 .world-clocks-button,
 .weather-button {
-  background-color: rgba(255, 255, 255, 0.07) !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
   border-radius: 18px !important;
   box-shadow: none !important; }
 .events-button:hover, .world-clocks-button:hover, .weather-button:hover {
-  background-color: rgba(255, 255, 255, 0.12) !important; }
+  background-color: rgba(255, 255, 255, 0.03) !important; }
 .events-button:focus, .world-clocks-button:focus, .weather-button:focus {
-  background-color: rgba(255, 255, 255, 0.12) !important; }
+  background-color: rgba(255, 255, 255, 0.03) !important; }
 .events-button:active, .world-clocks-button:active, .weather-button:active {
-  background-color: rgba(255, 255, 255, 0.15) !important; }
+  background-color: rgba(255, 255, 255, 0.03) !important; }
 /* gnome-themes override: calendar tiles (end) */
