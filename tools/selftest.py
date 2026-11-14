@@ -106,15 +106,15 @@ def toolkit(kind):
         return errs
     if kind == 'shell':
         gi.require_version('St', '51'); gi.require_version('Clutter', '51'); from gi.repository import St
-    TILERE = re.compile(r'/\* gnome-themes override: calendar tiles \(begin\) \*/.*?/\* gnome-themes override: calendar tiles \(end\) \*/', re.S)
+    TILERE = re.compile(r'/\* candy-for-gnome override: calendar tiles \(begin\) \*/.*?/\* candy-for-gnome override: calendar tiles \(end\) \*/', re.S)
     TILEA = tomllib.load(open(os.path.join(HERE, 'shell-tile-alphas.toml'), 'rb'))
     if kind == 'shell': ok(all(os.path.isfile(os.path.join(ROOT, k, 'scheme.toml')) for k in TILEA), 'shell-tile-alphas.toml names only existing schemes')
     for path, (stock, v) in files.items():
         rel = os.path.relpath(path, D); new = open(path).read()
         body = new[new.index('*/') + 2:] if kind == 'shell' else new[new.index('*/') + 2:]
         # structure: shell stock keeps its own header comment; compare after dropping comments
-        CALRE = re.compile(r'\n?/\* gnome-themes override: calendar flat \(begin\) \*/.*?/\* gnome-themes override: calendar flat \(end\) \*/\n?', re.S)
-        TILERE = re.compile(r'\n?/\* gnome-themes override: calendar tiles \(begin\) \*/.*?/\* gnome-themes override: calendar tiles \(end\) \*/\n?', re.S)
+        CALRE = re.compile(r'\n?/\* candy-for-gnome override: calendar flat \(begin\) \*/.*?/\* candy-for-gnome override: calendar flat \(end\) \*/\n?', re.S)
+        TILERE = re.compile(r'\n?/\* candy-for-gnome override: calendar tiles \(begin\) \*/.*?/\* candy-for-gnome override: calendar tiles \(end\) \*/\n?', re.S)
         if kind == 'shell':
             blocks = CALRE.findall(new); tblocks = TILERE.findall(new)
             ok(len(blocks) == 1 and new.rstrip().endswith('(end) */') and re.findall(r'(?m)^(\.calendar [^{]*) \{ background-color: transparent; \}$', blocks[0]).__len__() == 8 and blocks[0].count('{') == 8

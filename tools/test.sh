@@ -19,7 +19,7 @@ root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 if [ ! -f /run/.containerenv ] && [ ! -f /.dockerenv ] && [ -z "${TEST_IN_CONTAINER:-}" ]; then
     rt=$(command -v podman || command -v docker) || { echo "tools/test.sh runs in a container: install podman or docker"; exit 2; }
     tag=$(cat "$root/tools/test.Containerfile" "$root/tools/test-packages.txt" | sha1sum | cut -c1-8)
-    img="gnome-themes-test:45-$tag"
+    img="candy-for-gnome-test:45-$tag"
     args=(); for a in "$@"; do if [ "$a" = --rebuild ]; then "$rt" rmi -f "$img" >/dev/null 2>&1 || true; else args+=("$a"); fi; done
     if ! "$rt" image inspect "$img" >/dev/null 2>&1; then
         echo "building $img (first run downloads about 500 MB)"; "$rt" build -q -t "$img" -f "$root/tools/test.Containerfile" "$root/tools" >/dev/null || exit 2
@@ -61,7 +61,7 @@ SH
 chmod +x "$T/bin/dconf"
 export THEMES_PICKER=builtin THEMES_SWITCH_AFTER_INSTALL=0   # tests choose the picker explicitly (a developer machine may have gum) and enable the switch menu after an install only in their own pty tests
 export PTYXIS_PALETTES="$T/ptyxis-palettes" GTKSOURCEVIEW_STYLES="$T/gsv-styles" FLATPAK_APPS="$T/var-app"
-export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" GNOME_THEMES_CACHE="$T/cache"
+export PATH="$T/bin:$PATH" XDG_CONFIG_HOME="$T/cfg" XDG_STATE_HOME="$T/state" CANDY_FOR_GNOME_CACHE="$T/cache"
 export GIT_AUTHOR_NAME=t GIT_AUTHOR_EMAIL=t@t GIT_COMMITTER_NAME=t GIT_COMMITTER_EMAIL=t@t
 # a stand-in flatpak (FLATPAK_DB: the global override's filesystems, one entry per line); only the calls themectl makes. Absent unless a test
 # puts $T/fpbin on the PATH, so the other tests behave like a machine without Flatpak
@@ -133,7 +133,7 @@ cheap_one() {
       if [ "$d" -eq 0 ]; then echo "  PASS regeneration is byte-identical to the committed files ($s)"; echo "COUNT 1 0"
       else echo "  FAIL regeneration changed $d files of $s (stock stylesheets drifted or a generated file was edited)"; git status --porcelain -- "$s" | head -3; git checkout -q -- "$s"; echo "COUNT 0 1"; fi; } > "$T/cheap-$s.out"
 }
-export -f cheap_one; export T LOG GNOME_THEMES_SKIP_ASSETS=1   # assets are checked once below, not per scheme
+export -f cheap_one; export T LOG CANDY_FOR_GNOME_SKIP_ASSETS=1   # assets are checked once below, not per scheme
 mkdir -p "$T/cheap"
 printf '%s\n' $cheap_schemes | xargs -P "${TEST_JOBS:-$(nproc)}" -I{} bash -c 'cheap_one {}'
 for s in $cheap_schemes; do
@@ -151,7 +151,7 @@ for s in $loop_schemes; do
         : > "$LOG"; THEMES_DEST=$D just switch-theme "$s" "$a" >/dev/null 2>&1; rc=$?
         [ $rc -eq 0 ] && [ "$(grep -c gtk-theme "$LOG")" -ge 1 ] && chk ok "switch-theme $s $a" || chk fail "switch-theme $s $a (rc=$rc)"
     done
-    last=$(grep -v '^#' "$s/accents/list" | awk 'NF {print $1}' | tail -1); st=$(grep "^$s=" "$T/state/gnome-themes/accents" 2>/dev/null | cut -d= -f2)
+    last=$(grep -v '^#' "$s/accents/list" | awk 'NF {print $1}' | tail -1); st=$(grep "^$s=" "$T/state/candy-for-gnome/accents" 2>/dev/null | cut -d= -f2)
     [ "$st" = "$last" ] && chk ok "accent remembered ($st)" || chk fail "accent state '$st' != '$last'"
     h1=$(find "$D" -type f -exec sha1sum {} + | sort | sha1sum); THEMES_DEST=$D just update-theme >/dev/null 2>&1; h2=$(find "$D" -type f -exec sha1sum {} + | sort | sha1sum)
     [ "$h1" = "$h2" ] && chk ok "update-theme keeps the remembered accent" || chk fail "update-theme changed the installed tree"
@@ -248,19 +248,22 @@ THEMES_DEST=$SCROLL_THEMES python3 -I tools/pty-scroll-test.py 10 24 > "$T/scrol
 echo "=== collision guard"
 G="$T/guard-themes"; mkdir -p "$G/Dracula"; echo mine > "$G/Dracula/mine.txt"; printf '[Desktop Entry]\nName=Dracula\n' > "$G/Dracula/index.theme"
 out=$(THEMES_DEST=$G just install-theme dracula </dev/null 2>&1); rc=$?
-[ -f "$G/Dracula/mine.txt" ] && [ ! -f "$G/Dracula/.gnome-themes" ] && chk ok "install: unrelated folder of the same name left untouched" || chk fail "install replaced an unrelated Dracula"
-printf '%s\n' "$out" | grep -q "not installed by gnome-themes" && [ $rc -eq 0 ] && chk ok "install: refusal message, other folders still handled (rc=$rc)" || chk fail "install: no refusal message or rc=$rc"
-[ -f "$G/Dracula-Shell-Dark/.gnome-themes" ] && [ "$(cat "$G/Dracula-Shell-Dark/.gnome-themes")" = dracula ] && chk ok "install: the other folders were installed with the marker" || chk fail "install: marker missing on Dracula-Shell-Dark"
+[ -f "$G/Dracula/mine.txt" ] && [ ! -f "$G/Dracula/.candy-for-gnome" ] && chk ok "install: unrelated folder of the same name left untouched" || chk fail "install replaced an unrelated Dracula"
+printf '%s\n' "$out" | grep -q "not installed by candy-for-gnome" && [ $rc -eq 0 ] && chk ok "install: refusal message, other folders still handled (rc=$rc)" || chk fail "install: no refusal message or rc=$rc"
+[ -f "$G/Dracula-Shell-Dark/.candy-for-gnome" ] && [ "$(cat "$G/Dracula-Shell-Dark/.candy-for-gnome")" = dracula ] && chk ok "install: the other folders were installed with the marker" || chk fail "install: marker missing on Dracula-Shell-Dark"
 THEMES_DEST=$G just update-theme </dev/null >/dev/null 2>&1; [ -f "$G/Dracula/mine.txt" ] && chk ok "update: unrelated folder untouched" || chk fail "update replaced an unrelated Dracula"
 THEMES_DEST=$G just remove-theme dracula </dev/null >/dev/null 2>&1
 [ -f "$G/Dracula/mine.txt" ] && [ ! -e "$G/Dracula-Shell-Dark" ] && chk ok "remove: unrelated folder untouched, our folders removed" || chk fail "remove: wrong result ($(ls "$G" | tr '\n' ' '))"
 FORCE=1 THEMES_DEST=$G just install-theme dracula </dev/null >/dev/null 2>&1
-[ ! -e "$G/Dracula/mine.txt" ] && [ -f "$G/Dracula/.gnome-themes" ] && chk ok "FORCE=1 replaces the unrelated folder and marks it" || chk fail "FORCE=1 did not replace"
+[ ! -e "$G/Dracula/mine.txt" ] && [ -f "$G/Dracula/.candy-for-gnome" ] && chk ok "FORCE=1 replaces the unrelated folder and marks it" || chk fail "FORCE=1 did not replace"
 echo stale > "$G/Dracula/stale.txt"; out=$(THEMES_DEST=$G just install-theme dracula </dev/null 2>&1)
 [ ! -e "$G/Dracula/stale.txt" ] && ! printf '%s\n' "$out" | grep -q "not installed by" && chk ok "a marked folder is replaced silently" || chk fail "marked folder not replaced silently"
 L="$T/guard-legacy"; mkdir -p "$L"; cp -a dracula/themes/Dracula "$L/Dracula"; echo stale > "$L/Dracula/stale.txt"
 out=$(THEMES_DEST=$L just install-theme dracula </dev/null 2>&1)
-[ ! -e "$L/Dracula/stale.txt" ] && [ -f "$L/Dracula/.gnome-themes" ] && ! printf '%s\n' "$out" | grep -q "not installed by" && chk ok "a pre-marker installation (identical index.theme) is adopted" || chk fail "legacy installation not adopted"
+[ ! -e "$L/Dracula/stale.txt" ] && [ -f "$L/Dracula/.candy-for-gnome" ] && ! printf '%s\n' "$out" | grep -q "not installed by" && chk ok "a pre-marker installation (identical index.theme) is adopted" || chk fail "legacy installation not adopted"
+O="$T/guard-oldname"; mkdir -p "$O"; cp -a dracula/themes/Dracula "$O/Dracula"; echo dracula > "$O/Dracula/.gnome-themes"; echo stale > "$O/Dracula/stale.txt"
+out=$(THEMES_DEST=$O just install-theme dracula </dev/null 2>&1)
+[ -f "$O/Dracula/stale.txt" ] && [ ! -f "$O/Dracula/.candy-for-gnome" ] && [ "$(printf '%s\n' "$out" | grep -c 'installed under the old project name')" = 1 ] && chk ok "old-name marker: folder not adopted, one leftover message" || chk fail "old-name marker folder was adopted or message count wrong"
 if command -v script >/dev/null 2>&1; then
     I="$T/guard-ask"; mkdir -p "$I/Dracula"; echo mine > "$I/Dracula/mine.txt"
     printf 'n\n' | script -qec "THEMES_DEST=$I tools/themectl.sh themes install dracula" /dev/null >/dev/null 2>&1
@@ -304,16 +307,16 @@ for i in nord "Everforest" "Catppuccin Mocha" "Catppuccin Latte"; do printf '[Pa
 # dconf db: three profiles; the default one (a) has no palette key, b has one, c has none
 PD="$T/themes-pty"; : > "$DCONF_DB"
 printf '%s\t%s\n' /org/gnome/Ptyxis/profile-uuids "['aaa', 'bbb', 'ccc']" /org/gnome/Ptyxis/default-profile-uuid "'aaa'" /org/gnome/Ptyxis/Profiles/bbb/palette "'Old'" /org/gnome/Ptyxis/Profiles/ccc/label "'x'" >> "$DCONF_DB"
-# old generated files carry our marker; Kevin's own palette does not (it even mentions gnome-themes in a comment)
+# old generated files carry our marker; Kevin's own palette does not (it even mentions candy-for-gnome in a comment)
 rm -rf "$PTYXIS_PALETTES"; mkdir -p "$PTYXIS_PALETTES"
-mkold() { printf '[Palette]\nName=Old (GNOME Themes)\n# gnome-themes: rose-pine\n' > "$PTYXIS_PALETTES/gnome-themes-rose-pine.palette"; printf '[Palette]\nName=Old\n# gnome-themes: sweet\n' > "$PTYXIS_PALETTES/gnome-themes-sweet.palette"; }
-printf '[Palette]\nName=mine\n# see gnome-themes for the idea\n' > "$PTYXIS_PALETTES/catppuccin-dynamic.palette"
+mkold() { printf '[Palette]\nName=Old (GNOME Themes)\n# candy-for-gnome: rose-pine\n' > "$PTYXIS_PALETTES/candy-for-gnome-rose-pine.palette"; printf '[Palette]\nName=Old\n# candy-for-gnome: sweet\n' > "$PTYXIS_PALETTES/candy-for-gnome-sweet.palette"; }
+printf '[Palette]\nName=mine\n# see candy-for-gnome for the idea\n' > "$PTYXIS_PALETTES/catppuccin-dynamic.palette"
 for verb in install-theme update-theme switch-theme remove-theme; do
     THEMES_DEST=$PD PTYXIS_BIN="$FIX" just install-theme everforest </dev/null >/dev/null 2>&1; mkold
     vargs=(); [ "$verb" = update-theme ] || vargs=(everforest)
     out=$(THEMES_DEST=$PD PTYXIS_BIN="$FIX" just "$verb" "${vargs[@]}" </dev/null 2>&1)
     n=$(printf '%s\n' "$out" | grep -c 'Removed old generated Ptyxis palette')
-    [ ! -e "$PTYXIS_PALETTES/gnome-themes-rose-pine.palette" ] && [ ! -e "$PTYXIS_PALETTES/gnome-themes-sweet.palette" ] && [ "$n" = 2 ] && [ -f "$PTYXIS_PALETTES/catppuccin-dynamic.palette" ] && grep -q mine "$PTYXIS_PALETTES/catppuccin-dynamic.palette" && chk ok "$verb deletes the old marked palette files (one line each) and keeps the unmarked one" || chk fail "$verb palette cleanup ($n lines; $(ls "$PTYXIS_PALETTES" | tr '\n' ' '))"
+    [ ! -e "$PTYXIS_PALETTES/candy-for-gnome-rose-pine.palette" ] && [ ! -e "$PTYXIS_PALETTES/candy-for-gnome-sweet.palette" ] && [ "$n" = 2 ] && [ -f "$PTYXIS_PALETTES/catppuccin-dynamic.palette" ] && grep -q mine "$PTYXIS_PALETTES/catppuccin-dynamic.palette" && chk ok "$verb deletes the old marked palette files (one line each) and keeps the unmarked one" || chk fail "$verb palette cleanup ($n lines; $(ls "$PTYXIS_PALETTES" | tr '\n' ' '))"
 done
 THEMES_DEST=$PD just remove-theme everforest </dev/null >/dev/null 2>&1; rm -rf "$PTYXIS_PALETTES"
 THEMES_DEST=$PD PTYXIS_BIN="$FIX" just install-theme everforest </dev/null >/dev/null 2>&1; ls "$PTYXIS_PALETTES" >/dev/null 2>&1 && [ -z "$(ls "$PTYXIS_PALETTES")" ] && chk fail "install created palette dir content" || chk ok "install-theme copies no palette file"
@@ -353,7 +356,7 @@ for f in sorted(glob.glob('*/gtksourceview/*.xml')):
     except ET.ParseError as e: bad.append('%s: %s' % (f, e)); continue
     sid = root.get('id'); name = root.get('_name') or root.get('name')
     if sid != os.path.basename(f)[:-4] or not re.fullmatch(r'([a-zA-Z0-9_]|-)+', sid) or not name: bad.append(f + ': id/name')
-    if 'gnome-themes: ' + scheme not in open(f).read(): bad.append(f + ': marker')
+    if 'candy-for-gnome: ' + scheme not in open(f).read(): bad.append(f + ': marker')
     cols = {c.get('name'): c.get('value') for c in root.iter('color')}
     meta = {p.get('name'): p.text for p in root.iter('property')}
     if meta.get('variant') not in ('dark', 'light'): bad.append(f + ': variant')
@@ -389,25 +392,25 @@ rm -rf "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS"; PD="$T/themes-gsv"; : > "$DCONF_
 printf '%s\t%s\n' /org/gnome/Ptyxis/profile-uuids "['aaa']" >> "$DCONF_DB"
 mkdir -p "$FLATPAK_APPS/org.gnome.TextEditor"    # Text Editor: data dir exists; Builder: only known to flatpak
 out=$(FLATPAK_INFO="org.gnome.Builder" PATH="$T/fpbin:$PATH" THEMES_DEST=$PD just install-theme gruvbox-material </dev/null 2>&1)
-ids="gnome-themes-gruvbox-material-dark.xml gnome-themes-gruvbox-material-light.xml"; ok=1
+ids="candy-for-gnome-gruvbox-material-dark.xml candy-for-gnome-gruvbox-material-light.xml"; ok=1
 for d in "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor/data/gtksourceview-5/styles" "$FLATPAK_APPS/org.gnome.Builder/data/gtksourceview-5/styles"; do for f in $ids; do [ -f "$d/$f" ] || ok=0; done; done
 [ $ok = 1 ] && chk ok "install-theme copies the style schemes into the user dir and into the Flatpak editors' data dirs (Text Editor by dir, Builder via flatpak info)" || chk fail "gsv install ($(ls "$GTKSOURCEVIEW_STYLES" 2>&1 | tr '\n' ' '))"
 out=$(FLATPAK_INFO="org.gnome.Builder" PATH="$T/fpbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null 2>&1)
-[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'gnome-themes-gruvbox-material-dark'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'gnome-themes-gruvbox-material-dark'" ] && chk ok "switch-theme sets Text Editor and (Builder present) Builder to the -dark id while the desktop is dark" || chk fail "gsv switch dark ($(grep -E 'TextEditor|builder' "$DCONF_DB" | tr '\t\n' '= '))"
+[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'candy-for-gnome-gruvbox-material-dark'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'candy-for-gnome-gruvbox-material-dark'" ] && chk ok "switch-theme sets Text Editor and (Builder present) Builder to the -dark id while the desktop is dark" || chk fail "gsv switch dark ($(grep -E 'TextEditor|builder' "$DCONF_DB" | tr '\t\n' '= '))"
 lbin="$T/bin-light"; mkdir -p "$lbin"; printf '#!/bin/sh\ncase "$1" in set) : ;; get) case "$3" in color-scheme) echo "\x27default\x27";; *) echo "\x27x\x27";; esac ;; list-schemas) echo org.gnome.shell.extensions.user-theme ;; esac\n' > "$lbin/gsettings"; chmod +x "$lbin/gsettings"
 PATH="$lbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null >/dev/null 2>&1
-[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'gnome-themes-gruvbox-material-light'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'gnome-themes-gruvbox-material-dark'" ] && chk ok "light desktop: the -light id for Text Editor; Builder untouched when it is not installed" || chk fail "gsv switch light"
+[ "$(dconf read /org/gnome/TextEditor/style-scheme)" = "'candy-for-gnome-gruvbox-material-light'" ] && [ "$(dconf read /org/gnome/builder/editor/style-scheme-name)" = "'candy-for-gnome-gruvbox-material-dark'" ] && chk ok "light desktop: the -light id for Text Editor; Builder untouched when it is not installed" || chk fail "gsv switch light"
 PATH="$lbin:$PATH" THEMES_DEST=$PD just switch-theme gruvbox-material </dev/null 2>&1 | grep -q "Builder not found" && chk ok "without Builder the skip is announced" || chk fail "no Builder note"
-echo "<!-- stale -->" >> "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml"; THEMES_DEST=$PD just update-theme </dev/null >/dev/null 2>&1
-grep -q stale "$GTKSOURCEVIEW_STYLES/gnome-themes-gruvbox-material-dark.xml" && chk fail "update did not refresh the style scheme" || chk ok "update-theme refreshes the style schemes"
+echo "<!-- stale -->" >> "$GTKSOURCEVIEW_STYLES/candy-for-gnome-gruvbox-material-dark.xml"; THEMES_DEST=$PD just update-theme </dev/null >/dev/null 2>&1
+grep -q stale "$GTKSOURCEVIEW_STYLES/candy-for-gnome-gruvbox-material-dark.xml" && chk fail "update did not refresh the style scheme" || chk ok "update-theme refreshes the style schemes"
 THEMES_DEST=$PD just remove-theme gruvbox-material </dev/null >/dev/null 2>&1
 [ -z "$(find "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS/org.gnome.TextEditor" -type f 2>/dev/null)" ] && chk ok "remove-theme removes the style schemes everywhere" || chk fail "remove left style schemes: $(find "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS" -type f 2>&1 | tr "\n" " ")"
 # collision: an unmarked file with our id is kept; dark-only scheme has only the dark id
-mkdir -p "$GTKSOURCEVIEW_STYLES"; echo mine > "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"
+mkdir -p "$GTKSOURCEVIEW_STYLES"; echo mine > "$GTKSOURCEVIEW_STYLES/candy-for-gnome-fairy-floss-dark.xml"
 out=$(THEMES_DEST=$PD just install-theme fairy-floss </dev/null 2>&1)
-[ "$(cat "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml")" = mine ] && printf '%s\n' "$out" | grep -q "not installed by gnome-themes" && chk ok "an unmarked style scheme file is not replaced" || chk fail "gsv collision"
-rm -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml"; THEMES_DEST=$PD just install-theme fairy-floss </dev/null >/dev/null 2>&1
-[ -f "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-dark.xml" ] && [ ! -e "$GTKSOURCEVIEW_STYLES/gnome-themes-fairy-floss-light.xml" ] && chk ok "a dark-only scheme installs only its -dark style scheme" || chk fail "dark-only gsv"
+[ "$(cat "$GTKSOURCEVIEW_STYLES/candy-for-gnome-fairy-floss-dark.xml")" = mine ] && printf '%s\n' "$out" | grep -q "not installed by candy-for-gnome" && chk ok "an unmarked style scheme file is not replaced" || chk fail "gsv collision"
+rm -f "$GTKSOURCEVIEW_STYLES/candy-for-gnome-fairy-floss-dark.xml"; THEMES_DEST=$PD just install-theme fairy-floss </dev/null >/dev/null 2>&1
+[ -f "$GTKSOURCEVIEW_STYLES/candy-for-gnome-fairy-floss-dark.xml" ] && [ ! -e "$GTKSOURCEVIEW_STYLES/candy-for-gnome-fairy-floss-light.xml" ] && chk ok "a dark-only scheme installs only its -dark style scheme" || chk fail "dark-only gsv"
 THEMES_DEST=$PD just remove-theme fairy-floss </dev/null >/dev/null 2>&1; THEMES_DEST=$PD just remove-theme gruvbox-material </dev/null >/dev/null 2>&1; rm -rf "$GTKSOURCEVIEW_STYLES" "$FLATPAK_APPS" "$PTYXIS_PALETTES"
 
 # ---- new-scheme helpers: Ptyxis built-in reader (by id) and the draft scheme.toml writer (fixture built-ins, no real Ptyxis needed) ----
@@ -578,14 +581,14 @@ just remove-icon Fake-Dark >/dev/null 2>&1; [ ! -d "$ICONS_DEST/Fake-Dark" ] && 
 mkdir -p "$ICONS_DEST/Fake-Light"; echo mine > "$ICONS_DEST/Fake-Light/mine.txt"
 just install-icon Fake-Light </dev/null >/dev/null 2>&1; just update-icon </dev/null >/dev/null 2>&1; just remove-icon Fake-Light </dev/null >/dev/null 2>&1
 [ -f "$ICONS_DEST/Fake-Light/mine.txt" ] && chk ok "icons: unrelated folder untouched by install, update and remove" || chk fail "icons: unrelated Fake-Light was touched"
-FORCE=1 just install-icon Fake-Light </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Light/mine.txt" ] && [ -f "$ICONS_DEST/Fake-Light/.gnome-themes" ] && chk ok "icons: FORCE=1 replaces and marks" || chk fail "icons: FORCE=1"
+FORCE=1 just install-icon Fake-Light </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Light/mine.txt" ] && [ -f "$ICONS_DEST/Fake-Light/.candy-for-gnome" ] && chk ok "icons: FORCE=1 replaces and marks" || chk fail "icons: FORCE=1"
 cp -a "$T/icons-src/Fake-Dark" "$ICONS_DEST/Fake-Dark"; rm -rf "$ICONS_DEST/Fake-Dark/.git"; echo stale > "$ICONS_DEST/Fake-Dark/stale.txt"
-just install-icon Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.gnome-themes" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
+just install-icon Fake-Dark </dev/null >/dev/null 2>&1; [ ! -e "$ICONS_DEST/Fake-Dark/stale.txt" ] && [ -f "$ICONS_DEST/Fake-Dark/.candy-for-gnome" ] && chk ok "icons: a pre-marker installation is adopted" || chk fail "icons: legacy not adopted"
 just remove-icon Fake-Dark </dev/null >/dev/null 2>&1; just remove-icon Fake-Light </dev/null >/dev/null 2>&1
 
 # ---- Flatpak access: grant after a y, record only what was added, undo only that ------------------------------------------------
 echo "=== flatpak access"
-FS="$T/themes-fp"; FI="$T/icons-fp"; fpst="$XDG_STATE_HOME/gnome-themes/flatpak-overrides"; rm -f "$fpst"
+FS="$T/themes-fp"; FI="$T/icons-fp"; fpst="$XDG_STATE_HOME/candy-for-gnome/flatpak-overrides"; rm -f "$fpst"
 export FP_PATH="$T/fpbin:$PATH"
 fpshow() { sort "$FLATPAK_DB" | tr '\n' ' '; }
 # without a terminal: nothing changes, the exact command is printed
@@ -599,7 +602,7 @@ if command -v script >/dev/null 2>&1; then
     [ "$(fpshow)" = "xdg-config/gtk-4.0:ro " ] && [ ! -e "$fpst" ] && grep -q "Allow read-only access to these folders for all Flatpaks" "$T/fp.out" && chk ok "answer n: nothing granted or recorded; the prompt text" || chk fail "flatpak n case ($(fpshow))"
     printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null >/dev/null 2>&1
     [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "answer y: the missing entries were granted" || chk fail "flatpak y grant ($(fpshow))"
-    [ "$(sort "$fpst" | tr '\n' ' ')" = "xdg-config/gtk-3.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "only the entries gnome-themes added are recorded (the pre-existing one is not)" || chk fail "record: $(cat "$fpst" 2>/dev/null | tr '\n' ' ')"
+    [ "$(sort "$fpst" | tr '\n' ' ')" = "xdg-config/gtk-3.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "only the entries candy-for-gnome added are recorded (the pre-existing one is not)" || chk fail "record: $(cat "$fpst" 2>/dev/null | tr '\n' ' ')"
     # a second switch finds nothing missing: no prompt
     printf 'y\n' | PATH="$FP_PATH" THEMES_DEST=$FS script -qec "tools/themectl.sh themes switch fairy-floss magenta" /dev/null > "$T/fp.out" 2>&1
     grep -q "Allow read-only access" "$T/fp.out" && chk fail "prompted although everything is granted" || chk ok "nothing missing: no prompt"
@@ -608,7 +611,7 @@ if command -v script >/dev/null 2>&1; then
     printf 'y\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh themes remove fairy-floss" /dev/null > "$T/fp.out" 2>&1
     [ -s "$fpst" ] && ! grep -q "Remove the Flatpak read access" "$T/fp.out" && chk ok "removing the last theme while an icon set remains does not ask" || chk fail "undo asked too early"
     printf 'n\n' | PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS script -qec "tools/themectl.sh icons remove Fake-Dark" /dev/null > "$T/fp.out" 2>&1
-    grep -q "Remove the Flatpak read access that gnome-themes added" "$T/fp.out" && [ -s "$fpst" ] && [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "removing the last set asks; n keeps access and record" || chk fail "undo n case"
+    grep -q "Remove the Flatpak read access that candy-for-gnome added" "$T/fp.out" && [ -s "$fpst" ] && [ "$(fpshow)" = "xdg-config/gtk-3.0:ro xdg-config/gtk-4.0:ro xdg-data/icons:ro ~/.themes:ro " ] && chk ok "removing the last set asks; n keeps access and record" || chk fail "undo n case"
     PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just install-icon Fake-Dark </dev/null >/dev/null 2>&1
     out=$(PATH="$FP_PATH" ICONS_DEST=$FI THEMES_DEST=$FS just remove-icon Fake-Dark </dev/null 2>&1)
     printf '%s\n' "$out" | grep -qF "flatpak override --user --nofilesystem=xdg-config/gtk-3.0 --nofilesystem=xdg-data/icons --nofilesystem=~/.themes" && ! printf '%s\n' "$out" | grep -q "nofilesystem=xdg-config/gtk-4.0" && [ -s "$fpst" ] && chk ok "no terminal: the undo commands for exactly the recorded entries are printed, nothing removed" || chk fail "undo no-terminal case"
@@ -672,7 +675,7 @@ THEMES_DEST=$PD2 tools/themectl.sh themes install "$first_sc" >/dev/null 2>&1
 [ "$(n_inst "$PD2")" -ge 1 ] && chk ok "a named scheme installs without the checklist" || chk fail "named install failed"
 out=$(THEMES_DEST=$PD pty down,enter tools/themectl.sh themes switch "$first_sc")
 echo "$out" | grep -q 'current' && chk ok "accent submenu marks the current accent" || chk fail "accent submenu: no (current) mark"
-grep -q "^$first_sc=" "$XDG_STATE_HOME/gnome-themes/accents" && chk ok "accent chosen in the submenu is remembered" || chk fail "accent not remembered"
+grep -q "^$first_sc=" "$XDG_STATE_HOME/candy-for-gnome/accents" && chk ok "accent chosen in the submenu is remembered" || chk fail "accent not remembered"
 
 # ---- switch menu after install-theme / install-icon (terminal only; stub gum) --------------------------------------------------------------
 echo "=== switch after install"
