@@ -106,16 +106,25 @@ def toolkit(kind):
         return errs
     if kind == 'shell':
         gi.require_version('St', '51'); gi.require_version('Clutter', '51'); from gi.repository import St
+    TILERE = re.compile(r'/\* gnome-themes override: calendar tiles \(begin\) \*/.*?/\* gnome-themes override: calendar tiles \(end\) \*/', re.S)
     for path, (stock, v) in files.items():
         rel = os.path.relpath(path, D); new = open(path).read()
         body = new[new.index('*/') + 2:] if kind == 'shell' else new[new.index('*/') + 2:]
         # structure: shell stock keeps its own header comment; compare after dropping comments
         CALRE = re.compile(r'\n?/\* gnome-themes override: calendar flat \(begin\) \*/.*?/\* gnome-themes override: calendar flat \(end\) \*/\n?', re.S)
+        TILERE = re.compile(r'\n?/\* gnome-themes override: calendar tiles \(begin\) \*/.*?/\* gnome-themes override: calendar tiles \(end\) \*/\n?', re.S)
         if kind == 'shell':
-            blocks = CALRE.findall(new)
+            blocks = CALRE.findall(new); tblocks = TILERE.findall(new)
             ok(len(blocks) == 1 and new.rstrip().endswith('(end) */') and re.findall(r'(?m)^(\.calendar [^{]*) \{ background-color: transparent; \}$', blocks[0]).__len__() == 8 and blocks[0].count('{') == 8
-               and not TOK.search(blocks[0]), '%s has exactly one calendar override block at the end (8 transparent-background rules, no colour tokens)' % rel)
-            new = CALRE.sub('\n', new)
+               and not TOK.search(blocks[0]), '%s has exactly one calendar override block (8 transparent-background rules, no colour tokens)' % rel)
+            # tiles block: the three tile selectors only, translucent white overlays (the only colours: rgba), nothing else
+            tb = tblocks[0] if len(tblocks) == 1 else ''
+            ok(len(tblocks) == 1 and new.rstrip().endswith('calendar tiles (end) */') and tb.count('{') == 4
+               and set(re.findall(r'\.[\w-]+-button', tb)) == {'.events-button', '.world-clocks-button', '.weather-button'}
+               and set(re.findall(r'(?m)^\s*([\w-]+):', tb)) == {'background-color', 'border', 'border-radius', 'box-shadow'}
+               and all(re.fullmatch(r'rgba\((255, 255, 255|0, 0, 0), [0-9.]+\)', t) for t in TOK.findall(tb)),
+               '%s has exactly one calendar tiles override block at the end (3 tile selectors, background/border/radius/shadow only, white or black alpha overlays)' % rel)
+            new = TILERE.sub('\n', CALRE.sub('\n', new))
         a, b = mask(stock), mask(new)
         diff = sum(1 for x, y in zip(a.split('\n'), b.split('\n')) if x != y) + abs(len(a.split('\n')) - len(b.split('\n')))
         ok(diff == 0, '%s structure identical to stock after colour masking (%d differing lines)' % (rel, diff))
@@ -155,6 +164,16 @@ def toolkit(kind):
             def nd(typ, cls): return St.ThemeNode.new(ctx, root, t, typ.__gtype__, '', cls, '', '')
             h = lambda c: '#%02x%02x%02x' % (c.red, c.green, c.blue)
             b = nd(St.Button, 'button default')
+            # calendar tiles: tile text on the translucent overlay blended over the popup surface, worst state (reported, not asserted)
+            blend = lambda c, a, base: tuple(round(a * x + (1 - a) * y) for x, y in zip(c, base))
+            pop = nd(St.BoxLayout, 'popup-menu-content').get_background_color(); popc = (pop.red, pop.green, pop.blue)
+            tcol = nd(St.Button, 'events-button').get_foreground_color(); tfg = (tcol.red, tcol.green, tcol.blue)
+            tb = TILERE.findall(open(path).read())[0]
+            worst = 99
+            for a in sorted(set(float(x) for x in re.findall(r'background-color: rgba\(255, 255, 255, ([0-9.]+)\)', tb))):
+                worst = min(worst, cr('#%02x%02x%02x' % tfg, '#%02x%02x%02x' % blend((255, 255, 255), a, popc)))
+            print('     tiles: text %s on popup %s, worst blended contrast %.2f%s' % (h(tcol), h(pop), worst, '' if worst >= 4.5 else '  < 4.5'))
+            # informational like the other secondary contrast lines (only fg on window and view are hard 4.5:1 checks): the overlay lightens the surface a little
             print('     probe %s: root text %s, default button bg %s text %s (palette accent %s, fg %s)' % (os.path.basename(path), h(root.get_foreground_color()),
                   h(b.get_background_color()), h(b.get_foreground_color()), M['accents'][v][M['default_accent']]['color'], M['accents'][v][M['default_accent']]['fg']))
             ok(h(b.get_background_color()) == M['accents'][v][M['default_accent']]['color'], '%s default button background is the scheme accent (not GNOME\'s runtime accent)' % os.path.basename(os.path.dirname(os.path.dirname(path))))
