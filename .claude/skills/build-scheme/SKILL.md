@@ -1,9 +1,9 @@
 ---
 name: build-scheme
-description: Add a new colour scheme (a new top-level theme directory) to gnome-themes. Starts from a Ptyxis built-in palette (by id), then hands off to the deterministic generators. Use when asked to add, port or build a scheme or theme from a colour palette.
+description: Add a new colour scheme (a new top-level theme directory) to candy-for-gnome. Starts from a Ptyxis built-in palette (by id), then hands off to the deterministic generators. Use when asked to add, port or build a scheme or theme from a colour palette.
 ---
 
-# Add a scheme to gnome-themes
+# Add a scheme to candy-for-gnome
 
 A scheme is a top-level directory with one `scheme.toml`; everything else (GTK 3/4, Shell, libadwaita file, accent maps, GtkSourceView styles; the terminal is a Ptyxis built-in, nothing is generated for it) is generated. Your job is only the decisions about colours; the scripts do the rest. Read `CLAUDE.md` first (colour values only, generated files are never hand-edited, structure check stays at 0 differing lines).
 
@@ -56,5 +56,5 @@ If `accent-maps-gen` reports `VERIFY FAILED`, two role colours collide with an a
 - `NOTICE`: the palette credit and licence of the new scheme (the suite requires the scheme name to appear there).
 - `README.md`: the one-line list of schemes.
 - Commit by explicit paths on `testing` (never `git add -A`), message says why. Never push or open pull requests unless asked; `main` is protected.
-- The scheme needs nothing else: schemes are discovered by their `scheme.toml`, so it appears in `list-themes` and `install-theme` automatically and is installable on an image that ships the recipes with `ujust gnome-themes install-theme <scheme>`.
+- The scheme needs nothing else: schemes are discovered by their `scheme.toml`, so it appears in `list-themes` and `install-theme` automatically and is installable on an image that ships the recipes with `ujust candy-for-gnome install-theme <scheme>`.
 - Report: what you added, the test totals, contrast exceptions, which values are verified vs derived vs invented, anything for the hub under `Needs from hub:`.

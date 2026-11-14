@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Turn Ptyxis built-in palettes into gnome-themes schemes in bulk. tools/ptyxis-schemes.tsv is the source of truth.
+"""Turn Ptyxis built-in palettes into candy-for-gnome schemes in bulk. tools/ptyxis-schemes.tsv is the source of truth.
 
   python3 -I tools/bulk-scheme.py inventory              # (re)write the TSV from the built-ins and the rules below; keeps built/excluded rows
   python3 -I tools/bulk-scheme.py build [name ...] [--limit N]   # build the `todo` rows (or the named ones): draft, finalize, generate, check

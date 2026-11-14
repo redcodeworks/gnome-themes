@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: MIT
+# Per-variant overrides of the calendar tile overlay alphas (tools/shell-theme-gen.py, "calendar tiles" block).
+# Blur My Shell's default alphas (dark 0.07 / hover 0.12 / focus 0.12 / active 0.15) lighten the popup surface
+# enough that the tile text of a few dark schemes (mid-tone foreground) falls under 3.5:1. For these variants
+# the alphas are lowered to the highest value (not below 0.02, so the tile stays faintly visible) at which the
+# tile text reaches 4.5:1 over the popup surface; text colours are never changed. Order: [background, hover,
+# focus, active]. Only the alphas change; radius, border and selectors stay. selftest.py checks that every key
+# names an existing scheme and that an override is never worse than the default alphas.
+# ollie and solarized stay under 4.5:1 (about 4.3): their text colour on the plain popup surface is only
+# 4.58 / 4.50, so even the minimum alpha cannot reach 4.5 without an invisible tile.
+
+[belafonte]
+dark = [0.04, 0.04, 0.04, 0.04]
+[flat]
+dark = [0.05, 0.05, 0.05, 0.05]
+[freya]
+dark = [0.02, 0.02, 0.02, 0.02]
+[later-this-evening]
+dark = [0.03, 0.03, 0.03, 0.03]
+[ocean-dark]
+dark = [0.06, 0.06, 0.06, 0.06]
+[ollie]
+dark = [0.02, 0.02, 0.02, 0.02]
+[paraiso-dark]
+dark = [0.06, 0.06, 0.06, 0.06]
+[solarized]
+dark = [0.02, 0.02, 0.02, 0.02]
+[terminix-dark]
+dark = [0.05, 0.05, 0.05, 0.05]

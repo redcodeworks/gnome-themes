@@ -106,13 +106,15 @@ def toolkit(kind):
         return errs
     if kind == 'shell':
         gi.require_version('St', '51'); gi.require_version('Clutter', '51'); from gi.repository import St
-    TILERE = re.compile(r'/\* gnome-themes override: calendar tiles \(begin\) \*/.*?/\* gnome-themes override: calendar tiles \(end\) \*/', re.S)
+    TILERE = re.compile(r'/\* candy-for-gnome override: calendar tiles \(begin\) \*/.*?/\* candy-for-gnome override: calendar tiles \(end\) \*/', re.S)
+    TILEA = tomllib.load(open(os.path.join(HERE, 'shell-tile-alphas.toml'), 'rb'))
+    if kind == 'shell': ok(all(os.path.isfile(os.path.join(ROOT, k, 'scheme.toml')) for k in TILEA), 'shell-tile-alphas.toml names only existing schemes')
     for path, (stock, v) in files.items():
         rel = os.path.relpath(path, D); new = open(path).read()
         body = new[new.index('*/') + 2:] if kind == 'shell' else new[new.index('*/') + 2:]
         # structure: shell stock keeps its own header comment; compare after dropping comments
-        CALRE = re.compile(r'\n?/\* gnome-themes override: calendar flat \(begin\) \*/.*?/\* gnome-themes override: calendar flat \(end\) \*/\n?', re.S)
-        TILERE = re.compile(r'\n?/\* gnome-themes override: calendar tiles \(begin\) \*/.*?/\* gnome-themes override: calendar tiles \(end\) \*/\n?', re.S)
+        CALRE = re.compile(r'\n?/\* candy-for-gnome override: calendar flat \(begin\) \*/.*?/\* candy-for-gnome override: calendar flat \(end\) \*/\n?', re.S)
+        TILERE = re.compile(r'\n?/\* candy-for-gnome override: calendar tiles \(begin\) \*/.*?/\* candy-for-gnome override: calendar tiles \(end\) \*/\n?', re.S)
         if kind == 'shell':
             blocks = CALRE.findall(new); tblocks = TILERE.findall(new)
             ok(len(blocks) == 1 and new.rstrip().endswith('(end) */') and re.findall(r'(?m)^(\.calendar [^{]*) \{ background-color: transparent; \}$', blocks[0]).__len__() == 8 and blocks[0].count('{') == 8
@@ -173,6 +175,11 @@ def toolkit(kind):
             for a in sorted(set(float(x) for x in re.findall(r'background-color: rgba\(255, 255, 255, ([0-9.]+)\)', tb))):
                 worst = min(worst, cr('#%02x%02x%02x' % tfg, '#%02x%02x%02x' % blend((255, 255, 255), a, popc)))
             print('     tiles: text %s on popup %s, worst blended contrast %.2f%s' % (h(tcol), h(pop), worst, '' if worst >= 4.5 else '  < 4.5'))
+            # alpha overrides (tools/shell-tile-alphas.toml): only existing schemes, and never worse than the default alphas
+            ov = TILEA.get(scheme, {}).get(v)
+            dflt = [.07, .12, .15] if v == 'dark' else [.4, .58, .7]
+            w0 = min(cr('#%02x%02x%02x' % tfg, '#%02x%02x%02x' % blend((255, 255, 255), a, popc)) for a in dflt)
+            ok(not ov or worst >= w0, '%s tile alpha override is not worse than the default alphas (%.2f vs %.2f)' % (scheme, worst, w0))
             # informational like the other secondary contrast lines (only fg on window and view are hard 4.5:1 checks): the overlay lightens the surface a little
             print('     probe %s: root text %s, default button bg %s text %s (palette accent %s, fg %s)' % (os.path.basename(path), h(root.get_foreground_color()),
                   h(b.get_background_color()), h(b.get_foreground_color()), M['accents'][v][M['default_accent']]['color'], M['accents'][v][M['default_accent']]['fg']))
