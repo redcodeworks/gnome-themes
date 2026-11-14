@@ -19,7 +19,7 @@ The stock CSS refers to its SVGs with absolute resource:/// URLs, so the SVGs ar
 Shell's own gresource and are not copied. pad-osd.css is copied unmodified. Needs python3-gobject
 and gnome-shell installed (to read the gresource).
 """
-import sys, os, re
+import sys, os, re, tomllib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # python3 -I does not add the script dir
 from themegen import arg, load_palette, load_meta, recolour, hx, with_accent, accent_dir_write
 import gi
@@ -77,11 +77,17 @@ TILE_LOOK = {   # variant -> (background, hover, focus, active, border)
     'dark': ('rgba(255, 255, 255, 0.07)', 'rgba(255, 255, 255, 0.12)', 'rgba(255, 255, 255, 0.12)', 'rgba(255, 255, 255, 0.15)', 'rgba(255, 255, 255, 0.05)'),
     'light': ('rgba(255, 255, 255, 0.58)', 'rgba(255, 255, 255, 0.4)', 'rgba(255, 255, 255, 0.7)', 'rgba(255, 255, 255, 0.7)', 'rgba(0, 0, 0, 0.1)'),
 }
-def tiles(variant):
+def tiles(variant, scheme):
     bg, hov, foc, act, bor = TILE_LOOK[variant]
+    over = TILE_ALPHAS.get(scheme, {}).get(variant)      # tools/shell-tile-alphas.toml: lowered alphas for low-contrast variants
+    if over:
+        a = lambda alpha: 'rgba(255, 255, 255, %s)' % ('%.2f' % alpha).rstrip('0').rstrip('.')
+        bg, hov, foc, act = (a(x) for x in over)
     def sel(st): return ', '.join(x + st for x in TILE_SEL)
     return '\n%s\n%s {\n  background-color: %s !important;\n  border: 1px solid %s !important;\n  border-radius: %s !important;\n  box-shadow: none !important; }\n%s {\n  background-color: %s !important; }\n%s {\n  background-color: %s !important; }\n%s {\n  background-color: %s !important; }\n%s\n' % (
         TILE_BEGIN, ',\n'.join(TILE_SEL), bg, bor, TILE_RADIUS, sel(':hover'), hov, sel(':focus'), foc, sel(':active'), act, TILE_END)
+TILE_ALPHAS = tomllib.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'shell-tile-alphas.toml'), 'rb'))
+SCHEME = os.path.basename(os.path.dirname(os.path.abspath(arg('palette'))))
 INDEX = '''[Desktop Entry]
 Type=X-GNOME-Metatheme
 Name=%s
@@ -110,7 +116,7 @@ def build(css, variant, P):
     body = recolour(css, P)
     body = re.sub(r'(?m)^(\s*color:\s*)rgba\(255, 255, 255, ([0-9.]+)\)',
                   lambda m: '%srgba(%d, %d, %d, %s)' % (m.group(1), tr, tg, tb, m.group(2)), body)  # after recolour: its output must not be recoloured again
-    return literal_accent(body, P) + CAL + tiles(variant)
+    return literal_accent(body, P) + CAL + tiles(variant, SCHEME)
 
 def main():
     check = '--check' in sys.argv
